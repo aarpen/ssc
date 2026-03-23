@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Biology Question Bank Flat View</title>
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --paper: rgba(255, 252, 247, 0.94);
+      --ink: #1d1a17;
+      --muted: #6c6258;
+      --line: rgba(48, 36, 25, 0.12);
+      --line-strong: rgba(48, 36, 25, 0.2);
+      --accent: #a33d2d;
+      --accent-soft: rgba(163, 61, 45, 0.1);
+      --leaf: #2f6b4f;
+      --leaf-soft: rgba(47, 107, 79, 0.12);
+      --shadow: 0 18px 40px rgba(61, 43, 23, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(197, 139, 42, 0.18), transparent 26%),
+        radial-gradient(circle at top right, rgba(47, 107, 79, 0.12), transparent 24%),
+        linear-gradient(180deg, #f8f2e9 0%, #f3ede3 42%, #efe7db 100%);
+      font-family: "Segoe UI Variable Text", "Trebuchet MS", "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    .page { max-width: 1240px; margin: 0 auto; padding: 32px 18px 56px; }
+    .hero, .section {
+      background: rgba(255,253,249,0.94);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+    .hero { padding: 30px; margin-bottom: 22px; }
+    .eyebrow {
+      display: inline-block; padding: 7px 14px; border-radius: 999px;
+      background: var(--accent-soft); color: var(--accent);
+      font-size: 0.78rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    h1 {
+      margin: 16px 0 10px; font-family: "Palatino Linotype", Georgia, serif;
+      font-size: clamp(2.2rem, 5vw, 4.2rem); line-height: 0.98; letter-spacing: -0.03em;
+    }
+    .hero p { margin: 0; color: var(--muted); max-width: 850px; }
+    .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 24px; }
+    .stat { background: rgba(255,255,255,0.72); border: 1px solid var(--line); border-radius: 18px; padding: 16px; }
+    .stat strong { display: block; color: var(--accent); font-size: 1.9rem; font-family: "Palatino Linotype", Georgia, serif; }
+    .stat span { color: var(--muted); font-size: 0.88rem; }
+    .toolbar { display: grid; grid-template-columns: 1.3fr auto auto; gap: 14px; margin-bottom: 20px; align-items: center; }
+    .search, .chip, .toggle { background: var(--paper); border: 1px solid var(--line-strong); border-radius: 18px; box-shadow: var(--shadow); }
+    .search { padding: 0 16px; min-height: 58px; display: flex; align-items: center; }
+    .search input { width: 100%; border: 0; outline: 0; background: transparent; font: inherit; color: var(--ink); }
+    .chip-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .chip, .toggle { min-height: 48px; padding: 12px 16px; border-radius: 999px; cursor: pointer; font: inherit; font-weight: 700; }
+    .chip.active { background: var(--accent); color: #fff9f6; border-color: var(--accent); }
+    .toggle.active { background: var(--leaf); color: #f4fff8; border-color: var(--leaf); }
+    .results { margin-bottom: 18px; color: var(--muted); display: flex; gap: 18px; flex-wrap: wrap; }
+    .results strong { color: var(--ink); }
+    .stack { display: grid; gap: 18px; }
+    .section { padding: 22px; }
+    .section.hidden, .question.hidden { display: none; }
+    .section-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+    .section-head h2 { margin: 0; font-size: 1.08rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .count { padding: 6px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 0.78rem; font-weight: 800; }
+    .question-list { display: grid; gap: 12px; }
+    .question {
+      display: grid; grid-template-columns: auto 1fr; gap: 12px; padding: 14px 14px 14px 16px;
+      border-radius: 16px; border: 1px solid rgba(48, 36, 25, 0.1); background: rgba(255,255,255,0.68);
+    }
+    .qno {
+      width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center;
+      background: linear-gradient(180deg, #fbf0e9, #f4dfd0);
+      border: 1px solid rgba(163, 61, 45, 0.16); color: var(--accent); font-weight: 800;
+    }
+    .qtext { margin: 0; }
+    .tags { margin-top: 9px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag { display: inline-flex; align-items: center; padding: 6px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; }
+    .tag.source { background: rgba(197, 139, 42, 0.12); color: #845c18; }
+    .tag.diagram { background: var(--leaf-soft); color: var(--leaf); }
+    .empty { display: none; padding: 30px 18px; text-align: center; color: var(--muted); border: 1px dashed var(--line-strong); border-radius: 20px; background: rgba(255,255,255,0.58); }
+    @media (max-width: 980px) { .toolbar { grid-template-columns: 1fr; } .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 620px) { .page { padding: 14px 10px 40px; } .hero, .section { border-radius: 22px; } .hero { padding: 22px 18px; } .stats { grid-template-columns: 1fr 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <div class="eyebrow">Flat View • No Paper Segregation</div>
+      <h1>All Biology subjective questions in one continuous mark-wise view.</h1>
+      <p>
+        Same question bank, but without district or paper-wise grouping. Everything is arranged only under
+        <strong>2 marks</strong>, <strong>4 marks</strong>, and <strong>6 marks</strong>.
+      </p>
+      <div class="stats">
+        <div class="stat"><strong id="totalQuestions">0</strong><span>Total questions</span></div>
+        <div class="stat"><strong id="totalDiagrams">0</strong><span>Diagram references</span></div>
+        <div class="stat"><strong id="count2">0</strong><span>2 mark questions</span></div>
+        <div class="stat"><strong id="count46">0</strong><span>4 and 6 mark questions</span></div>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <label class="search">
+        <input id="searchInput" type="search" placeholder="Search by topic or question text..." />
+      </label>
+      <div class="chip-row">
+        <button class="chip active" data-mark="all">All Marks</button>
+        <button class="chip" data-mark="2">2 Marks</button>
+        <button class="chip" data-mark="4">4 Marks</button>
+        <button class="chip" data-mark="6">6 Marks</button>
+      </div>
+      <button class="toggle" id="diagramOnly">Only Diagram References</button>
+    </section>
+
+    <div class="results">
+      <span><strong id="visibleCount">0</strong> questions visible</span>
+      <span>Questions are intentionally not grouped by district or paper in this version.</span>
+    </div>
+
+    <div class="empty" id="emptyState">No questions match the current filter.</div>
+    <main class="stack" id="stack"></main>
+  </div>
+
+  <script>
+    const stack = document.getElementById("stack");
+    const searchInput = document.getElementById("searchInput");
+    const chips = [...document.querySelectorAll(".chip")];
+    const diagramOnlyBtn = document.getElementById("diagramOnly");
+    const emptyState = document.getElementById("emptyState");
+    let activeMark = "all";
+    let diagramOnly = false;
+
+    async function loadPapers() {
+      const response = await fetch("./biology_subjective_questions.html");
+      const html = await response.text();
+      const match = html.match(/const papers = \[(.*?)\n\s*const papersContainer/s);
+      if (!match) throw new Error("Could not read source question data.");
+      return Function(`return [${match[1]}];`)();
+    }
+
+    function flatten(papers) {
+      const grouped = { 2: [], 4: [], 6: [] };
+      papers.forEach(paper => {
+        [2, 4, 6].forEach(mark => {
+          (paper.sections[mark] || []).forEach(q => grouped[mark].push(q));
+        });
+      });
+      return grouped;
+    }
+
+    function render(grouped) {
+      const total2 = grouped[2].length;
+      const total4 = grouped[4].length;
+      const total6 = grouped[6].length;
+      const totalQuestions = total2 + total4 + total6;
+      const totalDiagrams = [...grouped[2], ...grouped[4], ...grouped[6]].filter(q => q.diagram).length;
+
+      document.getElementById("totalQuestions").textContent = totalQuestions;
+      document.getElementById("totalDiagrams").textContent = totalDiagrams;
+      document.getElementById("count2").textContent = total2;
+      document.getElementById("count46").textContent = total4 + total6;
+
+      stack.innerHTML = [2, 4, 6].map(mark => `
+        <section class="section" data-section="${mark}">
+          <div class="section-head">
+            <h2>${mark} Mark Questions</h2>
+            <span class="count">${grouped[mark].length} questions</span>
+          </div>
+          <div class="question-list">
+            ${grouped[mark].map((q, i) => `
+              <article class="question" data-mark="${mark}" data-diagram="${q.diagram ? "true" : "false"}" data-search="${q.text.toLowerCase().replace(/"/g, "&quot;")}">
+                <div class="qno">${i + 1}</div>
+                <div>
+                  <p class="qtext">${q.text}</p>
+                  <div class="tags">
+                    <span class="tag source">${mark} Marks</span>
+                    ${q.diagram ? '<span class="tag diagram">Diagram referenced in PDF</span>' : ""}
+                  </div>
+                </div>
+              </article>
+            `).join("")}
+          </div>
+        </section>
+      `).join("");
+
+      function applyFilters() {
+        const term = searchInput.value.trim().toLowerCase();
+        let visible = 0;
+        document.querySelectorAll(".question").forEach(question => {
+          const markMatch = activeMark === "all" || question.dataset.mark === activeMark;
+          const diagramMatch = !diagramOnly || question.dataset.diagram === "true";
+          const termMatch = !term || question.dataset.search.includes(term);
+          const show = markMatch && diagramMatch && termMatch;
+          question.classList.toggle("hidden", !show);
+          if (show) visible += 1;
+        });
+        document.querySelectorAll(".section").forEach(section => {
+          const hasVisible = section.querySelectorAll(".question:not(.hidden)").length > 0;
+          section.classList.toggle("hidden", !hasVisible);
+        });
+        document.getElementById("visibleCount").textContent = visible;
+        emptyState.style.display = visible ? "none" : "block";
+      }
+
+      chips.forEach(chip => {
+        chip.addEventListener("click", () => {
+          chips.forEach(node => node.classList.remove("active"));
+          chip.classList.add("active");
+          activeMark = chip.dataset.mark;
+          applyFilters();
+        });
+      });
+
+      diagramOnlyBtn.addEventListener("click", () => {
+        diagramOnly = !diagramOnly;
+        diagramOnlyBtn.classList.toggle("active", diagramOnly);
+        applyFilters();
+      });
+
+      searchInput.addEventListener("input", applyFilters);
+      applyFilters();
+    }
+
+    loadPapers().then(render).catch(error => {
+      emptyState.style.display = "block";
+      emptyState.textContent = "Could not load the flat question bank source. Open this file in the same folder as the paper-wise version.";
+      console.error(error);
+    });
+  </script>
+</body>
+</html>

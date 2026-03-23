@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class X Mathematics — Pre-Final MCQ Papers</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0c;
+    --paper: #f5f0e8;
+    --cream: #ede7d9;
+    --gold: #c9a84c;
+    --gold-light: #e8d08a;
+    --red: #b84040;
+    --green: #2e7d52;
+    --blue: #1a4a8a;
+    --muted: #7a7264;
+    --border: #c8bfa8;
+    --shadow: rgba(15,14,12,0.12);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(201,168,76,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(26,74,138,0.06) 0%, transparent 50%);
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--gold);
+  }
+  .site-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+  }
+  .site-header h1 span { color: var(--gold); }
+  .header-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--border);
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  /* ── HOME SCREEN ── */
+  #home-screen {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+  .home-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+  .home-subtitle {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+  .papers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.2rem;
+  }
+  .paper-card {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    padding: 1.4rem 1.6rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .paper-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--gold);
+    transform: scaleY(0);
+    transition: transform 0.2s ease;
+    transform-origin: bottom;
+  }
+  .paper-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 6px 24px var(--shadow);
+    transform: translateY(-2px);
+  }
+  .paper-card:hover::before { transform: scaleY(1); }
+  .paper-card .code {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+  }
+  .paper-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+  .paper-card .meta {
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: flex;
+    gap: 1rem;
+  }
+  .paper-card .meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.15rem 0.5rem;
+    color: var(--muted);
+    margin-top: 0.6rem;
+  }
+
+  /* ── TIMER MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,14,12,0.6);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal-box {
+    background: white;
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+    padding: 2.5rem 3rem;
+    max-width: 440px;
+    width: 90%;
+    text-align: center;
+    animation: modalIn 0.25s ease;
+  }
+  @keyframes modalIn {
+    from { opacity:0; transform: scale(0.92) translateY(20px); }
+    to   { opacity:1; transform: scale(1)   translateY(0); }
+  }
+  .modal-box h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 0.4rem;
+  }
+  .modal-box p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.8rem; }
+  .time-options {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.4rem;
+  }
+  .time-btn {
+    padding: 0.6rem 1.2rem;
+    border: 1.5px solid var(--border);
+    background: var(--cream);
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.15s;
+    color: var(--ink);
+  }
+  .time-btn:hover, .time-btn.selected {
+    border-color: var(--gold);
+    background: var(--gold);
+    color: var(--ink);
+  }
+  .custom-time-row {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.6rem;
+  }
+  .custom-time-row input {
+    width: 80px;
+    padding: 0.5rem 0.7rem;
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.9rem;
+    text-align: center;
+    background: white;
+    color: var(--ink);
+  }
+  .custom-time-row input:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+  .custom-time-row label { font-size: 0.85rem; color: var(--muted); }
+  .btn-start {
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 0.85rem 2.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 3px;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    transition: all 0.2s;
+    width: 100%;
+  }
+  .btn-start:hover { background: var(--blue); }
+  .btn-cancel {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 0.85rem;
+    cursor: pointer;
+    margin-top: 0.8rem;
+    text-decoration: underline;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* ── QUIZ SCREEN ── */
+  #quiz-screen { display: none; min-height: 100vh; }
+  #quiz-screen.active { display: block; }
+
+  .quiz-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.9rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--gold);
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .quiz-topbar .paper-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+  .quiz-topbar .paper-title small {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--gold-light);
+    display: block;
+  }
+  .topbar-right { display:flex; align-items:center; gap:1.2rem; }
+
+  /* Timer */
+  .timer-display {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    transition: color 0.3s;
+  }
+  .timer-display.warning { color: #ff8c42; }
+  .timer-display.danger  { color: #e04040; animation: pulse 0.7s infinite; }
+  @keyframes pulse {
+    0%,100% { opacity:1; }
+    50%      { opacity:0.5; }
+  }
+
+  .progress-bar-wrap {
+    width: 140px;
+    height: 6px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 3px;
+    transition: width 1s linear;
+  }
+
+  .btn-back {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: var(--paper);
+    padding: 0.4rem 0.9rem;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+  }
+  .btn-back:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Quiz body */
+  .quiz-body {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 5rem;
+  }
+  .q-count-bar {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+  .q-dot {
+    width: 22px;
+    height: 7px;
+    border-radius: 2px;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .q-dot.answered  { background: var(--green); border-color: var(--green); }
+  .q-dot.current   { background: var(--gold); border-color: var(--gold); }
+  .q-dot.skipped   { background: var(--red); border-color: var(--red); opacity:0.6; }
+
+  .question-card {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 5px;
+    padding: 2rem 2.2rem;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+  .q-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.7rem;
+  }
+  .q-text {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.6;
+    margin-bottom: 1.4rem;
+    color: var(--ink);
+  }
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+  }
+  @media (max-width: 560px) {
+    .options-grid { grid-template-columns: 1fr; }
+  }
+  .option-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 0.85rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    background: var(--cream);
+    cursor: pointer;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: var(--ink);
+    transition: all 0.15s;
+  }
+  .option-btn:hover {
+    border-color: var(--blue);
+    background: #eef3fa;
+  }
+  .option-btn.selected {
+    border-color: var(--blue);
+    background: #dce8f5;
+  }
+  .option-btn.correct {
+    border-color: var(--green);
+    background: #d4eddf;
+    color: var(--green);
+  }
+  .option-btn.wrong {
+    border-color: var(--red);
+    background: #fde8e8;
+    color: var(--red);
+  }
+  .option-letter {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 500;
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--border);
+    border-radius: 2px;
+    color: var(--ink);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .option-btn.selected .option-letter { background: var(--blue); color: white; }
+  .option-btn.correct .option-letter  { background: var(--green); color: white; }
+  .option-btn.wrong   .option-letter  { background: var(--red); color: white; }
+
+  .q-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.2rem;
+    gap: 0.8rem;
+  }
+  .btn-nav {
+    padding: 0.65rem 1.5rem;
+    border-radius: 3px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1.5px solid;
+    transition: all 0.15s;
+  }
+  .btn-prev {
+    border-color: var(--border);
+    background: white;
+    color: var(--ink);
+  }
+  .btn-prev:hover { border-color: var(--ink); }
+  .btn-next {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .btn-next:hover { background: var(--blue); border-color: var(--blue); }
+  .btn-submit {
+    border-color: var(--gold);
+    background: var(--gold);
+    color: var(--ink);
+  }
+  .btn-submit:hover { background: #b8942e; border-color: #b8942e; }
+
+  /* ── RESULTS SCREEN ── */
+  #results-screen { display: none; }
+  #results-screen.active { display: block; }
+
+  .results-body {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+  .results-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .results-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    margin-bottom: 0.4rem;
+  }
+  .score-ring {
+    width: 160px;
+    height: 160px;
+    margin: 1.5rem auto;
+    position: relative;
+  }
+  .score-ring svg { transform: rotate(-90deg); }
+  .score-ring-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .score-ring-text .score-pct {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .score-ring-text .score-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .stat-box {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    padding: 1.2rem;
+    text-align: center;
+  }
+  .stat-box .val {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+  }
+  .stat-box .val.green { color: var(--green); }
+  .stat-box .val.red   { color: var(--red); }
+  .stat-box .val.blue  { color: var(--blue); }
+  .stat-box .lbl {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+
+  .review-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid var(--border);
+  }
+  .review-item {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 0.8rem;
+  }
+  .review-item.r-correct { border-left: 4px solid var(--green); }
+  .review-item.r-wrong   { border-left: 4px solid var(--red); }
+  .review-item.r-skip    { border-left: 4px solid var(--muted); }
+  .review-q {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.6rem;
+    line-height: 1.5;
+  }
+  .review-ans {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .review-ans .your-ans { color: var(--red); }
+  .review-ans .correct-ans { color: var(--green); }
+  .review-ans .skipped { color: var(--muted); }
+
+  .results-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .btn-action {
+    padding: 0.8rem 2rem;
+    border-radius: 3px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1.5px solid;
+    transition: all 0.15s;
+  }
+  .btn-home-go {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+  .btn-home-go:hover { background: var(--blue); border-color: var(--blue); }
+  .btn-retry {
+    background: white;
+    border-color: var(--border);
+    color: var(--ink);
+  }
+  .btn-retry:hover { border-color: var(--ink); }
+
+  /* Time-up overlay */
+  .timeup-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,14,12,0.85);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .timeup-overlay.active { display: flex; }
+  .timeup-box {
+    background: white;
+    border: 3px solid var(--red);
+    border-radius: 6px;
+    padding: 3rem;
+    max-width: 360px;
+    animation: modalIn 0.3s ease;
+  }
+  .timeup-box h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--red);
+    margin-bottom: 0.5rem;
+  }
+  .timeup-box p { color: var(--muted); margin-bottom: 1.5rem; }
+
+  /* Utility */
+  .hidden { display: none !important; }
+  .screen { min-height: calc(100vh - 72px); }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>Class X <span>Mathematics</span></h1>
+  <div class="header-meta">
+    Pre-Final Examinations · February 2026<br>
+    Part-B MCQ Practice Portal
+  </div>
+</header>
+
+<!-- HOME SCREEN -->
+<div id="home-screen" class="screen">
+  <div class="home-title">MCQ Practice Papers</div>
+  <div class="home-subtitle">Select a paper · Set your timer · Begin</div>
+  <div class="papers-grid" id="papers-grid"></div>
+</div>
+
+<!-- QUIZ SCREEN -->
+<div id="quiz-screen" class="screen">
+  <div class="quiz-topbar">
+    <div>
+      <button class="btn-back" onclick="goHome()">← Papers</button>
+    </div>
+    <div class="paper-title" id="quiz-paper-title">
+      <small id="quiz-paper-code"></small>
+    </div>
+    <div class="topbar-right">
+      <div>
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" id="timer-bar" style="width:100%"></div></div>
+        <div style="font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--gold-light);margin-top:2px;text-align:right" id="q-progress-text"></div>
+      </div>
+      <div class="timer-display" id="timer-display">30:00</div>
+    </div>
+  </div>
+  <div class="quiz-body">
+    <div class="q-count-bar" id="q-count-bar"></div>
+    <div id="question-container"></div>
+    <div class="q-nav" id="q-nav">
+      <button class="btn-nav btn-prev" id="btn-prev" onclick="prevQ()">← Prev</button>
+      <span style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--muted)" id="q-index-label"></span>
+      <button class="btn-nav btn-next" id="btn-next" onclick="nextQ()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS SCREEN -->
+<div id="results-screen" class="screen">
+  <div class="results-body">
+    <div class="results-header">
+      <div id="results-paper-name" style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.4rem;"></div>
+      <h2>Your Results</h2>
+      <div class="score-ring">
+        <svg width="160" height="160" viewBox="0 0 160 160">
+          <circle cx="80" cy="80" r="64" fill="none" stroke="#e8e3da" stroke-width="12"/>
+          <circle cx="80" cy="80" r="64" fill="none" stroke="#c9a84c" stroke-width="12"
+            stroke-dasharray="402.1" stroke-dashoffset="402.1" id="score-arc"
+            stroke-linecap="round" style="transition:stroke-dashoffset 1.2s ease"/>
+        </svg>
+        <div class="score-ring-text">
+          <div class="score-pct" id="score-pct">0%</div>
+          <div class="score-label">Score</div>
+        </div>
+      </div>
+    </div>
+    <div class="stats-row">
+      <div class="stat-box"><div class="val green" id="res-correct">0</div><div class="lbl">Correct</div></div>
+      <div class="stat-box"><div class="val red"   id="res-wrong">0</div><div class="lbl">Wrong</div></div>
+      <div class="stat-box"><div class="val blue"  id="res-skip">0</div><div class="lbl">Skipped</div></div>
+    </div>
+    <div class="review-title">Answer Review</div>
+    <div id="review-list"></div>
+    <div class="results-actions">
+      <button class="btn-action btn-home-go" onclick="goHome()">← All Papers</button>
+      <button class="btn-action btn-retry" onclick="retryPaper()">Retry This Paper</button>
+    </div>
+  </div>
+</div>
+
+<!-- TIMER MODAL -->
+<div class="modal-overlay" id="timer-modal">
+  <div class="modal-box">
+    <h2 id="modal-paper-name">Paper Name</h2>
+    <p id="modal-paper-meta">20 questions · 1 mark each</p>
+    <div style="font-size:0.85rem;font-weight:600;margin-bottom:0.8rem;color:var(--ink)">How many minutes for this section?</div>
+    <div class="time-options">
+      <button class="time-btn" onclick="selectTime(10,this)">10 min</button>
+      <button class="time-btn" onclick="selectTime(15,this)">15 min</button>
+      <button class="time-btn selected" onclick="selectTime(20,this)">20 min</button>
+      <button class="time-btn" onclick="selectTime(25,this)">25 min</button>
+      <button class="time-btn" onclick="selectTime(30,this)">30 min</button>
+    </div>
+    <div class="custom-time-row">
+      <label>Custom:</label>
+      <input type="number" id="custom-min" min="1" max="120" placeholder="mins" oninput="selectCustomTime(this)">
+      <label>minutes</label>
+    </div>
+    <button class="btn-start" onclick="startQuiz()">Start Quiz →</button>
+    <br>
+    <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- TIME UP -->
+<div class="timeup-overlay" id="timeup-overlay">
+  <div class="timeup-box">
+    <h2>⏰ Time's Up!</h2>
+    <p>Your time has expired. Results are being calculated.</p>
+    <button class="btn-action btn-home-go" onclick="finishQuiz()" style="width:100%">View Results</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  ALL MCQ DATA
+// ═══════════════════════════════════════════════
+const PAPERS = [
+  {
+    code: "JK-82",
+    name: "Rajanna Sircilla",
+    district: "Rajanna Sircilla",
+    questions: [
+      { q: "Which of the following is irrational?", opts: ["log₁₀10", "log₁₀2", "logₐa", "log₁₀(1)"], ans: "B" },
+      { q: "The number of subsets of A = {1, 2}", opts: ["2", "4", "0", "None"], ans: "B" },
+      { q: "The degree of constant polynomial is:", opts: ["2", "√2", "0", "1"], ans: "C" },
+      { q: "2x+3y+5=0, 4x+6y+10=0 are ___ lines.", opts: ["parallel", "intersecting", "coinciding", "all the above"], ans: "C" },
+      { q: "Sin²θ + (1 − Sin²θ) =", opts: ["0", "1", "2", "10"], ans: "B" },
+      { q: "If a, b, c are in GP, then b =", opts: ["a+c", "√(ac)", "a−c", "(a−c)/2"], ans: "B" },
+      { q: "The angle between two parallel lines", opts: ["0°", "180°", "not defined", "90°"], ans: "A" },
+      { q: "In △ABC, DE∥BC, then AD/DB =", opts: ["AE/AC", "AE/EC", "AB/DB", "DE/BC"], ans: "B" },
+      { q: "In adjacent figure, AB is diameter then ∠C is", opts: ["90°", "180°", "0°", "360°"], ans: "A" },
+      { q: "Volume of cone 3cm³ then volume of cylinder is (same radius and height)", opts: ["3cm³", "9cm³", "6cm³", "12cm³"], ans: "B" },
+      { q: "Sin25° × Cosec25° =", opts: ["0", "1", "2", "−1"], ans: "B" },
+      { q: "In evening due to sunlight, shadow of tree is √3 times its height, then angle between sunrays and shadow is", opts: ["90°", "60°", "30°", "45°"], ans: "C" },
+      { q: "If a letter is selected at random from MATHEMATICS, probability of getting 'A' is", opts: ["2/11", "3/11", "4/11", "1/11"], ans: "A" },
+      { q: "Mode of the vehicle type data (cars, bikes, buses — bikes most frequent)", opts: ["cars", "busses", "bikes", "none"], ans: "C" },
+      { q: "a, b are zeros of x²−5x+6 then (a+b)² =", opts: ["10", "25", "20", "36"], ans: "B" },
+      { q: "Areas of similar triangles are in ratio 25:49, ratio of corresponding sides is", opts: ["5:7", "7:5", "25:49", "49:25"], ans: "A" },
+      { q: "A = {x: x is single digit whole number} then n(A) =", opts: ["9", "10", "0", "5"], ans: "B" },
+      { q: "The angle between tangent and radius of a circle is", opts: ["right", "obtuse", "acute", "complete"], ans: "A" },
+      { q: "a + (n−1)d is nᵗʰ term of", opts: ["G.P.", "A.P.", "both A, B", "none"], ans: "B" },
+      { q: "Which of the following is Ramanujan number?", opts: ["2917", "1729", "2719", "9712"], ans: "B" }
+    ]
+  },
+  {
+    code: "NK-8(A)",
+    name: "Nagarkurnool",
+    district: "Nagarkurnool",
+    questions: [
+      { q: "The distance between the points (sinθ, 0) and (0, cosθ) where 0 < θ < 90° is", opts: ["1", "2", "1/2", "0"], ans: "A" },
+      { q: "If x + 1/x = 3 then x² + 1/x² =", opts: ["6", "7", "8", "9"], ans: "B" },
+      { q: "If A ⊂ B then A ∪ B =", opts: ["B", "U", "A", "∅"], ans: "A" },
+      { q: "The average of first 5 prime numbers is", opts: ["5.2", "5.4", "5.6", "5.8"], ans: "D" },
+      { q: "The sum of the probabilities of all elementary events of an experiment is", opts: ["0", "1", "2", "3"], ans: "B" },
+      { q: "The quadratic polynomial whose sum and product of zeroes are −3 and 2 is", opts: ["x²+6x+5=0", "x²−x−6=0", "x²+3x+2=0", "x²+3x+2=0"], ans: "D" },
+      { q: "The slope of the line joining (5,8) and (6,10) is", opts: ["2", "4/3", "2/3", "4/5"], ans: "A" },
+      { q: "The value of sin²29° + sin²61° is", opts: ["−1", "1", "0", "2"], ans: "B" },
+      { q: "A cone and cylinder have equal base radii and equal heights, ratio of volumes is", opts: ["3:1", "1:1", "1:3", "1:3"], ans: "C" },
+      { q: "Angle between tangent and radius at point of contact is", opts: ["60°", "30°", "45°", "90°"], ans: "D" },
+      { q: "In △ABC, DE∥BC, AD:DB = 2:3 and AC = 10 cm, then AE =", opts: ["4", "6", "5", "15"], ans: "A" },
+      { q: "The common ratio of G.P. 25, −5, 1, −1/5,...", opts: ["−5", "−1/5", "1/5", "5"], ans: "B" },
+      { q: "The equation x − 4y = 5 has", opts: ["Two solutions", "Unique solution", "No solution", "Infinitely many solutions"], ans: "D" },
+      { q: "Which is true from the following?", opts: ["P(E) > P(Ē)", "P(E) + P(Ē) = 1", "P(E) < P(Ē)", "P(E) + P(Ē) > 1"], ans: "B" },
+      { q: "The HCF of 12 and 21 is", opts: ["4", "7", "3", "6"], ans: "C" },
+      { q: "If 5cosA − 4 = 0 then the value of sinA is", opts: ["3/4", "4/3", "3/5", "4/5"], ans: "C" },
+      { q: "2tan30°/(1−tan²30°) is equal to", opts: ["cos60°", "sin60°", "tan60°", "sin30°"], ans: "C" },
+      { q: "The midpoint of (a+b, a−b) and (−b, b) is", opts: ["(a,b)", "(a,0)", "(a, a/2)", "((a+b)/2, a/2)"], ans: "B" },
+      { q: "If a pole 6m high casts a shadow 2√3 m long on the ground, then sun's elevation is", opts: ["30°", "45°", "60°", "90°"], ans: "C" },
+      { q: "In an AP if d = −4, a₇ = 4, then first term 'a' is equal to", opts: ["6", "7", "20", "28"], ans: "D" }
+    ]
+  },
+  {
+    code: "J-8A",
+    name: "Jayashankar Bhupalpally",
+    district: "Jayashankar",
+    questions: [
+      { q: "HCF(90, 144) — the last non-zero remainder when 90 divides 144", opts: ["3", "0", "6", "2"], ans: "A" },
+      { q: "If A and B are disjoint sets then A∩B =", opts: ["∅", "0", "1", "None"], ans: "A" },
+      { q: "Which of the following is a polynomial?", opts: ["2x", "1/x²", "m²−√2m+2", "All the above"], ans: "C" },
+      { q: "The quadratic equation whose roots are −5 and 2 is", opts: ["x²+x−5=0", "2x²−5x−5=0", "x²+3x−10=0", "x²−3x−10=0"], ans: "C" },
+      { q: "If A = {1,2,3,4} then the number of subsets are", opts: ["4", "8", "16", "Infinite"], ans: "C" },
+      { q: "Product of zeroes of polynomial x³−2x²+3x−4 is", opts: ["−2", "2/3", "4", "−4"], ans: "C" },
+      { q: "Which of the following is a solution for 2x−3y = 5?", opts: ["(1,1)", "(−1,1)", "(5,−1)", "All the above"], ans: "C" },
+      { q: "Number of solutions for 2x+y=5 and 4x+2y=10", opts: ["0", "1", "2", "Many"], ans: "D" },
+      { q: "The sum of first 100 natural numbers is", opts: ["1000", "1050", "5000", "5050"], ans: "D" },
+      { q: "In a G.P. aₙ = 2(0.5)ⁿ⁻¹, then first term is", opts: ["5", "1", "2", "0.5"], ans: "C" },
+      { q: "The centroid of triangle with vertices (4,6), (2,−2), (2,5) is", opts: ["(1,1/3)", "(3,3)", "(0,3)", "(3,0)"], ans: "B" },
+      { q: "The distance between (cosθ, 0) and (0, sinθ) is", opts: ["0", "1", "cosθ+sinθ", "cosθ−sinθ"], ans: "B" },
+      { q: "Which is NOT a measure of central tendency?", opts: ["Median", "Mean", "Mode", "Range"], ans: "D" },
+      { q: "Which one of the following is not defined?", opts: ["sin90°", "cos0°", "sec90°", "cos90°"], ans: "C" },
+      { q: "If height and shadow of a man are equal, angle of elevation of sun is", opts: ["30°", "45°", "90°", "0°"], ans: "B" },
+      { q: "If 'a' is a side of equilateral triangle, its area is", opts: ["a²", "√3a²/4", "√3a", "√a"], ans: "B" },
+      { q: "△ABC and △PQR are similar, areas 9cm² and 16cm² resp. If BC=4.5m, QR=", opts: ["2.5", "3.5", "6", "6"], ans: "C" },
+      { q: "Two circles of radii 5cm and 3cm touch externally. Distance between centres is", opts: ["4cm", "5cm", "8cm", "2cm"], ans: "C" },
+      { q: "Probability of selecting a red face card from a deck", opts: ["5/26", "3/26", "2/13", "1/13"], ans: "B" },
+      { q: "The lateral surface area of hemisphere is", opts: ["πr²", "2πr²", "3πr²", "4πr²"], ans: "B" }
+    ]
+  },
+  {
+    code: "MP-11A",
+    name: "Mancherial / Peddapalli Region",
+    district: "Mancherial",
+    questions: [
+      { q: "Decimal expansion of 25/100", opts: ["1", "0.25", "2", "2.5"], ans: "B" },
+      { q: "The central tendency that depends on all observations", opts: ["Mean", "Range", "Median", "Mode"], ans: "A" },
+      { q: "3log2 =", opts: ["3", "8", "1", "3"], ans: "B" },
+      { q: "If two dice are rolled, probability of getting sum of two faces as 4", opts: ["1/12", "4/9", "7/36", "4/36"], ans: "A" },
+      { q: "If A ⊂ B, then A∪B =", opts: ["A∩B", "∅", "A", "B"], ans: "D" },
+      { q: "If length of shadow of a pole equals its height, angle of elevation is", opts: ["30°", "45°", "60°", "90°"], ans: "B" },
+      { q: "A quadratic polynomial with zeroes −√3 and √3 is", opts: ["x²+√3x+9", "x²+9", "x²−9", "√3"], ans: "C" },
+      { q: "If tanθ = √3, which of the following is NOT true?", opts: ["cotθ=1/√3", "sinθ=3/2", "cosθ=1/2", "sinθ=2/√3"], ans: "B" },
+      { q: "The equation 3x+2y=12 has", opts: ["Many solutions", "No solution", "Unique solution", "only two solutions"], ans: "A" },
+      { q: "Area of square inscribed in circle of radius 6cm is ___ cm²", opts: ["36", "18", "9", "64"], ans: "A" },
+      { q: "The line that has only one point in common with a circle is", opts: ["tangent", "secant", "chord", "radius"], ans: "A" },
+      { q: "If 4x²−2x+3=0, product of roots =", opts: ["3/4", "2/3", "1/3", "−2"], ans: "A" },
+      { q: "Slant height of a cone l =", opts: ["√(r²+h²)", "√(r²+l²)", "√(r²−h²)", "√(h²−r²)"], ans: "A" },
+      { q: "If a, b, c are in A.P., then b =", opts: ["ac", "(c−a)/2", "(a+c)/2", "√(ac)"], ans: "C" },
+      { q: "Area of triangle with vertices (0,0), (8,0) and (0,8) is", opts: ["64", "32", "16", "8"], ans: "B" },
+      { q: "In figure AB=2cm, BC=4cm, BE=3cm, then CD = ___ cm", opts: ["9", "6", "8", "4"], ans: "B" },
+      { q: "The point which is on x-axis", opts: ["(0,−2)", "(2,0)", "(0,4)", "(0,2)"], ans: "B" },
+      { q: "log16 − log2 =", opts: ["log14", "log8", "log4", "log32"], ans: "C" },
+      { q: "In A.P., S₂=7 and S₄=15 then a₃ =", opts: ["2", "10", "7", "8"], ans: "D" },
+      { q: "Number of tangents from outside point to circle is", opts: ["Infinity", "1", "2", "4"], ans: "C" }
+    ]
+  },
+  {
+    code: "V-11A",
+    name: "Vikarabad",
+    district: "Vikarabad",
+    questions: [
+      { q: "The HCF of 14 and 26 is", opts: ["4", "2", "7", "13"], ans: "B" },
+      { q: "If A and B are disjoint, n(A)=6, n(A∪B)=9, then n(B)=", opts: ["4", "3", "5", "2"], ans: "B" },
+      { q: "If P(x)=6x²+5x²+3x−8, then P(0)=", opts: ["6", "22", "−8", "8"], ans: "C" },
+      { q: "4 pencil boxes and 5 notebooks cost Rs.120. Linear equation is", opts: ["4x+5y=120", "9x+y=120", "x+5y=120", "x+y=120"], ans: "A" },
+      { q: "Which equation has '2' as a root?", opts: ["x²−4x+5=0", "x²+3x−12=0", "2x²−7x+6=0", "2x²−4x−2=0"], ans: "C" },
+      { q: "In A.P., nᵗʰ term aₙ = a+(n−1)d, 'n' represents", opts: ["first term", "common difference", "number of terms", "nᵗʰ term"], ans: "C" },
+      { q: "Slope of line through (a,b) and (−a,−b) is", opts: ["2a", "0", "b/a", "b/a"], ans: "C" },
+      { q: "Statement: Any two similar figures are congruent / Any two congruent are similar — which is true?", opts: ["only (i)", "only (ii)", "Both", "Neither"], ans: "B" },
+      { q: "Number of tangents from external point to circle is", opts: ["2", "1", "4", "Infinite"], ans: "A" },
+      { q: "If ratio of surface areas of two hemispheres is 4:9, ratio of volumes is", opts: ["27:8", "9:4", "16:81", "8:27"], ans: "D" },
+      { q: "Sum of roots of 4x²=5 is", opts: ["0", "1/4", "5/4", "4"], ans: "A" },
+      { q: "If θ=45°, value of sin2θ/(1−cos2θ) =", opts: ["−1", "1", "2", "0"], ans: "B" },
+      { q: "Which is NOT true?", opts: ["sinθ=√(1−cos²θ)", "tan²θ−sec²θ=−1", "cosθ·cosecθ=1", "cotθ·tanθ=1"], ans: "C" },
+      { q: "As angle of elevation of sun increases from 0°→90°, length of shadow", opts: ["No change", "Increases", "Decreases", "None"], ans: "C" },
+      { q: "Probability of not getting first rank = 0.89, probability of not getting first rank is", opts: ["0.01", "0.11", "0.011", "0.001"], ans: "B" },
+      { q: "Median of x+4, x+2, x−1, x+3, y−2 is 12, then x =", opts: ["13", "11", "9", "10"], ans: "B" },
+      { q: "△ABC ~ △DEF, AB:DE=9:16, ar(△ABC):ar(△DEF) is", opts: ["3:4", "4:3", "81:256", "256:81"], ans: "C" },
+      { q: "a, b, c are in G.P., then b =", opts: ["(a+c)/2", "ac", "√(ac)", "a²c²"], ans: "C" },
+      { q: "Product of zeroes of 2x²+3x−4 is", opts: ["2", "−2", "−4", "4"], ans: "B" },
+      { q: "Lateral surface area of cube is 64cm², side of cube is", opts: ["6cm", "3cm", "4cm", "5cm"], ans: "C" }
+    ]
+  },
+  {
+    code: "K-8A",
+    name: "Khammam",
+    district: "Khammam",
+    questions: [
+      { q: "If A⊂B and n(A)=7, n(B)=10 then n(A−B)=", opts: ["3", "17", "0", "1"], ans: "C" },
+      { q: "log₁₀25 + log₁₀4 =", opts: ["100", "2", "10", "29"], ans: "B" },
+      { q: "Which is NOT a polynomial?", opts: ["x²+5x²−7", "x²+5x+6", "5", "√x+7√x−1"], ans: "D" },
+      { q: "Quadratic polynomial with log₂8 and tan²60° as zeroes is", opts: ["x²−4x+1", "x²+6x+9", "x²−6x+9", "x²−6x+27"], ans: "C" },
+      { q: "LCM of first composite number and smallest odd prime is", opts: ["4", "3", "8", "12"], ans: "D" },
+      { q: "If n(A)=5 then number of subsets of A =", opts: ["10", "32", "25", "7"], ans: "B" },
+      { q: "If sin(A+B)=1 and tan(A−B)=1, then ∠B =", opts: ["15°", "32.5°", "37.5°", "35°"], ans: "A" },
+      { q: "Formula to find area of sector is", opts: ["θ/360°×πr²", "θ/360°×2πr", "πr²/180°", "2πr/180°"], ans: "A" },
+      { q: "If P(E)−P(Ē)=0.34 then P(E)=", opts: ["0.66", "0.67", "0.68", "0"], ans: "B" },
+      { q: "Which is an A.P.?", opts: ["1,2,4,8", "4,7,10,13", "3,9,27,81", "2,4,8,16"], ans: "B" },
+      { q: "If slope of line joining (2,3) and (x,11) is 2, then x =", opts: ["2", "4", "3", "5"], ans: "B" },
+      { q: "Ladder 15m reaches top of vertical wall, makes 60° with wall. Height of wall is", opts: ["15√3m", "15/2m", "7.5m", "15m"], ans: "C" },
+      { q: "3(sin²A+cos²A)−5(tan²A−sec²A) / (cosec²A−cot²A)² =", opts: ["−1", "1", "3", "4"], ans: "D" },
+      { q: "Geometric Mean of 3, 27 is", opts: ["10", "9", "8", "7"], ans: "B" },
+      { q: "If 2x+3y+1=0 and 6x+(k−1)y+7=0 have no solution, k =", opts: ["10", "8", "3", "5"], ans: "A" },
+      { q: "f₀=20, f₁=25, f₂=10, A=15, h=5 then Mode =", opts: ["15", "32", "21.5", "22.5"], ans: "C" },
+      { q: "Which is NOT a Pythagorean triplet?", opts: ["(7,24,25)", "(3,4,5)", "(8,15,16)", "(5,12,13)"], ans: "C" },
+      { q: "Volume of cube is 125cm³, its TSA =", opts: ["900cm²", "60cm²", "150cm²", "125cm²"], ans: "C" },
+      { q: "If product of two consecutive positive even integers is 288, quadratic equation is", opts: ["x²+x−288=0", "x²+2x−288=0", "x²−2x+288=0", "x²−2x−288=0"], ans: "B" },
+      { q: "In △ABC, if A=(−1,2) and midpoint of BC is (2,2), centroid of △ABC is", opts: ["(1,2)", "(2,1)", "(1/3, 2)", "(1,0)"], ans: "A" }
+    ]
+  },
+  {
+    code: "R-8A",
+    name: "Rangareddy",
+    district: "Rangareddy",
+    questions: [
+      { q: "LCM of least prime and least composite number is", opts: ["2", "4", "8", "6"], ans: "B" },
+      { q: "A, B are disjoint sets then n(A∩B) =", opts: ["∅", "1", "−1", "0"], ans: "D" },
+      { q: "Sum of roots of 4x²−9 = 0 is", opts: ["3/2", "2/3", "0", "−3/2"], ans: "C" },
+      { q: "Lines x+y=6 and y−y=2 are", opts: ["Parallel", "Coincident", "Intersecting", "Dependent"], ans: "C" },
+      { q: "Which is a quadratic equation?", opts: ["x³−5=0", "x²+5=0", "x²−x(x+4)=0", "(x+1)(x+3)=0"], ans: "D" },
+      { q: "10th term of A.P. 10, 9, 8... is", opts: ["0", "1", "2", "−2"], ans: "B" },
+      { q: "Midpoint of segment joining (−3,2) and (6,4) is", opts: ["(3,2)", "(3/2, 2)", "(3, 3)", "(1,2)"], ans: "C" },
+      { q: "Ratio of sides of two similar triangles is 9:4, ratio of perimeters is", opts: ["3:2", "81:16", "9:4", "2:3"], ans: "C" },
+      { q: "Angle between radius and tangent at point of contact is", opts: ["60°", "90°", "180°", "270°"], ans: "B" },
+      { q: "Curved surface area of cone is πrl where l stands for", opts: ["Length", "Height", "Radius", "Slant height"], ans: "D" },
+      { q: "If sin(90°−θ) = 3/2, then value of θ =", opts: ["60°", "30°", "45°", "90°"], ans: "B" },
+      { q: "A die thrown once, probability of composite number", opts: ["1/6", "3/6", "2/3", "1/3"], ans: "B" },
+      { q: "Arithmetic mean of first n natural numbers is", opts: ["(n+1)/2", "n(n+1)", "(n(n+1))/2", "n−1"], ans: "A" },
+      { q: "The ten's digit in the product of 6¹⁵ × 5²⁰ is", opts: ["0", "6", "5", "4"], ans: "A" },
+      { q: "If A⊂B then A−B =", opts: ["A", "B", "∅", "U"], ans: "C" },
+      { q: "Formula to find nᵗʰ term of G.P.", opts: ["arⁿ", "arⁿ⁻¹", "a+(n−1)d", "(n/2)(2a+1)"], ans: "B" },
+      { q: "If a<0 then (−a, a) lies in which quadrant?", opts: ["Q₁", "Q₂", "Q₃", "Q₄"], ans: "A" },
+      { q: "P(x) and g(x) degrees are 3 and 4, degree of p(x)·g(x) is", opts: ["4", "3", "7", "12"], ans: "C" },
+      { q: "△ABC ~ △PQR. If ∠Q+∠R=120° then sinA =", opts: ["1", "1/2", "√3/2", "0"], ans: "A" },
+      { q: "Which is probability of sure event?", opts: ["0", "1", "2", "1/2"], ans: "B" }
+    ]
+  },
+  {
+    code: "RJ-82",
+    name: "Jagtial",
+    district: "Jagtial",
+    questions: [
+      { q: "If set A and B are disjoint sets then n(A∩B) =", opts: ["{ }", "0", "∅", "All the above"], ans: "D" },
+      { q: "LCM of first two prime numbers is", opts: ["2", "3", "4", "6"], ans: "D" },
+      { q: "Zeroes of polynomial p(x) = x²−4 is", opts: ["±2", "−2", "Both A and B", "None"], ans: "C" },
+      { q: "If x+y+4=0 and 2x+2ky+8=0 represent unique line, value of k is", opts: ["1", "4", "2", "8"], ans: "A" },
+      { q: "Discriminant of 2x²−3x+2=0 is a", opts: ["Natural number", "Whole number", "Integer", "Irrational number"], ans: "C" },
+      { q: "12th term of A.P. 10, 8, 6, 4,... is", opts: ["−8", "−10", "−6", "−12"], ans: "D" },
+      { q: "Centroid divides the median in the ratio", opts: ["1:2", "2:1", "1:3", "3:1"], ans: "B" },
+      { q: "Which is NOT a value of sinθ (0°< θ <90°)?", opts: ["1/2", "1/√2", "3/√5", "10/3"], ans: "D" },
+      { q: "If P(E)=0.012 then P(Ē) =", opts: ["0.98", "0.098", "0.998", "0.988"], ans: "D" },
+      { q: "If slope of line joining (a,7) and (−3,−5) is 3/2, then a =", opts: ["−5", "+5", "−4", "+4"], ans: "B" },
+      { q: "If cotθ − cosecθ = 5, then cotθ + cosecθ =", opts: ["1/5", "−1", "5", "−5"], ans: "A" },
+      { q: "If radius of sphere is 1cm, volume is ___ cu.cm", opts: ["22/21", "88/21", "22/3", "88/3"], ans: "B" },
+      { q: "P={a,b,c,d} number of subsets is", opts: ["4", "8", "12", "16"], ans: "D" },
+      { q: "Angle between tangent and radius of circle is", opts: ["Acute", "Obtuse", "Right", "Straight"], ans: "C" },
+      { q: "In G.P., 5th and 7th terms are 32 and 128 respectively. Common ratio is", opts: ["2", "4", "3", "1"], ans: "A" },
+      { q: "Median of factors of 36 is", opts: ["2", "3", "4", "6"], ans: "C" },
+      { q: "Sin30° × tan45° × cos90° =", opts: ["1/4", "0", "1", "√2"], ans: "B" },
+      { q: "End points of diameter are (3,−5) and (−1,1), centre is", opts: ["(1,−2)", "(1,2)", "(1,−1)", "(−2,−2)"], ans: "A" },
+      { q: "In △ABC, angle B is right. Sin(A+C) =", opts: ["0", "1", "1/2", "−1"], ans: "B" },
+      { q: "For any base a > 0, a≠1, log1 =", opts: ["1", "10", "0", "Not defined"], ans: "C" }
+    ]
+  },
+  {
+    code: "C-8A",
+    name: "Khammam / Nizamabad",
+    district: "Khammam/Nizamabad",
+    questions: [
+      { q: "The ratio in which x-axis divides segment joining (5,4) and (2,−3) is", opts: ["5:2", "3:4", "2:5", "4:3"], ans: "D" },
+      { q: "Quadratic polynomial whose zeroes are (4+√5) and (4−√5) is", opts: ["x²−8x−11", "x²−11x+8", "x²−8x+11", "x²−8x+3"], ans: "C" },
+      { q: "Value of (cos30°+cos45°)−(sin60°+sin45°) =", opts: ["1", "(√3+√2)/2", "0", "√3+√2"], ans: "C" },
+      { q: "Range of first ten prime numbers is", opts: ["25", "21", "27", "17"], ans: "B" },
+      { q: "B={x: x is english alphabet in INDIA}, number of subsets of B =", opts: ["2", "4", "8", "16"], ans: "C" },
+      { q: "If log₅(x+y)+log₅(x−y)=4, value of x²−y² =", opts: ["4", "8", "16", "10"], ans: "C" },
+      { q: "Equation coincident with 7x−8y=9 is", opts: ["8x−9y=7", "−14x+16y+18=0", "21x−24y=18", "14x+16y=18"], ans: "B" },
+      { q: "If n=2³×3⁴×5⁴×7, consecutive zeroes in n is", opts: ["2", "3", "4", "7"], ans: "B" },
+      { q: "a₁x+b₁y+c₁=0 and a₂x+b₂y+c₂=0 has infinitely many solutions if", opts: ["a₁/a₂≠b₁/b₂", "a₁/a₂=b₁/b₂≠c₁/c₂", "a₁/a₂=b₁/b₂=c₁/c₂", "(none)"], ans: "C" },
+      { q: "Which is NOT a quadratic equation?", opts: ["2(x−1)²=4x²−2x+1", "2x−x²=x²+5", "(√2x+√3)²+x²=3x²−5x", "(x²+2x)²=x⁴+3+4x³"], ans: "B" },
+      { q: "Cylinder, cone and hemisphere with same base radius and height — ratio of volumes is", opts: ["1:2:3", "3:1:2", "1:3:2", "3:2:1"], ans: "B" },
+      { q: "If in △ABC and △DEF, AB/FD=BC/DE=CA/EF, then", opts: ["△BCA~△DEF", "△BCA~△FED", "△ABC~△DEF", "△CAB~△DEF"], ans: "B" },
+      { q: "E and Ē complementary, P(E)−P(Ē)=0.3, P(E) =", opts: ["0.3", "0.35", "0.65", "0.53"], ans: "C" },
+      { q: "If 0°<θ<90° and sin3θ=1, value of θ =", opts: ["30°", "60°", "45°", "90°"], ans: "A" },
+      { q: "Value of 5^(log₅3) =", opts: ["25", "75", "3", "28"], ans: "C" },
+      { q: "Formula to find median of grouped data", opts: ["l+((n/2−cf)/f)×h", "l+((n/4−cf)/f)×h", "l+((3n/4−cf)/f)×h", "l+((n/2+cf)/f)×h"], ans: "A" },
+      { q: "TP and TQ tangents to circle, ∠POQ=110°, then ∠PTQ =", opts: ["60°", "70°", "80°", "90°"], ans: "B" },
+      { q: "x=2²×3×5² and y=2²×3³, HCF(x,y) is", opts: ["12", "108", "6", "36"], ans: "A" },
+      { q: "20m ladder on 10m pole, angle with ground =", opts: ["60°", "45°", "30°", "0°"], ans: "C" },
+      { q: "Which CANNOT be probability of event?", opts: ["2/3", "4/5", "5/7", "2%"], ans: "D" }
+    ]
+  },
+  {
+    code: "W-08(A)",
+    name: "Wanaparthy",
+    district: "Wanaparthy",
+    questions: [
+      { q: "LCM of 2³×3×5 and 2×5×7 is", opts: ["1680", "420", "280", "840"], ans: "D" },
+      { q: "Elements of S={x: x is letter in 'RAMANUJAN'}:", opts: ["{R,A,M,U,J,N}", "{R,A,M,A,N,U,J,A,N}", "{R,M,N,J}", "{R,A,M,N,J}"], ans: "D" },
+      { q: "One solution of x+y=5 is", opts: ["(3,1)", "(4,0)", "(1,4)", "(0,−5)"], ans: "C" },
+      { q: "If p(x)=x²−5x−10, p(−2) =", opts: ["1", "2", "3", "4"], ans: "D" },
+      { q: "If A={1,2,3,4}, number of subsets of A is", opts: ["16", "32", "4", "64"], ans: "A" },
+      { q: "Lines 3x−4y=−7 and 3x−4y=−5 have", opts: ["Unique solution", "No solution", "Infinitely many", "None"], ans: "B" },
+      { q: "Mode of 5,2,5,7,2,3,5,2,8,2,6,8,5 is", opts: ["5", "2", "3", "None"], ans: "B" },
+      { q: "Sum of roots of x²−6x+8=0 is", opts: ["6", "−6", "−8", "8"], ans: "A" },
+      { q: "Common ratio of G.P. 8, 16, 32, 64,...", opts: ["8", "2", "1", "−2"], ans: "B" },
+      { q: "Slope of line parallel to x-axis is", opts: ["0", "1", "−1", "Not defined"], ans: "A" },
+      { q: "DE∥BC, AD=x, DB=x−2, AE=x+2, CE=x−1, x =", opts: ["4", "2", "3", "1"], ans: "A" },
+      { q: "Angle made by radius with tangent at contact point", opts: ["60°", "0°", "90°", "180°"], ans: "C" },
+      { q: "Ratio of volumes of cone and cylinder with same base and height is", opts: ["1:3", "3:1", "1:1", "2:3"], ans: "A" },
+      { q: "cosec(90°−A) =", opts: ["tanA", "secA", "sinA", "cosA"], ans: "B" },
+      { q: "Ladder 20m touches wall at 10m. Angle between wall and ladder is", opts: ["45°", "60°", "30°", "90°"], ans: "B" },
+      { q: "Range of probability of event to occur", opts: ["0>P(E)>1", "0<P(E)<1", "P(E)<1", "P(E)>1"], ans: "B" },
+      { q: "Probability of getting odd prime when dice thrown", opts: ["1/3", "2/3", "1/6", "4/6"], ans: "A" },
+      { q: "Distance between (acosA, 0) and (0, asinA) is", opts: ["a", "a²", "1", "2a"], ans: "A" },
+      { q: "In △ABC ≅ △DEF if AB=BC=CA then", opts: ["△ABC~△DEF", "△ABC~△FDE", "△BCA~△FDE", "△CAB~△EFD"], ans: "B" },
+      { q: "Tangent from Q is 24cm, distance from centre is 25cm. Radius =", opts: ["15", "6", "7", "19"], ans: "C" }
+    ]
+  },
+  {
+    code: "RM-82",
+    name: "Karimnagar",
+    district: "Karimnagar",
+    questions: [
+      { q: "Product of HCF and LCM of smallest prime and smallest composite number is", opts: ["2", "4", "6", "8"], ans: "D" },
+      { q: "If A={x: x is prime, x<10}, number of subsets of A is", opts: ["8", "4", "16", "5"], ans: "C" },
+      { q: "If 3log(x+3)=log27, value of x is", opts: ["24", "6", "3", "0"], ans: "D" },
+      { q: "A, B disjoint, n(A)=4, n(A∪B)=7, n(B) =", opts: ["4", "3", "11", "∅"], ans: "B" },
+      { q: "α,β zeroes of p(x)=x²−6x+6, value of (α+β)²−2αβ =", opts: ["6", "0", "−6", "12"], ans: "B" },
+      { q: "If x=1, value of y satisfying (x+3)/(3y−2)=1/5 is", opts: ["3", "2/3", "4/3", "1"], ans: "A" },
+      { q: "If nᵗʰ term of A.P. is 5n−3, 10ᵗʰ term is", opts: ["45", "46", "47", "53"], ans: "C" },
+      { q: "In G.P. aₙ=arⁿ⁻¹, 'r' is", opts: ["common ratio", "radius", "first term", "common difference"], ans: "A" },
+      { q: "△ACB~△APQ, AB=6, BC=8, PQ=4, AQ =", opts: ["2cm", "4.2cm", "5.1cm", "3cm"], ans: "D" },
+      { q: "Midpoints of △ABC are D, E, F; area(△DEF):area(△ABC) =", opts: ["1:3", "3:1", "4:1", "1:4"], ans: "D" },
+      { q: "If cosecθ = 5/3, cotθ =", opts: ["3/4", "5/3", "4/3", "4/5"], ans: "C" },
+      { q: "Value of sinθ·cos(90°−θ) is", opts: ["0", "1", "−1", "2"], ans: "B" },
+      { q: "Roots of x²−0.04=0 are", opts: ["0.02, 0.02", "0.02, 0.2", "−0.2, 0.2", "−0.04, 0.1"], ans: "C" },
+      { q: "AB chord, AOC diameter, ∠ACB=50°, AT tangent at A, ∠BAT =", opts: ["40°", "60°", "50°", "55°"], ans: "C" },
+      { q: "Tangents from P: 2x−3 and x+2, value of x is", opts: ["25", "5", "4", "None"], ans: "B" },
+      { q: "Median of first 8 prime numbers is", opts: ["7", "9", "11", "8"], ans: "B" },
+      { q: "Number selected at random from 1 to 15, probability it's multiple of 5 is", opts: ["1/5", "1/15", "2/15", "2/5"], ans: "A" },
+      { q: "Which value is NOT possible for probability?", opts: ["4/5", "1/4", "75%", "0.09"], ans: "D" },
+      { q: "Volume of cone with radius r and height 3r is", opts: ["πr³", "3πr³", "9πr³", "πr²"], ans: "A" },
+      { q: "Sheet 40cm×22cm rolled to cylinder of height 40cm. Radius is", opts: ["3/π", "7/π", "22/π", "7"], ans: "D" }
+    ]
+  },
+  {
+    code: "S-11A",
+    name: "Suryapet",
+    district: "Suryapet",
+    questions: [
+      { q: "7x²+2x+49=0 solution is", opts: ["x=1", "x=0", "x=−1", "x=∅"], ans: "C" },
+      { q: "Number of non-empty subsets of {1,2,3,4} is", opts: ["15", "14", "16", "17"], ans: "A" },
+      { q: "Number of solutions of 3x+2y=6 and 6x+4y=18 is", opts: ["0", "1", "2", "Infinite"], ans: "A" },
+      { q: "Nature of roots of x²+6x+9=0 is", opts: ["Real and distinct", "Real and equal", "No real roots", "None"], ans: "B" },
+      { q: "Distance of (x,y) from y-axis is", opts: ["|x|", "|y|", "|x+y|", "|x−y|"], ans: "A" },
+      { q: "PA and PB tangents from P, PA=6cm, PB =", opts: ["5", "3", "6", "8"], ans: "C" },
+      { q: "Mean of first n odd naturals is 81. n =", opts: ["9", "81", "27", "37"], ans: "B" },
+      { q: "tan²50°−sec²50° =", opts: ["−1", "1", "2", "3"], ans: "A" },
+      { q: "Shadow of tower is √3 times height, angle of elevation is", opts: ["15°", "30°", "45°", "60°"], ans: "B" },
+      { q: "P(E)=0.07, P(Ē) =", opts: ["0.3", "0.7", "0.03", "0.07"], ans: "D" },
+      { q: "If sinθ=cosθ, tanθ+cotθ =", opts: ["2√3", "2", "1", "2/3"], ans: "B" },
+      { q: "LCM of 18 and 24 is", opts: ["18", "24", "36", "72"], ans: "D" },
+      { q: "Degree of quadratic equation is", opts: ["1", "0", "2", "3"], ans: "C" },
+      { q: "Ratio of areas 144:441, ratio of perimeters is", opts: ["14:41", "44:41", "7:4", "4:7"], ans: "A" },
+      { q: "Common difference d=2, aₙ₊₁−aₙ =", opts: ["5", "2", "10", "20"], ans: "B" },
+      { q: "If a, b, c in A.P. then b =", opts: ["b/2", "(a+c)", "√(ac)", "ac"], ans: "B" },
+      { q: "If A⊂B then A−B =", opts: ["A", "B", "A−B", "∅"], ans: "D" },
+      { q: "15th term of A.P. 3,6,9... is", opts: ["15", "45", "30", "360"], ans: "B" },
+      { q: "△ABC, DE∥BC, AD=6, DB=2, DE=9, BC=x, x =", opts: ["6", "8", "9", "12"], ans: "D" },
+      { q: "tanθ in terms of cosθ is", opts: ["√(1−cos²θ)/cosθ", "1/cosθ", "cosθ/√(1−cos²θ)", "√(1−cos²θ)"], ans: "A" }
+    ]
+  },
+  {
+    code: "Y-8A",
+    name: "Yadadri Bhongir",
+    district: "Yadadri",
+    questions: [
+      { q: "Terminating decimal from the following:", opts: ["95/7", "75/6", "60/10", "9/8"], ans: "C" },
+      { q: "Number of subsets of A={a,b,c} is", opts: ["3", "4", "6", "8"], ans: "D" },
+      { q: "If 1 is zero of polynomial ax³+bx²+cx+d, then", opts: ["a+b=c+d", "a+c=b+d", "a−b=c−d", "a+b+c+d=0"], ans: "D" },
+      { q: "If b²−4ac>0, roots of ax²+bx+c=0 are", opts: ["Real and unequal", "Real and equal", "Imaginary", "None"], ans: "A" },
+      { q: "Quadratic equation with roots −2 and 3 is", opts: ["x²+5x+6=0", "x²−5x−6=0", "x²−5x+6=0", "x²+x−6=0"], ans: "D" },
+      { q: "Tan60°, Tan45°, Tan30° are in", opts: ["A.P.", "G.P.", "Both", "None"], ans: "B" },
+      { q: "Which is true for probability P(E)?", opts: ["0<P(E)<1", "0≤P(E)≤1", "0≥P(E)≥1", "0>P(E)>1"], ans: "B" },
+      { q: "LCM of 2³×3⁴×7 and 2⁴×3⁴×11", opts: ["2³×3⁴×7×11", "2⁴×3⁴×7×11", "2⁷×3⁸×11", "2⁴×3⁴×11"], ans: "B" },
+      { q: "A={x: x is letter in 'INTENSIVE TEST'}, cardinal number of A =", opts: ["5", "6", "7", "13"], ans: "C" },
+      { q: "If P(Ē)=0.54, P(E) =", opts: ["0.36", "0.46", "0.44", "0.66"], ans: "B" },
+      { q: "Slope of line through (0,4) and (a, 0) is", opts: ["4", "a", "infinity", "0"], ans: "A" },
+      { q: "Value of sin²A−cos²A when A=0°", opts: ["0", "1", "−1", "90"], ans: "C" },
+      { q: "Arithmetic mean of a−d, a, a+d is", opts: ["a+d", "a−d", "a", "3a"], ans: "C" },
+      { q: "Value of x in 3x−(x−4)=3x+1", opts: ["−3", "0", "3", "10"], ans: "C" },
+      { q: "Maximum number of tangents from external point to circle", opts: ["4", "3", "2", "1"], ans: "C" },
+      { q: "Volume of cone with base radius 7cm is 462cc, height is", opts: ["9cm", "18cm", "3cm", "27cm"], ans: "A" },
+      { q: "Which is NOT possible value for sinx?", opts: ["4/5", "1/5", "1/2", "13/12"], ans: "D" },
+      { q: "Mode of 20,3,7,13,3,4,6,7,15,18,3,7 is", opts: ["3,7", "7,10", "3", "None"], ans: "A" },
+      { q: "Sum of first 100 natural numbers is", opts: ["4550", "6505", "3500", "5050"], ans: "D" },
+      { q: "Distance of (3,4) from origin is ___ units", opts: ["3", "4", "5", "7"], ans: "C" }
+    ]
+  },
+  {
+    code: "RP-11A",
+    name: "Ranga Reddy (Practice)",
+    district: "Ranga Reddy",
+    questions: [
+      { q: "The fraction form of 12.5 is", opts: ["125/100", "125/10", "125/1000", "75/10000"], ans: "B" },
+      { q: "If n(A)=100, number of subsets of A is", opts: ["2⁻¹", "10²", "0", "2×100"], ans: "B" },
+      { q: "If P(x)=x³−7x²+8x+5, P(1) =", opts: ["6", "7", "14", "13"], ans: "B" },
+      { q: "Equation parallel to 3x−4y+7=0 is", opts: ["6x−8y+9=0", "6x+8y+9=0", "3x+4y+7=0", "x+y+1=0"], ans: "A" },
+      { q: "In 3x+7y+10=0, if y=1, x =", opts: ["10/3", "3", "2/10", "−13/7"], ans: "D" },
+      { q: "If 1, 2 are roots of quadratic equation, equation is", opts: ["(x+1)(x+2)=0", "(x−1)(x−2)=0", "(x+1)(x−2)=0", "(x−1)(x+2)=0"], ans: "B" },
+      { q: "Which is a Geometric Progression?", opts: ["5, 6, 9, 12, 5", "1, 3, 9, 27,...", "1, 2, 3, 4, 5", "3, 9, 36"], ans: "B" },
+      { q: "Slope of line parallel to x-axis", opts: ["tan0°", "tan30°", "tan60°", "tan90°"], ans: "A" },
+      { q: "If volume of sphere = 4y/3, r =", opts: ["4v/4π", "4y/4π", "3v/4π", "4πr/3"], ans: "C" },
+      { q: "sin0°×sin1°×sin2°...×sin90° =", opts: ["1", "−1", "0", "√3/2"], ans: "C" },
+      { q: "If △PRQ ~ △MZN, which is correct?", opts: ["PQ/YZ=PR/ZX=RQ/XZ", "PR/YZ=PQ/XZ=RQ/ZX", "PR/ZX=PQ/YZ=RQ/XZ", "PR/YZ=PQ/ZX=RQ/YX"], ans: "B" },
+      { q: "Which does NOT exist if 0° < θ ≤ 90°?", opts: ["sinθ=1/√2", "cosθ=1/2", "sinθ=1/√2", "cosθ = 5/4"], ans: "D" },
+      { q: "In figure, which is correct?", opts: ["AC=AB", "AC=BC", "AB=BC", "AB≠BC"], ans: "C" },
+      { q: "P(E)=0.198, probability of not E is", opts: ["0.802", "1.802", "0.820", "0.8"], ans: "A" },
+      { q: "Mean of first five prime numbers", opts: ["5.7", "5.5", "6.5", "5.6"], ans: "D" },
+      { q: "Which is sure event?", opts: ["P(E)=1/3", "P(E)=0", "P(E)=2/3", "P(E)=1"], ans: "D" },
+      { q: "Which figure shows a tangent to a circle?", opts: ["Line through two points", "Line touching at one point", "Chord", "Secant"], ans: "B" },
+      { q: "In A.P., a=3, d=2, then A.P. is", opts: ["3,5,7,...", "3,5,8,...", "3,5,6,...", "3,5,9,..."], ans: "A" },
+      { q: "Distance between (0,0) and (sinθ, cosθ) is", opts: ["sinθ", "cosθ", "tanθ", "1"], ans: "D" },
+      { q: "In quadratic gx²+px+c=0, if b²−4ac>0, suitable graph is", opts: ["Graph crosses x-axis at 2 pts", "Graph touches x-axis", "Graph doesn't cross x-axis", "None"], ans: "A" }
+    ]
+  },
+  {
+    code: "15E/16E",
+    name: "SSC Pre-Final (Telangana State)",
+    district: "State Board",
+    questions: [
+      { q: "Range of first 10 whole numbers is", opts: ["10", "9", "3", "7"], ans: "B" },
+      { q: "Identify disjoint sets", opts: ["A−B, B−A", "A−B, A∩B−A", "B−A, B", "None"], ans: "A" },
+      { q: "Graph of 2x+y=2 is a ___ line", opts: ["Curve", "Straight", "Circular", "None"], ans: "B" },
+      { q: "If fₙ = n(n²−1), then f₅ =", opts: ["60", "70", "30", "None"], ans: "B" },
+      { q: "Identify correct statement about probability", opts: ["P(E)=−1", "P(E)≥1", "0<P(E)<1", "None"], ans: "C" },
+      { q: "Slope of line making 30° with positive x-axis is", opts: ["∞", "0", "1/√3", "1"], ans: "C" },
+      { q: "Values of x, y in given figure (x=21, y=12 from diagram)", opts: ["x=12,y=21", "x=10,y=14", "x=21,y=84", "x=21,y=12"], ans: "D" },
+      { q: "Ratio of volumes of cone and cylinder of equal diameter and height is", opts: ["1:3", "3:1", "1:4", "4:1"], ans: "A" },
+      { q: "cot57°×tan33° =", opts: ["0", "1", "a", "√3"], ans: "B" },
+      { q: "If n(A)=4, number of subsets of A =", opts: ["4", "1", "16", "8"], ans: "C" },
+      { q: "If P(E)=0.04, P(Ē) =", opts: ["0.04", "0.96", "1", "0"], ans: "B" },
+      { q: "sin²90°+cos²70° =", opts: ["1", "0", "2", "None"], ans: "A" },
+      { q: "Distance between (acos25°, 0) and (0, acos65°) is", opts: ["a", "0", "a²", "2a"], ans: "A" },
+      { q: "DE∥BC, AD=6cm, DB=8cm, AE=9cm, then EC =", opts: ["5cm", "12cm", "48cm", "7cm"], ans: "B" },
+      { q: "Probability of sure event is", opts: ["0", "0.5", "1", "None"], ans: "C" },
+      { q: "A∪∅ =", opts: ["A", "∅", "both", "None"], ans: "A" },
+      { q: "Discriminant of 5x²−3x−2 is", opts: ["30", "6", "49", "49"], ans: "C" },
+      { q: "log₃81 =", opts: ["2", "5", "4", "20"], ans: "C" },
+      { q: "(−2,−2) lies in ___ quadrant", opts: ["Q₁", "Q₂", "Q₃", "Q₄"], ans: "C" },
+      { q: "If α,β zeroes of p(x)=2x²−x−6, α+β =", opts: ["2", "−1/2", "1/2", "−1/2"], ans: "B" }
+    ]
+  },
+  {
+    code: "DP-13A",
+    name: "Duplicate / Practice Paper",
+    district: "Practice",
+    questions: [
+      { q: "The symbol for empty set is", opts: ["∪", "{ }", "∩", "{∅}"], ans: "B" },
+      { q: "Logarithmic form of 243 = 3⁵ is", opts: ["log₁=243", "log₂=3", "log₃=5", "log₃¹=5"], ans: "C" },
+      { q: "If P(x)=3x⁴+5x²+3x−9, P(0) =", opts: ["4", "−9", "5", "3"], ans: "B" },
+      { q: "173 = 8q+r, value of r", opts: ["2", "6", "1", "5"], ans: "D" },
+      { q: "A={y: y is letter in 'RAMANUJAN'}, n(A) =", opts: ["9", "5", "6", "7"], ans: "B" },
+      { q: "If sinθ = cosθ, θ =", opts: ["60°", "30°", "90°", "45°"], ans: "D" },
+      { q: "In nᵗʰ term of G.P. aₙ=arⁿ⁻¹, 'r' represents", opts: ["First term", "Number of terms", "Common ratio", "Common difference"], ans: "C" },
+      { q: "Midpoint of (x,5) and (4,3) is (5,4), value of x =", opts: ["6", "5", "9", "4"], ans: "A" },
+      { q: "In △ABC, DE∥BC, AD=3, DB=4.5, AE=6, AC =", opts: ["7.5cm", "15cm", "9cm", "13.5cm"], ans: "B" },
+      { q: "Mode of 6,8,10,14,8,18,6,10,22,14,18,22 is", opts: ["6", "0", "8 and 10", "No mode"], ans: "D" },
+      { q: "Side of cube = diameter of sphere, ratio of volumes", opts: ["6:π", "3:π", "4:π", "2:π"], ans: "A" },
+      { q: "If θ acute, cosθ × cosecθ =", opts: ["cotθ", "tanθ", "1", "secθ"], ans: "A" },
+      { q: "Value of sin15°×cos45°×2sec75° is", opts: ["1/2", "1/8", "1/4", "√2"], ans: "A" },
+      { q: "P(E)=0.35, P(Ē) =", opts: ["1", "0.65", "0.75", "0.55"], ans: "B" },
+      { q: "One letter from MATHEMATICS — probability of getting a vowel is", opts: ["5/11", "3/11", "4/11", "6/11"], ans: "C" },
+      { q: "Total cost of 7 pens and 5 notebooks is Rs.270. Linear equation is", opts: ["7x+5y=270", "x+y=270", "12x+y=270", "7x−5y=270"], ans: "A" },
+      { q: "Mean of first 7 multiples of 3 is", opts: ["10", "12", "8", "14"], ans: "B" },
+      { q: "nᵗʰ term of A.P. is 7n−2, 7ᵗʰ term is", opts: ["51", "47", "45", "14"], ans: "B" },
+      { q: "Quadratic equation with roots 3+√5 and 3−√5 is", opts: ["x²−6x+4=0", "x²−4x+6=0", "x²−6x+√3=0", "x²+6x+4=0"], ans: "A" },
+      { q: "Tangents at endpoints of diameter are", opts: ["Equal", "Parallel", "Perpendicular", "Similar"], ans: "B" }
+    ]
+  },
+  {
+    code: "G-12A",
+    name: "Practice Test Paper II",
+    district: "Practice",
+    questions: [
+      { q: "log₄0.25 =", opts: ["100", "10", "1", "0"], ans: "C" },
+      { q: "A={1,3,5,7,9,11}, B={0,2,4,6,8,10}, n(A∩B) =", opts: ["0", "6", "12", "1"], ans: "A" },
+      { q: "Coefficient of x in P(x) = −x³+2x²−7x+11 is", opts: ["0", "1", "2", "−1"], ans: "D" },
+      { q: "Which is parallel to 3x−y=12?", opts: ["6x−2y=24", "6x+2y=24", "6x−2y=17", "6x+2y=17"], ans: "C" },
+      { q: "Roots of 3x²+2x=0 are", opts: ["1/3, 0", "1/3, −3", "0, 3", "0, −2/3"], ans: "D" },
+      { q: "Sum of first 10 terms of A.P. 2,9,16,23... is", opts: ["335", "65", "67", "337"], ans: "A" },
+      { q: "Slope of line joining (3,3) and (−3,−3) =", opts: ["Not defined", "−1", "1", "3"], ans: "C" },
+      { q: "In right isosceles △ABC, ∠ABC=90°, AB=BC=p, AC =", opts: ["p√2", "2p", "√2p", "√2p"], ans: "C" },
+      { q: "Distance between contacts of two parallel tangents (circle) is 9.6cm. Radius =", opts: ["9.6", "4.6", "4.8", "4.9"], ans: "C" },
+      { q: "Cone and sphere same radius equal volumes, height:radius =", opts: ["1:4", "4:1", "1:2", "2:1"], ans: "B" },
+      { q: "If tanθ=b/a, cosecθ =", opts: ["√(a²+b²)/a", "√(a²+b²)", "a/√(a²+b²)", "√(a²−b²)/b"], ans: "B" },
+      { q: "Height of building:shadow = √3:√3, angle of elevation =", opts: ["30°", "45°", "60°", "90°"], ans: "C" },
+      { q: "Two different coins tossed, probability of at least one head is", opts: ["1/2", "1/4", "3/4", "1"], ans: "C" },
+      { q: "Mode of first 5 prime numbers", opts: ["2", "5", "No mode", "7"], ans: "C" },
+      { q: "Shaded region in Venn diagram (symmetric diff) represents", opts: ["(A−B)∪(B−A)", "(A∪B)−(A∩B)", "Both A and B", "None"], ans: "C" },
+      { q: "Range of probability of E is", opts: ["0≤P(E)≤1", "−1<P(E)<1", "0≥P(E)≥1", "−1≥P(E)≥1"], ans: "A" },
+      { q: "2log5+3logx−2logy =", opts: ["log(25x³/y²)", "log25x³y⁻²", "log(25x/y²)", "log(x³y/25)"], ans: "A" },
+      { q: "Distance between (0,2) and (4,0) is", opts: ["√5", "√5", "√25", "√20"], ans: "D" },
+      { q: "Value of (sin60°·sin30°−cos60°·cos30°) =", opts: ["0", "1", "2", "−1"], ans: "A" },
+      { q: "A and B disjoint sets: n(A∩B)=0, n(A∪B)=n(A)+n(B), n(A−B)=n(A), n(B−A)=n(B) — which are ALL true?", opts: ["only (i)", "(i) and (ii)", "(i),(ii) and (iii)", "(i),(ii),(iii) and (iv)"], ans: "D" }
+    ]
+  },
+  {
+    code: "ST-82",
+    name: "Siddipet",
+    district: "Siddipet",
+    questions: [
+      { q: "Logarithmic form of x^y = z is", opts: ["log_x(z)=y", "log_y(x)=z", "log_x(z)=x", "log_z(x)=z"], ans: "A" },
+      { q: "If log₂x = x, value of x is", opts: ["9", "243", "81", "6"], ans: "C" },
+      { q: "Disjoint sets: n(A∪B) =", opts: ["n(A)+n(B)", "n(A)−n(B)", "n(A)·n(B)", "n(A)/n(B)"], ans: "A" },
+      { q: "Divisor is (2x+3), quotient is (x+1), remainder is 4. Dividend is", opts: ["2x²+5x", "4(2x+3)+x+1", "(2x+3)(x+1)+4", "2x+7"], ans: "C" },
+      { q: "Product of zeroes = p, sum = s. Quadratic polynomial is", opts: ["x²−sx+p", "x²+sx+p", "x²−px+s", "x²+px+s"], ans: "A" },
+      { q: "x+2y−3=0 and 5x−my+8=0 parallel, m =", opts: ["10", "5", "−5", "−10"], ans: "D" },
+      { q: "x²+Kx+9=0 has equal roots, K =", opts: ["3", "−3", "6", "9"], ans: "C" },
+      { q: "2 pens + 3 books = Rs.110, linear equation is", opts: ["x+y=110", "5x+y=10", "x+y=110", "2x+3y=110"], ans: "D" },
+      { q: "Which term of A.P. 50,40,30... is zero?", opts: ["6", "5", "10", "7"], ans: "A" },
+      { q: "If 1/9, x, 1/1 are in G.P., values of x is", opts: ["2", "1", "0", "1/4"], ans: "B" },
+      { q: "Midpoint of (3,5) and (x,3) is (4,4), value of x is", opts: ["3", "4", "5", "7"], ans: "C" },
+      { q: "△ABC~△DEF, ∠A+∠C=110°, ∠E =", opts: ["0°", "90°", "70°", "20°"], ans: "C" },
+      { q: "∠XOY=130°, ∠XPO =", opts: ["65°", "35°", "25°", "55°"], ans: "C" },
+      { q: "Lateral surface area of right circular cone = πrl, l is", opts: ["Height", "Slant height", "Diameter", "None"], ans: "B" },
+      { q: "Which is NOT defined?", opts: ["tan0°", "tan90°", "cot90°", "sec0°"], ans: "B" },
+      { q: "sin²29° + sin²61° =", opts: ["−1", "2", "0", "1"], ans: "D" },
+      { q: "Angle of depression to ground from top of tower is 30°. Height 12m. Distance of point from top of tower", opts: ["12√3m", "7.5m", "24m", "10m"], ans: "C" },
+      { q: "P(E)=0.82, P(Ē) =", opts: ["0.18", "0.28", "0.38", "P(E)=P(Ē)"], ans: "A" },
+      { q: "Mean of first 10 prime numbers is", opts: ["12.3", "12.5", "12.9", "12.6"], ans: "C" },
+      { q: "Die thrown once. Probability of prime number", opts: ["1/2", "1/4", "1/3", "1/6"], ans: "A" }
+    ]
+  },
+  {
+    code: "SK-82",
+    name: "Medak",
+    district: "Medak",
+    questions: [
+      { q: "LCM of smallest prime and smallest composite is", opts: ["2", "4", "6", "8"], ans: "B" },
+      { q: "A={x: x is letter in 'SUCCESS'}, n(A) is", opts: ["7", "4", "3", "6"], ans: "B" },
+      { q: "Value of K for x+2y=3 and 5x+ky+7=0 inconsistent", opts: ["10", "5", "−10", "2"], ans: "A" },
+      { q: "Sum of first 10 terms of A.P. 2,7,12,...", opts: ["250", "490", "225", "245"], ans: "D" },
+      { q: "Value of K if slope of line joining (3,K) and (2,7) is 2", opts: ["5", "7", "9", "11"], ans: "C" },
+      { q: "Perimeters of similar triangles 30cm and 20cm, side of first is 12cm, corresponding side of second is", opts: ["10cm", "8cm", "9cm", "6cm"], ans: "B" },
+      { q: "Point P 25cm from centre, tangent 24cm. Radius of circle", opts: ["12cm", "0cm", "1cm", "7cm"], ans: "D" },
+      { q: "Cylinder and cone same radius and height, cone volume 15cm³. Cylinder volume is", opts: ["15cm³", "30cm³", "45cm³", "60cm³"], ans: "C" },
+      { q: "tan1°×tan2°×tan3°...×tan89° =", opts: ["1", "0", "1/2", "∞"], ans: "A" },
+      { q: "Two dice thrown, probability sum is 10", opts: ["1/9", "1/12", "1/8", "1/36"], ans: "B" },
+      { q: "Mean of first n natural numbers is n/2, n =", opts: ["5", "4", "9", "10"], ans: "C" },
+      { q: "p(x)=x³−kx²+4, divided by (x−2), remainder K =", opts: ["2", "0", "4", "3"], ans: "B" },
+      { q: "One root of x²−4x+1=0 is 2+√3, other root is", opts: ["3−2", "2−√3", "−2+√3", "2+√3"], ans: "B" },
+      { q: "As angle of elevation increases 30° to 60°, shadow length", opts: ["Increases", "Decreases", "Doubles", "Remains constant"], ans: "B" },
+      { q: "(1−tan²45°)/(1+tan²45°) equals", opts: ["tan90°", "sin45°", "sin0°", "cos0°"], ans: "C" },
+      { q: "Nature of roots of 2x²−4x+3=0 is", opts: ["Real and equal", "Real and distinct", "No real roots", "None"], ans: "C" },
+      { q: "Polynomial with only one zero is", opts: ["p(x)=x²−6x+9", "p(x)=x²−5x+6", "p(x)=x²+4", "p(x)=3x²+2"], ans: "A" },
+      { q: "If x=log₂5 and y=log₂5, value of log₂10 in terms of x and y is", opts: ["x+y", "xy", "x−y", "x/y"], ans: "A" },
+      { q: "Set builder form of S={1,4,9,16,25} is", opts: ["{x:x=2n,n∈N,n≤5}", "{x:x=n²,n∈∅,n≤5}", "{x:x=n+3,n∈N,n≤5}", "{x:x=n²,n∈N,n≤5}"], ans: "D" },
+      { q: "'Numerator x of fraction is 4 less than denominator y', equation is", opts: ["x−y=4", "y−x=4", "x+y=4", "x=4y"], ans: "B" }
+    ]
+  },
+  {
+    code: "NP-8(A)",
+    name: "Narayanpet",
+    district: "Narayanpet",
+    questions: [
+      { q: "logx − logy =", opts: ["log(x/y)", "logxy", "log(x−y)", "log(x+y)"], ans: "A" },
+      { q: "cot(90−θ) =", opts: ["cosθ", "cosecθ", "tanθ", "sinθ"], ans: "C" },
+      { q: "In Sₙ=(n/2)(a+l), l refers to", opts: ["Common difference", "Common ratio", "First term", "Last term"], ans: "D" },
+      { q: "In ax²+bx+c=0, if b²−4ac=9, roots are", opts: ["real and equal", "real and distinct", "no roots", "no real roots"], ans: "B" },
+      { q: "Null set among the following", opts: ["{x: x is square number less than 10}", "{x: x is prime less than 5}", "{x: x is composite less than 4}", "{x: x is natural not having 1 as factor}"], ans: "C" },
+      { q: "log₂64 =", opts: ["3", "6", "4", "9"], ans: "B" },
+      { q: "Slope of line joining (3,5) and (5,7)", opts: ["2", "−2", "−1", "1"], ans: "D" },
+      { q: "P(E)=0.12, P(Ē) =", opts: ["0.88", "0.82", "0.78", "0.98"], ans: "A" },
+      { q: "Tangent from point 5cm from centre, radius 3cm. Length =", opts: ["6cm", "9cm", "4cm", "8cm"], ans: "C" },
+      { q: "n(A)=5, n(A∩B)=2, n(A∪B)=7, n(B) =", opts: ["3", "4", "5", "6"], ans: "B" },
+      { q: "If P(x)=x²+x, P(−2) =", opts: ["2", "−2", "4", "6"], ans: "A" },
+      { q: "sin0° × sin90° =", opts: ["1", "−1", "0", "0"], ans: "D" },
+      { q: "Probability of red king from deck of cards", opts: ["1/52", "1/26", "1/4", "1/13"], ans: "B" },
+      { q: "In △ADE and △ABC, AD=x, DE=5, BC=10+x. BC =", opts: ["48", "56", "40.8", "84"], ans: "C" },
+      { q: "Sum of first 10 natural numbers", opts: ["50", "55", "100", "110"], ans: "B" },
+      { q: "Lines 2x+3y+4=0 and 4x+ky+6=0 are parallel, k =", opts: ["5", "−5", "6", "−6"], ans: "C" },
+      { q: "DE∥BC, AD=x, BD=2x, DE=5, BC =", opts: ["10cm", "15cm", "20cm", "25cm"], ans: "B" },
+      { q: "Height = distance from foot. Angle of elevation of top is", opts: ["30°", "45°", "60°", "90°"], ans: "B" },
+      { q: "Sum of zeroes of 3x²+√3x is", opts: ["√3", "−√3", "1/√3", "−1/√3"], ans: "D" },
+      { q: "TSA of cube of side 6cm is", opts: ["36 sq.cm", "64 sq.cm", "216 sq.cm", "144 sq.cm"], ans: "C" }
+    ]
+  },
+  {
+    code: "M-8A",
+    name: "Medchal-Malkajgiri",
+    district: "Medchal",
+    questions: [
+      { q: "Value of sin60° =", opts: ["1/2", "√3/2", "√3", "1"], ans: "B" },
+      { q: "a=2²×3×5×7 and b=2×3×7×11, HCF(a,b) is", opts: ["12", "42", "110", "150"], ans: "B" },
+      { q: "Zero of p(x) = x³−8 is", opts: ["2", "5", "0", "8"], ans: "A" },
+      { q: "Lines a₁x+b₁y+c₁=0 and a₂x+b₂y+c₂=0 are intersecting if", opts: ["a₁/a₂ ≠ b₁/b₂", "a₁/a₂ = b₁/b₂", "a₁c₂ = a₂c₁", "b₁c₂ = b₂c₁"], ans: "A" },
+      { q: "Roots of kx²+2x+3=0 are equal, k =", opts: ["1/3", "−1/3", "3", "−3"], ans: "A" },
+      { q: "a,b,c in A.P., which is correct?", opts: ["a+b+c=1", "2b=a+c", "b=√(ac)", "A and B"], ans: "B" },
+      { q: "Product of zeroes of 3x²+5x−2 is", opts: ["−2", "3/5", "−1/2", "−2/3"], ans: "D" },
+      { q: "Common difference of A.P. 4,7,10,... is", opts: ["1/2", "3", "1/3", "11"], ans: "B" },
+      { q: "If tanθ=1/x, tan(90°−θ) =", opts: ["x", "2x", "−1/x", "1"], ans: "A" },
+      { q: "Sum of first n even natural numbers is", opts: ["n", "n(n+1)", "n+1", "n−1"], ans: "B" },
+      { q: "Slope of (0,0) and (cosφ, sinφ)", opts: ["secφ", "tanφ", "0", "not defined"], ans: "B" },
+      { q: "Angle between radius and tangent of circle is", opts: ["30°", "45°", "60°", "90°"], ans: "D" },
+      { q: "Surface areas of two spheres in ratio 4:9, volumes ratio is", opts: ["27:8", "8:27", "1:9", "2:3"], ans: "B" },
+      { q: "TSA of hemisphere of radius r cm is", opts: ["2πr cm²", "3πr cm²", "3πr² cm²", "(1/2)πr cm²"], ans: "C" },
+      { q: "If sinA = cosB, cot(A+B) =", opts: ["1", "0", "−1", "−3"], ans: "B" },
+      { q: "3x+4y=10 and kx+8y=14 are parallel, k =", opts: ["2", "8", "14", "6"], ans: "D" },
+      { q: "Height of pole = shadow length. Angle of elevation of sun is", opts: ["30°", "45°", "60°", "90°"], ans: "B" },
+      { q: "Probability of National Mathematics Day (Dec 22) in 2026", opts: ["1/365", "22/365", "22", "1/31"], ans: "A" },
+      { q: "If A⊂B, n(A)=10, n(B)=13, n(A−B) =", opts: ["3", "0", "23", "7"], ans: "B" },
+      { q: "If tan(72°+θ) = cot(−θ), θ =", opts: ["30°", "18°", "15°", "54°"], ans: "C" }
+    ]
+  },
+  {
+    code: "N-11A",
+    name: "Nalgonda",
+    district: "Nalgonda",
+    questions: [
+      { q: "HCF of 2²×3³×5⁴ and 2²×3²×5³ is", opts: ["2²×3³×5⁴", "2²×3²×5³", "2²×3³×5³", "2²×3³×5³"], ans: "B" },
+      { q: "A⊂B. If n(A)=4, n(B)=6, n(A∩B) =", opts: ["6", "10", "4", "2"], ans: "C" },
+      { q: "△ABC ~ △XYZ, XY:AB=2:1. Area of △ABC=32sq.cm, area of △XYZ is", opts: ["16", "64", "48", "12"], ans: "B" },
+      { q: "2x+3y=5 and 4x+py=10 have infinite solutions, p =", opts: ["6", "3", "8", "4"], ans: "A" },
+      { q: "4ⁿ ends with ___ if n is multiple of 4", opts: ["0", "6", "4", "8"], ans: "B" },
+      { q: "Slope of line parallel to Y-axis is", opts: ["1", "0", "not defined", "None"], ans: "C" },
+      { q: "Curved surface area of cone base 7cm, slant 14cm is ___ cm²", opts: ["236", "154", "308", "196"], ans: "C" },
+      { q: "x²−6x+p=0 has equal real roots, p =", opts: ["−6", "9", "6", "1"], ans: "B" },
+      { q: "Mean of data is 5. Each multiplied by 2 and added 3, new mean is", opts: ["13", "7", "11", "5"], ans: "A" },
+      { q: "Zeroes of x²+y(a+s)+b are 2 and −3, a and b are", opts: ["1,−6", "−1,6", "a=−2,b=6", "a=0,b=6"], ans: "B" },
+      { q: "Which equation has '2' as root?", opts: ["2x²−7x+6=0", "x²−4x+5=0", "x²+3x−12=0", "3x²−6x−2=0"], ans: "A" },
+      { q: "In △ABC, sinA/2 =", opts: ["sinB/2", "cosC/2", "tanC/2", "cosecC/2"], ans: "B" },
+      { q: "Area of triangle with vertices (0,0), (3,0) and (0,6) is ___ sq.units", opts: ["9", "6", "12", "18"], ans: "A" },
+      { q: "Sum of first 20 even numbers is", opts: ["420", "505", "550", "240"], ans: "A" },
+      { q: "Product of two numbers is 216. HCF=6, LCM is", opts: ["48", "32", "42", "30"], ans: "C" },
+      { q: "In △ABC, if BC²=AB²+AC², right angle is", opts: ["∠C", "∠B", "∠A", "None"], ans: "B" },
+      { q: "Probability of face card from deck is", opts: ["3/13", "12/52", "4/52", "3/26"], ans: "A" },
+      { q: "Probability of complementary of 0.45 is", opts: ["0.44", "0.54", "0.36", "0.55"], ans: "D" },
+      { q: "AB=3cm, AC=8cm, AE=4.5cm, AD = ___ cm", opts: ["10.5", "3", "9.5", "12"], ans: "C" },
+      { q: "Surface area S and volume V of sphere with radius r, then", opts: ["r=3V/S", "r=3S/V", "3S=Vr", "3V=Sr"], ans: "D" }
+    ]
+  },
+  {
+    code: "Warangal",
+    name: "Warangal",
+    district: "Warangal",
+    questions: [
+      { q: "A={x: x is zeroes of x³−4x²+4x}, n(A) =", opts: ["3", "2", "1", "0"], ans: "B" },
+      { q: "If A(x₁,y₁), B(x₂,y₂), coordinate dividing AB in k:1 is", opts: ["((kx₂+x₁)/(k+1), (ky₂+y₁)/(k+1))", "((x₁+kx₂)/(k+1), (y₁+ky₂)/(k+1))", "((kx₂−x₁)/(k−1), (ky₂−y₁)/(k−1))", "(none)"], ans: "A" },
+      { q: "If 8232 = 2ⁿ×3×7, value of n is", opts: ["1", "2", "3", "4"], ans: "C" },
+      { q: "If log₁₀x=k, 10ˡᵒᵍ⁽¹⁰ˣ⁾ in terms of x is", opts: ["10/x", "10x", "x/10", "x²"], ans: "B" },
+      { q: "x+ky=5, 5x−10y=−7 has no solution, k =", opts: ["10", "8", "2", "−2"], ans: "D" },
+      { q: "Shadow of 18m tree at 9am is 9m. Shadow of 40m tower is", opts: ["27m", "20m", "80m", "31m"], ans: "B" },
+      { q: "Angle between tangents to circle of radius 3cm is 60°. Tangent length is", opts: ["6", "3√3", "3", "3√3/2"], ans: "B" },
+      { q: "If secA = cosecB, A+B =", opts: ["90°", "180°", "360°", "0°"], ans: "A" },
+      { q: "P(E) = probability of E", opts: ["0<P(E)<1", "0≤P(E)<1", "0≤P(E)≤1", "0<P(E)≤1"], ans: "C" },
+      { q: "P={x: x is integer between −3.7 and 2.7}, roster form is", opts: ["{ }", "{0,1,2}", "{−2,−1,0,1,2}", "{−3,−2,−1,0,1,2,3}"], ans: "C" },
+      { q: "Distance between (log₃27, log₄64) and origin is", opts: ["5", "2", "4", "1"], ans: "A" },
+      { q: "If sin3θ = cos(θ−9°), θ =", opts: ["24.75°", "12°", "36°", "12°"], ans: "A" },
+      { q: "Set of zeroes of x³−4x is", opts: ["{0,4,−4}", "{1,−1,2}", "{0,√2,−√2}", "{0,2,−2}"], ans: "D" },
+      { q: "(k+1)th term of A.P. 5,2,−1,−4,... if aₖ=5−3k is", opts: ["2−3k", "8−3k", "3k−2", "2+3k"], ans: "A" },
+      { q: "log a, log a², log a³, log a⁴ is in", opts: ["A.P.", "G.P.", "Both", "None"], ans: "A" },
+      { q: "In △ABC, DE∥BC, AD/DB=3/5, AC=5.6cm, AE =", opts: ["2.4cm", "3.2cm", "2.1cm", "1.8cm"], ans: "C" },
+      { q: "Ratio of volumes of cone, cylinder and hemisphere with same radius and equal heights is", opts: ["1:2:3", "3:2:1", "2:3:4", "3:4:5"], ans: "A" },
+      { q: "Arithmetic mean of a+2, a, a−2 is", opts: ["a+2", "a", "a−2", "3a"], ans: "B" },
+      { q: "Ratio of volumes of spheres 8:27, ratio of surface areas is", opts: ["2:3", "4:27", "8:9", "4:9"], ans: "D" },
+      { q: "Midpoint of line joining (x−y, 8) and (x+y, 4) is (7, 6), then (x,y) is", opts: ["(2,10)", "(10,2)", "(0,2)", "(10,−2)"], ans: "B" }
+    ]
+  },
+  {
+    code: "M-08(A)",
+    name: "Mahabubnagar",
+    district: "Mahabubnagar",
+    questions: [
+      { q: "If P₁ and P₂ are two odd primes, P₁>P₂, then P₁²−P₂² =", opts: ["Even number", "Odd number", "Prime number", "Odd prime"], ans: "A" },
+      { q: "Every odd positive integer can be written as", opts: ["3K(K∈Z⁺)", "2K+1 (K non-negative)", "2K(K∈Z)", "2^K(K∈N)"], ans: "B" },
+      { q: "If B⊂A, A∩B =", opts: ["B", "A", "∅", "U"], ans: "A" },
+      { q: "Number of subsets of set is 64, number of elements is", opts: ["2", "4", "6", "8"], ans: "C" },
+      { q: "α,β zeroes of x²+10x+21, α−β =", opts: ["10", "21", "1", "16"], ans: "D" },
+      { q: "Example of cubic polynomial", opts: ["P(x)=2−3x+4x²+9", "P(y)=y³", "P(z)=4z²−5z+9", "P(t)=4t³+5t−9"], ans: "D" },
+      { q: "2x+3y=8 and 4x+ky=11 has no solutions, K =", opts: ["3", "0", "6", "1"], ans: "C" },
+      { q: "One root of ax²+bx+c=0 is twice other, 2b² =", opts: ["4ac", "6ac", "8ac", "9ac"], ans: "D" },
+      { q: "In G.P. aₙ=arⁿ⁻¹, r represents", opts: ["Common difference", "Common ratio", "First term", "Radius"], ans: "B" },
+      { q: "Sum of first 100 natural numbers is", opts: ["5500", "5050", "5005", "5555"], ans: "B" },
+      { q: "Distance of (5,12) from origin is ___ units", opts: ["13", "17", "20", "10"], ans: "A" },
+      { q: "Slope of line through (−7,9) and (−5,7) is", opts: ["1", "−1/2", "1/2", "−1"], ans: "D" },
+      { q: "△ABC~△PQR, ∠A=53°, ∠Q=67°, ∠C =", opts: ["60°", "90°", "180°", "120°"], ans: "A" },
+      { q: "PA, PB tangents, PA=5cm, ∠PAB=60°, chord AB =", opts: ["10", "15", "5", "20"], ans: "C" },
+      { q: "Number of pairs of parallel tangents to a circle is", opts: ["2", "1", "0", "Infinitely many"], ans: "B" },
+      { q: "LSA of right circular cone = πrl, l is", opts: ["Height", "Radius", "Slant height", "Vertex"], ans: "C" },
+      { q: "sin40°·tan45°·sec50° =", opts: ["1/2", "1", "√3", "0"], ans: "B" },
+      { q: "If sinθ = 3/5, cosθ (θ acute) =", opts: ["3/4", "4/5", "3/5", "5/4"], ans: "B" },
+      { q: "Die thrown once, probability of prime number is", opts: ["1/4", "1/3", "1/4", "1/2"], ans: "D" },
+      { q: "7,5,2,5,x,9,7,8. Mode is 5, x =", opts: ["5", "7", "8", "9"], ans: "A" }
+    ]
+  },
+  {
+    code: "Y-11A",
+    name: "Yadadri (Pre-Public)",
+    district: "Yadadri Pre-Public",
+    questions: [
+      { q: "Which is NOT a geometric progression?", opts: ["1,−1,1,−1,...", "1,2,4,8,...", "3,6,12,24,...", "5,10,20,..."], ans: "A" },
+      { q: "'r' in nᵗʰ term of G.P. aₙ=arⁿ represents", opts: ["Distance", "Common difference", "Common ratio", "Common Multiple"], ans: "C" },
+      { q: "16, 13, 10,... 6th term is", opts: ["−1", "−2", "2", "1"], ans: "A" },
+      { q: "Which term of A.P. 24,21,18,15... has sum 78?", opts: ["4th", "13th", "4th and 13th", "9th"], ans: "C" },
+      { q: "Nature of roots of 2x²+3x+1=0", opts: ["Real & different", "Real & equal", "Not real", "Not real & not different"], ans: "A" },
+      { q: "One root of x²−bx+6=0 is 3, k =", opts: ["5", "6", "7", "8"], ans: "C" },
+      { q: "Ladder 25m reaches window 20m above. Distance from foot to building", opts: ["15", "16", "17", "18"], ans: "A" },
+      { q: "Areas of similar triangles 81sq.cm and 49sq.cm. Bigger altitude 4.5cm. Smaller altitude =", opts: ["6.5", "3.5", "5", "9"], ans: "B" },
+      { q: "If sin(A−B)=1/2, cos(A+B)=1/2, 0°<A+B≤90°, A>B, tanA =", opts: ["4", "3", "2", "1"], ans: "A" },
+      { q: "cot²θ+cot⁴θ =", opts: ["cot²θ−cot⁴θ", "sec⁴θ−sec²θ", "cosec⁴θ−cosec²θ", "tan⁷θ−tan⁴θ"], ans: "C" },
+      { q: "If tanA=1/2, sinA =", opts: ["1/√5", "2/√5", "√3/2", "4/5"], ans: "A" },
+      { q: "Number of subsets of {a,b,c,d} =", opts: ["16", "15", "8", "4"], ans: "A" },
+      { q: "A={1,2,3,4,5}, B={5,6,7,8,9}, n(A∪B) =", opts: ["2", "9", "6", "12"], ans: "B" },
+      { q: "LCM of 11 and 13 is", opts: ["77", "66", "143", "88"], ans: "C" },
+      { q: "α,β zeroes of x²−3x+1, (α+β):αβ =", opts: ["3:1", "4:√5", "√5:4", "1:3"], ans: "A" },
+      { q: "If 125x+25y=7 and 25x+ky=10 has no solutions, k =", opts: ["125", "25", "5", "1"], ans: "C" },
+      { q: "A(7,3), B(6,1), C(8,2), D(x,y) vertices of parallelogram, (x,y) =", opts: ["(−9,−4)", "(9,4)", "(4,9)", "(−4,−9)"], ans: "B" },
+      { q: "Angle between tangent and radius at point of contact is", opts: ["60°", "30°", "45°", "90°"], ans: "D" },
+      { q: "P(E) is probability, which is correct?", opts: ["P(E)<1", "0<P(E)", "0≥P(E)≥1", "0≤P(E)≤1"], ans: "D" },
+      { q: "If tan2A = cot(A−18°), ∠A =", opts: ["36°", "72°", "45°", "90°"], ans: "A" }
+    ]
+  },
+  {
+    code: "Maths-PF-2026",
+    name: "Pre-Final 2026 (General)",
+    district: "Telangana State",
+    questions: [
+      { q: "Euclid division: a=bq+r, r must satisfy", opts: ["1≤r<b", "0<r<b", "0<r≤b", "0≤r<b"], ans: "D" },
+      { q: "Zeroes of p(x)=x²+kx+k, k≠0 where k=4", opts: ["Cannot both be positive", "Cannot both be negative", "Are always equal", "Are always unequal"], ans: "A" },
+      { q: "3x−y−8=0 and 6x−ky=−16 parallel, k =", opts: ["2", "−2", "2", "−2"], ans: "A" },
+      { q: "α,β roots of 2x²+x−4=0, α²β+αβ² =", opts: ["1", "−1", "2", "−2"], ans: "D" },
+      { q: "In G.P., 5th term to 2nd term ratio is 27. Common ratio is", opts: ["3", "−3", "9", "−9"], ans: "A" },
+      { q: "n(A)=15, n(B)=20, n(A∪B)=30, n(A∩B) =", opts: ["25", "15", "10", "5"], ans: "D" },
+      { q: "Two triangles equal areas:", opts: ["Similar", "Congruent", "Side ratio=1", "Cannot conclude"], ans: "D" },
+      { q: "Radius is perpendicular to tangent at", opts: ["Any point", "Centre", "Point of contact", "External point"], ans: "C" },
+      { q: "P(E)=0.35, P(not E) =", opts: ["0.35", "0.65", "1.35", "−0.35"], ans: "B" },
+      { q: "If modal class frequency increases, mode will", opts: ["Decrease", "Increase", "Remain same", "Become median"], ans: "B" },
+      { q: "tanθ+secθ=3, tanθ−secθ =", opts: ["1", "−1", "3", "−3"], ans: "B" },
+      { q: "log₅25 − log₅5 is equal to", opts: ["5", "1", "−5", "1/5"], ans: "B" },
+      { q: "Shadow of tower is √3 times height. Angle of elevation of sun is", opts: ["30°", "60°", "45°", "90°"], ans: "A" },
+      { q: "A={x/x=n², n∈N, n≤4}. Number of subsets of A is", opts: ["8", "12", "16", "32"], ans: "C" },
+      { q: "Tangent from point 8cm from centre, radius 6cm. Tangent length is", opts: ["24cm", "2√7cm", "10cm", "5cm"], ans: "B" },
+      { q: "△ABC~△DEF, areas 100cm² and 64cm², EF=4cm. BC =", opts: ["9cm", "5cm", "4cm", "8cm"], ans: "B" },
+      { q: "Minute hand 28cm. Distance covered 10:10am to 10:25am is", opts: ["44cm", "88cm", "132cm", "176cm"], ans: "B" },
+      { q: "Diameter of sphere 14cm. Volume is", opts: ["718.6cm³", "5749.3cm³", "11498.6cm³", "1437.3cm³"], ans: "A" },
+      { q: "Distance between A(4,P) and B(1,0) is 5 units. Values of P is", opts: ["±4", "±3", "−4 only", "4 only"], ans: "A" },
+      { q: "Origin divides AB joining A(1,−3) and B(−3,9) in ratio", opts: ["3:1", "1:3", "2:3", "1:1"], ans: "B" }
+    ]
+  }
+];
+
+// ═══════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════
+let currentPaper = null;
+let answers = {};       // qIdx -> "A"|"B"|"C"|"D"
+let selectedMinutes = 20;
+let timerInterval = null;
+let timerSeconds = 0;
+let totalSeconds = 0;
+
+// ═══════════════════════════════════════════════
+//  BUILD HOME GRID
+// ═══════════════════════════════════════════════
+function buildHome() {
+  const grid = document.getElementById('papers-grid');
+  grid.innerHTML = PAPERS.map((p, i) => `
+    <div class="paper-card" onclick="openModal(${i})">
+      <div class="code">${p.code} · ${p.district}</div>
+      <h3>${p.name}</h3>
+      <div class="meta">
+        <span>📝 ${p.questions.length} MCQs</span>
+        <span>🏆 ${p.questions.length} marks</span>
+      </div>
+      <div class="badge">Part-B · Objective</div>
+    </div>
+  `).join('');
+}
+
+// ═══════════════════════════════════════════════
+//  MODAL
+// ═══════════════════════════════════════════════
+function openModal(idx) {
+  currentPaper = idx;
+  selectedMinutes = 20;
+  document.getElementById('modal-paper-name').textContent = PAPERS[idx].name;
+  document.getElementById('modal-paper-meta').textContent =
+    `${PAPERS[idx].questions.length} questions · 1 mark each · ${PAPERS[idx].code}`;
+  document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.time-btn')[2].classList.add('selected');
+  document.getElementById('custom-min').value = '';
+  document.getElementById('timer-modal').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('timer-modal').classList.remove('active');
+}
+
+function selectTime(min, btn) {
+  selectedMinutes = min;
+  document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('custom-min').value = '';
+}
+
+function selectCustomTime(input) {
+  const v = parseInt(input.value);
+  if (v > 0) {
+    selectedMinutes = v;
+    document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  START QUIZ
+// ═══════════════════════════════════════════════
+let currentQ = 0;
+
+function startQuiz() {
+  closeModal();
+  answers = {};
+  currentQ = 0;
+
+  const paper = PAPERS[currentPaper];
+  document.getElementById('quiz-paper-code').textContent = `${paper.code} · ${paper.district}`;
+  document.getElementById('quiz-paper-title').childNodes[0].textContent = paper.name + ' ';
+
+  // Setup timer
+  totalSeconds = selectedMinutes * 60;
+  timerSeconds = totalSeconds;
+  updateTimerDisplay();
+  clearInterval(timerInterval);
+  timerInterval = setInterval(tickTimer, 1000);
+
+  // Show screens
+  document.getElementById('home-screen').style.display = 'none';
+  document.getElementById('results-screen').classList.remove('active');
+  document.getElementById('quiz-screen').classList.add('active');
+
+  buildQDots();
+  renderQuestion(0);
+}
+
+function tickTimer() {
+  timerSeconds--;
+  updateTimerDisplay();
+  if (timerSeconds <= 0) {
+    clearInterval(timerInterval);
+    document.getElementById('timeup-overlay').classList.add('active');
+  }
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timerSeconds / 60);
+  const s = timerSeconds % 60;
+  const el = document.getElementById('timer-display');
+  el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  el.className = 'timer-display';
+  if (timerSeconds < 60) el.classList.add('danger');
+  else if (timerSeconds < totalSeconds * 0.25) el.classList.add('warning');
+
+  const pct = (timerSeconds / totalSeconds) * 100;
+  document.getElementById('timer-bar').style.width = pct + '%';
+}
+
+// ═══════════════════════════════════════════════
+//  Q DOTS
+// ═══════════════════════════════════════════════
+function buildQDots() {
+  const paper = PAPERS[currentPaper];
+  const bar = document.getElementById('q-count-bar');
+  bar.innerHTML = paper.questions.map((_, i) => `
+    <div class="q-dot ${i===currentQ?'current':''}" id="dot-${i}" onclick="jumpTo(${i})" title="Q${i+1}"></div>
+  `).join('');
+}
+
+function updateDots() {
+  const paper = PAPERS[currentPaper];
+  paper.questions.forEach((_, i) => {
+    const d = document.getElementById('dot-'+i);
+    if (!d) return;
+    d.className = 'q-dot';
+    if (i === currentQ) d.classList.add('current');
+    else if (answers[i]) d.classList.add('answered');
+  });
+}
+
+function jumpTo(idx) {
+  currentQ = idx;
+  renderQuestion(idx);
+}
+
+// ═══════════════════════════════════════════════
+//  RENDER QUESTION
+// ═══════════════════════════════════════════════
+function renderQuestion(idx) {
+  const paper = PAPERS[currentPaper];
+  const q = paper.questions[idx];
+  const total = paper.questions.length;
+
+  document.getElementById('q-index-label').textContent = `${idx+1} of ${total}`;
+  document.getElementById('q-progress-text').textContent = `${Object.keys(answers).length}/${total} answered`;
+
+  const letters = ['A','B','C','D'];
+  const html = `
+    <div class="question-card">
+      <div class="q-number">Question ${idx+1}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options-grid">
+        ${q.opts.map((opt, oi) => `
+          <button class="option-btn ${answers[idx]===letters[oi]?'selected':''}"
+            onclick="selectAnswer(${idx},'${letters[oi]}')">
+            <span class="option-letter">${letters[oi]}</span>
+            <span>${opt}</span>
+          </button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  document.getElementById('question-container').innerHTML = html;
+
+  // Nav buttons
+  const prevBtn = document.getElementById('btn-prev');
+  const nextBtn = document.getElementById('btn-next');
+  prevBtn.style.visibility = idx === 0 ? 'hidden' : 'visible';
+
+  if (idx === total - 1) {
+    nextBtn.textContent = 'Submit ✓';
+    nextBtn.className = 'btn-nav btn-submit';
+    nextBtn.onclick = finishQuiz;
+  } else {
+    nextBtn.textContent = 'Next →';
+    nextBtn.className = 'btn-nav btn-next';
+    nextBtn.onclick = nextQ;
+  }
+
+  updateDots();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function selectAnswer(idx, letter) {
+  answers[idx] = letter;
+  renderQuestion(idx);
+}
+
+function prevQ() {
+  if (currentQ > 0) { currentQ--; renderQuestion(currentQ); }
+}
+function nextQ() {
+  const total = PAPERS[currentPaper].questions.length;
+  if (currentQ < total-1) { currentQ++; renderQuestion(currentQ); }
+}
+
+// ═══════════════════════════════════════════════
+//  FINISH / RESULTS
+// ═══════════════════════════════════════════════
+function finishQuiz() {
+  clearInterval(timerInterval);
+  document.getElementById('timeup-overlay').classList.remove('active');
+  document.getElementById('quiz-screen').classList.remove('active');
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('home-screen').style.display = 'none';
+
+  const paper = PAPERS[currentPaper];
+  const total = paper.questions.length;
+  let correct = 0, wrong = 0, skip = 0;
+
+  paper.questions.forEach((q, i) => {
+    if (!answers[i]) { skip++; return; }
+    if (answers[i] === q.ans) correct++;
+    else wrong++;
+  });
+
+  const pct = Math.round((correct/total)*100);
+
+  document.getElementById('results-paper-name').textContent = `${paper.code} · ${paper.name}`;
+  document.getElementById('score-pct').textContent = pct + '%';
+  document.getElementById('res-correct').textContent = correct;
+  document.getElementById('res-wrong').textContent = wrong;
+  document.getElementById('res-skip').textContent = skip;
+
+  // Arc animation
+  const arc = document.getElementById('score-arc');
+  const circumference = 2 * Math.PI * 64;
+  const offset = circumference - (pct/100) * circumference;
+  arc.style.stroke = pct >= 70 ? '#2e7d52' : pct >= 40 ? '#c9a84c' : '#b84040';
+  setTimeout(() => { arc.style.strokeDashoffset = offset; }, 100);
+
+  // Review
+  const letters = ['A','B','C','D'];
+  const reviewHtml = paper.questions.map((q, i) => {
+    const userAns = answers[i];
+    const isCorrect = userAns === q.ans;
+    const cls = !userAns ? 'r-skip' : isCorrect ? 'r-correct' : 'r-wrong';
+    const icon = !userAns ? '—' : isCorrect ? '✓' : '✗';
+    return `
+      <div class="review-item ${cls}">
+        <div class="review-q">${icon} Q${i+1}: ${q.q}</div>
+        <div class="review-ans">
+          ${userAns
+            ? `<span class="${isCorrect?'correct-ans':'your-ans'}">Your answer: ${userAns}) ${q.opts[letters.indexOf(userAns)]}</span>`
+            : `<span class="skipped">Not attempted</span>`}
+          ${!isCorrect ? `<span class="correct-ans">Correct: ${q.ans}) ${q.opts[letters.indexOf(q.ans)]}</span>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+  document.getElementById('review-list').innerHTML = reviewHtml;
+
+  document.getElementById('results-screen').classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function retryPaper() {
+  answers = {};
+  currentQ = 0;
+  document.getElementById('results-screen').classList.remove('active');
+  openModal(currentPaper);
+}
+
+function goHome() {
+  clearInterval(timerInterval);
+  document.getElementById('quiz-screen').classList.remove('active');
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('results-screen').classList.remove('active');
+  document.getElementById('home-screen').style.display = 'block';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// Init
+buildHome();
+</script>
+</body>
+</html>

@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MATHSCORE X — MCQ ARENA</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --cyan:#00fff5;--pink:#ff006e;--gold:#ffd60a;--green:#39ff14;--purple:#b14aed;
+  --bg:#020408;--card:#06111a;--panel:#0a1828;
+  --grid:rgba(0,255,245,0.05);--text:#e0f0ff;--dim:#2a4a5a;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Rajdhani',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;cursor:none;}
+
+/* CURSOR */
+#cur,#cur2{position:fixed;pointer-events:none;z-index:9999;border-radius:50%;transform:translate(-50%,-50%);}
+#cur{width:20px;height:20px;border:2px solid var(--cyan);transition:all .1s;mix-blend-mode:screen;}
+#cur2{width:5px;height:5px;background:var(--cyan);box-shadow:0 0 8px var(--cyan),0 0 20px var(--cyan);}
+body:has(.option-btn:hover) #cur{width:36px;height:36px;border-color:var(--pink);background:rgba(255,0,110,0.1);}
+
+/* GRID BG */
+.grid-bg{position:fixed;inset:0;z-index:0;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:60px 60px;animation:gridMove 25s linear infinite;}
+@keyframes gridMove{to{background-position:60px 60px;}}
+
+/* SCAN LINES */
+.scan{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.15) 3px,rgba(0,0,0,.15) 4px);
+  animation:scanAnim 8s linear infinite;}
+@keyframes scanAnim{0%{background-position:0 0;}100%{background-position:0 100%}}
+
+/* CORNER DECO */
+.corner{position:fixed;width:80px;height:80px;z-index:2;pointer-events:none;}
+.corner::before,.corner::after{content:'';position:absolute;background:var(--cyan);box-shadow:0 0 8px var(--cyan);}
+.corner.tl{top:16px;left:16px;}
+.corner.tr{top:16px;right:16px;transform:scaleX(-1);}
+.corner.bl{bottom:16px;left:16px;transform:scaleY(-1);}
+.corner.br{bottom:16px;right:16px;transform:scale(-1);}
+.corner::before{width:30px;height:2px;top:0;left:0;}
+.corner::after{width:2px;height:30px;top:0;left:0;}
+
+/* FLOATING PARTICLES */
+.particle{position:fixed;pointer-events:none;z-index:0;border-radius:50%;animation:float linear infinite;}
+@keyframes float{0%{transform:translateY(100vh) rotate(0deg);opacity:0;}
+  10%{opacity:1;}90%{opacity:1;}100%{transform:translateY(-100px) rotate(720deg);opacity:0;}}
+
+/* ══════════ HOME ══════════ */
+#home{position:relative;z-index:10;min-height:100vh;}
+
+/* HERO */
+.hero{text-align:center;padding:60px 20px 40px;position:relative;}
+.hero-eyebrow{
+  font-family:'Share Tech Mono',monospace;font-size:.75rem;letter-spacing:.4em;
+  color:var(--cyan);text-transform:uppercase;margin-bottom:16px;
+  animation:blink 2s step-end infinite;
+}
+@keyframes blink{50%{opacity:0;}}
+.hero-title{
+  font-family:'Orbitron',sans-serif;font-size:clamp(2.5rem,8vw,6rem);
+  font-weight:900;line-height:1;margin-bottom:8px;
+  background:linear-gradient(135deg,var(--cyan),var(--purple),var(--pink));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 30px rgba(0,255,245,.5));
+  animation:titlePulse 4s ease-in-out infinite;
+}
+@keyframes titlePulse{0%,100%{filter:drop-shadow(0 0 30px rgba(0,255,245,.5));}
+  50%{filter:drop-shadow(0 0 60px rgba(177,74,237,.8));}}
+.hero-sub{
+  font-family:'Share Tech Mono',monospace;font-size:1rem;color:var(--dim);
+  letter-spacing:.15em;margin-bottom:6px;
+}
+.hero-badges{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:20px;}
+.hbadge{
+  font-family:'Share Tech Mono',monospace;font-size:.65rem;letter-spacing:.1em;
+  padding:4px 12px;border:1px solid var(--dim);color:var(--dim);border-radius:2px;
+}
+
+/* STATS BAR */
+.stats-bar{
+  display:flex;justify-content:center;gap:0;max-width:700px;margin:0 auto 40px;
+  border:1px solid rgba(0,255,245,.15);border-radius:4px;overflow:hidden;
+  background:rgba(0,255,245,.02);
+}
+.stat-item{flex:1;text-align:center;padding:14px 8px;border-right:1px solid rgba(0,255,245,.1);}
+.stat-item:last-child{border-right:none;}
+.stat-val{font-family:'Orbitron',sans-serif;font-size:1.4rem;font-weight:700;color:var(--cyan);
+  text-shadow:0 0 20px var(--cyan);}
+.stat-lbl{font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--dim);
+  letter-spacing:.1em;text-transform:uppercase;margin-top:2px;}
+
+/* SEARCH / FILTER */
+.filter-bar{max-width:1100px;margin:0 auto 24px;padding:0 20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.search-wrap{flex:1;min-width:200px;position:relative;}
+.search-wrap input{
+  width:100%;background:var(--card);border:1px solid rgba(0,255,245,.2);
+  color:var(--text);font-family:'Share Tech Mono',monospace;font-size:.85rem;
+  padding:10px 14px 10px 36px;border-radius:3px;outline:none;
+  transition:border-color .2s;
+}
+.search-wrap input:focus{border-color:var(--cyan);box-shadow:0 0 15px rgba(0,255,245,.15);}
+.search-wrap input::placeholder{color:var(--dim);}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--dim);font-size:.8rem;}
+
+/* PAPERS GRID */
+.papers-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:16px;max-width:1100px;margin:0 auto;padding:0 20px 80px;
+}
+
+/* PAPER CARD */
+.pcard{
+  background:var(--card);border:1px solid rgba(0,255,245,.1);border-radius:4px;
+  padding:20px;cursor:pointer;position:relative;overflow:hidden;
+  transition:all .25s ease;
+  animation:cardIn .4s ease backwards;
+}
+.pcard::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,255,245,.04),transparent 60%);
+  opacity:0;transition:opacity .25s;
+}
+.pcard::after{
+  content:'';position:absolute;top:0;left:-100%;
+  width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(0,255,245,.06),transparent);
+  transition:left .4s ease;
+}
+.pcard:hover{
+  border-color:rgba(0,255,245,.5);
+  box-shadow:0 0 30px rgba(0,255,245,.12),inset 0 0 30px rgba(0,255,245,.03);
+  transform:translateY(-4px);
+}
+.pcard:hover::before{opacity:1;}
+.pcard:hover::after{left:150%;}
+@keyframes cardIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+
+.pcard-accent{
+  position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(to bottom,var(--cyan),var(--purple));
+  box-shadow:0 0 12px var(--cyan);
+}
+.pcard-num{
+  position:absolute;top:16px;right:16px;
+  font-family:'Orbitron',monospace;font-size:.6rem;color:var(--dim);
+  letter-spacing:.1em;
+}
+.pcard-code{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--cyan);
+  letter-spacing:.12em;margin-bottom:8px;}
+.pcard-name{font-family:'Orbitron',sans-serif;font-size:.95rem;font-weight:700;
+  line-height:1.3;margin-bottom:4px;color:var(--text);}
+.pcard-district{font-size:.8rem;color:var(--dim);margin-bottom:14px;}
+.pcard-meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.pcard-pill{
+  font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:.05em;
+  padding:3px 8px;border-radius:2px;
+}
+.pill-q{background:rgba(0,255,245,.08);border:1px solid rgba(0,255,245,.2);color:var(--cyan);}
+.pill-m{background:rgba(255,214,10,.06);border:1px solid rgba(255,214,10,.2);color:var(--gold);}
+.pcard-play{
+  margin-left:auto;width:32px;height:32px;border-radius:50%;
+  background:rgba(0,255,245,.08);border:1px solid rgba(0,255,245,.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;color:var(--cyan);transition:all .2s;
+}
+.pcard:hover .pcard-play{background:var(--cyan);color:var(--bg);box-shadow:0 0 20px var(--cyan);}
+
+/* ══════════ TIMER MODAL ══════════ */
+.overlay{display:none;position:fixed;inset:0;z-index:100;
+  background:rgba(2,4,8,.85);backdrop-filter:blur(8px);
+  align-items:center;justify-content:center;}
+.overlay.show{display:flex;}
+
+.modal{
+  background:var(--card);border:1px solid rgba(0,255,245,.3);
+  border-radius:6px;padding:36px 40px;max-width:480px;width:92%;
+  position:relative;overflow:hidden;
+  animation:modalPop .3s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes modalPop{from{opacity:0;transform:scale(.85) translateY(30px);}to{opacity:1;transform:none;}}
+.modal::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,255,245,.04),transparent 50%,rgba(177,74,237,.04));
+  pointer-events:none;
+}
+.modal-corner{position:absolute;width:40px;height:40px;}
+.modal-corner::before,.modal-corner::after{content:'';position:absolute;background:var(--cyan);}
+.modal-corner::before{width:20px;height:1px;top:0;left:0;}
+.modal-corner::after{width:1px;height:20px;top:0;left:0;}
+.mc-tl{top:10px;left:10px;}
+.mc-br{bottom:10px;right:10px;transform:rotate(180deg);}
+
+.modal-tag{font-family:'Share Tech Mono',monospace;font-size:.65rem;color:var(--cyan);
+  letter-spacing:.2em;margin-bottom:10px;opacity:.8;}
+.modal-title{font-family:'Orbitron',sans-serif;font-size:1.3rem;font-weight:700;
+  margin-bottom:4px;color:var(--text);}
+.modal-sub{font-size:.85rem;color:var(--dim);margin-bottom:28px;font-family:'Share Tech Mono',monospace;}
+
+.modal-section-label{font-family:'Share Tech Mono',monospace;font-size:.65rem;
+  color:var(--dim);letter-spacing:.15em;text-transform:uppercase;margin-bottom:10px;}
+
+.time-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:20px;}
+.tbtn{
+  background:rgba(0,255,245,.04);border:1px solid rgba(0,255,245,.15);
+  color:var(--dim);font-family:'Orbitron',sans-serif;font-size:.75rem;font-weight:600;
+  padding:10px 4px;border-radius:3px;cursor:pointer;transition:all .15s;text-align:center;
+}
+.tbtn:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,255,245,.08);}
+.tbtn.sel{
+  background:rgba(0,255,245,.12);border-color:var(--cyan);color:var(--cyan);
+  box-shadow:0 0 15px rgba(0,255,245,.2);
+}
+
+.custom-row{display:flex;gap:10px;align-items:center;margin-bottom:28px;}
+.custom-row input{
+  width:90px;background:rgba(0,255,245,.04);border:1px solid rgba(0,255,245,.2);
+  color:var(--text);font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;
+  padding:8px 12px;border-radius:3px;outline:none;text-align:center;
+  transition:border-color .2s;
+}
+.custom-row input:focus{border-color:var(--cyan);box-shadow:0 0 12px rgba(0,255,245,.2);}
+.custom-row label{font-family:'Share Tech Mono',monospace;font-size:.75rem;color:var(--dim);}
+
+.btn-launch{
+  width:100%;padding:16px;border:none;border-radius:3px;cursor:pointer;
+  font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,var(--cyan),var(--purple));
+  color:var(--bg);transition:all .2s;
+}
+.btn-launch::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  opacity:0;transition:opacity .2s;
+}
+.btn-launch:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,255,245,.3);}
+.btn-launch:hover::before{opacity:1;}
+.btn-launch span{position:relative;z-index:1;}
+.btn-cancel-modal{
+  width:100%;margin-top:10px;padding:8px;background:none;border:none;
+  color:var(--dim);font-family:'Share Tech Mono',monospace;font-size:.75rem;
+  cursor:pointer;letter-spacing:.08em;transition:color .15s;
+}
+.btn-cancel-modal:hover{color:var(--text);}
+
+/* ══════════ QUIZ SCREEN ══════════ */
+#quiz{display:none;position:relative;z-index:10;min-height:100vh;}
+#quiz.show{display:block;}
+
+/* TOP HUD */
+.hud{
+  position:sticky;top:0;z-index:50;
+  background:rgba(2,4,8,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(0,255,245,.12);
+  padding:0 24px;
+}
+.hud-inner{
+  max-width:1000px;margin:0 auto;
+  display:grid;grid-template-columns:auto 1fr auto auto;
+  align-items:center;gap:16px;padding:12px 0;
+}
+.hud-back{
+  font-family:'Share Tech Mono',monospace;font-size:.75rem;
+  color:var(--dim);background:none;border:1px solid rgba(0,255,245,.15);
+  padding:6px 14px;border-radius:2px;cursor:pointer;letter-spacing:.08em;
+  transition:all .15s;white-space:nowrap;
+}
+.hud-back:hover{color:var(--cyan);border-color:var(--cyan);}
+
+.hud-paper{
+  min-width:0;
+}
+.hud-paper-name{font-family:'Orbitron',sans-serif;font-size:.8rem;font-weight:700;
+  color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.hud-paper-code{font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--dim);}
+
+/* TIMER */
+.hud-timer{
+  font-family:'Orbitron',sans-serif;font-size:1.6rem;font-weight:700;
+  color:var(--gold);text-shadow:0 0 20px var(--gold),0 0 40px rgba(255,214,10,.3);
+  letter-spacing:.05em;white-space:nowrap;
+  transition:color .3s,text-shadow .3s;
+}
+.hud-timer.warn{color:#ff8c00;text-shadow:0 0 20px #ff8c00;}
+.hud-timer.danger{color:var(--pink);text-shadow:0 0 20px var(--pink),0 0 40px rgba(255,0,110,.4);
+  animation:dangerPulse .5s ease-in-out infinite;}
+@keyframes dangerPulse{50%{opacity:.4;}}
+
+.hud-score-display{
+  font-family:'Orbitron',sans-serif;font-size:.75rem;font-weight:700;
+  color:var(--green);text-shadow:0 0 12px var(--green);
+  white-space:nowrap;
+}
+
+/* PROGRESS RAIL */
+.progress-rail{
+  height:3px;background:rgba(0,255,245,.08);
+  position:relative;overflow:hidden;
+}
+.progress-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--cyan),var(--purple));
+  box-shadow:0 0 10px var(--cyan);
+  transition:width 1s linear;
+}
+
+/* Q NAVIGATOR */
+.q-nav-strip{
+  max-width:1000px;margin:20px auto 0;padding:0 24px;
+  display:flex;gap:5px;flex-wrap:wrap;
+}
+.qdot{
+  width:28px;height:7px;border-radius:2px;
+  background:rgba(0,255,245,.06);border:1px solid rgba(0,255,245,.1);
+  cursor:pointer;transition:all .15s;
+}
+.qdot:hover{background:rgba(0,255,245,.15);}
+.qdot.done{background:rgba(57,255,20,.25);border-color:rgba(57,255,20,.5);}
+.qdot.active{background:var(--cyan);border-color:var(--cyan);box-shadow:0 0 8px var(--cyan);}
+.qdot.wrong-dot{background:rgba(255,0,110,.2);border-color:rgba(255,0,110,.4);}
+
+/* QUESTION AREA */
+.q-area{max-width:1000px;margin:20px auto;padding:0 24px 100px;}
+
+.q-card{
+  background:var(--card);
+  border:1px solid rgba(0,255,245,.1);
+  border-radius:6px;overflow:hidden;position:relative;
+  animation:qIn .3s cubic-bezier(.34,1.2,.64,1);
+}
+@keyframes qIn{from{opacity:0;transform:translateY(16px) scale(.98);}to{opacity:1;transform:none;}}
+
+.q-card-header{
+  padding:18px 24px;
+  border-bottom:1px solid rgba(0,255,245,.07);
+  display:flex;align-items:center;gap:16px;
+  background:rgba(0,255,245,.02);
+}
+.q-num-badge{
+  font-family:'Orbitron',sans-serif;font-size:.65rem;font-weight:700;
+  color:var(--bg);background:var(--cyan);padding:4px 10px;border-radius:2px;
+  letter-spacing:.05em;white-space:nowrap;
+  box-shadow:0 0 12px rgba(0,255,245,.4);
+}
+.q-progress-txt{font-family:'Share Tech Mono',monospace;font-size:.65rem;color:var(--dim);
+  letter-spacing:.08em;margin-left:auto;}
+
+.q-text-wrap{padding:24px 24px 20px;}
+.q-text{font-size:1.1rem;font-weight:500;line-height:1.6;color:var(--text);}
+
+/* OPTIONS */
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 24px 24px;}
+@media(max-width:580px){.opts{grid-template-columns:1fr;}}
+
+.opt{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:14px 16px;border-radius:4px;cursor:pointer;
+  background:rgba(0,255,245,.03);border:1px solid rgba(0,255,245,.1);
+  font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:500;
+  color:var(--text);text-align:left;
+  transition:all .15s;position:relative;overflow:hidden;
+}
+.opt::before{
+  content:'';position:absolute;inset:0;opacity:0;
+  background:linear-gradient(135deg,rgba(0,255,245,.06),transparent);
+  transition:opacity .15s;
+}
+.opt:hover{border-color:rgba(0,255,245,.4);transform:translateX(4px);}
+.opt:hover::before{opacity:1;}
+.opt:hover .opt-letter{background:rgba(0,255,245,.2);border-color:var(--cyan);color:var(--cyan);}
+
+.opt.selected{
+  border-color:var(--cyan);background:rgba(0,255,245,.06);
+  box-shadow:0 0 20px rgba(0,255,245,.1),inset 0 0 20px rgba(0,255,245,.03);
+}
+.opt.selected .opt-letter{background:var(--cyan);color:var(--bg);box-shadow:0 0 12px var(--cyan);}
+.opt.correct{
+  border-color:var(--green);background:rgba(57,255,20,.06);
+  box-shadow:0 0 20px rgba(57,255,20,.15);
+  animation:correctFlash .4s ease;
+}
+@keyframes correctFlash{0%{background:rgba(57,255,20,.25);}100%{background:rgba(57,255,20,.06);}}
+.opt.correct .opt-letter{background:var(--green);color:var(--bg);box-shadow:0 0 12px var(--green);}
+.opt.wrong{
+  border-color:var(--pink);background:rgba(255,0,110,.06);
+  animation:wrongShake .35s ease;
+}
+@keyframes wrongShake{0%,100%{transform:translateX(0);}20%{transform:translateX(-6px);}40%{transform:translateX(6px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
+.opt.wrong .opt-letter{background:var(--pink);color:white;box-shadow:0 0 12px var(--pink);}
+
+.opt-letter{
+  font-family:'Orbitron',sans-serif;font-size:.65rem;font-weight:700;
+  min-width:26px;height:26px;display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(0,255,245,.2);border-radius:3px;
+  color:var(--dim);flex-shrink:0;margin-top:1px;transition:all .15s;
+}
+
+/* Q FOOTER NAV */
+.q-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 24px;
+  border-top:1px solid rgba(0,255,245,.06);
+  gap:12px;
+}
+.btn-qnav{
+  font-family:'Orbitron',sans-serif;font-size:.7rem;font-weight:700;
+  letter-spacing:.08em;padding:10px 22px;border-radius:3px;cursor:pointer;
+  border:1px solid;transition:all .15s;
+}
+.btn-prev-q{background:none;border-color:rgba(0,255,245,.2);color:var(--dim);}
+.btn-prev-q:hover{border-color:var(--cyan);color:var(--cyan);}
+.btn-next-q{background:linear-gradient(135deg,rgba(0,255,245,.15),rgba(177,74,237,.15));
+  border-color:rgba(0,255,245,.4);color:var(--cyan);
+  box-shadow:0 0 15px rgba(0,255,245,.1);}
+.btn-next-q:hover{box-shadow:0 0 25px rgba(0,255,245,.25);transform:translateX(3px);}
+.btn-submit-q{
+  background:linear-gradient(135deg,var(--gold),#ff8c00);
+  border-color:var(--gold);color:var(--bg);
+  box-shadow:0 0 20px rgba(255,214,10,.3);
+  animation:submitPulse 2s ease-in-out infinite;
+}
+@keyframes submitPulse{50%{box-shadow:0 0 35px rgba(255,214,10,.5);}}
+.btn-submit-q:hover{transform:scale(1.05);}
+
+/* COMBO POPUP */
+.combo-pop{
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+  z-index:200;pointer-events:none;
+  font-family:'Orbitron',sans-serif;font-size:2.5rem;font-weight:900;
+  text-align:center;opacity:0;
+}
+.combo-pop.fire{
+  color:var(--gold);
+  text-shadow:0 0 30px var(--gold),0 0 60px rgba(255,214,10,.5);
+  animation:comboAnim .8s ease forwards;
+}
+@keyframes comboAnim{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.5);}
+  30%{opacity:1;transform:translate(-50%,-50%) scale(1.3);}
+  60%{opacity:1;transform:translate(-50%,-50%) scale(1);}
+  100%{opacity:0;transform:translate(-50%,-80%) scale(.9);}
+}
+
+/* ══════════ RESULTS ══════════ */
+#results{display:none;position:relative;z-index:10;min-height:100vh;}
+#results.show{display:block;}
+
+.res-hero{
+  text-align:center;padding:60px 20px 40px;
+  position:relative;
+}
+.res-tag{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--cyan);
+  letter-spacing:.3em;margin-bottom:16px;}
+.res-title{
+  font-family:'Orbitron',sans-serif;font-size:clamp(2rem,6vw,4rem);font-weight:900;
+  background:linear-gradient(135deg,var(--gold),var(--pink));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 25px rgba(255,214,10,.4));
+  margin-bottom:10px;
+}
+
+/* SCORE RING */
+.ring-wrap{width:180px;height:180px;margin:20px auto;position:relative;}
+.ring-wrap svg{transform:rotate(-90deg);}
+.ring-bg-c{stroke:rgba(0,255,245,.08);}
+.ring-fg-c{
+  stroke-dasharray:440;stroke-dashoffset:440;
+  transition:stroke-dashoffset 1.5s cubic-bezier(.25,.46,.45,.94);
+  stroke-linecap:round;
+  filter:url(#glow);
+}
+.ring-text{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+}
+.ring-pct{
+  font-family:'Orbitron',sans-serif;font-size:2.2rem;font-weight:900;
+  line-height:1;
+}
+.ring-lbl{font-family:'Share Tech Mono',monospace;font-size:.6rem;
+  color:var(--dim);letter-spacing:.15em;margin-top:4px;}
+
+/* GRADE TAG */
+.grade-tag{
+  display:inline-block;
+  font-family:'Orbitron',sans-serif;font-size:2.5rem;font-weight:900;
+  padding:6px 24px;border-radius:4px;margin:16px 0;
+  animation:gradePulse 2s ease-in-out infinite;
+}
+.grade-S{background:linear-gradient(135deg,var(--gold),#ff8c00);color:var(--bg);box-shadow:0 0 30px rgba(255,214,10,.5);}
+.grade-A{background:linear-gradient(135deg,var(--cyan),var(--purple));color:var(--bg);box-shadow:0 0 30px rgba(0,255,245,.4);}
+.grade-B{background:linear-gradient(135deg,var(--green),#00cc11);color:var(--bg);box-shadow:0 0 30px rgba(57,255,20,.4);}
+.grade-C{background:linear-gradient(135deg,#ff8c00,var(--pink));color:white;box-shadow:0 0 30px rgba(255,140,0,.4);}
+.grade-D{background:rgba(255,0,110,.15);border:2px solid var(--pink);color:var(--pink);}
+@keyframes gradePulse{50%{transform:scale(1.04);}}
+
+/* STATS CARDS */
+.res-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:12px;max-width:700px;margin:0 auto 40px;padding:0 20px;
+}
+.res-stat{
+  background:var(--card);border:1px solid rgba(0,255,245,.1);
+  border-radius:4px;padding:18px 12px;text-align:center;position:relative;
+  overflow:hidden;
+}
+.res-stat::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+}
+.rs-correct::after{background:linear-gradient(90deg,transparent,var(--green),transparent);}
+.rs-wrong::after{background:linear-gradient(90deg,transparent,var(--pink),transparent);}
+.rs-skip::after{background:linear-gradient(90deg,transparent,var(--dim),transparent);}
+.res-stat-val{
+  font-family:'Orbitron',sans-serif;font-size:2.2rem;font-weight:900;
+  line-height:1;margin-bottom:4px;
+}
+.rs-correct .res-stat-val{color:var(--green);text-shadow:0 0 20px var(--green);}
+.rs-wrong .res-stat-val{color:var(--pink);text-shadow:0 0 20px var(--pink);}
+.rs-skip .res-stat-val{color:var(--dim);}
+.res-stat-lbl{font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--dim);
+  letter-spacing:.1em;text-transform:uppercase;}
+
+/* REVIEW */
+.review-wrap{max-width:800px;margin:0 auto;padding:0 20px 100px;}
+.review-head{
+  font-family:'Orbitron',sans-serif;font-size:.85rem;font-weight:700;
+  color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;
+  padding:16px 0 12px;border-bottom:1px solid rgba(0,255,245,.1);margin-bottom:16px;
+  display:flex;align-items:center;gap:10px;
+}
+.review-head::before{content:'';display:block;width:3px;height:18px;
+  background:var(--cyan);box-shadow:0 0 8px var(--cyan);}
+
+.rev-item{
+  background:var(--card);border:1px solid rgba(0,255,245,.07);
+  border-radius:4px;padding:14px 16px;margin-bottom:8px;
+  border-left:3px solid;position:relative;
+  transition:all .15s;
+}
+.rev-item.rc{border-left-color:var(--green);}
+.rev-item.rw{border-left-color:var(--pink);}
+.rev-item.rs{border-left-color:rgba(42,74,90,.8);}
+.rev-item:hover{background:rgba(0,255,245,.02);}
+
+.rev-q{font-size:.9rem;font-weight:500;line-height:1.5;margin-bottom:8px;}
+.rev-icon{margin-right:8px;font-size:.8rem;}
+.rev-ans{display:flex;gap:16px;flex-wrap:wrap;}
+.rev-ans span{font-family:'Share Tech Mono',monospace;font-size:.72rem;}
+.rev-your-c{color:var(--green);}
+.rev-your-w{color:var(--pink);}
+.rev-correct{color:var(--green);}
+.rev-skip-lbl{color:var(--dim);}
+
+/* ACTIONS */
+.res-actions{
+  display:flex;gap:12px;justify-content:center;
+  padding:0 20px 60px;flex-wrap:wrap;
+}
+.btn-res{
+  font-family:'Orbitron',sans-serif;font-size:.75rem;font-weight:700;
+  letter-spacing:.1em;padding:14px 28px;border-radius:3px;cursor:pointer;
+  border:1px solid;transition:all .2s;
+}
+.btn-home-r{
+  background:linear-gradient(135deg,rgba(0,255,245,.1),rgba(177,74,237,.1));
+  border-color:rgba(0,255,245,.4);color:var(--cyan);
+}
+.btn-home-r:hover{box-shadow:0 0 25px rgba(0,255,245,.2);transform:translateY(-2px);}
+.btn-retry-r{
+  background:linear-gradient(135deg,rgba(255,214,10,.1),rgba(255,140,0,.1));
+  border-color:rgba(255,214,10,.4);color:var(--gold);
+}
+.btn-retry-r:hover{box-shadow:0 0 25px rgba(255,214,10,.2);transform:translateY(-2px);}
+
+/* TIMEUP */
+.timeup-ov{display:none;position:fixed;inset:0;z-index:500;
+  background:rgba(2,4,8,.9);backdrop-filter:blur(10px);
+  align-items:center;justify-content:center;text-align:center;}
+.timeup-ov.show{display:flex;}
+.timeup-box{
+  border:2px solid var(--pink);border-radius:8px;
+  background:rgba(255,0,110,.06);padding:48px;max-width:360px;
+  animation:timeupIn .4s cubic-bezier(.34,1.4,.64,1);
+}
+@keyframes timeupIn{from{transform:scale(0) rotate(-10deg);}to{transform:none;}}
+.timeup-icon{font-size:3.5rem;margin-bottom:12px;animation:spin 2s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.timeup-title{font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:900;
+  color:var(--pink);text-shadow:0 0 20px var(--pink);margin-bottom:8px;}
+.timeup-sub{font-family:'Share Tech Mono',monospace;font-size:.8rem;color:var(--dim);
+  margin-bottom:24px;}
+.btn-timeup{
+  width:100%;padding:14px;background:var(--pink);border:none;color:white;
+  font-family:'Orbitron',sans-serif;font-size:.85rem;font-weight:700;
+  letter-spacing:.1em;cursor:pointer;border-radius:3px;
+  box-shadow:0 0 25px rgba(255,0,110,.4);transition:all .15s;
+}
+.btn-timeup:hover{transform:scale(1.02);box-shadow:0 0 40px rgba(255,0,110,.6);}
+
+/* GLITCH EFFECT */
+.glitch{position:relative;}
+.glitch::before,.glitch::after{
+  content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.glitch::before{
+  background:linear-gradient(135deg,var(--cyan),var(--purple));
+  animation:glitch1 3s infinite;clip-path:polygon(0 0,100% 0,100% 35%,0 35%);
+}
+.glitch::after{
+  background:linear-gradient(135deg,var(--pink),var(--gold));
+  animation:glitch2 3s infinite;clip-path:polygon(0 65%,100% 65%,100% 100%,0 100%);
+}
+@keyframes glitch1{
+  0%,90%,100%{transform:none;}
+  92%{transform:translate(-3px,1px);}
+  94%{transform:translate(3px,-1px);}
+  96%{transform:translate(-1px,2px);}
+}
+@keyframes glitch2{
+  0%,90%,100%{transform:none;}
+  92%{transform:translate(3px,-1px);}
+  94%{transform:translate(-3px,1px);}
+  96%{transform:translate(2px,-2px);}
+}
+
+/* MISC */
+.hidden{display:none!important;}
+.neon-line{height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+  margin:0;opacity:.4;}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cur"></div>
+<div id="cur2"></div>
+
+<!-- DECORATIVE -->
+<div class="grid-bg"></div>
+<div class="scan"></div>
+<div class="corner tl"></div>
+<div class="corner tr"></div>
+<div class="corner bl"></div>
+<div class="corner br"></div>
+
+<!-- COMBO POPUP -->
+<div class="combo-pop" id="comboPop"></div>
+
+<!-- ════════════════ HOME ════════════════ -->
+<div id="home">
+  <div class="hero">
+    <div class="hero-eyebrow">// INITIALIZING EXAM PROTOCOL //</div>
+    <h1 class="hero-title glitch" data-text="MATHSCORE X">MATHSCORE X</h1>
+    <div class="hero-sub">CLASS X · PRE-FINAL · FEBRUARY 2026</div>
+    <div class="hero-sub" style="color:var(--dim);font-size:.75rem;">TELANGANA DISTRICT COMMON EXAMINATIONS — MCQ ARENA</div>
+    <div class="hero-badges">
+      <span class="hbadge">MATHEMATICS</span>
+      <span class="hbadge">PART-B OBJECTIVE</span>
+      <span class="hbadge">MULTI-DISTRICT</span>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-val" id="s-papers">27</div><div class="stat-lbl">Papers</div></div>
+    <div class="stat-item"><div class="stat-val" id="s-qs">540+</div><div class="stat-lbl">Questions</div></div>
+    <div class="stat-item"><div class="stat-val">20</div><div class="stat-lbl">Marks Each</div></div>
+    <div class="stat-item"><div class="stat-val">2026</div><div class="stat-lbl">Pre-Final</div></div>
+  </div>
+
+  <div class="filter-bar">
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input type="text" id="searchBox" placeholder="Search by district or code..." oninput="filterPapers(this.value)">
+    </div>
+  </div>
+
+  <div class="papers-grid" id="papersGrid"></div>
+</div>
+
+<!-- ════════════════ TIMER MODAL ════════════════ -->
+<div class="overlay" id="timerModal">
+  <div class="modal">
+    <div class="modal-corner mc-tl"></div>
+    <div class="modal-corner mc-br"></div>
+    <div class="modal-tag">// CONFIGURE SESSION //</div>
+    <div class="modal-title" id="mTitle">Paper Name</div>
+    <div class="modal-sub" id="mSub">20 questions · 1 mark each</div>
+    <div class="modal-section-label">Select Duration</div>
+    <div class="time-grid">
+      <button class="tbtn" onclick="selTime(10,this)">10</button>
+      <button class="tbtn" onclick="selTime(15,this)">15</button>
+      <button class="tbtn sel" onclick="selTime(20,this)">20</button>
+      <button class="tbtn" onclick="selTime(25,this)">25</button>
+      <button class="tbtn" onclick="selTime(30,this)">30</button>
+    </div>
+    <div class="modal-section-label">Custom (minutes)</div>
+    <div class="custom-row">
+      <input type="number" id="customMin" min="1" max="180" placeholder="—" oninput="selCustom(this)">
+      <label>minutes</label>
+    </div>
+    <button class="btn-launch" onclick="launchQuiz()"><span>⚡ LAUNCH QUIZ</span></button>
+    <button class="btn-cancel-modal" onclick="closeModal()">[ CANCEL ]</button>
+  </div>
+</div>
+
+<!-- ════════════════ QUIZ ════════════════ -->
+<div id="quiz">
+  <div class="hud">
+    <div class="hud-inner">
+      <button class="hud-back" onclick="goHome()">◀ EXIT</button>
+      <div class="hud-paper">
+        <div class="hud-paper-name" id="hudName">—</div>
+        <div class="hud-paper-code" id="hudCode">—</div>
+      </div>
+      <div class="hud-score-display" id="hudScore">SCORE: 0</div>
+      <div class="hud-timer" id="hudTimer">20:00</div>
+    </div>
+    <div class="progress-rail"><div class="progress-fill" id="timerBar" style="width:100%"></div></div>
+  </div>
+
+  <div class="q-nav-strip" id="qNavStrip"></div>
+  <div class="q-area">
+    <div id="qContainer"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;gap:12px;flex-wrap:wrap;">
+      <button class="btn-qnav btn-prev-q" id="btnPrev" onclick="prevQ()">◀ PREV</button>
+      <span style="font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--dim)" id="qIndexLbl"></span>
+      <button class="btn-qnav btn-next-q" id="btnNext" onclick="nextQ()">NEXT ▶</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ RESULTS ════════════════ -->
+<div id="results">
+  <div class="res-hero">
+    <div class="res-tag">// SESSION COMPLETE //</div>
+    <div class="res-title" id="resPaperTitle">—</div>
+    <div id="resTitleSub" style="font-family:'Share Tech Mono',monospace;font-size:.8rem;color:var(--dim);margin-bottom:24px;"></div>
+
+    <div class="ring-wrap">
+      <svg width="180" height="180" viewBox="0 0 180 180">
+        <defs>
+          <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <circle class="ring-bg-c" cx="90" cy="90" r="70" fill="none" stroke-width="8"/>
+        <circle class="ring-fg-c" id="ringFg" cx="90" cy="90" r="70" fill="none" stroke-width="8" stroke="var(--cyan)"/>
+      </svg>
+      <div class="ring-text">
+        <div class="ring-pct" id="ringPct" style="color:var(--cyan);text-shadow:0 0 20px var(--cyan)">0%</div>
+        <div class="ring-lbl">ACCURACY</div>
+      </div>
+    </div>
+
+    <div id="gradeBadge" class="grade-tag grade-A">A+</div>
+    <div style="font-family:'Share Tech Mono',monospace;font-size:.8rem;color:var(--dim);margin-top:8px;" id="resMsg"></div>
+  </div>
+
+  <div class="res-stats">
+    <div class="res-stat rs-correct">
+      <div class="res-stat-val" id="resCorrect">0</div>
+      <div class="res-stat-lbl">✓ Correct</div>
+    </div>
+    <div class="res-stat rs-wrong">
+      <div class="res-stat-val" id="resWrong">0</div>
+      <div class="res-stat-lbl">✗ Wrong</div>
+    </div>
+    <div class="res-stat rs-skip">
+      <div class="res-stat-val" id="resSkip">0</div>
+      <div class="res-stat-lbl">— Skipped</div>
+    </div>
+  </div>
+
+  <div class="res-actions">
+    <button class="btn-res btn-home-r" onclick="goHome()">◀ ALL PAPERS</button>
+    <button class="btn-res btn-retry-r" onclick="retryPaper()">⟳ RETRY</button>
+  </div>
+
+  <div class="review-wrap">
+    <div class="review-head">Answer Review</div>
+    <div id="reviewList"></div>
+  </div>
+</div>
+
+<!-- TIME UP -->
+<div class="timeup-ov" id="timeupOv">
+  <div class="timeup-box">
+    <div class="timeup-icon">⏰</div>
+    <div class="timeup-title">TIME'S UP</div>
+    <div class="timeup-sub">// SESSION TERMINATED //</div>
+    <button class="btn-timeup" onclick="finishQuiz()">VIEW RESULTS ▶</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// CURSOR
+// ══════════════════════════════════════════════
+const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
+let mx=0,my=0,cx=0,cy=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function moveDot(){cx+=(mx-cx)*.18;cy+=(my-cy)*.18;cur2.style.left=cx+'px';cur2.style.top=cy+'px';requestAnimationFrame(moveDot);})();
+document.addEventListener('mousedown',()=>cur.classList.add('clicking'));
+document.addEventListener('mouseup',()=>cur.classList.remove('clicking'));
+
+// ══════════════════════════════════════════════
+// PARTICLES
+// ══════════════════════════════════════════════
+const colors=['var(--cyan)','var(--purple)','var(--pink)','var(--gold)'];
+for(let i=0;i<25;i++){
+  const p=document.createElement('div');
+  p.className='particle';
+  const sz=Math.random()*3+1;
+  const c=colors[Math.floor(Math.random()*colors.length)];
+  p.style.cssText=`width:${sz}px;height:${sz}px;background:${c};box-shadow:0 0 ${sz*3}px ${c};
+    left:${Math.random()*100}vw;animation-duration:${8+Math.random()*15}s;
+    animation-delay:${-Math.random()*20}s;opacity:.6;`;
+  document.body.appendChild(p);
+}
+
+// ══════════════════════════════════════════════
+// ALL MCQ DATA
+// ══════════════════════════════════════════════
+const PAPERS=[
+  {code:"JK-82",name:"Rajanna Sircilla",district:"Rajanna Sircilla",questions:[
+    {q:"Which of the following is irrational?",opts:["log₁₀10","log₁₀2","logₐa","log₁₀(1)"],ans:"B"},
+    {q:"The number of subsets of A = {1, 2}",opts:["2","4","0","None"],ans:"B"},
+    {q:"The degree of constant polynomial is:",opts:["2","√2","0","1"],ans:"C"},
+    {q:"2x+3y+5=0, 4x+6y+10=0 are ___ lines.",opts:["parallel","intersecting","coinciding","all the above"],ans:"C"},
+    {q:"Sin²θ + (1 − Sin²θ) =",opts:["0","1","2","10"],ans:"B"},
+    {q:"If a, b, c are in GP, then b =",opts:["a+c","√(ac)","a−c","(a−c)/2"],ans:"B"},
+    {q:"The angle between two parallel lines",opts:["0°","180°","not defined","90°"],ans:"A"},
+    {q:"In △ABC, DE∥BC, then AD/DB =",opts:["AE/AC","AE/EC","AB/DB","DE/BC"],ans:"B"},
+    {q:"In adjacent figure, AB is diameter then ∠C is",opts:["90°","180°","0°","360°"],ans:"A"},
+    {q:"Volume of cone 3cm³ then volume of cylinder is (same radius and height)",opts:["3cm³","9cm³","6cm³","12cm³"],ans:"B"},
+    {q:"Sin25° × Cosec25° =",opts:["0","1","2","−1"],ans:"B"},
+    {q:"Shadow of tree is √3 times height, angle between sunrays and shadow is",opts:["90°","60°","30°","45°"],ans:"C"},
+    {q:"Letter selected from MATHEMATICS, probability of getting 'A' is",opts:["2/11","3/11","4/11","1/11"],ans:"A"},
+    {q:"Mode of vehicle type data (bikes most frequent)",opts:["cars","busses","bikes","none"],ans:"C"},
+    {q:"a, b are zeros of x²−5x+6 then (a+b)² =",opts:["10","25","20","36"],ans:"B"},
+    {q:"Areas of similar triangles 25:49, ratio of corresponding sides is",opts:["5:7","7:5","25:49","49:25"],ans:"A"},
+    {q:"A = {x: x is single digit whole number} then n(A) =",opts:["9","10","0","5"],ans:"B"},
+    {q:"Angle between tangent and radius of a circle is",opts:["right","obtuse","acute","complete"],ans:"A"},
+    {q:"a + (n−1)d is nᵗʰ term of",opts:["G.P.","A.P.","both A, B","none"],ans:"B"},
+    {q:"Which of the following is Ramanujan number?",opts:["2917","1729","2719","9712"],ans:"B"}
+  ]},
+  {code:"NK-8(A)",name:"Nagarkurnool",district:"Nagarkurnool",questions:[
+    {q:"Distance between (sinθ,0) and (0,cosθ) where 0<θ<90° is",opts:["1","2","1/2","0"],ans:"A"},
+    {q:"If x + 1/x = 3 then x² + 1/x² =",opts:["6","7","8","9"],ans:"B"},
+    {q:"If A ⊂ B then A ∪ B =",opts:["B","U","A","∅"],ans:"A"},
+    {q:"Average of first 5 prime numbers is",opts:["5.2","5.4","5.6","5.8"],ans:"D"},
+    {q:"Sum of probabilities of all elementary events =",opts:["0","1","2","3"],ans:"B"},
+    {q:"Quadratic polynomial: sum=−3, product=2 is",opts:["x²+6x+5=0","x²−x−6=0","x²+3x+2=0","x²+3x+2=0"],ans:"D"},
+    {q:"Slope of line joining (5,8) and (6,10) is",opts:["2","4/3","2/3","4/5"],ans:"A"},
+    {q:"Value of sin²29° + sin²61° is",opts:["−1","1","0","2"],ans:"B"},
+    {q:"Cone and cylinder equal base radii and equal heights, ratio of volumes is",opts:["3:1","1:1","1:3","1:3"],ans:"C"},
+    {q:"Angle between tangent and radius at contact is",opts:["60°","30°","45°","90°"],ans:"D"},
+    {q:"△ABC, DE∥BC, AD:DB=2:3, AC=10cm, AE=",opts:["4","6","5","15"],ans:"A"},
+    {q:"Common ratio of G.P. 25,−5,1,−1/5,...",opts:["−5","−1/5","1/5","5"],ans:"B"},
+    {q:"Equation x−4y=5 has",opts:["Two solutions","Unique solution","No solution","Infinitely many"],ans:"D"},
+    {q:"Which is true?",opts:["P(E)>P(Ē)","P(E)+P(Ē)=1","P(E)<P(Ē)","P(E)+P(Ē)>1"],ans:"B"},
+    {q:"HCF of 12 and 21 is",opts:["4","7","3","6"],ans:"C"},
+    {q:"If 5cosA−4=0 then sinA is",opts:["3/4","4/3","3/5","4/5"],ans:"C"},
+    {q:"2tan30°/(1−tan²30°) equals",opts:["cos60°","sin60°","tan60°","sin30°"],ans:"C"},
+    {q:"Midpoint of (a+b,a−b) and (−b,b) is",opts:["(a,b)","(a,0)","(a,a/2)","((a+b)/2,a/2)"],ans:"B"},
+    {q:"Pole 6m casts shadow 2√3m, sun's elevation is",opts:["30°","45°","60°","90°"],ans:"C"},
+    {q:"AP: d=−4, a₇=4, first term 'a' equals",opts:["6","7","20","28"],ans:"D"}
+  ]},
+  {code:"J-8A",name:"Jayashankar Bhupalpally",district:"Jayashankar",questions:[
+    {q:"HCF(90,144) remainder",opts:["3","0","6","2"],ans:"A"},
+    {q:"A and B disjoint sets, A∩B =",opts:["∅","0","1","None"],ans:"A"},
+    {q:"Which is a polynomial?",opts:["2x","1/x²","m²−√2m+2","All the above"],ans:"C"},
+    {q:"Quadratic equation with roots −5 and 2 is",opts:["x²+x−5=0","2x²−5x−5=0","x²+3x−10=0","x²−3x−10=0"],ans:"C"},
+    {q:"A={1,2,3,4}, number of subsets =",opts:["4","8","16","Infinite"],ans:"C"},
+    {q:"Product of zeroes of x³−2x²+3x−4 is",opts:["−2","2/3","4","−4"],ans:"C"},
+    {q:"Solution for 2x−3y=5?",opts:["(1,1)","(−1,1)","(5,−1)","All the above"],ans:"C"},
+    {q:"Solutions for 2x+y=5 and 4x+2y=10",opts:["0","1","2","Many"],ans:"D"},
+    {q:"Sum of first 100 natural numbers",opts:["1000","1050","5000","5050"],ans:"D"},
+    {q:"G.P. aₙ=2(0.5)ⁿ⁻¹, first term is",opts:["5","1","2","0.5"],ans:"C"},
+    {q:"Centroid of (4,6),(2,−2),(2,5) is",opts:["(1,1/3)","(3,3)","(0,3)","(3,0)"],ans:"B"},
+    {q:"Distance between (cosθ,0) and (0,sinθ)",opts:["0","1","cosθ+sinθ","cosθ−sinθ"],ans:"B"},
+    {q:"NOT a measure of central tendency?",opts:["Median","Mean","Mode","Range"],ans:"D"},
+    {q:"Which is not defined?",opts:["sin90°","cos0°","sec90°","cos90°"],ans:"C"},
+    {q:"Height = shadow of man, angle of elevation of sun",opts:["30°","45°","90°","0°"],ans:"B"},
+    {q:"'a' is side of equilateral triangle, area is",opts:["a²","√3a²/4","√3a","√a"],ans:"B"},
+    {q:"△ABC and △PQR similar, areas 9 and 16cm², BC=4.5m, QR=",opts:["2.5","3.5","6","6"],ans:"C"},
+    {q:"Two circles radii 5cm and 3cm touch externally. Distance =",opts:["4cm","5cm","8cm","2cm"],ans:"C"},
+    {q:"Probability of red face card from deck",opts:["5/26","3/26","2/13","1/13"],ans:"B"},
+    {q:"Lateral surface area of hemisphere is",opts:["πr²","2πr²","3πr²","4πr²"],ans:"B"}
+  ]},
+  {code:"MP-11A",name:"Mancherial",district:"Mancherial",questions:[
+    {q:"Decimal expansion of 25/100",opts:["1","0.25","2","2.5"],ans:"B"},
+    {q:"Central tendency depending on all observations",opts:["Mean","Range","Median","Mode"],ans:"A"},
+    {q:"3log2 =",opts:["3","8","1","3"],ans:"B"},
+    {q:"Two dice rolled, probability of sum=4",opts:["1/12","4/9","7/36","4/36"],ans:"A"},
+    {q:"If A⊂B, A∪B =",opts:["A∩B","∅","A","B"],ans:"D"},
+    {q:"Shadow equals height, angle of elevation",opts:["30°","45°","60°","90°"],ans:"B"},
+    {q:"Quadratic polynomial with zeroes −√3 and √3",opts:["x²+√3x+9","x²+9","x²−9","√3"],ans:"C"},
+    {q:"tanθ=√3, which is NOT true?",opts:["cotθ=1/√3","sinθ=3/2","cosθ=1/2","sinθ=2/√3"],ans:"B"},
+    {q:"3x+2y=12 has",opts:["Many solutions","No solution","Unique solution","only two solutions"],ans:"A"},
+    {q:"Area of square inscribed in circle of radius 6cm",opts:["36","18","9","64"],ans:"A"},
+    {q:"One point in common with circle is",opts:["tangent","secant","chord","radius"],ans:"A"},
+    {q:"4x²−2x+3=0, product of roots =",opts:["3/4","2/3","1/3","−2"],ans:"A"},
+    {q:"Slant height of cone l =",opts:["√(r²+h²)","√(r²+l²)","√(r²−h²)","√(h²−r²)"],ans:"A"},
+    {q:"a,b,c in A.P., b =",opts:["ac","(c−a)/2","(a+c)/2","√(ac)"],ans:"C"},
+    {q:"Area of triangle (0,0),(8,0),(0,8)",opts:["64","32","16","8"],ans:"B"},
+    {q:"AB=2,BC=4,BE=3 cm, CD = ___ cm",opts:["9","6","8","4"],ans:"B"},
+    {q:"Point on x-axis",opts:["(0,−2)","(2,0)","(0,4)","(0,2)"],ans:"B"},
+    {q:"log16−log2 =",opts:["log14","log8","log4","log32"],ans:"C"},
+    {q:"A.P.: S₂=7, S₄=15, a₃ =",opts:["2","10","7","8"],ans:"D"},
+    {q:"Tangents from outside point to circle",opts:["Infinity","1","2","4"],ans:"C"}
+  ]},
+  {code:"V-11A",name:"Vikarabad",district:"Vikarabad",questions:[
+    {q:"HCF of 14 and 26",opts:["4","2","7","13"],ans:"B"},
+    {q:"A,B disjoint n(A)=6, n(A∪B)=9, n(B)=",opts:["4","3","5","2"],ans:"B"},
+    {q:"P(x)=6x²+5x²+3x−8, P(0)=",opts:["6","22","−8","8"],ans:"C"},
+    {q:"4 pencil boxes + 5 notebooks = Rs.120. Equation:",opts:["4x+5y=120","9x+y=120","x+5y=120","x+y=120"],ans:"A"},
+    {q:"Which equation has '2' as root?",opts:["x²−4x+5=0","x²+3x−12=0","2x²−7x+6=0","2x²−4x−2=0"],ans:"C"},
+    {q:"In A.P. aₙ=a+(n−1)d, 'n' represents",opts:["first term","common difference","number of terms","nᵗʰ term"],ans:"C"},
+    {q:"Slope of line through (a,b) and (−a,−b)",opts:["2a","0","b/a","b/a"],ans:"C"},
+    {q:"Similar vs Congruent — which statement is true?",opts:["only (i)","only (ii)","Both","Neither"],ans:"B"},
+    {q:"Tangents from external point to circle",opts:["2","1","4","Infinite"],ans:"A"},
+    {q:"Surface areas 4:9, ratio of volumes",opts:["27:8","9:4","16:81","8:27"],ans:"D"},
+    {q:"Sum of roots of 4x²=5",opts:["0","1/4","5/4","4"],ans:"A"},
+    {q:"θ=45°, sin2θ/(1−cos2θ) =",opts:["−1","1","2","0"],ans:"B"},
+    {q:"Which is NOT true?",opts:["sinθ=√(1−cos²θ)","tan²θ−sec²θ=−1","cosθ·cosecθ=1","cotθ·tanθ=1"],ans:"C"},
+    {q:"Elevation increases 0°→90°, shadow",opts:["No change","Increases","Decreases","None"],ans:"C"},
+    {q:"P(getting first rank)=0.89, P(not) =",opts:["0.01","0.11","0.011","0.001"],ans:"B"},
+    {q:"Median of x+4,x+2,x−1,x+3,y−2 is 12, x=",opts:["13","11","9","10"],ans:"B"},
+    {q:"△ABC~△DEF, AB:DE=9:16, areas ratio",opts:["3:4","4:3","81:256","256:81"],ans:"C"},
+    {q:"a,b,c in G.P., b =",opts:["(a+c)/2","ac","√(ac)","a²c²"],ans:"C"},
+    {q:"Product of zeroes of 2x²+3x−4",opts:["2","−2","−4","4"],ans:"B"},
+    {q:"Lateral surface area cube 64cm², side =",opts:["6cm","3cm","4cm","5cm"],ans:"C"}
+  ]},
+  {code:"K-8A",name:"Khammam",district:"Khammam",questions:[
+    {q:"A⊂B, n(A)=7, n(B)=10, n(A−B)=",opts:["3","17","0","1"],ans:"C"},
+    {q:"log₁₀25 + log₁₀4 =",opts:["100","2","10","29"],ans:"B"},
+    {q:"NOT a polynomial?",opts:["x²+5x²−7","x²+5x+6","5","√x+7√x−1"],ans:"D"},
+    {q:"Polynomial with log₂8 and tan²60° as zeroes",opts:["x²−4x+1","x²+6x+9","x²−6x+9","x²−6x+27"],ans:"C"},
+    {q:"LCM of first composite and smallest odd prime",opts:["4","3","8","12"],ans:"D"},
+    {q:"n(A)=5, subsets of A =",opts:["10","32","25","7"],ans:"B"},
+    {q:"sin(A+B)=1, tan(A−B)=1, ∠B =",opts:["15°","32.5°","37.5°","35°"],ans:"A"},
+    {q:"Formula for area of sector",opts:["θ/360°×πr²","θ/360°×2πr","πr²/180°","2πr/180°"],ans:"A"},
+    {q:"P(E)−P(Ē)=0.34, P(E)=",opts:["0.66","0.67","0.68","0"],ans:"B"},
+    {q:"Which is an A.P.?",opts:["1,2,4,8","4,7,10,13","3,9,27,81","2,4,8,16"],ans:"B"},
+    {q:"Slope joining (2,3) and (x,11) is 2, x=",opts:["2","4","3","5"],ans:"B"},
+    {q:"Ladder 15m, makes 60° with wall, height =",opts:["15√3m","15/2m","7.5m","15m"],ans:"C"},
+    {q:"3(sin²A+cos²A)−5(tan²A−sec²A) / (cosec²A−cot²A)²",opts:["−1","1","3","4"],ans:"D"},
+    {q:"Geometric Mean of 3, 27",opts:["10","9","8","7"],ans:"B"},
+    {q:"2x+3y+1=0 and 6x+(k−1)y+7=0 no solution, k=",opts:["10","8","3","5"],ans:"A"},
+    {q:"f₀=20,f₁=25,f₂=10,A=15,h=5 Mode =",opts:["15","32","21.5","22.5"],ans:"C"},
+    {q:"NOT a Pythagorean triplet?",opts:["(7,24,25)","(3,4,5)","(8,15,16)","(5,12,13)"],ans:"C"},
+    {q:"Volume of cube 125cm³, TSA =",opts:["900cm²","60cm²","150cm²","125cm²"],ans:"C"},
+    {q:"Product of consecutive even integers 288, equation",opts:["x²+x−288=0","x²+2x−288=0","x²−2x+288=0","x²−2x−288=0"],ans:"B"},
+    {q:"A=(−1,2), midpoint of BC=(2,2), centroid =",opts:["(1,2)","(2,1)","(1/3,2)","(1,0)"],ans:"A"}
+  ]},
+  {code:"R-8A",name:"Rangareddy",district:"Rangareddy",questions:[
+    {q:"LCM of least prime and least composite",opts:["2","4","8","6"],ans:"B"},
+    {q:"A,B disjoint, n(A∩B) =",opts:["∅","1","−1","0"],ans:"D"},
+    {q:"Sum of roots of 4x²−9=0",opts:["3/2","2/3","0","−3/2"],ans:"C"},
+    {q:"Lines x+y=6 and y−y=2 are",opts:["Parallel","Coincident","Intersecting","Dependent"],ans:"C"},
+    {q:"Which is a quadratic equation?",opts:["x³−5=0","x²+5=0","x²−x(x+4)=0","(x+1)(x+3)=0"],ans:"D"},
+    {q:"10th term of A.P. 10,9,8,...",opts:["0","1","2","−2"],ans:"B"},
+    {q:"Midpoint of (−3,2) and (6,4)",opts:["(3,2)","(3/2,2)","(3,3)","(1,2)"],ans:"C"},
+    {q:"Similar triangles sides 9:4, ratio of perimeters",opts:["3:2","81:16","9:4","2:3"],ans:"C"},
+    {q:"Angle between radius and tangent",opts:["60°","90°","180°","270°"],ans:"B"},
+    {q:"CSA of cone πrl, l stands for",opts:["Length","Height","Radius","Slant height"],ans:"D"},
+    {q:"sin(90°−θ)=3/2, θ =",opts:["60°","30°","45°","90°"],ans:"B"},
+    {q:"Die thrown, probability of composite number",opts:["1/6","3/6","2/3","1/3"],ans:"B"},
+    {q:"AM of first n natural numbers",opts:["(n+1)/2","n(n+1)","(n(n+1))/2","n−1"],ans:"A"},
+    {q:"Ten's digit in 6¹⁵×5²⁰",opts:["0","6","5","4"],ans:"A"},
+    {q:"A⊂B, A−B =",opts:["A","B","∅","U"],ans:"C"},
+    {q:"nᵗʰ term of G.P. formula",opts:["arⁿ","arⁿ⁻¹","a+(n−1)d","(n/2)(2a+1)"],ans:"B"},
+    {q:"a<0, (−a,a) lies in which quadrant?",opts:["Q₁","Q₂","Q₃","Q₄"],ans:"A"},
+    {q:"Degrees of p(x) and g(x) are 3,4, degree of p(x)·g(x)",opts:["4","3","7","12"],ans:"C"},
+    {q:"△ABC~△PQR, ∠Q+∠R=120°, sinA =",opts:["1","1/2","√3/2","0"],ans:"A"},
+    {q:"Probability of sure event",opts:["0","1","2","1/2"],ans:"B"}
+  ]},
+  {code:"RJ-82",name:"Jagtial",district:"Jagtial",questions:[
+    {q:"A,B disjoint, n(A∩B) =",opts:["{ }","0","∅","All the above"],ans:"D"},
+    {q:"LCM of first two prime numbers",opts:["2","3","4","6"],ans:"D"},
+    {q:"Zeroes of p(x)=x²−4",opts:["±2","−2","Both A and B","None"],ans:"C"},
+    {q:"x+y+4=0 and 2x+2ky+8=0 unique line, k =",opts:["1","4","2","8"],ans:"A"},
+    {q:"Discriminant of 2x²−3x+2=0 is a",opts:["Natural number","Whole number","Integer","Irrational number"],ans:"C"},
+    {q:"12th term of A.P. 10,8,6,4,...",opts:["−8","−10","−6","−12"],ans:"D"},
+    {q:"Centroid divides median in ratio",opts:["1:2","2:1","1:3","3:1"],ans:"B"},
+    {q:"NOT a value of sinθ (0°<θ<90°)?",opts:["1/2","1/√2","3/√5","10/3"],ans:"D"},
+    {q:"P(E)=0.012, P(Ē) =",opts:["0.98","0.098","0.998","0.988"],ans:"D"},
+    {q:"Slope of (a,7) and (−3,−5) is 3/2, a =",opts:["−5","+5","−4","+4"],ans:"B"},
+    {q:"cotθ−cosecθ=5, cotθ+cosecθ =",opts:["1/5","−1","5","−5"],ans:"A"},
+    {q:"Radius of sphere 1cm, volume ___ cu.cm",opts:["22/21","88/21","22/3","88/3"],ans:"B"},
+    {q:"P={a,b,c,d}, number of subsets",opts:["4","8","12","16"],ans:"D"},
+    {q:"Angle between tangent and radius",opts:["Acute","Obtuse","Right","Straight"],ans:"C"},
+    {q:"G.P. 5th and 7th terms 32 and 128. Common ratio",opts:["2","4","3","1"],ans:"A"},
+    {q:"Median of factors of 36",opts:["2","3","4","6"],ans:"C"},
+    {q:"Sin30°×tan45°×cos90° =",opts:["1/4","0","1","√2"],ans:"B"},
+    {q:"Diameter endpoints (3,−5) and (−1,1), centre",opts:["(1,−2)","(1,2)","(1,−1)","(−2,−2)"],ans:"A"},
+    {q:"△ABC angle B right. Sin(A+C) =",opts:["0","1","1/2","−1"],ans:"B"},
+    {q:"For any base a>0, a≠1, log1 =",opts:["1","10","0","Not defined"],ans:"C"}
+  ]},
+  {code:"C-8A",name:"Khammam / Nizamabad",district:"Khammam/Nizamabad",questions:[
+    {q:"x-axis divides (5,4) and (2,−3) in ratio",opts:["5:2","3:4","2:5","4:3"],ans:"D"},
+    {q:"Quadratic polynomial: zeroes (4+√5) and (4−√5)",opts:["x²−8x−11","x²−11x+8","x²−8x+11","x²−8x+3"],ans:"C"},
+    {q:"(cos30°+cos45°)−(sin60°+sin45°) =",opts:["1","(√3+√2)/2","0","√3+√2"],ans:"C"},
+    {q:"Range of first ten prime numbers",opts:["25","21","27","17"],ans:"B"},
+    {q:"B = {english alphabets in INDIA}, subsets of B =",opts:["2","4","8","16"],ans:"C"},
+    {q:"log₅(x+y)+log₅(x−y)=4, x²−y² =",opts:["4","8","16","10"],ans:"C"},
+    {q:"Coincident with 7x−8y=9",opts:["8x−9y=7","−14x+16y+18=0","21x−24y=18","14x+16y=18"],ans:"B"},
+    {q:"n=2³×3⁴×5⁴×7, consecutive zeroes",opts:["2","3","4","7"],ans:"B"},
+    {q:"Infinitely many solutions condition",opts:["a₁/a₂≠b₁/b₂","a₁/a₂=b₁/b₂≠c₁/c₂","a₁/a₂=b₁/b₂=c₁/c₂","none"],ans:"C"},
+    {q:"NOT a quadratic equation?",opts:["2(x−1)²=4x²−2x+1","2x−x²=x²+5","(√2x+√3)²+x²=3x²−5x","(x²+2x)²=x⁴+3+4x³"],ans:"B"},
+    {q:"Cylinder,cone,hemisphere same radius/height volume ratio",opts:["1:2:3","3:1:2","1:3:2","3:2:1"],ans:"B"},
+    {q:"△ABC and △DEF, AB/FD=BC/DE=CA/EF",opts:["△BCA~△DEF","△BCA~△FED","△ABC~△DEF","△CAB~△DEF"],ans:"B"},
+    {q:"E,Ē complementary, P(E)−P(Ē)=0.3, P(E) =",opts:["0.3","0.35","0.65","0.53"],ans:"C"},
+    {q:"0°<θ<90° and sin3θ=1, θ =",opts:["30°","60°","45°","90°"],ans:"A"},
+    {q:"5^(log₅3) =",opts:["25","75","3","28"],ans:"C"},
+    {q:"Median grouped data formula",opts:["l+((n/2−cf)/f)×h","l+((n/4−cf)/f)×h","l+((3n/4−cf)/f)×h","l+((n/2+cf)/f)×h"],ans:"A"},
+    {q:"TP,TQ tangents, ∠POQ=110°, ∠PTQ =",opts:["60°","70°","80°","90°"],ans:"B"},
+    {q:"x=2²×3×5², y=2²×3³, HCF(x,y) =",opts:["12","108","6","36"],ans:"A"},
+    {q:"20m ladder on 10m pole, angle with ground =",opts:["60°","45°","30°","0°"],ans:"C"},
+    {q:"CANNOT be probability of event?",opts:["2/3","4/5","5/7","2%"],ans:"D"}
+  ]},
+  {code:"W-08(A)",name:"Wanaparthy",district:"Wanaparthy",questions:[
+    {q:"LCM of 2³×3×5 and 2×5×7",opts:["1680","420","280","840"],ans:"D"},
+    {q:"Elements of S = {letters in 'RAMANUJAN'}",opts:["{R,A,M,U,J,N}","{R,A,M,A,N,U,J,A,N}","{R,M,N,J}","{R,A,M,N,J}"],ans:"D"},
+    {q:"Solution of x+y=5",opts:["(3,1)","(4,0)","(1,4)","(0,−5)"],ans:"C"},
+    {q:"p(x)=x²−5x−10, p(−2) =",opts:["1","2","3","4"],ans:"D"},
+    {q:"A={1,2,3,4}, subsets =",opts:["16","32","4","64"],ans:"A"},
+    {q:"3x−4y=−7 and 3x−4y=−5 have",opts:["Unique solution","No solution","Infinitely many","None"],ans:"B"},
+    {q:"Mode of 5,2,5,7,2,3,5,2,8,2,6,8,5",opts:["5","2","3","None"],ans:"B"},
+    {q:"Sum of roots of x²−6x+8=0",opts:["6","−6","−8","8"],ans:"A"},
+    {q:"Common ratio of G.P. 8,16,32,64,...",opts:["8","2","1","−2"],ans:"B"},
+    {q:"Slope of line parallel to x-axis",opts:["0","1","−1","Not defined"],ans:"A"},
+    {q:"DE∥BC, AD=x, DB=x−2, AE=x+2, CE=x−1, x =",opts:["4","2","3","1"],ans:"A"},
+    {q:"Angle of radius with tangent at contact",opts:["60°","0°","90°","180°"],ans:"C"},
+    {q:"Cone and cylinder same base/height, volume ratio",opts:["1:3","3:1","1:1","2:3"],ans:"A"},
+    {q:"cosec(90°−A) =",opts:["tanA","secA","sinA","cosA"],ans:"B"},
+    {q:"Ladder 20m touches wall at 10m, angle wall:ladder",opts:["45°","60°","30°","90°"],ans:"B"},
+    {q:"Range of probability",opts:["0>P(E)>1","0<P(E)<1","P(E)<1","P(E)>1"],ans:"B"},
+    {q:"Probability of odd prime when dice thrown",opts:["1/3","2/3","1/6","4/6"],ans:"A"},
+    {q:"Distance between (acosA,0) and (0,asinA)",opts:["a","a²","1","2a"],ans:"A"},
+    {q:"△ABC≅△DEF if AB=BC=CA",opts:["△ABC~△DEF","△ABC~△FDE","△BCA~△FDE","△CAB~△EFD"],ans:"B"},
+    {q:"Tangent from Q=24cm, distance from centre=25cm, radius =",opts:["15","6","7","19"],ans:"C"}
+  ]},
+  {code:"RM-82",name:"Karimnagar",district:"Karimnagar",questions:[
+    {q:"Product of HCF and LCM of smallest prime and smallest composite",opts:["2","4","6","8"],ans:"D"},
+    {q:"A={x: prime, x<10}, subsets =",opts:["8","4","16","5"],ans:"C"},
+    {q:"3log(x+3)=log27, x =",opts:["24","6","3","0"],ans:"D"},
+    {q:"A,B disjoint, n(A)=4, n(A∪B)=7, n(B) =",opts:["4","3","11","∅"],ans:"B"},
+    {q:"α,β zeroes of x²−6x+6, (α+β)²−2αβ =",opts:["6","0","−6","12"],ans:"B"},
+    {q:"x=1, value of y in (x+3)/(3y−2)=1/5",opts:["3","2/3","4/3","1"],ans:"A"},
+    {q:"nᵗʰ term of A.P. is 5n−3, 10ᵗʰ term",opts:["45","46","47","53"],ans:"C"},
+    {q:"G.P. aₙ=arⁿ⁻¹, 'r' is",opts:["common ratio","radius","first term","common difference"],ans:"A"},
+    {q:"△ACB~△APQ, AB=6,BC=8,PQ=4, AQ =",opts:["2cm","4.2cm","5.1cm","3cm"],ans:"D"},
+    {q:"Midpoints D,E,F of △ABC, area(△DEF):area(△ABC) =",opts:["1:3","3:1","4:1","1:4"],ans:"D"},
+    {q:"cosecθ=5/3, cotθ =",opts:["3/4","5/3","4/3","4/5"],ans:"C"},
+    {q:"sinθ·cos(90°−θ) =",opts:["0","1","−1","2"],ans:"B"},
+    {q:"Roots of x²−0.04=0",opts:["0.02,0.02","0.02,0.2","−0.2,0.2","−0.04,0.1"],ans:"C"},
+    {q:"AB chord, AOC diameter, ∠ACB=50°, AT tangent, ∠BAT =",opts:["40°","60°","50°","55°"],ans:"C"},
+    {q:"Tangents 2x−3 and x+2, value of x",opts:["25","5","4","None"],ans:"B"},
+    {q:"Median of first 8 prime numbers",opts:["7","9","11","8"],ans:"B"},
+    {q:"1 to 15, probability of multiple of 5",opts:["1/5","1/15","2/15","2/5"],ans:"A"},
+    {q:"NOT possible for probability",opts:["4/5","1/4","75%","0.09"],ans:"D"},
+    {q:"Volume of cone radius r, height 3r",opts:["πr³","3πr³","9πr³","πr²"],ans:"A"},
+    {q:"Sheet 40×22 rolled, height 40, radius =",opts:["3/π","7/π","22/π","7"],ans:"D"}
+  ]},
+  {code:"S-11A",name:"Suryapet",district:"Suryapet",questions:[
+    {q:"7x²+2x+49=0 solution",opts:["x=1","x=0","x=−1","x=∅"],ans:"C"},
+    {q:"Non-empty subsets of {1,2,3,4}",opts:["15","14","16","17"],ans:"A"},
+    {q:"Solutions of 3x+2y=6 and 6x+4y=18",opts:["0","1","2","Infinite"],ans:"A"},
+    {q:"Nature of roots of x²+6x+9=0",opts:["Real and distinct","Real and equal","No real roots","None"],ans:"B"},
+    {q:"Distance of (x,y) from y-axis",opts:["|x|","|y|","|x+y|","|x−y|"],ans:"A"},
+    {q:"PA,PB tangents, PA=6cm, PB =",opts:["5","3","6","8"],ans:"C"},
+    {q:"Mean of first n odd naturals is 81. n =",opts:["9","81","27","37"],ans:"B"},
+    {q:"tan²50°−sec²50° =",opts:["−1","1","2","3"],ans:"A"},
+    {q:"Shadow = √3×height, angle of elevation",opts:["15°","30°","45°","60°"],ans:"B"},
+    {q:"P(E)=0.07, P(Ē) =",opts:["0.3","0.7","0.03","0.07"],ans:"D"},
+    {q:"sinθ=cosθ, tanθ+cotθ =",opts:["2√3","2","1","2/3"],ans:"B"},
+    {q:"LCM of 18 and 24",opts:["18","24","36","72"],ans:"D"},
+    {q:"Degree of quadratic equation",opts:["1","0","2","3"],ans:"C"},
+    {q:"Areas 144:441, ratio of perimeters",opts:["14:41","44:41","7:4","4:7"],ans:"A"},
+    {q:"d=2, aₙ₊₁−aₙ =",opts:["5","2","10","20"],ans:"B"},
+    {q:"a,b,c in A.P., b =",opts:["b/2","(a+c)","√(ac)","ac"],ans:"B"},
+    {q:"A⊂B, A−B =",opts:["A","B","A−B","∅"],ans:"D"},
+    {q:"15th term of A.P. 3,6,9,...",opts:["15","45","30","360"],ans:"B"},
+    {q:"△ABC, DE∥BC, AD=6,DB=2,DE=9, BC =",opts:["6","8","9","12"],ans:"D"},
+    {q:"tanθ in terms of cosθ",opts:["√(1−cos²θ)/cosθ","1/cosθ","cosθ/√(1−cos²θ)","√(1−cos²θ)"],ans:"A"}
+  ]},
+  {code:"Y-8A",name:"Yadadri Bhongir",district:"Yadadri",questions:[
+    {q:"Terminating decimal:",opts:["95/7","75/6","60/10","9/8"],ans:"C"},
+    {q:"Subsets of A={a,b,c}",opts:["3","4","6","8"],ans:"D"},
+    {q:"1 is zero of ax³+bx²+cx+d, then",opts:["a+b=c+d","a+c=b+d","a−b=c−d","a+b+c+d=0"],ans:"D"},
+    {q:"b²−4ac>0, roots of ax²+bx+c=0 are",opts:["Real and unequal","Real and equal","Imaginary","None"],ans:"A"},
+    {q:"Quadratic equation with roots −2 and 3",opts:["x²+5x+6=0","x²−5x−6=0","x²−5x+6=0","x²+x−6=0"],ans:"D"},
+    {q:"Tan60°,Tan45°,Tan30° are in",opts:["A.P.","G.P.","Both","None"],ans:"B"},
+    {q:"Which is true for P(E)?",opts:["0<P(E)<1","0≤P(E)≤1","0≥P(E)≥1","0>P(E)>1"],ans:"B"},
+    {q:"LCM of 2³×3⁴×7 and 2⁴×3⁴×11",opts:["2³×3⁴×7×11","2⁴×3⁴×7×11","2⁷×3⁸×11","2⁴×3⁴×11"],ans:"B"},
+    {q:"A={letters in 'INTENSIVE TEST'}, cardinal number",opts:["5","6","7","13"],ans:"C"},
+    {q:"P(Ē)=0.54, P(E) =",opts:["0.36","0.46","0.44","0.66"],ans:"B"},
+    {q:"Slope through (0,4) and (a,0)",opts:["4","a","infinity","0"],ans:"A"},
+    {q:"sin²A−cos²A when A=0°",opts:["0","1","−1","90"],ans:"C"},
+    {q:"AM of a−d, a, a+d",opts:["a+d","a−d","a","3a"],ans:"C"},
+    {q:"3x−(x−4)=3x+1, x =",opts:["−3","0","3","10"],ans:"C"},
+    {q:"Max tangents from external point",opts:["4","3","2","1"],ans:"C"},
+    {q:"Volume of cone radius 7cm is 462cc, height",opts:["9cm","18cm","3cm","27cm"],ans:"A"},
+    {q:"NOT possible value for sinx?",opts:["4/5","1/5","1/2","13/12"],ans:"D"},
+    {q:"Mode of 20,3,7,13,3,4,6,7,15,18,3,7",opts:["3,7","7,10","3","None"],ans:"A"},
+    {q:"Sum of first 100 natural numbers",opts:["4550","6505","3500","5050"],ans:"D"},
+    {q:"Distance of (3,4) from origin",opts:["3","4","5","7"],ans:"C"}
+  ]},
+  {code:"RP-11A",name:"Ranga Reddy Practice",district:"Ranga Reddy",questions:[
+    {q:"Fraction form of 12.5",opts:["125/100","125/10","125/1000","75/10000"],ans:"B"},
+    {q:"n(A)=100, subsets of A =",opts:["2⁻¹","10²","0","2×100"],ans:"B"},
+    {q:"P(x)=x³−7x²+8x+5, P(1) =",opts:["6","7","14","13"],ans:"B"},
+    {q:"Parallel to 3x−4y+7=0",opts:["6x−8y+9=0","6x+8y+9=0","3x+4y+7=0","x+y+1=0"],ans:"A"},
+    {q:"3x+7y+10=0, y=1, x =",opts:["10/3","3","2/10","−13/7"],ans:"D"},
+    {q:"Roots 1 and 2, equation is",opts:["(x+1)(x+2)=0","(x−1)(x−2)=0","(x+1)(x−2)=0","(x−1)(x+2)=0"],ans:"B"},
+    {q:"Which is a G.P.?",opts:["5,6,9,12,5","1,3,9,27,...","1,2,3,4,5","3,9,36"],ans:"B"},
+    {q:"Slope of line parallel to x-axis",opts:["tan0°","tan30°","tan60°","tan90°"],ans:"A"},
+    {q:"Volume of sphere = 4y/3, r =",opts:["4v/4π","4y/4π","3v/4π","4πr/3"],ans:"C"},
+    {q:"sin0°×sin1°×sin2°...×sin90° =",opts:["1","−1","0","√3/2"],ans:"C"},
+    {q:"△PRQ~△MZN, which is correct?",opts:["PQ/YZ=PR/ZX=RQ/XZ","PR/YZ=PQ/XZ=RQ/ZX","PR/ZX=PQ/YZ=RQ/XZ","PR/YZ=PQ/ZX=RQ/YX"],ans:"B"},
+    {q:"Does NOT exist if 0°<θ≤90°?",opts:["sinθ=1/√2","cosθ=1/2","sinθ=1/√2","cosθ=5/4"],ans:"D"},
+    {q:"In figure, which is correct?",opts:["AC=AB","AC=BC","AB=BC","AB≠BC"],ans:"C"},
+    {q:"P(E)=0.198, probability of not E",opts:["0.802","1.802","0.820","0.8"],ans:"A"},
+    {q:"Mean of first five prime numbers",opts:["5.7","5.5","6.5","5.6"],ans:"D"},
+    {q:"Which is sure event?",opts:["P(E)=1/3","P(E)=0","P(E)=2/3","P(E)=1"],ans:"D"},
+    {q:"Which shows tangent to a circle?",opts:["Line through two points","Line touching at one point","Chord","Secant"],ans:"B"},
+    {q:"A.P. a=3, d=2",opts:["3,5,7,...","3,5,8,...","3,5,6,...","3,5,9,..."],ans:"A"},
+    {q:"Distance between (0,0) and (sinθ,cosθ)",opts:["sinθ","cosθ","tanθ","1"],ans:"D"},
+    {q:"b²−4ac>0, suitable graph",opts:["Crosses x-axis at 2 pts","Touches x-axis","Doesn't cross x-axis","None"],ans:"A"}
+  ]},
+  {code:"15E/16E",name:"SSC Pre-Final State",district:"State Board",questions:[
+    {q:"Range of first 10 whole numbers",opts:["10","9","3","7"],ans:"B"},
+    {q:"Identify disjoint sets",opts:["A−B,B−A","A−B,A∩B−A","B−A,B","None"],ans:"A"},
+    {q:"Graph of 2x+y=2 is a ___ line",opts:["Curve","Straight","Circular","None"],ans:"B"},
+    {q:"fₙ=n(n²−1), f₅ =",opts:["60","70","30","None"],ans:"B"},
+    {q:"Correct statement about probability",opts:["P(E)=−1","P(E)≥1","0<P(E)<1","None"],ans:"C"},
+    {q:"Slope of line making 30° with x-axis",opts:["∞","0","1/√3","1"],ans:"C"},
+    {q:"Values of x,y from figure (x=21,y=12)",opts:["x=12,y=21","x=10,y=14","x=21,y=84","x=21,y=12"],ans:"D"},
+    {q:"Volume ratio of cone and cylinder (equal diameter and height)",opts:["1:3","3:1","1:4","4:1"],ans:"A"},
+    {q:"cot57°×tan33° =",opts:["0","1","a","√3"],ans:"B"},
+    {q:"n(A)=4, subsets of A =",opts:["4","1","16","8"],ans:"C"},
+    {q:"P(E)=0.04, P(Ē) =",opts:["0.04","0.96","1","0"],ans:"B"},
+    {q:"sin²90°+cos²70° =",opts:["1","0","2","None"],ans:"A"},
+    {q:"Distance between (acos25°,0) and (0,acos65°)",opts:["a","0","a²","2a"],ans:"A"},
+    {q:"DE∥BC, AD=6,DB=8,AE=9, EC =",opts:["5cm","12cm","48cm","7cm"],ans:"B"},
+    {q:"Probability of sure event",opts:["0","0.5","1","None"],ans:"C"},
+    {q:"A∪∅ =",opts:["A","∅","both","None"],ans:"A"},
+    {q:"Discriminant of 5x²−3x−2",opts:["30","6","49","49"],ans:"C"},
+    {q:"log₃81 =",opts:["2","5","4","20"],ans:"C"},
+    {q:"(−2,−2) lies in ___ quadrant",opts:["Q₁","Q₂","Q₃","Q₄"],ans:"C"},
+    {q:"α,β zeroes of 2x²−x−6, α+β =",opts:["2","−1/2","1/2","−1/2"],ans:"B"}
+  ]},
+  {code:"DP-13A",name:"Practice Paper",district:"Practice",questions:[
+    {q:"Symbol for empty set",opts:["∪","{ }","∩","{∅}"],ans:"B"},
+    {q:"Logarithmic form of 243=3⁵",opts:["log₁=243","log₂=3","log₃=5","log₃¹=5"],ans:"C"},
+    {q:"P(x)=3x⁴+5x²+3x−9, P(0) =",opts:["4","−9","5","3"],ans:"B"},
+    {q:"173=8q+r, r =",opts:["2","6","1","5"],ans:"D"},
+    {q:"A={letters in 'RAMANUJAN'}, n(A) =",opts:["9","5","6","7"],ans:"B"},
+    {q:"sinθ=cosθ, θ =",opts:["60°","30°","90°","45°"],ans:"D"},
+    {q:"In G.P. aₙ=arⁿ⁻¹, 'r' =",opts:["First term","Number of terms","Common ratio","Common difference"],ans:"C"},
+    {q:"Midpoint of (x,5) and (4,3) is (5,4), x =",opts:["6","5","9","4"],ans:"A"},
+    {q:"△ABC, DE∥BC, AD=3,DB=4.5,AE=6, AC =",opts:["7.5cm","15cm","9cm","13.5cm"],ans:"B"},
+    {q:"Mode of 6,8,10,14,8,18,6,10,22,14,18,22",opts:["6","0","8 and 10","No mode"],ans:"D"},
+    {q:"Side of cube = diameter of sphere, volume ratio",opts:["6:π","3:π","4:π","2:π"],ans:"A"},
+    {q:"θ acute, cosθ×cosecθ =",opts:["cotθ","tanθ","1","secθ"],ans:"A"},
+    {q:"sin15°×cos45°×2sec75° =",opts:["1/2","1/8","1/4","√2"],ans:"A"},
+    {q:"P(E)=0.35, P(Ē) =",opts:["1","0.65","0.75","0.55"],ans:"B"},
+    {q:"One letter from MATHEMATICS, probability of vowel",opts:["5/11","3/11","4/11","6/11"],ans:"C"},
+    {q:"7 pens + 5 notebooks = Rs.270. Equation:",opts:["7x+5y=270","x+y=270","12x+y=270","7x−5y=270"],ans:"A"},
+    {q:"Mean of first 7 multiples of 3",opts:["10","12","8","14"],ans:"B"},
+    {q:"nᵗʰ term 7n−2, 7ᵗʰ term =",opts:["51","47","45","14"],ans:"B"},
+    {q:"Quadratic with roots 3+√5 and 3−√5",opts:["x²−6x+4=0","x²−4x+6=0","x²−6x+√3=0","x²+6x+4=0"],ans:"A"},
+    {q:"Tangents at endpoints of diameter are",opts:["Equal","Parallel","Perpendicular","Similar"],ans:"B"}
+  ]},
+  {code:"G-12A",name:"Practice Test II",district:"Practice",questions:[
+    {q:"log₄0.25 =",opts:["100","10","1","0"],ans:"C"},
+    {q:"A={1,3,5,7,9,11},B={0,2,4,6,8,10}, n(A∩B) =",opts:["0","6","12","1"],ans:"A"},
+    {q:"Coefficient of x in P(x)=−x³+2x²−7x+11",opts:["0","1","2","−1"],ans:"D"},
+    {q:"Parallel to 3x−y=12?",opts:["6x−2y=24","6x+2y=24","6x−2y=17","6x+2y=17"],ans:"C"},
+    {q:"Roots of 3x²+2x=0",opts:["1/3,0","1/3,−3","0,3","0,−2/3"],ans:"D"},
+    {q:"Sum of first 10 terms of A.P. 2,9,16,23...",opts:["335","65","67","337"],ans:"A"},
+    {q:"Slope joining (3,3) and (−3,−3)",opts:["Not defined","−1","1","3"],ans:"C"},
+    {q:"Right isosceles △, ∠ABC=90°, AB=BC=p, AC =",opts:["p√2","2p","√2p","√2p"],ans:"C"},
+    {q:"Parallel tangents contact distance 9.6cm, radius =",opts:["9.6","4.6","4.8","4.9"],ans:"C"},
+    {q:"Cone and sphere same radius, equal volumes, height:radius =",opts:["1:4","4:1","1:2","2:1"],ans:"B"},
+    {q:"tanθ=b/a, cosecθ =",opts:["√(a²+b²)/a","√(a²+b²)","a/√(a²+b²)","√(a²−b²)/b"],ans:"B"},
+    {q:"Building:shadow = √3:√3, angle of elevation =",opts:["30°","45°","60°","90°"],ans:"C"},
+    {q:"Two different coins, probability of at least one head",opts:["1/2","1/4","3/4","1"],ans:"C"},
+    {q:"Mode of first 5 prime numbers",opts:["2","5","No mode","7"],ans:"C"},
+    {q:"Shaded region in Venn diagram (symmetric difference)",opts:["(A−B)∪(B−A)","(A∪B)−(A∩B)","Both A and B","None"],ans:"C"},
+    {q:"Range of probability of E",opts:["0≤P(E)≤1","−1<P(E)<1","0≥P(E)≥1","−1≥P(E)≥1"],ans:"A"},
+    {q:"2log5+3logx−2logy =",opts:["log(25x³/y²)","log25x³y⁻²","log(25x/y²)","log(x³y/25)"],ans:"A"},
+    {q:"Distance between (0,2) and (4,0)",opts:["√5","√5","√25","√20"],ans:"D"},
+    {q:"sin60°·sin30°−cos60°·cos30° =",opts:["0","1","2","−1"],ans:"A"},
+    {q:"A,B disjoint — all four statements correct?",opts:["only (i)","(i) and (ii)","(i),(ii) and (iii)","(i),(ii),(iii) and (iv)"],ans:"D"}
+  ]},
+  {code:"ST-82",name:"Siddipet",district:"Siddipet",questions:[
+    {q:"Logarithmic form of x^y=z",opts:["log_x(z)=y","log_y(x)=z","log_x(z)=x","log_z(x)=z"],ans:"A"},
+    {q:"log₂(x)=x, value of x",opts:["9","243","81","6"],ans:"C"},
+    {q:"Disjoint sets: n(A∪B) =",opts:["n(A)+n(B)","n(A)−n(B)","n(A)·n(B)","n(A)/n(B)"],ans:"A"},
+    {q:"Divisor (2x+3), quotient (x+1), remainder 4. Dividend:",opts:["2x²+5x","4(2x+3)+x+1","(2x+3)(x+1)+4","2x+7"],ans:"C"},
+    {q:"Product of zeroes=p, sum=s. Quadratic polynomial:",opts:["x²−sx+p","x²+sx+p","x²−px+s","x²+px+s"],ans:"A"},
+    {q:"x+2y−3=0, 5x−my+8=0 parallel, m =",opts:["10","5","−5","−10"],ans:"D"},
+    {q:"x²+Kx+9=0 has equal roots, K =",opts:["3","−3","6","9"],ans:"C"},
+    {q:"2 pens + 3 books = Rs.110",opts:["x+y=110","5x+y=10","x+y=110","2x+3y=110"],ans:"D"},
+    {q:"Which term of A.P. 50,40,30,... is zero?",opts:["6","5","10","7"],ans:"A"},
+    {q:"1/9, x, 1/1 in G.P., x =",opts:["2","1","0","1/4"],ans:"B"},
+    {q:"Midpoint of (3,5) and (x,3) is (4,4), x =",opts:["3","4","5","7"],ans:"C"},
+    {q:"△ABC~△DEF, ∠A+∠C=110°, ∠E =",opts:["0°","90°","70°","20°"],ans:"C"},
+    {q:"∠XOY=130°, ∠XPO =",opts:["65°","35°","25°","55°"],ans:"C"},
+    {q:"LSA of right circular cone = πrl, l is",opts:["Height","Slant height","Diameter","None"],ans:"B"},
+    {q:"NOT defined?",opts:["tan0°","tan90°","cot90°","sec0°"],ans:"B"},
+    {q:"sin²29°+sin²61° =",opts:["−1","2","0","1"],ans:"D"},
+    {q:"Depression 30°, tower 12m, distance from top =",opts:["12√3m","7.5m","24m","10m"],ans:"C"},
+    {q:"P(E)=0.82, P(Ē) =",opts:["0.18","0.28","0.38","P(E)=P(Ē)"],ans:"A"},
+    {q:"Mean of first 10 prime numbers",opts:["12.3","12.5","12.9","12.6"],ans:"C"},
+    {q:"Die thrown, probability of prime number",opts:["1/2","1/4","1/3","1/6"],ans:"A"}
+  ]},
+  {code:"SK-82",name:"Medak",district:"Medak",questions:[
+    {q:"LCM of smallest prime and smallest composite",opts:["2","4","6","8"],ans:"B"},
+    {q:"A={letters in 'SUCCESS'}, n(A) =",opts:["7","4","3","6"],ans:"B"},
+    {q:"K for x+2y=3, 5x+ky+7=0 inconsistent",opts:["10","5","−10","2"],ans:"A"},
+    {q:"Sum of first 10 terms of A.P. 2,7,12,...",opts:["250","490","225","245"],ans:"D"},
+    {q:"K if slope of (3,K) and (2,7) is 2",opts:["5","7","9","11"],ans:"C"},
+    {q:"Perimeters 30 and 20cm, side 12cm, corresponding side",opts:["10cm","8cm","9cm","6cm"],ans:"B"},
+    {q:"P 25cm from centre, tangent 24cm, radius =",opts:["12cm","0cm","1cm","7cm"],ans:"D"},
+    {q:"Cone volume 15cm³, cylinder volume (same radius/height)",opts:["15cm³","30cm³","45cm³","60cm³"],ans:"C"},
+    {q:"tan1°×tan2°×...×tan89° =",opts:["1","0","1/2","∞"],ans:"A"},
+    {q:"Two dice, probability sum=10",opts:["1/9","1/12","1/8","1/36"],ans:"B"},
+    {q:"Mean of first n naturals = n/2, n =",opts:["5","4","9","10"],ans:"C"},
+    {q:"p(x)=x³−kx²+4, divided by (x−2), K =",opts:["2","0","4","3"],ans:"B"},
+    {q:"One root of x²−4x+1=0 is 2+√3, other root",opts:["3−2","2−√3","−2+√3","2+√3"],ans:"B"},
+    {q:"Angle elevation 30°→60°, shadow length",opts:["Increases","Decreases","Doubles","Remains constant"],ans:"B"},
+    {q:"(1−tan²45°)/(1+tan²45°) equals",opts:["tan90°","sin45°","sin0°","cos0°"],ans:"C"},
+    {q:"Nature of roots of 2x²−4x+3=0",opts:["Real and equal","Real and distinct","No real roots","None"],ans:"C"},
+    {q:"Polynomial with only one zero",opts:["p(x)=x²−6x+9","p(x)=x²−5x+6","p(x)=x²+4","p(x)=3x²+2"],ans:"A"},
+    {q:"log₂5=x, log₂5=y, log₂10 =",opts:["x+y","xy","x−y","x/y"],ans:"A"},
+    {q:"Set builder of {1,4,9,16,25}",opts:["{x:x=2n,n∈N,n≤5}","{x:x=n²,n∈∅,n≤5}","{x:x=n+3,n∈N,n≤5}","{x:x=n²,n∈N,n≤5}"],ans:"D"},
+    {q:"'Numerator x is 4 less than denominator y', equation",opts:["x−y=4","y−x=4","x+y=4","x=4y"],ans:"B"}
+  ]},
+  {code:"NP-8(A)",name:"Narayanpet",district:"Narayanpet",questions:[
+    {q:"logx − logy =",opts:["log(x/y)","logxy","log(x−y)","log(x+y)"],ans:"A"},
+    {q:"cot(90−θ) =",opts:["cosθ","cosecθ","tanθ","sinθ"],ans:"C"},
+    {q:"In Sₙ=(n/2)(a+l), l refers to",opts:["Common difference","Common ratio","First term","Last term"],ans:"D"},
+    {q:"b²−4ac=9, roots are",opts:["real and equal","real and distinct","no roots","no real roots"],ans:"B"},
+    {q:"Null set among the following",opts:["{x:square<10}","{x:prime<5}","{x:composite<4}","{x:natural, no factor 1}"],ans:"C"},
+    {q:"log₂64 =",opts:["3","6","4","9"],ans:"B"},
+    {q:"Slope joining (3,5) and (5,7)",opts:["2","−2","−1","1"],ans:"D"},
+    {q:"P(E)=0.12, P(Ē) =",opts:["0.88","0.82","0.78","0.98"],ans:"A"},
+    {q:"Tangent from 5cm, radius 3cm, length =",opts:["6cm","9cm","4cm","8cm"],ans:"C"},
+    {q:"n(A)=5, n(A∩B)=2, n(A∪B)=7, n(B) =",opts:["3","4","5","6"],ans:"B"},
+    {q:"P(x)=x²+x, P(−2) =",opts:["2","−2","4","6"],ans:"A"},
+    {q:"sin0°×sin90° =",opts:["1","−1","0","0"],ans:"D"},
+    {q:"Probability of red king from deck",opts:["1/52","1/26","1/4","1/13"],ans:"B"},
+    {q:"In △ADE and △ABC, BC =",opts:["48","56","40.8","84"],ans:"C"},
+    {q:"Sum of first 10 natural numbers",opts:["50","55","100","110"],ans:"B"},
+    {q:"2x+3y+4=0, 4x+ky+6=0 parallel, k =",opts:["5","−5","6","−6"],ans:"C"},
+    {q:"DE∥BC, AD=x, BD=2x, DE=5, BC =",opts:["10cm","15cm","20cm","25cm"],ans:"B"},
+    {q:"Height = distance, angle of elevation",opts:["30°","45°","60°","90°"],ans:"B"},
+    {q:"Sum of zeroes of 3x²+√3x",opts:["√3","−√3","1/√3","−1/√3"],ans:"D"},
+    {q:"TSA of cube of side 6cm",opts:["36 sq.cm","64 sq.cm","216 sq.cm","144 sq.cm"],ans:"C"}
+  ]},
+  {code:"M-8A",name:"Medchal-Malkajgiri",district:"Medchal",questions:[
+    {q:"Value of sin60°",opts:["1/2","√3/2","√3","1"],ans:"B"},
+    {q:"a=2²×3×5×7, b=2×3×7×11, HCF(a,b) =",opts:["12","42","110","150"],ans:"B"},
+    {q:"Zero of p(x)=x³−8",opts:["2","5","0","8"],ans:"A"},
+    {q:"Lines a₁x+b₁y+c₁=0, a₂x+b₂y+c₂=0 intersecting if",opts:["a₁/a₂≠b₁/b₂","a₁/a₂=b₁/b₂","a₁c₂=a₂c₁","b₁c₂=b₂c₁"],ans:"A"},
+    {q:"kx²+2x+3=0 equal roots, k =",opts:["1/3","−1/3","3","−3"],ans:"A"},
+    {q:"a,b,c in A.P., correct:",opts:["a+b+c=1","2b=a+c","b=√(ac)","A and B"],ans:"B"},
+    {q:"Product of zeroes of 3x²+5x−2",opts:["−2","3/5","−1/2","−2/3"],ans:"D"},
+    {q:"Common difference of 4,7,10,...",opts:["1/2","3","1/3","11"],ans:"B"},
+    {q:"tanθ=1/x, tan(90°−θ) =",opts:["x","2x","−1/x","1"],ans:"A"},
+    {q:"Sum of first n even natural numbers",opts:["n","n(n+1)","n+1","n−1"],ans:"B"},
+    {q:"Slope of (0,0) and (cosφ,sinφ)",opts:["secφ","tanφ","0","not defined"],ans:"B"},
+    {q:"Angle between radius and tangent",opts:["30°","45°","60°","90°"],ans:"D"},
+    {q:"Surface areas 4:9, volumes ratio",opts:["27:8","8:27","1:9","2:3"],ans:"B"},
+    {q:"TSA of hemisphere radius r",opts:["2πr cm²","3πr cm²","3πr² cm²","(1/2)πr cm²"],ans:"C"},
+    {q:"sinA=cosB, cot(A+B) =",opts:["1","0","−1","−3"],ans:"B"},
+    {q:"3x+4y=10, kx+8y=14 parallel, k =",opts:["2","8","14","6"],ans:"D"},
+    {q:"Height of pole = shadow, angle of elevation",opts:["30°","45°","60°","90°"],ans:"B"},
+    {q:"Probability of National Maths Day (Dec 22) in 2026",opts:["1/365","22/365","22","1/31"],ans:"A"},
+    {q:"A⊂B, n(A)=10, n(B)=13, n(A−B) =",opts:["3","0","23","7"],ans:"B"},
+    {q:"tan(72°+θ)=cot(−θ), θ =",opts:["30°","18°","15°","54°"],ans:"C"}
+  ]},
+  {code:"N-11A",name:"Nalgonda",district:"Nalgonda",questions:[
+    {q:"HCF of 2²×3³×5⁴ and 2²×3²×5³",opts:["2²×3³×5⁴","2²×3²×5³","2²×3³×5³","2²×3³×5³"],ans:"B"},
+    {q:"A⊂B, n(A)=4, n(B)=6, n(A∩B) =",opts:["6","10","4","2"],ans:"C"},
+    {q:"△ABC~△XYZ, XY:AB=2:1, area △ABC=32, area △XYZ =",opts:["16","64","48","12"],ans:"B"},
+    {q:"2x+3y=5, 4x+py=10 infinite solutions, p =",opts:["6","3","8","4"],ans:"A"},
+    {q:"4ⁿ ends with ___ if n is multiple of 4",opts:["0","6","4","8"],ans:"B"},
+    {q:"Slope of line parallel to Y-axis",opts:["1","0","not defined","None"],ans:"C"},
+    {q:"CSA of cone: base 7, slant 14cm",opts:["236","154","308","196"],ans:"C"},
+    {q:"x²−6x+p=0 equal real roots, p =",opts:["−6","9","6","1"],ans:"B"},
+    {q:"Mean=5, each ×2+3, new mean =",opts:["13","7","11","5"],ans:"A"},
+    {q:"Zeroes of x²+y(a+s)+b are 2,−3, a,b =",opts:["1,−6","−1,6","a=−2,b=6","a=0,b=6"],ans:"B"},
+    {q:"Which equation has '2' as root?",opts:["2x²−7x+6=0","x²−4x+5=0","x²+3x−12=0","3x²−6x−2=0"],ans:"A"},
+    {q:"In △ABC, sinA/2 =",opts:["sinB/2","cosC/2","tanC/2","cosecC/2"],ans:"B"},
+    {q:"Area of triangle (0,0),(3,0),(0,6)",opts:["9","6","12","18"],ans:"A"},
+    {q:"Sum of first 20 even numbers",opts:["420","505","550","240"],ans:"A"},
+    {q:"Product 216, HCF=6, LCM =",opts:["48","32","42","30"],ans:"C"},
+    {q:"BC²=AB²+AC², right angle is",opts:["∠C","∠B","∠A","None"],ans:"B"},
+    {q:"Probability of face card from deck",opts:["3/13","12/52","4/52","3/26"],ans:"A"},
+    {q:"Complementary of 0.45 is",opts:["0.44","0.54","0.36","0.55"],ans:"D"},
+    {q:"AB=3,AC=8,AE=4.5, AD =",opts:["10.5","3","9.5","12"],ans:"C"},
+    {q:"Surface area S, volume V, sphere radius r",opts:["r=3V/S","r=3S/V","3S=Vr","3V=Sr"],ans:"D"}
+  ]},
+  {code:"Warangal",name:"Warangal",district:"Warangal",questions:[
+    {q:"A={zeroes of x³−4x²+4x}, n(A) =",opts:["3","2","1","0"],ans:"B"},
+    {q:"A(x₁,y₁),B(x₂,y₂), divides AB in k:1",opts:["((kx₂+x₁)/(k+1),(ky₂+y₁)/(k+1))","((x₁+kx₂)/(k+1),(y₁+ky₂)/(k+1))","((kx₂−x₁)/(k−1),(ky₂−y₁)/(k−1))","none"],ans:"A"},
+    {q:"8232=2ⁿ×3×7, n =",opts:["1","2","3","4"],ans:"C"},
+    {q:"log₁₀x=k, 10^(log(10x)) in terms of x",opts:["10/x","10x","x/10","x²"],ans:"B"},
+    {q:"x+ky=5, 5x−10y=−7 no solution, k =",opts:["10","8","2","−2"],ans:"D"},
+    {q:"Shadow of 18m tree is 9m. Shadow of 40m tower =",opts:["27m","20m","80m","31m"],ans:"B"},
+    {q:"Tangents to circle r=3cm, angle 60°. Tangent length =",opts:["6","3√3","3","3√3/2"],ans:"B"},
+    {q:"secA=cosecB, A+B =",opts:["90°","180°","360°","0°"],ans:"A"},
+    {q:"P(E) is probability of E",opts:["0<P(E)<1","0≤P(E)<1","0≤P(E)≤1","0<P(E)≤1"],ans:"C"},
+    {q:"P={integers between −3.7 and 2.7}, roster form",opts:["{ }","{0,1,2}","{−2,−1,0,1,2}","{−3,−2,−1,0,1,2,3}"],ans:"C"},
+    {q:"Distance between (log₃27,log₄64) and origin",opts:["5","2","4","1"],ans:"A"},
+    {q:"sin3θ=cos(θ−9°), θ =",opts:["24.75°","12°","36°","12°"],ans:"A"},
+    {q:"Zeroes of x³−4x",opts:["{0,4,−4}","{1,−1,2}","{0,√2,−√2}","{0,2,−2}"],ans:"D"},
+    {q:"(k+1)th term of A.P. 5,2,−1,−4,... aₖ=5−3k",opts:["2−3k","8−3k","3k−2","2+3k"],ans:"A"},
+    {q:"logₐ, logₐ², logₐ³, logₐ⁴ is in",opts:["A.P.","G.P.","Both","None"],ans:"A"},
+    {q:"DE∥BC, AD/DB=3/5, AC=5.6, AE =",opts:["2.4cm","3.2cm","2.1cm","1.8cm"],ans:"C"},
+    {q:"Volume ratio of cone:cylinder:hemisphere (same radius/height)",opts:["1:2:3","3:2:1","2:3:4","3:4:5"],ans:"A"},
+    {q:"AM of a+2, a, a−2",opts:["a+2","a","a−2","3a"],ans:"B"},
+    {q:"Volume ratio of spheres 8:27, surface area ratio",opts:["2:3","4:27","8:9","4:9"],ans:"D"},
+    {q:"Midpoint of (x−y,8) and (x+y,4) is (7,6), (x,y) =",opts:["(2,10)","(10,2)","(0,2)","(10,−2)"],ans:"B"}
+  ]},
+  {code:"M-08(A)",name:"Mahabubnagar",district:"Mahabubnagar",questions:[
+    {q:"P₁,P₂ odd primes P₁>P₂, P₁²−P₂² =",opts:["Even number","Odd number","Prime number","Odd prime"],ans:"A"},
+    {q:"Every odd positive integer can be written as",opts:["3K(K∈Z⁺)","2K+1 (K non-negative)","2K(K∈Z)","2^K(K∈N)"],ans:"B"},
+    {q:"B⊂A, A∩B =",opts:["B","A","∅","U"],ans:"A"},
+    {q:"Number of subsets is 64, elements =",opts:["2","4","6","8"],ans:"C"},
+    {q:"α,β zeroes of x²+10x+21, α−β =",opts:["10","21","1","16"],ans:"D"},
+    {q:"Example of cubic polynomial",opts:["P(x)=2−3x+4x²+9","P(y)=y³","P(z)=4z²−5z+9","P(t)=4t³+5t−9"],ans:"D"},
+    {q:"2x+3y=8, 4x+ky=11 no solutions, K =",opts:["3","0","6","1"],ans:"C"},
+    {q:"One root twice other, 2b² =",opts:["4ac","6ac","8ac","9ac"],ans:"D"},
+    {q:"G.P. aₙ=arⁿ⁻¹, r represents",opts:["Common difference","Common ratio","First term","Radius"],ans:"B"},
+    {q:"Sum of first 100 natural numbers",opts:["5500","5050","5005","5555"],ans:"B"},
+    {q:"Distance of (5,12) from origin",opts:["13","17","20","10"],ans:"A"},
+    {q:"Slope of (−7,9) and (−5,7)",opts:["1","−1/2","1/2","−1"],ans:"D"},
+    {q:"△ABC~△PQR, ∠A=53°, ∠Q=67°, ∠C =",opts:["60°","90°","180°","120°"],ans:"A"},
+    {q:"PA,PB tangents, PA=5cm, ∠PAB=60°, chord AB =",opts:["10","15","5","20"],ans:"C"},
+    {q:"Pairs of parallel tangents to circle",opts:["2","1","0","Infinitely many"],ans:"B"},
+    {q:"LSA=πrl, l is",opts:["Height","Radius","Slant height","Vertex"],ans:"C"},
+    {q:"sin40°·tan45°·sec50° =",opts:["1/2","1","√3","0"],ans:"B"},
+    {q:"sinθ=3/5, cosθ =",opts:["3/4","4/5","3/5","5/4"],ans:"B"},
+    {q:"Die thrown, probability of prime",opts:["1/4","1/3","1/4","1/2"],ans:"D"},
+    {q:"7,5,2,5,x,9,7,8. Mode is 5, x =",opts:["5","7","8","9"],ans:"A"}
+  ]},
+  {code:"Y-11A",name:"Yadadri Pre-Public",district:"Yadadri Pre-Public",questions:[
+    {q:"NOT a geometric progression?",opts:["1,−1,1,−1,...","1,2,4,8,...","3,6,12,24,...","5,10,20,..."],ans:"A"},
+    {q:"'r' in G.P. aₙ=arⁿ represents",opts:["Distance","Common difference","Common ratio","Common Multiple"],ans:"C"},
+    {q:"16,13,10,... 6th term",opts:["−1","−2","2","1"],ans:"A"},
+    {q:"Term of 24,21,18,15,... with sum 78",opts:["4th","13th","4th and 13th","9th"],ans:"C"},
+    {q:"Nature of roots of 2x²+3x+1=0",opts:["Real & different","Real & equal","Not real","Not real & not different"],ans:"A"},
+    {q:"One root of x²−bx+6=0 is 3, k =",opts:["5","6","7","8"],ans:"C"},
+    {q:"Ladder 25m reaches window 20m above, distance from foot",opts:["15","16","17","18"],ans:"A"},
+    {q:"Similar triangles areas 81 and 49. Bigger altitude 4.5, smaller =",opts:["6.5","3.5","5","9"],ans:"B"},
+    {q:"sin(A−B)=1/2, cos(A+B)=1/2, tanA =",opts:["4","3","2","1"],ans:"A"},
+    {q:"cot²θ+cot⁴θ =",opts:["cot²θ−cot⁴θ","sec⁴θ−sec²θ","cosec⁴θ−cosec²θ","tan⁷θ−tan⁴θ"],ans:"C"},
+    {q:"tanA=1/2, sinA =",opts:["1/√5","2/√5","√3/2","4/5"],ans:"A"},
+    {q:"Subsets of {a,b,c,d} =",opts:["16","15","8","4"],ans:"A"},
+    {q:"A={1,2,3,4,5}, B={5,6,7,8,9}, n(A∪B) =",opts:["2","9","6","12"],ans:"B"},
+    {q:"LCM of 11 and 13",opts:["77","66","143","88"],ans:"C"},
+    {q:"α,β zeroes of x²−3x+1, (α+β):αβ =",opts:["3:1","4:√5","√5:4","1:3"],ans:"A"},
+    {q:"125x+25y=7, 25x+ky=10 no solutions, k =",opts:["125","25","5","1"],ans:"C"},
+    {q:"A(7,3),B(6,1),C(8,2),D(x,y) parallelogram, (x,y) =",opts:["(−9,−4)","(9,4)","(4,9)","(−4,−9)"],ans:"B"},
+    {q:"Angle between tangent and radius at contact",opts:["60°","30°","45°","90°"],ans:"D"},
+    {q:"P(E) is probability, correct:",opts:["P(E)<1","0<P(E)","0≥P(E)≥1","0≤P(E)≤1"],ans:"D"},
+    {q:"tan2A=cot(A−18°), ∠A =",opts:["36°","72°","45°","90°"],ans:"A"}
+  ]},
+  {code:"PF-2026",name:"Pre-Final 2026 General",district:"Telangana State",questions:[
+    {q:"Euclid division: a=bq+r, r must satisfy",opts:["1≤r<b","0<r<b","0<r≤b","0≤r<b"],ans:"D"},
+    {q:"Zeroes of p(x)=x²+kx+k, k≠0, k=4",opts:["Cannot both be positive","Cannot both be negative","Always equal","Always unequal"],ans:"A"},
+    {q:"3x−y−8=0 and 6x−ky=−16 parallel, k =",opts:["2","−2","2","−2"],ans:"A"},
+    {q:"α,β roots of 2x²+x−4=0, α²β+αβ² =",opts:["1","−1","2","−2"],ans:"D"},
+    {q:"G.P. 5th:2nd = 27. Common ratio =",opts:["3","−3","9","−9"],ans:"A"},
+    {q:"n(A)=15, n(B)=20, n(A∪B)=30, n(A∩B) =",opts:["25","15","10","5"],ans:"D"},
+    {q:"Two triangles equal areas:",opts:["Similar","Congruent","Side ratio=1","Cannot conclude"],ans:"D"},
+    {q:"Radius perpendicular to tangent at",opts:["Any point","Centre","Point of contact","External point"],ans:"C"},
+    {q:"P(E)=0.35, P(not E) =",opts:["0.35","0.65","1.35","−0.35"],ans:"B"},
+    {q:"Modal class frequency increases, mode will",opts:["Decrease","Increase","Remain same","Become median"],ans:"B"},
+    {q:"tanθ+secθ=3, tanθ−secθ =",opts:["1","−1","3","−3"],ans:"B"},
+    {q:"log₅25−log₅5 =",opts:["5","1","−5","1/5"],ans:"B"},
+    {q:"Shadow = √3×height, angle of elevation =",opts:["30°","60°","45°","90°"],ans:"A"},
+    {q:"A={x/x=n²,n∈N,n≤4}, subsets =",opts:["8","12","16","32"],ans:"C"},
+    {q:"8cm from centre, radius 6cm, tangent length =",opts:["24cm","2√7cm","10cm","5cm"],ans:"B"},
+    {q:"△ABC~△DEF areas 100 and 64cm², EF=4cm, BC =",opts:["9cm","5cm","4cm","8cm"],ans:"B"},
+    {q:"Minute hand 28cm, 10:10 to 10:25am distance =",opts:["44cm","88cm","132cm","176cm"],ans:"B"},
+    {q:"Diameter 14cm sphere, volume =",opts:["718.6cm³","5749.3cm³","11498.6cm³","1437.3cm³"],ans:"A"},
+    {q:"A(4,P), B(1,0) distance=5. P =",opts:["±4","±3","−4 only","4 only"],ans:"A"},
+    {q:"Origin divides A(1,−3),B(−3,9) in ratio",opts:["3:1","1:3","2:3","1:1"],ans:"B"}
+  ]}
+];
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let curPaper=null,answers={},curQ=0,selMin=20;
+let timerInt=null,timerSec=0,totalSec=0,score=0,streak=0;
+const LETTERS=['A','B','C','D'];
+
+// ══════════════════════════════════════════════
+// HOME
+// ══════════════════════════════════════════════
+function buildHome(){
+  const g=document.getElementById('papersGrid');
+  g.innerHTML=PAPERS.map((p,i)=>`
+    <div class="pcard" onclick="openModal(${i})" style="animation-delay:${i*0.03}s">
+      <div class="pcard-accent"></div>
+      <div class="pcard-num">#${String(i+1).padStart(2,'0')}</div>
+      <div class="pcard-code">${p.code}</div>
+      <div class="pcard-name">${p.name}</div>
+      <div class="pcard-district">${p.district}</div>
+      <div class="pcard-meta">
+        <span class="pcard-pill pill-q">📝 ${p.questions.length} MCQs</span>
+        <span class="pcard-pill pill-m">⭐ ${p.questions.length}M</span>
+        <span class="pcard-play">▶</span>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('s-papers').textContent=PAPERS.length;
+  document.getElementById('s-qs').textContent=PAPERS.reduce((a,p)=>a+p.questions.length,0)+'+';
+}
+
+function filterPapers(v){
+  const low=v.toLowerCase();
+  document.querySelectorAll('.pcard').forEach((c,i)=>{
+    const p=PAPERS[i];
+    const match=p.name.toLowerCase().includes(low)||p.code.toLowerCase().includes(low)||p.district.toLowerCase().includes(low);
+    c.style.display=match?'':'none';
+  });
+}
+
+// ══════════════════════════════════════════════
+// MODAL
+// ══════════════════════════════════════════════
+function openModal(idx){
+  curPaper=idx;selMin=20;
+  const p=PAPERS[idx];
+  document.getElementById('mTitle').textContent=p.name;
+  document.getElementById('mSub').textContent=`${p.code} · ${p.questions.length} questions · ${p.questions.length} marks`;
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('sel'));
+  document.querySelectorAll('.tbtn')[2].classList.add('sel');
+  document.getElementById('customMin').value='';
+  document.getElementById('timerModal').classList.add('show');
+}
+function closeModal(){document.getElementById('timerModal').classList.remove('show');}
+function selTime(m,btn){
+  selMin=m;
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  document.getElementById('customMin').value='';
+}
+function selCustom(inp){
+  const v=parseInt(inp.value);
+  if(v>0){selMin=v;document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('sel'));}
+}
+
+// ══════════════════════════════════════════════
+// LAUNCH
+// ══════════════════════════════════════════════
+function launchQuiz(){
+  closeModal();
+  answers={};curQ=0;score=0;streak=0;
+  const p=PAPERS[curPaper];
+  document.getElementById('hudName').textContent=p.name;
+  document.getElementById('hudCode').textContent=`${p.code} · ${p.district} · ${p.questions.length} questions`;
+  document.getElementById('hudScore').textContent='SCORE: 0';
+  totalSec=selMin*60;timerSec=totalSec;
+  updateTimer();
+  clearInterval(timerInt);
+  timerInt=setInterval(tick,1000);
+  document.getElementById('home').style.display='none';
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('quiz').classList.add('show');
+  buildDots();renderQ(0);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ══════════════════════════════════════════════
+// TIMER
+// ══════════════════════════════════════════════
+function tick(){
+  timerSec--;updateTimer();
+  if(timerSec<=0){clearInterval(timerInt);document.getElementById('timeupOv').classList.add('show');}
+}
+function updateTimer(){
+  const m=Math.floor(timerSec/60),s=timerSec%60;
+  const el=document.getElementById('hudTimer');
+  el.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  el.className='hud-timer';
+  const pct=(timerSec/totalSec)*100;
+  document.getElementById('timerBar').style.width=pct+'%';
+  if(timerSec<60)el.classList.add('danger');
+  else if(pct<25)el.classList.add('warn');
+}
+
+// ══════════════════════════════════════════════
+// DOTS
+// ══════════════════════════════════════════════
+function buildDots(){
+  const qs=PAPERS[curPaper].questions;
+  document.getElementById('qNavStrip').innerHTML=qs.map((_,i)=>`<div class="qdot ${i===curQ?'active':''}" id="d${i}" onclick="jumpTo(${i})" title="Q${i+1}"></div>`).join('');
+}
+function refreshDots(){
+  PAPERS[curPaper].questions.forEach((_,i)=>{
+    const d=document.getElementById('d'+i);if(!d)return;
+    d.className='qdot';
+    if(i===curQ)d.classList.add('active');
+    else if(answers[i])d.classList.add('done');
+  });
+}
+
+// ══════════════════════════════════════════════
+// RENDER Q
+// ══════════════════════════════════════════════
+function renderQ(idx){
+  curQ=idx;
+  const qs=PAPERS[curPaper].questions,q=qs[idx],total=qs.length;
+  document.getElementById('qIndexLbl').textContent=`${idx+1} / ${total}`;
+  const html=`
+    <div class="q-card">
+      <div class="q-card-header">
+        <span class="q-num-badge">Q${idx+1}</span>
+        <span class="q-progress-txt">${Object.keys(answers).length}/${total} ANSWERED</span>
+      </div>
+      <div class="q-text-wrap"><div class="q-text">${q.q}</div></div>
+      <div class="opts">
+        ${q.opts.map((o,oi)=>`
+          <button class="opt ${answers[idx]===LETTERS[oi]?'selected':''}" onclick="pick(${idx},'${LETTERS[oi]}')">
+            <span class="opt-letter">${LETTERS[oi]}</span>
+            <span>${o}</span>
+          </button>
+        `).join('')}
+      </div>
+      <div class="q-footer">
+        <button class="btn-qnav btn-prev-q" onclick="prevQ()" style="visibility:${idx===0?'hidden':'visible'}">◀ PREV</button>
+        <span style="font-family:'Share Tech Mono',monospace;font-size:.65rem;color:var(--dim)">${idx+1} OF ${total}</span>
+        ${idx===total-1
+          ?`<button class="btn-qnav btn-submit-q" onclick="finishQuiz()">SUBMIT ✓</button>`
+          :`<button class="btn-qnav btn-next-q" onclick="nextQ()">NEXT ▶</button>`
+        }
+      </div>
+    </div>`;
+  document.getElementById('qContainer').innerHTML=html;
+  refreshDots();
+  window.scrollTo({top:80,behavior:'smooth'});
+}
+
+function pick(idx,letter){
+  const wasAnswered=!!answers[idx];
+  const p=PAPERS[curPaper].questions[idx];
+  const wasCorrect=wasAnswered&&answers[idx]===p.ans;
+  answers[idx]=letter;
+  const isCorrect=letter===p.ans;
+  if(!wasAnswered){
+    if(isCorrect){score++;streak++;showCombo();}
+    else{streak=0;}
+  }else if(!wasCorrect&&isCorrect){score++;streak++;showCombo();}
+  else if(wasCorrect&&!isCorrect){score--;streak=0;}
+  document.getElementById('hudScore').textContent=`SCORE: ${score}`;
+  renderQ(idx);
+}
+
+function showCombo(){
+  if(streak<2)return;
+  const msgs=streak>=10?['LEGENDARY!','GODLIKE!','UNSTOPPABLE!']:streak>=6?['ON FIRE! 🔥','COMBO x'+streak,'INSANE!']:['COMBO x'+streak,'NICE! ✓','STREAK!'];
+  const el=document.getElementById('comboPop');
+  el.textContent=msgs[Math.floor(Math.random()*msgs.length)];
+  el.className='combo-pop fire';
+  setTimeout(()=>el.className='combo-pop',900);
+}
+
+function prevQ(){if(curQ>0)renderQ(curQ-1);}
+function nextQ(){if(curQ<PAPERS[curPaper].questions.length-1)renderQ(curQ+1);}
+function jumpTo(i){renderQ(i);}
+
+// ══════════════════════════════════════════════
+// FINISH
+// ══════════════════════════════════════════════
+function finishQuiz(){
+  clearInterval(timerInt);
+  document.getElementById('timeupOv').classList.remove('show');
+  document.getElementById('quiz').classList.remove('show');
+  const p=PAPERS[curPaper];
+  const total=p.questions.length;
+  let correct=0,wrong=0,skip=0;
+  p.questions.forEach((q,i)=>{
+    if(!answers[i]){skip++;return;}
+    if(answers[i]===q.ans)correct++;else wrong++;
+  });
+  const pct=Math.round((correct/total)*100);
+  document.getElementById('resPaperTitle').textContent=p.name;
+  document.getElementById('resTitleSub').textContent=`${p.code} · ${p.district} · ${total} Questions`;
+  document.getElementById('ringPct').textContent=pct+'%';
+  document.getElementById('resCorrect').textContent=correct;
+  document.getElementById('resWrong').textContent=wrong;
+  document.getElementById('resSkip').textContent=skip;
+  // Grade
+  let grade,gClass,msg;
+  if(pct>=90){grade='S';gClass='grade-S';msg='// PERFECT EXECUTION. MAXIMUM PERFORMANCE //';}
+  else if(pct>=75){grade='A';gClass='grade-A';msg='// EXCELLENT WORK. KEEP PUSHING //';}
+  else if(pct>=60){grade='B';gClass='grade-B';msg='// GOOD PERFORMANCE. ROOM TO GROW //';}
+  else if(pct>=40){grade='C';gClass='grade-C';msg='// AVERAGE. NEED MORE PRACTICE //';}
+  else{grade='D';gClass='grade-D';msg='// NEEDS IMPROVEMENT. STUDY HARDER //';}
+  const gb=document.getElementById('gradeBadge');
+  gb.textContent=grade;gb.className=`grade-tag ${gClass}`;
+  document.getElementById('resMsg').textContent=msg;
+  // Ring
+  const circ=2*Math.PI*70;
+  const off=circ-(pct/100)*circ;
+  const rf=document.getElementById('ringFg');
+  rf.style.stroke=pct>=75?'var(--green)':pct>=50?'var(--gold)':'var(--pink)';
+  document.getElementById('ringPct').style.color=pct>=75?'var(--green)':pct>=50?'var(--gold)':'var(--pink)';
+  document.getElementById('ringPct').style.textShadow=`0 0 20px ${pct>=75?'var(--green)':pct>=50?'var(--gold)':'var(--pink)'}`;
+  setTimeout(()=>rf.style.strokeDashoffset=off,200);
+  // Review
+  const rv=p.questions.map((q,i)=>{
+    const ua=answers[i],ok=ua===q.ans;
+    const cls=!ua?'rs':'rc rw'.split(' ')[ok?0:1];
+    return `<div class="rev-item ${!ua?'rs':ok?'rc':'rw'}">
+      <div class="rev-q"><span class="rev-icon">${!ua?'—':ok?'✓':'✗'}</span>Q${i+1}: ${q.q}</div>
+      <div class="rev-ans">
+        ${ua?`<span class="${ok?'rev-your-c':'rev-your-w'}">Your: ${ua}) ${q.opts[LETTERS.indexOf(ua)]}</span>`:'<span class="rev-skip-lbl">Not attempted</span>'}
+        ${(!ok&&ua)?`<span class="rev-correct">Correct: ${q.ans}) ${q.opts[LETTERS.indexOf(q.ans)]}</span>`:''}
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('reviewList').innerHTML=rv;
+  document.getElementById('results').classList.add('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function retryPaper(){
+  document.getElementById('results').classList.remove('show');
+  openModal(curPaper);
+}
+function goHome(){
+  clearInterval(timerInt);
+  document.getElementById('quiz').classList.remove('show');
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('home').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+buildHome();
+</script>
+</body>
+</html>

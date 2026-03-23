@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biological Science MCQ Quiz</title>
+  <style>
+    :root{
+      --bg:#08131f;
+      --bg-soft:#102235;
+      --panel:#13293f;
+      --line:rgba(173, 215, 255, 0.14);
+      --text:#eef6ff;
+      --muted:#a8bfd7;
+      --accent:#78e3d0;
+      --accent-2:#ffd27a;
+      --danger:#ff8a80;
+      --success:#79e29d;
+      --shadow:0 20px 45px rgba(0,0,0,.28);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(120,227,208,.14), transparent 26%),
+        radial-gradient(circle at top right, rgba(255,210,122,.12), transparent 22%),
+        linear-gradient(180deg, #07111b 0%, #0b1826 100%);
+      font-family:"Book Antiqua", Georgia, serif;
+      min-height:100vh;
+    }
+    .shell{
+      width:min(1180px, calc(100% - 32px));
+      margin:0 auto;
+      padding:24px 0 48px;
+    }
+    .hero{
+      position:relative;
+      overflow:hidden;
+      background:linear-gradient(135deg, rgba(19,41,63,.95), rgba(10,28,45,.92));
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:34px 28px 26px;
+      box-shadow:var(--shadow);
+    }
+    .hero::before,
+    .hero::after{
+      content:"";
+      position:absolute;
+      border-radius:999px;
+      filter:blur(14px);
+      opacity:.75;
+      pointer-events:none;
+    }
+    .hero::before{
+      width:180px;
+      height:180px;
+      right:-30px;
+      top:-50px;
+      background:rgba(120,227,208,.18);
+    }
+    .hero::after{
+      width:120px;
+      height:120px;
+      left:-20px;
+      bottom:-30px;
+      background:rgba(255,210,122,.14);
+    }
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(120,227,208,.1);
+      color:var(--accent);
+      border:1px solid rgba(120,227,208,.18);
+      font-family:"Franklin Gothic Medium","Trebuchet MS",sans-serif;
+      font-size:.84rem;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    h1{
+      margin:16px 0 10px;
+      font-family:"Franklin Gothic Medium","Trebuchet MS",sans-serif;
+      font-size:clamp(2rem, 4vw, 3.6rem);
+      line-height:1;
+      letter-spacing:.02em;
+    }
+    .hero p{
+      margin:0;
+      max-width:760px;
+      color:var(--muted);
+      font-size:1.03rem;
+      line-height:1.6;
+    }
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+      gap:12px;
+      margin-top:22px;
+    }
+    .stat{
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px 18px;
+    }
+    .stat strong{
+      display:block;
+      font-family:"Franklin Gothic Medium","Trebuchet MS",sans-serif;
+      font-size:1.5rem;
+      color:var(--text);
+      margin-bottom:4px;
+    }
+    .stat span{
+      color:var(--muted);
+      font-size:.95rem;
+    }
+    .toolbar{
+      position:sticky;
+      top:14px;
+      z-index:20;
+      display:grid;
+      grid-template-columns:1.25fr auto auto auto auto;
+      gap:12px;
+      margin:18px 0;
+      padding:14px;
+      border-radius:22px;
+      background:rgba(9,22,35,.88);
+      backdrop-filter:blur(14px);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+    }
+    .search{
+      width:100%;
+      padding:14px 16px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:var(--bg-soft);
+      color:var(--text);
+      font-size:.98rem;
+      outline:none;
+    }
+    .search::placeholder{color:#8fa7bf}
+    .btn{
+      border:none;
+      border-radius:14px;
+      padding:14px 16px;
+      cursor:pointer;
+      font-family:"Franklin Gothic Medium","Trebuchet MS",sans-serif;
+      font-size:.96rem;
+      transition:transform .14s ease, box-shadow .14s ease, background .14s ease, color .14s ease;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn:active{transform:translateY(0)}
+    .btn-ghost{
+      background:var(--panel);
+      color:var(--text);
+      border:1px solid var(--line);
+    }
+    .btn-accent{
+      background:linear-gradient(135deg, #7ce6d3, #ffd27a);
+      color:#112133;
+      box-shadow:0 12px 30px rgba(120,227,208,.18);
+    }
+    .btn-danger{
+      background:#2a1b22;
+      color:#ffd9d4;
+      border:1px solid rgba(255,138,128,.25);
+    }
+    .meta{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:18px;
+      align-items:start;
+      margin-bottom:18px;
+    }
+    .progress-card,
+    .result-card{
+      background:linear-gradient(180deg, rgba(19,41,63,.96), rgba(14,33,51,.94));
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:18px 20px;
+      box-shadow:var(--shadow);
+    }
+    .progress-top{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+    }
+    .progress-top strong{
+      font-family:"Franklin Gothic Medium","Trebuchet MS",sans-serif;
+      font-size:1.1rem;
+    }
+    .progress-top span{
+      color:var(--muted);
+      font-size:.95rem;
+    }
+    .bar{
+      width:100%;
+      height:14px;
+      border-radius:999px;
+      background:#0d1b2a;
+      border:1px solid var(--line);
+      overflow:hidden;
+    }
+    .bar > div{
+      width:0;
+      height:100%;
+      background:linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition:width .2s ease;
+    }
+    .mini-stats{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+    .chip{
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      font-size:.92rem;
+    }
+    .result-card{
+      display:none;
+      min-width:310px;
+    }
+    .result-card.show{display:block}
+    .score{
+      font-family:"Franklin Gothic Medium","Trebuchet MS",sans-serif;
+      font-size:2.6rem;
+      margin:4px 0 6px;
+      color:var(--accent-2);
+    }
+    .result-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+    .result-grid div{
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      text-align:center;
+    }
+    .result-grid strong{
+      display:block;
+      font-family:"Franklin Gothic Medium","Trebuchet MS",sans-serif;
+      font-size:1.18rem;
+    }
+    .questions{
+      display:grid;
+      gap:16px;
+    }
+    .question{
+      background:linear-gradient(180deg, rgba(19,41,63,.96), rgba(13,31,49,.94));
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:20px;
+      box-shadow:var(--shadow);
+      transition:border-color .14s ease, transform .14s ease;
+    }
+    .question.hidden{display:none}
+    .question.answered{border-color:rgba(120,227,208,.28)}
+    .question.review-correct{border-color:rgba(121,226,157,.35)}
+    .question.review-wrong{border-color:rgba(255,138,128,.38)}
+    .q-head{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:10px;
+    }
+    .q-no{
+      font-family:"Franklin Gothic Medium","Trebuchet MS",sans-serif;
+      letter-spacing:.03em;
+      font-size:1.05rem;
+    }
+    .q-tag{
+      padding:7px 11px;
+      border-radius:999px;
+      background:rgba(120,227,208,.08);
+      border:1px solid rgba(120,227,208,.15);
+      color:var(--accent);
+      font-size:.84rem;
+    }
+    .q-text{
+      font-size:1.06rem;
+      line-height:1.65;
+      margin:0 0 14px;
+    }
+    .options{
+      display:grid;
+      gap:10px;
+    }
+    .option{
+      position:relative;
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      padding:14px 16px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      cursor:pointer;
+      transition:background .14s ease, border-color .14s ease, transform .14s ease;
+    }
+    .option:hover{
+      background:rgba(255,255,255,.055);
+      transform:translateY(-1px);
+    }
+    .option input{
+      margin-top:4px;
+      accent-color:#7ce6d3;
+      transform:scale(1.15);
+      cursor:pointer;
+    }
+    .option-text{
+      flex:1;
+      line-height:1.5;
+    }
+    .option.selected{
+      border-color:rgba(120,227,208,.35);
+      background:rgba(120,227,208,.07);
+    }
+    .option.correct{
+      border-color:rgba(121,226,157,.45);
+      background:rgba(121,226,157,.1);
+    }
+    .option.incorrect{
+      border-color:rgba(255,138,128,.46);
+      background:rgba(255,138,128,.1);
+    }
+    .answer-note{
+      display:none;
+      margin-top:14px;
+      padding:13px 14px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+    }
+    .answer-note.show{display:block}
+    .answer-note strong{color:var(--text)}
+    .footer-space{height:30px}
+    @media (max-width: 980px){
+      .toolbar{grid-template-columns:1fr 1fr}
+      .meta{grid-template-columns:1fr}
+    }
+    @media (max-width: 620px){
+      .shell{width:min(100% - 18px, 1180px)}
+      .hero{padding:24px 18px}
+      .toolbar{position:static;grid-template-columns:1fr}
+      .result-grid{grid-template-columns:1fr}
+      .question{padding:17px}
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <div class="eyebrow">Biology MCQ Bank</div>
+      <h1>Biological Science Quiz Website</h1>
+      <p>
+        All extracted Biology multiple choice questions are placed together in one mixed practice set.
+        Physical Science questions are excluded, district-wise segregation is removed, and the page supports
+        search, instant progress tracking, scoring, answer review, and reset.
+      </p>
+      <div class="stats">
+        <div class="stat"><strong id="stat-total">0</strong><span>Total MCQs</span></div>
+        <div class="stat"><strong>Mixed</strong><span>Single combined set</span></div>
+        <div class="stat"><strong>Biology Only</strong><span>No Physical Science</span></div>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <input id="searchBox" class="search" type="search" placeholder="Search by keyword or topic, for example: respiration, hormones, heart">
+      <button id="toggleUnanswered" class="btn btn-ghost" type="button">Show Unanswered</button>
+      <button id="submitBtn" class="btn btn-accent" type="button">Submit Quiz</button>
+      <button id="resetBtn" class="btn btn-danger" type="button">Reset Answers</button>
+      <button id="jumpTopBtn" class="btn btn-ghost" type="button">Jump To Top</button>
+    </section>
+
+    <section class="meta">
+      <div class="progress-card">
+        <div class="progress-top">
+          <div>
+            <strong>Progress</strong><br>
+            <span>Select one option for each question. You can review everything after submitting.</span>
+          </div>
+          <div>
+            <strong id="progressText">0 / 0 Answered</strong><br>
+            <span id="visibleText">Showing 0 questions</span>
+          </div>
+        </div>
+        <div class="bar"><div id="progressBar"></div></div>
+        <div class="mini-stats">
+          <div class="chip" id="answeredChip">Answered: 0</div>
+          <div class="chip" id="unansweredChip">Unanswered: 0</div>
+          <div class="chip" id="filteredChip">Visible: 0</div>
+        </div>
+      </div>
+
+      <aside id="resultCard" class="result-card">
+        <div class="eyebrow">Result</div>
+        <div class="score" id="scoreValue">0%</div>
+        <div id="scoreLine" style="color:var(--muted);line-height:1.6">Submit to see your score.</div>
+        <div class="result-grid">
+          <div><strong id="correctCount">0</strong><span>Correct</span></div>
+          <div><strong id="wrongCount">0</strong><span>Wrong</span></div>
+          <div><strong id="blankCount">0</strong><span>Unanswered</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="questionList" class="questions"></section>
+    <div class="footer-space"></div>
+  </div>
+
+  <script>
+    const questions = [
+      {topic:"Respiration", q:"Cellular respiration occurs in:", options:["Ribosome","Chloroplast","Mitochondria","Golgi complex"], answer:2},
+      {topic:"Excretion", q:"Choose the correct match for phyla and excretory organs.", options:["Platyhelminthes-Nephridia; Nematoda-Green glands; Annelida-Flame cells; Arthropoda-Renette cells","Platyhelminthes-Renette cells; Nematoda-Nephridia; Annelida-Green glands; Arthropoda-Flame cells","Platyhelminthes-Green glands; Nematoda-Flame cells; Annelida-Renette cells; Arthropoda-Nephridia","Platyhelminthes-Flame cells; Nematoda-Renette cells; Annelida-Nephridia; Arthropoda-Green glands"], answer:3},
+      {topic:"Digestion", q:"Find the odd one out.", options:["Pepsin","Trypsin","Lipase","Glucagon"], answer:3},
+      {topic:"Ecology", q:"Choose the incorrect sentence.", options:["Biomass can be used as a biofuel","Pyramid of energy is always inverted","Bioaccumulation is the entry of pollutants into the food chain","Biomass pyramid in aquatic ecosystems may be inverted"], answer:1},
+      {topic:"Hormones", q:"Less secretion of vasopressin hormone leads to:", options:["Diabetes mellitus","Diabetes insipidus","Uremia","Micturition"], answer:1},
+      {topic:"Digestion", q:"In the acid and leaf experiment, vaseline applied on the leaf can be compared with:", options:["Mucus","Hydrochloric acid","Enzyme","Bolus"], answer:0},
+      {topic:"Evolution", q:"Homologous organs are:", options:["Similar in origin with dissimilar functions","Dissimilar in origin and dissimilar in functions","Dissimilar in origin but similar in functions","Similar in origin and similar in functions"], answer:0},
+      {topic:"Circulation", q:"Choose the correct sentence.", options:["Only i is correct","i and ii are correct","ii and iii are correct","All i, ii and iii are correct"], answer:1, note:"Statement set: i) Coronary arteries supply blood to the muscles of the heart. ii) Arteries supply blood from heart to body organs. iii) Pulmonary vein carries oxygenated, not deoxygenated, blood from lungs to heart."},
+      {topic:"Nutrition", q:"Deficiency disease of niacin is:", options:["Beri beri","Glossitis","Pellagra","Anaemia"], answer:2},
+      {topic:"Respiration", q:"One ATP is approximately equal to:", options:["7.2 K.cal","72 K.cal","7200 K.cal","720 K.cal"], answer:0},
+      {topic:"Secondary Metabolites", q:"The secondary metabolite obtained from Hevea brasiliensis is:", options:["Gums","Latex","Alkaloids","Tannins"], answer:1},
+      {topic:"Reproduction", q:"Hormones secreted by ovaries in females are:", options:["Only progesterone","Only estrogen","Progesterone and estrogen","Progesterone, estrogen and testosterone"], answer:2},
+      {topic:"Plant Movements", q:"Movement in tendrils is called:", options:["Thigmotropism","Geotropism","Phototropism","Hydrotropism"], answer:0},
+      {topic:"Human Reproduction", q:"Placenta is formed during:", options:["3 weeks","6 weeks","9 weeks","12 weeks"], answer:3},
+      {topic:"Plant Reproduction", q:"Number of male nuclei observed in a pollen grain is:", options:["1","2","3","4"], answer:1},
+      {topic:"Ecology", q:"The special position of an animal within a food web is called:", options:["Food chain","Habitat","Food web","Niche"], answer:3},
+      {topic:"Body Coverings", q:"Identify the incorrect pair.", options:["Heart - Pericardium","Lungs - Pleura","Kidneys - Skin","Brain - Meninges"], answer:2},
+      {topic:"Ecology", q:"In an ecosystem, herbivores represent:", options:["Producers","Primary consumers","Secondary consumers","Tertiary consumers"], answer:1},
+      {topic:"Environment", q:"These are called the lungs of nature:", options:["Oceans","Forests","Rivers","Villages"], answer:1},
+      {topic:"Photosynthesis", q:"Which chemical is used to prove that carbon dioxide is essential for photosynthesis?", options:["Sodium hydroxide","Sodium carbonate","Iodine","Potassium hydroxide"], answer:3},
+      {topic:"Digestion", q:"Choose the best matching order of the first four parts of the alimentary canal from the given options.", options:["Mouth -> stomach -> pharynx -> buccal cavity","Mouth -> buccal cavity -> pharynx -> stomach","Stomach -> mouth -> pharynx -> buccal cavity","Mouth -> pharynx -> stomach -> buccal cavity"], answer:1},
+      {topic:"Respiration", q:"Complete the respiration equation: C6H12O6 + ____ -> ____ + 6H2O + Energy.", options:["6CO2 and 6O2","6O2 and 6CO2","6CO2 and 6H2O","6H2O and 6CO2"], answer:1},
+      {topic:"Excretion", q:"Choose the wrong pair.", options:["Protozoa - Diffusion","Nematoda - Renette cells","Platyhelminthes - Flame cells","Mammals - Nephridia"], answer:3},
+      {topic:"Circulation", q:"What is the reason for the sounds in the heart?", options:["Closing of valves","Blood pressure in heart","Rapid blood flow","Flow of blood in ventricles"], answer:0},
+      {topic:"Plant Reproduction", q:"Embryo sac in flowering plants has:", options:["7 cells and 8 nuclei","7 cells and 7 nuclei","8 cells and 7 nuclei","8 cells and 8 nuclei"], answer:0},
+      {topic:"Evolution", q:"Choose the correct match.", options:["Lamarck-Natural selection; Darwin-Inheritance of acquired characters; Watson and Crick-Heredity; Mendel-DNA","Lamarck-Inheritance of acquired characters; Darwin-Natural selection; Watson and Crick-DNA; Mendel-Heredity","Lamarck-Heredity; Darwin-DNA; Watson and Crick-Inheritance of acquired characters; Mendel-Natural selection","Lamarck-DNA; Darwin-Heredity; Watson and Crick-Natural selection; Mendel-Inheritance of acquired characters"], answer:1},
+      {topic:"Agriculture", q:"ICRISAT is located at:", options:["Mumbai","Hyderabad","Bengaluru","Chennai"], answer:1},
+      {topic:"Biodiversity", q:"Which of the following is a threat to biodiversity?", options:["Afforestation","Habitat destruction","Wildlife protection","Rainwater harvesting"], answer:1},
+      {topic:"Human Reproduction", q:"Identify the wrong statement.", options:["Fertilization of ovum takes place in the fallopian tube","Implantation occurs in the uterus","Colostrum is rich in antibodies and provides immunity to the newborn","Human gestation period is about 100 days"], answer:3},
+      {topic:"Digestion", q:"In the experiment showing action of saliva on flour, which observation confirms digestion of starch?", options:["Mixture turns blue-black after iodine","No colour change after adding iodine","Mixture turns green after iodine","A white precipitate is formed"], answer:1},
+      {topic:"Photosynthesis", q:"A plant is kept in darkness for about 48 hours before a photosynthesis experiment in order to:", options:["Remove chlorophyll from leaves","Remove water from leaves","Ensure no photosynthesis occurred at all","Ensure the leaves are free from starch"], answer:3},
+      {topic:"Circulation", q:"Fibrinogen is converted into fibrin by:", options:["Prothrombin","Thrombokinase","Thrombin","Serum"], answer:2},
+      {topic:"Asexual Reproduction", q:"Choose the correct match.", options:["Fission-Spirogyra; Budding-Watermelon; Fragmentation-Paramecium; Parthenocarpy-Yeast","Fission-Yeast; Budding-Paramecium; Fragmentation-Watermelon; Parthenocarpy-Spirogyra","Fission-Paramecium; Budding-Yeast; Fragmentation-Spirogyra; Parthenocarpy-Watermelon","Fission-Paramecium; Budding-Spirogyra; Fragmentation-Yeast; Parthenocarpy-Watermelon"], answer:2},
+      {topic:"Digestion", q:"Identify the pair of enzymes that convert proteins into peptones.", options:["Amylase and sucrase","Pepsin and trypsin","Peptidases and lipase","Ptyalin and trypsin"], answer:1},
+      {topic:"Vitamins", q:"Which vitamin is synthesized by bacteria present in the digestive system?", options:["Folic acid","Pantothenic acid","Ascorbic acid","Cyanocobalamin"], answer:3},
+      {topic:"Circulation", q:"The valve present between the right atrium and right ventricle is:", options:["Bicuspid valve","Tricuspid valve","Pulmonary valve","Systemic valve"], answer:1},
+      {topic:"Respiration", q:"Energy currency of the cell is:", options:["ADP","ATP","Chloroplast","Mitochondria"], answer:1},
+      {topic:"Environment", q:"The process of entry of pollutants into a food chain is called:", options:["Bioremediation","Biomagnification","Bioaccumulation","Phytoremediation"], answer:2},
+      {topic:"Digestion", q:"Which chemical is required for the experiment to prove the action of saliva on flour?", options:["Potassium hydroxide","Hydrochloric acid","Iodine","Methylated spirit"], answer:2},
+      {topic:"Photosynthesis", q:"Photosynthesis is the:", options:["Conversion of light energy into heat energy","Conversion of light energy into chemical energy","Conversion of light energy into electrical energy","Conversion of heat energy into chemical energy"], answer:1},
+      {topic:"Vegetative Reproduction", q:"Identify the incorrect pair.", options:["Leaves - Bryophyllum","Roots - Turmeric","Bulbs - Onion","Stolons - Strawberry"], answer:1},
+      {topic:"Excretion", q:"Function of Malpighian body is:", options:["Stores urine","Micturition","Protects kidneys","Filtration of substances in blood"], answer:3},
+      {topic:"Dentition", q:"Which type of teeth are present in the least number in humans?", options:["Incisors","Canines","Premolars","Molars"], answer:1},
+      {topic:"Vitamins", q:"Identify the correct pair of vitamins.", options:["Thiamin and calciferol","Biotin and phylloquinone","Calciferol and tocoferol","Retinol and niacin"], answer:2},
+      {topic:"Respiration", q:"The end products of anaerobic respiration in yeast are:", options:["CO2 and heat energy","CO2, ethyl alcohol and heat energy","CO2, heat energy and glucose","CO2, oxygen and heat energy"], answer:1},
+      {topic:"Excretion", q:"Identify the incorrect pair of excretory organs.", options:["Flame cells - Earthworm","Malpighian tubules - Cockroach","Kidney - Frog","Renette cells - Round worm"], answer:0},
+      {topic:"Hormones", q:"The male sex hormone in human beings is:", options:["Estrogen","Progesterone","Testosterone","Adrenaline"], answer:2},
+      {topic:"Photosynthesis", q:"In Mohl's half-leaf experiment, KOH is used to:", options:["Absorb carbon dioxide","Absorb water vapour","Release carbon dioxide","Test starch"], answer:0},
+      {topic:"Biofuels", q:"Biodiesel is obtained from which part of the Jatropha plant?", options:["Leaf","Root","Seed","Stem"], answer:2},
+      {topic:"Nervous System", q:"The part of the brain that controls hunger pangs is:", options:["Cerebrum","Midbrain","Medulla oblongata","Diencephalon"], answer:3},
+      {topic:"Endocrine System", q:"Identify the correct pair.", options:["Pituitary - Thyroxine","Adrenal - Testosterone","Ovary - Estrogen","Pancreas - Gonadotropin"], answer:2},
+      {topic:"Health Tools", q:"Which instrument is used to measure blood pressure?", options:["Sphygmomanometer","Barometer","Thermometer","Anemometer"], answer:0},
+      {topic:"Plant Physiology", q:"The structure useful for exchange of gases in plants is:", options:["Stomata","Chloroplasts","Ribosomes","Mitochondria"], answer:0},
+      {topic:"Plant Movements", q:"Choose the correct match.", options:["Phototropism-Gravity; Geotropism-Light; Hydrotropism-Chemicals; Chemotropism-Water","Phototropism-Light; Geotropism-Gravity; Hydrotropism-Water; Chemotropism-Chemicals","Phototropism-Water; Geotropism-Light; Hydrotropism-Gravity; Chemotropism-Chemicals","Phototropism-Chemicals; Geotropism-Water; Hydrotropism-Light; Chemotropism-Gravity"], answer:1},
+      {topic:"Digestion", q:"Identify the correct pair.", options:["Pyloric sphincter - Oesophagus","Anal sphincter - Anus","Cardiac muscles - Oesophagus","Gastric muscles - Large intestine"], answer:1},
+      {topic:"Digestion", q:"The acid present in gastric juice is:", options:["Acetic acid","Hydrochloric acid","Sulphuric acid","Nitric acid"], answer:1},
+      {topic:"Respiration", q:"Oxygen percentage in exhaled air is about:", options:["21%","78%","16%","4.4%"], answer:2},
+      {topic:"Circulation", q:"Which of the following does not belong to a double circulation system?", options:["Bird","Frog","Fish","Human being"], answer:2},
+      {topic:"Excretion", q:"Identify the incorrect pair.", options:["Nematoda - Renette cells","Mollusca - Metanephridia","Aves - Kidneys","Annelids - Water vascular system"], answer:3},
+      {topic:"Secondary Metabolites", q:"Which of the following is not an alkaloid?", options:["Nimbin","Caffeine","Rubber","Nicotine"], answer:2},
+      {topic:"Evolution", q:"Which is known as the connecting link between aves and reptiles?", options:["Dinosaur","Archaeopteryx","Cheetah","Dryopithecus"], answer:1},
+      {topic:"Crop Protection", q:"Which of the following is not a biological method of pest control?", options:["Crop rotation","Biological control","Environmental ethics","Pesticide use"], answer:3},
+      {topic:"Sustainable Development", q:"Sustainable development means:", options:["Prevention of wastage","Stable growth","Development without damaging the environment","High yield in less time"], answer:2},
+      {topic:"Hormones", q:"The hormone that stimulates hunger is:", options:["Leptin","Ghrelin","Secretin","Cholecystokinin"], answer:1},
+      {topic:"Plant Structure", q:"Identify the right pair.", options:["Root hair - Present on shoot","Xylem - Transport food material","Stomata - Transpiration","Phloem - Transport water"], answer:2},
+      {topic:"Genetics", q:"Which of the following indicates the homozygous state?", options:["yy","Yy","yY","Yr"], answer:0},
+      {topic:"Respiration", q:"The common passage for both food and air in humans is:", options:["Epiglottis","Glottis","Pharynx","Larynx"], answer:2},
+      {topic:"Immunity", q:"The fluid that develops immunity in the newborn baby is:", options:["Colostrum","Plasma","Serum","Blood"], answer:0},
+      {topic:"Public Health", q:"Government helps HIV patients through:", options:["ICRISAT","ART Centres","IUCN","BOD"], answer:1},
+      {topic:"Digestion", q:"Observe the statements and choose the correct answer.", options:["Only statement 1 is correct","Only statement 2 is correct","Both statements are correct","Both statements are incorrect"], answer:2, note:"Statement 1: Ghrelin stimulates hunger. Statement 2: Diencephalon and vagus nerve carry hunger signals to the brain."},
+      {topic:"Circulation", q:"Identify the correct pair from the following.", options:["Superior and inferior vena cava - Deoxygenated blood","Pulmonary vein - Deoxygenated blood","Pulmonary artery - Oxygenated blood","Aorta - Deoxygenated blood"], answer:0},
+      {topic:"Plant Movements", q:"Leaf movement in Mimosa helps to:", options:["Regulate its growth","Release phytohormones","Protect from grazers","Reduce photosynthesis"], answer:2},
+      {topic:"Genetics", q:"Identify the correct statement.", options:["Monohybrid genotype ratio is 3:1","Lamarck proposed natural selection theory","Microvilli of small intestine is a vestigial organ","Each human cell contains 23 pairs of chromosomes"], answer:3},
+      {topic:"Respiration", q:"Structural and functional units of lungs are called:", options:["Capillaries","Bronchioles","Alveoli","Bronchus"], answer:2},
+      {topic:"Environment", q:"The process of converting waste materials into new materials is called:", options:["Reuse","Recycle","Reduce","Recover"], answer:1},
+      {topic:"Ecology", q:"Which of the following is not a biotic component?", options:["Sunlight","Fauna","Flora","Microorganisms"], answer:0},
+      {topic:"Human Reproduction", q:"Sex of a child is determined by:", options:["Mother","Father","Both parents equally","Environment"], answer:1},
+      {topic:"Family Planning", q:"Find the odd one out among the contraceptive methods.", options:["Vasectomy","Condom","Tubectomy","Fertilization"], answer:3},
+      {topic:"Ecology", q:"An ecosystem consists of:", options:["Only living organisms","Only non-living components","Both biotic and abiotic components","Only producers"], answer:2},
+      {topic:"Environment", q:"The accumulation of harmful chemicals in higher trophic levels is called:", options:["Biodegradation","Biomagnification","Bioremediation","Biofertilizer"], answer:1},
+      {topic:"Microorganisms", q:"Bread mould grows well in:", options:["Dry and cold conditions","Hot and dry conditions","Warm and moist conditions","Cold and wet conditions"], answer:2},
+      {topic:"Excretion", q:"Choose the correct pair of excretory products in organisms.", options:["Aquatic animals - Ammonia","Mammals - Uric acid","Birds - Urea","Plants - Oxygen"], answer:0},
+      {topic:"Excretion", q:"The cup-shaped structure found at one end of the nephron is:", options:["Calyces","Henle's loop","Urinary bladder","Bowman's capsule"], answer:3},
+      {topic:"Ecology", q:"The base of a food pyramid always consists of:", options:["Producers","Primary consumers","Secondary consumers","Tertiary consumers"], answer:0},
+      {topic:"Digestion", q:"In the cycle tube and potato experiment, oil used for lubrication can be compared with:", options:["Enzymes","Mucus","Blood","Water"], answer:1},
+      {topic:"Excretion", q:"An artificial kidney is called a:", options:["Stethoscope","Sphygmomanometer","Dialysis machine","pH scale"], answer:2},
+      {topic:"Nervous System", q:"Identify the correct sequence of the nerve pathway.", options:["Sense organ -> afferent nerve -> brain -> efferent nerve -> effector organ","Brain -> efferent nerve -> effector organ -> sense organ -> afferent nerve","Efferent nerve -> effector organ -> brain -> sense organ -> afferent nerve","Effector organ -> efferent nerve -> brain -> afferent nerve -> sense organ"], answer:0},
+      {topic:"Resources", q:"Identify the wrong pair.", options:["Coal - Fossil fuel","SO2 - Greenhouse gas","Gliricidia - Leguminous plant","Forest - Non-renewable resource"], answer:3},
+      {topic:"Digestion", q:"Reverse peristalsis is commonly seen in:", options:["Dog","Buffalo","Man","Sparrow"], answer:2},
+      {topic:"Photosynthesis", q:"The plant commonly used in the experiment to show oxygen release during photosynthesis is:", options:["Hibiscus","Rose","Hydrilla","Aloe vera"], answer:2},
+      {topic:"Circulation", q:"Choose the correct sequence.", options:["Pulmonary vein -> left ventricle -> left atrium -> lungs","Pulmonary vein -> lungs -> left atrium -> left ventricle","Lungs -> pulmonary vein -> left atrium -> left ventricle","Lungs -> left atrium -> left ventricle -> pulmonary vein"], answer:2},
+      {topic:"Genetics", q:"Genotype ratio of a monohybrid cross is:", options:["1:2:1","1:3","3:1","4:1"], answer:0},
+      {topic:"Hormones", q:"The hormone that suppresses hunger is:", options:["Ghrelin","Pepsin","Leptin","Enterokinase"], answer:2},
+      {topic:"Endocrine System", q:"Identify the hormone not secreted by the pituitary gland.", options:["Growth hormone","Luteinizing hormone","Progesterone","Follicle stimulating hormone"], answer:2},
+      {topic:"Vegetative Reproduction", q:"Identify the correct pair.", options:["Stolons - Oxalis","Runner - Jasmine","Stem tuber - Radish","Rhizome - Turmeric"], answer:3},
+      {topic:"Photosynthesis", q:"Choose the correct statement related to the experiment that proves CO2 is necessary for photosynthesis.", options:["Potassium hydroxide releases carbon dioxide","Potassium hydroxide absorbs water","Potassium hydroxide absorbs light","Potassium hydroxide absorbs carbon dioxide"], answer:3},
+      {topic:"Excretion", q:"Identify the correct sequence in the human excretory system.", options:["Kidneys -> Urinary bladder -> Urethra -> Ureter","Kidneys -> Ureter -> Urinary bladder -> Urethra","Kidneys -> Urethra -> Ureter -> Urinary bladder","Kidneys -> Urethra -> Urinary bladder -> Ureter"], answer:1},
+      {topic:"Dentition", q:"In the dentition formula 2:1:2:3, the number 1 represents:", options:["Incisors","Premolars","Canines","Molars"], answer:2},
+      {topic:"Resources", q:"Which fossil fuel reserve decreases more rapidly in India?", options:["Natural gas","Coal","Petroleum","All equally"], answer:2},
+      {topic:"Reproduction", q:"In which part of the male reproductive system are sperms stored?", options:["Seminal vesicles","Urethra","Ejaculatory duct","Epididymis"], answer:3}
+    ];
+
+    const questionList = document.getElementById("questionList");
+    const searchBox = document.getElementById("searchBox");
+    const submitBtn = document.getElementById("submitBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const jumpTopBtn = document.getElementById("jumpTopBtn");
+    const toggleUnanswered = document.getElementById("toggleUnanswered");
+    const progressText = document.getElementById("progressText");
+    const visibleText = document.getElementById("visibleText");
+    const progressBar = document.getElementById("progressBar");
+    const answeredChip = document.getElementById("answeredChip");
+    const unansweredChip = document.getElementById("unansweredChip");
+    const filteredChip = document.getElementById("filteredChip");
+    const resultCard = document.getElementById("resultCard");
+    const scoreValue = document.getElementById("scoreValue");
+    const scoreLine = document.getElementById("scoreLine");
+    const correctCount = document.getElementById("correctCount");
+    const wrongCount = document.getElementById("wrongCount");
+    const blankCount = document.getElementById("blankCount");
+    const statTotal = document.getElementById("stat-total");
+
+    let showOnlyUnanswered = false;
+    let submitted = false;
+
+    function renderQuestions() {
+      questionList.innerHTML = "";
+      statTotal.textContent = questions.length;
+
+      questions.forEach((item, index) => {
+        const card = document.createElement("article");
+        card.className = "question";
+        card.dataset.index = index;
+        card.dataset.topic = item.topic.toLowerCase();
+
+        const noteText = item.note
+          ? item.note
+          : `Correct answer: ${String.fromCharCode(65 + item.answer)}. ${item.options[item.answer]}`;
+
+        card.innerHTML = `
+          <div class="q-head">
+            <div class="q-no">Question ${index + 1}</div>
+            <div class="q-tag">${item.topic}</div>
+          </div>
+          <p class="q-text">${item.q}</p>
+          <div class="options">
+            ${item.options.map((opt, optIndex) => `
+              <label class="option" data-option="${optIndex}">
+                <input type="radio" name="q-${index}" value="${optIndex}">
+                <div class="option-text"><strong>${String.fromCharCode(65 + optIndex)}.</strong> ${opt}</div>
+              </label>
+            `).join("")}
+          </div>
+          <div class="answer-note">${noteText}</div>
+        `;
+
+        questionList.appendChild(card);
+      });
+
+      bindEvents();
+      updateProgress();
+      applyFilters();
+    }
+
+    function bindEvents() {
+      document.querySelectorAll(".question").forEach(card => {
+        card.querySelectorAll('input[type="radio"]').forEach(input => {
+          input.addEventListener("change", () => {
+            const labels = card.querySelectorAll(".option");
+            labels.forEach(label => label.classList.remove("selected"));
+            input.closest(".option").classList.add("selected");
+            card.classList.add("answered");
+            if (submitted) reviewSingleCard(card);
+            updateProgress();
+            applyFilters();
+          });
+        });
+      });
+    }
+
+    function getSelectedIndex(card) {
+      const checked = card.querySelector('input[type="radio"]:checked');
+      return checked ? Number(checked.value) : null;
+    }
+
+    function updateProgress() {
+      const cards = [...document.querySelectorAll(".question")];
+      const answered = cards.filter(card => getSelectedIndex(card) !== null).length;
+      const total = cards.length;
+      const unanswered = total - answered;
+      const visible = cards.filter(card => !card.classList.contains("hidden")).length;
+      const percent = total ? Math.round((answered / total) * 100) : 0;
+
+      progressText.textContent = `${answered} / ${total} Answered`;
+      visibleText.textContent = `Showing ${visible} questions`;
+      progressBar.style.width = `${percent}%`;
+      answeredChip.textContent = `Answered: ${answered}`;
+      unansweredChip.textContent = `Unanswered: ${unanswered}`;
+      filteredChip.textContent = `Visible: ${visible}`;
+    }
+
+    function applyFilters() {
+      const term = searchBox.value.trim().toLowerCase();
+      const cards = [...document.querySelectorAll(".question")];
+
+      cards.forEach(card => {
+        const idx = Number(card.dataset.index);
+        const item = questions[idx];
+        const text = `${item.q} ${item.topic} ${item.options.join(" ")}`.toLowerCase();
+        const matchesSearch = !term || text.includes(term);
+        const unansweredOnly = !showOnlyUnanswered || getSelectedIndex(card) === null;
+        card.classList.toggle("hidden", !(matchesSearch && unansweredOnly));
+      });
+
+      toggleUnanswered.textContent = showOnlyUnanswered ? "Show All" : "Show Unanswered";
+      updateProgress();
+    }
+
+    function reviewSingleCard(card) {
+      const idx = Number(card.dataset.index);
+      const item = questions[idx];
+      const selected = getSelectedIndex(card);
+      const options = [...card.querySelectorAll(".option")];
+      const note = card.querySelector(".answer-note");
+
+      card.classList.remove("review-correct", "review-wrong");
+      options.forEach((opt, optIndex) => {
+        opt.classList.remove("correct", "incorrect");
+        if (optIndex === item.answer) opt.classList.add("correct");
+        if (selected !== null && optIndex === selected && selected !== item.answer) opt.classList.add("incorrect");
+      });
+
+      if (selected !== null) {
+        card.classList.add(selected === item.answer ? "review-correct" : "review-wrong");
+      }
+      note.classList.add("show");
+    }
+
+    function submitQuiz() {
+      submitted = true;
+      const cards = [...document.querySelectorAll(".question")];
+      let correct = 0;
+      let wrong = 0;
+      let blank = 0;
+
+      cards.forEach(card => {
+        const idx = Number(card.dataset.index);
+        const item = questions[idx];
+        const selected = getSelectedIndex(card);
+        reviewSingleCard(card);
+
+        if (selected === null) {
+          blank += 1;
+        } else if (selected === item.answer) {
+          correct += 1;
+        } else {
+          wrong += 1;
+        }
+      });
+
+      const percentage = Math.round((correct / questions.length) * 100);
+      resultCard.classList.add("show");
+      scoreValue.textContent = `${percentage}%`;
+      scoreLine.textContent = `You got ${correct} out of ${questions.length} correct. Review highlights are visible on every card now.`;
+      correctCount.textContent = correct;
+      wrongCount.textContent = wrong;
+      blankCount.textContent = blank;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function resetQuiz() {
+      submitted = false;
+      resultCard.classList.remove("show");
+      searchBox.value = "";
+      showOnlyUnanswered = false;
+
+      document.querySelectorAll(".question").forEach(card => {
+        card.classList.remove("answered", "review-correct", "review-wrong", "hidden");
+        card.querySelectorAll('input[type="radio"]').forEach(input => {
+          input.checked = false;
+        });
+        card.querySelectorAll(".option").forEach(opt => {
+          opt.classList.remove("selected", "correct", "incorrect");
+        });
+        card.querySelector(".answer-note").classList.remove("show");
+      });
+
+      scoreValue.textContent = "0%";
+      scoreLine.textContent = "Submit to see your score.";
+      correctCount.textContent = "0";
+      wrongCount.textContent = "0";
+      blankCount.textContent = "0";
+      applyFilters();
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    searchBox.addEventListener("input", applyFilters);
+    toggleUnanswered.addEventListener("click", () => {
+      showOnlyUnanswered = !showOnlyUnanswered;
+      applyFilters();
+    });
+    submitBtn.addEventListener("click", submitQuiz);
+    resetBtn.addEventListener("click", resetQuiz);
+    jumpTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+    renderQuestions();
+  </script>
+</body>
+</html>

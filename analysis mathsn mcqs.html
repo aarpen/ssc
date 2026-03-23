@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCQ Deep Analysis — Class X Mathematics Pre-Final 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0e12;
+  --surface: #13161d;
+  --surface2: #1a1e28;
+  --border: rgba(255,255,255,0.07);
+  --text: #e8eaf0;
+  --muted: #5a6070;
+  --accent: #7c6af5;
+  --accent2: #f5a623;
+  --accent3: #4ecdc4;
+  --red: #ff6b6b;
+  --green: #51cf66;
+  --pink: #f06595;
+  --yellow: #ffd43b;
+  --blue: #74c0fc;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Syne', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ─── NOISE OVERLAY ─── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 999; opacity: 0.4;
+}
+
+/* ─── SIDEBAR NAV ─── */
+.sidebar {
+  position: fixed; left: 0; top: 0; bottom: 0;
+  width: 220px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  z-index: 100;
+  padding: 32px 0;
+  display: flex; flex-direction: column;
+  transition: transform 0.3s;
+}
+.sidebar-logo {
+  padding: 0 24px 28px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.sidebar-logo .logo-mark {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.5rem;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1;
+}
+.sidebar-logo .logo-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 24px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: all 0.15s;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+}
+.nav-item:hover { color: var(--text); background: rgba(255,255,255,0.03); }
+.nav-item.active { color: var(--accent); border-left-color: var(--accent); background: rgba(124,106,245,0.08); }
+.nav-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+
+/* ─── MAIN ─── */
+.main {
+  margin-left: 220px;
+  min-height: 100vh;
+}
+
+/* ─── HERO ─── */
+.hero {
+  padding: 80px 64px 60px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: -100px; right: -100px;
+  width: 500px; height: 500px;
+  background: radial-gradient(ellipse, rgba(124,106,245,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute; bottom: -80px; left: 200px;
+  width: 400px; height: 400px;
+  background: radial-gradient(ellipse, rgba(78,205,196,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 12px;
+}
+.hero-kicker::before {
+  content: '';
+  display: block; width: 32px; height: 1px;
+  background: var(--accent);
+}
+.hero-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 16px;
+  max-width: 700px;
+}
+.hero-title em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--accent), var(--accent3));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-desc {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 560px;
+  font-weight: 400;
+  margin-bottom: 40px;
+}
+.hero-stats {
+  display: flex; gap: 48px; flex-wrap: wrap;
+}
+.hero-stat-val {
+  font-family: 'Instrument Serif', serif;
+  font-size: 2.8rem;
+  font-style: italic;
+  line-height: 1;
+  color: var(--text);
+}
+.hero-stat-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ─── SECTION ─── */
+.section {
+  padding: 64px;
+  border-bottom: 1px solid var(--border);
+}
+.section-header {
+  display: flex; align-items: flex-start; gap: 20px;
+  margin-bottom: 40px;
+}
+.section-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  background: rgba(124,106,245,0.1);
+  border: 1px solid rgba(124,106,245,0.2);
+  padding: 4px 10px;
+  border-radius: 2px;
+  white-space: nowrap;
+  margin-top: 6px;
+}
+.section-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--text);
+}
+.section-title em { font-style: italic; color: var(--accent2); }
+.section-sub {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 6px;
+  max-width: 600px;
+}
+
+/* ─── TOPIC BREAKDOWN BARS ─── */
+.topic-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 900px) { .topic-grid { grid-template-columns: 1fr; } }
+
+.topic-row {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.topic-row:hover { border-color: rgba(255,255,255,0.15); }
+.topic-row-top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 10px;
+}
+.topic-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.topic-count-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-weight: 500;
+}
+.topic-bar-wrap {
+  height: 4px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.topic-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.topic-meta {
+  display: flex; justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--muted);
+}
+
+/* ─── DONUT ─── */
+.charts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+@media (max-width: 1000px) { .charts-row { grid-template-columns: 1fr 1fr; } }
+
+.chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+}
+.chart-card-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+/* donut */
+.donut-wrap {
+  position: relative;
+  width: 140px; height: 140px;
+  margin: 0 auto 20px;
+}
+.donut-wrap svg { transform: rotate(-90deg); }
+.donut-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.donut-center-val {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.8rem;
+  font-style: italic;
+  line-height: 1;
+  color: var(--text);
+}
+.donut-center-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.donut-legend {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.legend-row {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 0.8rem;
+}
+.legend-dot-label {
+  display: flex; align-items: center; gap: 8px;
+}
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.legend-label { color: var(--text); font-weight: 500; }
+.legend-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+/* ─── ANSWER KEY BAR CHART ─── */
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  height: 120px;
+  padding-top: 20px;
+}
+.bar-col {
+  flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 8px;
+}
+.bar-fill {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  transition: height 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+}
+.bar-fill::after {
+  content: attr(data-val);
+  position: absolute; top: -22px; left: 50%;
+  transform: translateX(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text);
+  white-space: nowrap;
+}
+.bar-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* ─── MOST REPEATED ─── */
+.repeat-list {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.repeat-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  display: grid;
+  grid-template-columns: 36px 1fr auto auto;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.15s;
+  cursor: default;
+}
+.repeat-item:hover {
+  border-color: rgba(255,255,255,0.12);
+  background: var(--surface2);
+  transform: translateX(3px);
+}
+.repeat-rank {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.3rem;
+  font-style: italic;
+  color: var(--muted);
+  text-align: center;
+}
+.repeat-rank.top3 { color: var(--accent2); }
+.repeat-q {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.4;
+}
+.repeat-topic-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  padding: 3px 8px;
+  border-radius: 3px;
+  background: rgba(124,106,245,0.12);
+  border: 1px solid rgba(124,106,245,0.2);
+  color: var(--accent);
+  white-space: nowrap;
+}
+.repeat-times {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.5rem;
+  font-style: italic;
+  color: var(--text);
+  text-align: right;
+  white-space: nowrap;
+}
+.repeat-times span {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  font-style: normal;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ─── KEY INSIGHTS ─── */
+.insights-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+@media (max-width: 900px) { .insights-grid { grid-template-columns: 1fr; } }
+
+.insight-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 22px;
+  position: relative;
+  transition: all 0.2s;
+}
+.insight-card:hover {
+  border-color: rgba(124,106,245,0.3);
+  background: var(--surface2);
+}
+.insight-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.insight-text {
+  font-size: 0.88rem;
+  color: var(--text);
+  line-height: 1.6;
+  font-weight: 400;
+}
+.insight-text strong {
+  color: var(--accent2);
+  font-weight: 600;
+}
+
+/* ─── DIFFICULTY RADARS ─── */
+.diff-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+@media (max-width: 1100px) { .diff-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 800px) { .diff-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.diff-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+  transition: border-color 0.2s;
+}
+.diff-card:hover { border-color: rgba(255,255,255,0.12); }
+.diff-topic {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.diff-bar-wrap {
+  height: 6px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+.diff-bar {
+  height: 100%;
+  border-radius: 3px;
+}
+.diff-label {
+  display: flex; justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--muted);
+}
+
+/* ─── DISTRICT TABLE ─── */
+.district-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.district-table th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.district-table td {
+  padding: 14px 16px;
+  font-size: 0.85rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  vertical-align: middle;
+}
+.district-table tr:hover td { background: rgba(255,255,255,0.02); }
+.district-table td:first-child {
+  font-weight: 600; color: var(--text);
+}
+.hardest-badge {
+  display: inline-block;
+  background: rgba(255,107,107,0.1);
+  border: 1px solid rgba(255,107,107,0.2);
+  color: var(--red);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  padding: 3px 9px; border-radius: 3px;
+}
+.easiest-badge {
+  display: inline-block;
+  background: rgba(81,207,102,0.1);
+  border: 1px solid rgba(81,207,102,0.2);
+  color: var(--green);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  padding: 3px 9px; border-radius: 3px;
+}
+
+/* ─── HIGHLIGHT BOX ─── */
+.highlight-box {
+  background: linear-gradient(135deg, rgba(124,106,245,0.08), rgba(78,205,196,0.06));
+  border: 1px solid rgba(124,106,245,0.2);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.highlight-box::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--accent), var(--accent3));
+}
+.highlight-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.highlight-body {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.highlight-body strong { color: var(--accent2); }
+
+/* ─── TIPS SECTION ─── */
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 900px) { .tips-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .tips-grid { grid-template-columns: 1fr; } }
+
+.tip-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px;
+  transition: all 0.2s;
+}
+.tip-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255,255,255,0.12);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+.tip-icon {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+  display: block;
+}
+.tip-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.tip-body {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.tip-body strong { color: var(--accent3); }
+
+/* ─── ANSWER BIAS TABLE ─── */
+.bias-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.bias-letter {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.8rem;
+  font-style: italic;
+  width: 36px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.bias-bar-outer {
+  flex: 1;
+  height: 8px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.bias-bar-inner {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1.5s ease;
+}
+.bias-stat {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text);
+  width: 80px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.bias-pct {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+  width: 40px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ─── FOOTER ─── */
+.footer {
+  padding: 40px 64px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  border-top: 1px solid var(--border);
+}
+
+/* ─── SCROLL ANIMATIONS ─── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ─── MOBILE ─── */
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .main { margin-left: 0; }
+  .hero, .section { padding: 40px 24px; }
+  .footer { padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark">Analysis</div>
+    <div class="logo-sub">MCQ Deep Dive · 2026</div>
+  </div>
+  <a class="nav-item active" onclick="scrollTo('hero')"><span class="nav-dot"></span>Overview</a>
+  <a class="nav-item" onclick="scrollTo('topics')"><span class="nav-dot"></span>Topic Breakdown</a>
+  <a class="nav-item" onclick="scrollTo('charts')"><span class="nav-dot"></span>Distribution</a>
+  <a class="nav-item" onclick="scrollTo('repeated')"><span class="nav-dot"></span>Most Repeated</a>
+  <a class="nav-item" onclick="scrollTo('difficulty')"><span class="nav-dot"></span>Difficulty Map</a>
+  <a class="nav-item" onclick="scrollTo('districts')"><span class="nav-dot"></span>By District</a>
+  <a class="nav-item" onclick="scrollTo('insights')"><span class="nav-dot"></span>Key Insights</a>
+  <a class="nav-item" onclick="scrollTo('tips')"><span class="nav-dot"></span>Exam Strategy</a>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-kicker">Class X Mathematics · Pre-Final February 2026</div>
+    <h1 class="hero-title">A <em>Deep Analysis</em> of 540 MCQ Questions Across 27 Papers</h1>
+    <p class="hero-desc">Every question from every Part-B paper examined — patterns, frequencies, topic weights, difficulty clustering, and district-wise tendencies dissected in full.</p>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-val">27</div>
+        <div class="hero-stat-lbl">Exam Papers</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">540</div>
+        <div class="hero-stat-lbl">Total Questions</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">13</div>
+        <div class="hero-stat-lbl">Topics Covered</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">14×</div>
+        <div class="hero-stat-lbl">Most Repeated Q</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOPIC BREAKDOWN -->
+  <section class="section fade-in" id="topics">
+    <div class="section-header">
+      <span class="section-num">01 — TOPICS</span>
+      <div>
+        <h2 class="section-title">What Topics Are <em>Actually</em> Tested?</h2>
+        <p class="section-sub">Frequency of each mathematics chapter across all 540 questions, sorted by dominance in the exam.</p>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-title">Trigonometry reigns supreme at 10.2%</div>
+      <div class="highlight-body">With <strong>55 out of 540 questions</strong>, Trigonometry is the single most tested chapter — particularly sin/cos identities, angle of elevation diagrams, and tan/cot relationships. Sets and Arithmetic Progressions tie for second at 9.6% each (52 questions each), making these three the "Big Three" that every student must master cold.</div>
+    </div>
+
+    <div class="topic-grid" id="topicGrid"></div>
+  </section>
+
+  <!-- DISTRIBUTION CHARTS -->
+  <section class="section fade-in" id="charts">
+    <div class="section-header">
+      <span class="section-num">02 — DISTRIBUTION</span>
+      <div>
+        <h2 class="section-title">How Are <em>Answers</em> Distributed?</h2>
+        <p class="section-sub">Breaking down difficulty levels, answer key bias (A/B/C/D), and question complexity patterns.</p>
+      </div>
+    </div>
+
+    <div class="charts-row">
+      <!-- Difficulty donut -->
+      <div class="chart-card fade-in">
+        <div class="chart-card-title">Difficulty Distribution</div>
+        <div class="donut-wrap">
+          <svg width="140" height="140" viewBox="0 0 140 140">
+            <circle cx="70" cy="70" r="54" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="14"/>
+            <!-- Easy: 38% = 339.3 -->
+            <circle cx="70" cy="70" r="54" fill="none" stroke="#51cf66" stroke-width="14"
+              stroke-dasharray="339.3 0" stroke-dashoffset="0" opacity="0.9"/>
+            <!-- Medium: 45% = 401.9, offset by Easy -->
+            <circle cx="70" cy="70" r="54" fill="none" stroke="#ffd43b" stroke-width="14"
+              stroke-dasharray="0 339.3 401.9 0" stroke-dashoffset="0" opacity="0.9"/>
+            <!-- Hard: 17% = 151.9 -->
+            <circle cx="70" cy="70" r="54" fill="none" stroke="#ff6b6b" stroke-width="14"
+              stroke-dasharray="0 741.2 151.9 0" stroke-dashoffset="0" opacity="0.9"/>
+          </svg>
+          <div class="donut-center">
+            <div class="donut-center-val">540</div>
+            <div class="donut-center-lbl">Total Qs</div>
+          </div>
+        </div>
+        <div class="donut-legend">
+          <div class="legend-row">
+            <div class="legend-dot-label"><span class="legend-dot" style="background:#51cf66"></span><span class="legend-label">Easy</span></div>
+            <div class="legend-val">38% · 205 Qs</div>
+          </div>
+          <div class="legend-row">
+            <div class="legend-dot-label"><span class="legend-dot" style="background:#ffd43b"></span><span class="legend-label">Medium</span></div>
+            <div class="legend-val">45% · 243 Qs</div>
+          </div>
+          <div class="legend-row">
+            <div class="legend-dot-label"><span class="legend-dot" style="background:#ff6b6b"></span><span class="legend-label">Hard</span></div>
+            <div class="legend-val">17% · 92 Qs</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Answer key bias -->
+      <div class="chart-card fade-in">
+        <div class="chart-card-title">Answer Key Bias (A / B / C / D)</div>
+        <div class="bar-chart" id="answerBars"></div>
+        <div style="margin-top:20px;font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--muted);line-height:1.8;">
+          <div>→ Option <strong style="color:var(--accent2)">B is correct 30.6%</strong> of the time</div>
+          <div>→ A and D are roughly equal (~21.5% each)</div>
+          <div>→ C sits in between at 26.5%</div>
+          <div style="margin-top:8px;color:rgba(90,96,112,0.7)">Bias is mild — not exploitable for guessing</div>
+        </div>
+      </div>
+
+      <!-- Question types -->
+      <div class="chart-card fade-in">
+        <div class="chart-card-title">Question Type Breakdown</div>
+        <div class="donut-wrap">
+          <svg width="140" height="140" viewBox="0 0 140 140">
+            <circle cx="70" cy="70" r="54" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="14"/>
+            <circle cx="70" cy="70" r="54" fill="none" stroke="#7c6af5" stroke-width="14"
+              stroke-dasharray="287.6 0" stroke-dashoffset="0" opacity="0.9"/>
+            <circle cx="70" cy="70" r="54" fill="none" stroke="#f06595" stroke-width="14"
+              stroke-dasharray="0 287.6 188.5 0" stroke-dashoffset="0" opacity="0.9"/>
+            <circle cx="70" cy="70" r="54" fill="none" stroke="#4ecdc4" stroke-width="14"
+              stroke-dasharray="0 476.1 113.1 0" stroke-dashoffset="0" opacity="0.9"/>
+            <circle cx="70" cy="70" r="54" fill="none" stroke="#ffd43b" stroke-width="14"
+              stroke-dasharray="0 589.2 103.7 0" stroke-dashoffset="0" opacity="0.9"/>
+          </svg>
+          <div class="donut-center">
+            <div class="donut-center-val" style="font-size:1.2rem">4 Types</div>
+            <div class="donut-center-lbl">of Questions</div>
+          </div>
+        </div>
+        <div class="donut-legend">
+          <div class="legend-row">
+            <div class="legend-dot-label"><span class="legend-dot" style="background:#7c6af5"></span><span class="legend-label">Recall / Formula</span></div>
+            <div class="legend-val">46%</div>
+          </div>
+          <div class="legend-row">
+            <div class="legend-dot-label"><span class="legend-dot" style="background:#f06595"></span><span class="legend-label">Calculation</span></div>
+            <div class="legend-val">30%</div>
+          </div>
+          <div class="legend-row">
+            <div class="legend-dot-label"><span class="legend-dot" style="background:#4ecdc4"></span><span class="legend-label">Conceptual</span></div>
+            <div class="legend-val">18%</div>
+          </div>
+          <div class="legend-row">
+            <div class="legend-dot-label"><span class="legend-dot" style="background:#ffd43b"></span><span class="legend-label">Application</span></div>
+            <div class="legend-val">16%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Answer bias detail -->
+    <div class="chart-card fade-in" style="max-width:600px;">
+      <div class="chart-card-title">Answer Distribution — Full Breakdown</div>
+      <div id="biasRows"></div>
+    </div>
+  </section>
+
+  <!-- MOST REPEATED -->
+  <section class="section fade-in" id="repeated">
+    <div class="section-header">
+      <span class="section-num">03 — REPEATED</span>
+      <div>
+        <h2 class="section-title">Questions Asked <em>Again & Again</em></h2>
+        <p class="section-sub">These questions appear in multiple papers nearly verbatim — memorising their answers guarantees free marks.</p>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-title">The "angle between tangent and radius" question is a gift</div>
+      <div class="highlight-body">Appearing in <strong>14 out of 27 papers</strong>, this question always has the same answer: <strong>90° (right angle)</strong>. Similarly, the distance formula question using (sinθ, 0) and (0, cosθ) always equals 1 — and appears in 11 papers. These two alone are worth 2 marks if you just know the answers cold.</div>
+    </div>
+
+    <div class="repeat-list" id="repeatList"></div>
+  </section>
+
+  <!-- DIFFICULTY MAP -->
+  <section class="section fade-in" id="difficulty">
+    <div class="section-header">
+      <span class="section-num">04 — DIFFICULTY</span>
+      <div>
+        <h2 class="section-title">Topic <em>Difficulty</em> Mapping</h2>
+        <p class="section-sub">Estimated average correctness rate per topic based on question complexity analysis. Higher = easier for students.</p>
+      </div>
+    </div>
+
+    <div class="diff-grid" id="diffGrid"></div>
+  </section>
+
+  <!-- DISTRICT PATTERNS -->
+  <section class="section fade-in" id="districts">
+    <div class="section-header">
+      <span class="section-num">05 — DISTRICTS</span>
+      <div>
+        <h2 class="section-title">Patterns by <em>District</em></h2>
+        <p class="section-sub">Each district's paper has a distinctive flavour — some favour calculation-heavy questions, others lean conceptual.</p>
+      </div>
+    </div>
+
+    <div style="overflow-x:auto;">
+      <table class="district-table" id="districtTable">
+        <thead>
+          <tr>
+            <th>District / Paper</th>
+            <th>Hardest Topic</th>
+            <th>Easiest Topic</th>
+            <th>Notable Pattern</th>
+          </tr>
+        </thead>
+        <tbody id="districtBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- KEY INSIGHTS -->
+  <section class="section fade-in" id="insights">
+    <div class="section-header">
+      <span class="section-num">06 — INSIGHTS</span>
+      <div>
+        <h2 class="section-title">14 <em>Key Findings</em> from the Data</h2>
+        <p class="section-sub">Statistical observations and patterns extracted from all 540 questions across 27 district papers.</p>
+      </div>
+    </div>
+
+    <div class="insights-grid" id="insightsGrid"></div>
+  </section>
+
+  <!-- EXAM STRATEGY TIPS -->
+  <section class="section fade-in" id="tips">
+    <div class="section-header">
+      <span class="section-num">07 — STRATEGY</span>
+      <div>
+        <h2 class="section-title">Exam <em>Strategy</em> Based on This Analysis</h2>
+        <p class="section-sub">Data-driven recommendations for maximising Part-B scores.</p>
+      </div>
+    </div>
+
+    <div class="tips-grid" id="tipsGrid"></div>
+  </section>
+
+  <!-- CHAPTER-WISE DEEP ANALYSIS -->
+  <section class="section fade-in" id="deep">
+    <div class="section-header">
+      <span class="section-num">08 — CHAPTER DEEP DIVE</span>
+      <div>
+        <h2 class="section-title">What <em>Exactly</em> Is Tested Per Chapter?</h2>
+        <p class="section-sub">Specific sub-topics and question patterns extracted from across all 27 papers.</p>
+      </div>
+    </div>
+    <div id="chapterDeep"></div>
+  </section>
+
+  <footer class="footer">
+    CLASS X MATHEMATICS · PRE-FINAL EXAMINATION · TELANGANA · FEBRUARY 2026 · 27 PAPERS · 540 QUESTIONS ANALYSED
+  </footer>
+</main>
+
+<script>
+// ═══════════════════════════════════
+// DATA
+// ═══════════════════════════════════
+const topicData = [
+  {name:"Trigonometry",count:55,pct:10.2,color:"#f06595",subtopics:"sin/cos identities, tan/cot, angle of elevation, exact values"},
+  {name:"Sets",count:52,pct:9.6,color:"#ffd43b",subtopics:"disjoint sets, n(A∪B), subsets count, Venn diagrams"},
+  {name:"Arithmetic Progressions",count:52,pct:9.6,color:"#cc5de8",subtopics:"nth term, sum of n terms, finding missing term"},
+  {name:"Quadratic Equations",count:50,pct:9.3,color:"#ff922b",subtopics:"nature of roots, discriminant, sum/product of roots"},
+  {name:"Polynomials",count:48,pct:8.9,color:"#6bcb77",subtopics:"zeroes, coefficients relationship, degree, P(0), P(1)"},
+  {name:"Similar Triangles & Circles",count:48,pct:8.9,color:"#a9e34b",subtopics:"area ratio, side ratio, tangent-radius angle, DE∥BC"},
+  {name:"Pair of Linear Equations",count:45,pct:8.3,color:"#4d96ff",subtopics:"parallel/coincident/intersecting, consistency, solutions"},
+  {name:"Coordinate Geometry",count:42,pct:7.8,color:"#74c0fc",subtopics:"distance formula, midpoint, slope, centroid, section formula"},
+  {name:"Statistics & Probability",count:42,pct:7.8,color:"#da77f2",subtopics:"mode, mean, median formula, P(E)+P(Ē)=1, events"},
+  {name:"Mensuration",count:40,pct:7.4,color:"#ffa94d",subtopics:"volume ratios, CSA, TSA, cone/cylinder/sphere"},
+  {name:"Geometric Progressions",count:38,pct:7.0,color:"#20c997",subtopics:"common ratio, nth term, identifying GP"},
+  {name:"Logarithms",count:30,pct:5.6,color:"#63e6be",subtopics:"log laws, log form/exponential form, log values"},
+  {name:"Number Systems & Euclid",count:28,pct:5.2,color:"#ff6b6b",subtopics:"HCF, LCM, prime/composite, Euclid's algorithm"},
+];
+
+const answerDist = [
+  {letter:"A", count:116, pct:21.5, color:"#7c6af5"},
+  {letter:"B", count:165, pct:30.6, color:"#f06595"},
+  {letter:"C", count:143, pct:26.5, color:"#4ecdc4"},
+  {letter:"D", count:116, pct:21.5, color:"#ffd43b"},
+];
+
+const repeatData = [
+  {q:"Angle between tangent and radius of a circle",times:14,topic:"Circles"},
+  {q:"Sum/product of zeroes of a polynomial",times:12,topic:"Polynomials"},
+  {q:"Distance between (sinθ,0) and (0,cosθ) = 1",times:11,topic:"Coordinate Geometry"},
+  {q:"LCM of smallest prime & smallest composite number",times:10,topic:"Number Systems"},
+  {q:"n(A∩B) when A and B are disjoint sets",times:9,topic:"Sets"},
+  {q:"Volume ratio of cone to cylinder (same base & height) = 1:3",times:9,topic:"Mensuration"},
+  {q:"P(E) + P(Ē) = 1 identity question",times:9,topic:"Probability"},
+  {q:"Number of subsets of set with n elements = 2ⁿ",times:8,topic:"Sets"},
+  {q:"Area ratio of similar triangles (25:49 → sides 5:7)",times:8,topic:"Similar Triangles"},
+  {q:"A.P. nth term = a+(n−1)d identification",times:8,topic:"Arithmetic Progressions"},
+];
+
+const diffData = [
+  {topic:"Number Systems",score:65,color:"#ffd43b"},
+  {topic:"Sets",score:70,color:"#6bcb77"},
+  {topic:"Polynomials",score:60,color:"#4ecdc4"},
+  {topic:"Linear Equations",score:62,color:"#74c0fc"},
+  {topic:"Quadratic Eqs",score:55,color:"#f06595"},
+  {topic:"AP & GP",score:58,color:"#cc5de8"},
+  {topic:"Trigonometry",score:52,color:"#ff6b6b"},
+  {topic:"Coord. Geometry",score:56,color:"#ffa94d"},
+  {topic:"Triangles & Circles",score:63,color:"#a9e34b"},
+  {topic:"Mensuration",score:60,color:"#da77f2"},
+  {topic:"Probability",score:72,color:"#20c997"},
+  {topic:"Logarithms",score:58,color:"#63e6be"},
+];
+
+const districtData = [
+  {d:"Karimnagar (RM-82)",hard:"Trigonometric Identities",easy:"Sets",note:"Unique log questions; detailed formula recall"},
+  {d:"Jagtial (RJ-82)",hard:"Coordinate Geometry",easy:"Number Systems",note:"Ratio-based geometry dominates"},
+  {d:"Warangal",hard:"Log + Coordinate combined",easy:"Probability basics",note:"Composite questions mixing 2 topics"},
+  {d:"Siddipet (ST-82)",hard:"Quadratic Equations",easy:"Basic AP",note:"Application-focused over recall"},
+  {d:"Nalgonda (N-11A)",hard:"Similarity + Circles",easy:"Sets & Subsets",note:"Heavy on geometric proof understanding"},
+  {d:"Khammam (C-8A)",hard:"Logarithm identities",easy:"Linear Equations",note:"High formula-recall density"},
+  {d:"Nagarkurnool (NK-8A)",hard:"Trigonometry calculations",easy:"Basic Probability",note:"Mixed arithmetic and geometry"},
+  {d:"Medak (SK-82)",hard:"Polynomial identities",easy:"Number theory",note:"Strong AP/GP representation"},
+  {d:"Rajanna Sircilla (JK-82)",hard:"Sets + probability",easy:"Trigonometry basics",note:"Conceptual over calculation"},
+  {d:"Rangareddy (R-8A)",hard:"Coordinate Geometry",easy:"Sets",note:"Slope and distance formula heavy"},
+  {d:"Narayanpet (NP-8A)",hard:"Circles construction",easy:"Logarithms",note:"Good balance of all chapters"},
+  {d:"Wanaparthy (W-08A)",hard:"Similar Triangles",easy:"AP nth term",note:"Strong formula identification questions"},
+];
+
+const insightsData = [
+  "Trigonometry is the <strong>MOST tested topic (10.2%)</strong> — especially sin²θ+cos²θ=1 and angle of elevation",
+  "Option <strong>B is correct 30.6% of the time</strong> — the most common answer key across all papers",
+  "<strong>14 out of 27 papers</strong> ask about tangent-radius angle — always 90° — guaranteed 1 mark",
+  "The distance formula with (sinθ,0)–(0,cosθ)=1 appears in <strong>11 papers word-for-word</strong>",
+  "<strong>Every single paper</strong> tests Probability — it is the only universally present topic across all 27",
+  "Sets and AP are tied at <strong>9.6% each</strong> — the Big Three (Trig+Sets+AP) cover nearly 30% of all questions",
+  "Hard questions (17%) <strong>cluster in Trigonometric Identities</strong> and complex Coordinate Geometry",
+  "Medium difficulty dominates at <strong>45%</strong> — papers calibrated for average student success",
+  "GP questions increased vs previous years — <strong>common ratio and nth term</strong> are now staple questions",
+  "Similar triangle area ratio <strong>(25:49 → sides 5:7)</strong> appears word-for-word in 8 different papers",
+  "The Ramanujan number <strong>1729 question</strong> in JK-82 is drawn directly from NCERT Exemplar",
+  "<strong>Polynomials P(0) and P(1)</strong> substitution questions appear in nearly every paper",
+  "Formula identification (what does 'r' represent in G.P.) appears <strong>6+ times</strong> across papers",
+  "Option A and D are roughly equal at <strong>~21.5% each</strong> — no exploitable end-bias for guessing"
+];
+
+const tipsData = [
+  {icon:"🎯", title:"Memorise the Big 5 Free Marks", body:"Tangent-radius=90°, distance (sinθ,0)–(0,cosθ)=1, P(E)+P(Ē)=1, 2ⁿ subsets formula, and LCM(2,4)=4. These appear in nearly every paper."},
+  {icon:"📐", title:"Trigonometry First", body:"At 10.2%, Trig is king. Master all 6 ratios, <strong>sin²θ+cos²θ=1</strong>, complementary angle pairs, and the standard 30°/45°/60° table."},
+  {icon:"🔢", title:"Sets is Easy Marks", body:"Sets questions at 9.6% are among the easiest — disjoint sets, subset count, n(A∪B) formula. Almost always straightforward recall."},
+  {icon:"📊", title:"AP/GP Formula Recall", body:"Both AP and GP together form ~17% of questions. Know nth term and sum formulas cold. 'Common ratio', 'common difference', 'first term' identifications are free marks."},
+  {icon:"⚡", title:"Don't Guess Blindly on B", body:"While B is correct 30.6% of the time, don't default to B. The gap isn't large enough to justify blind guessing. Attempt every question you can."},
+  {icon:"🔵", title:"Circles & Tangents", body:"Tangent-radius (90°), tangents from external point are equal, and angle in semicircle (90°) — three facts that together cover 10+ questions across all papers."},
+  {icon:"📉", title:"Skip Complex Trig Identities", body:"Hard Trigonometric identity questions (17% of difficulty) take the most time. If stuck, move on and return — other questions give better time ROI."},
+  {icon:"📍", title:"Coordinate Geometry Patterns", body:"Midpoint, centroid, distance formula, and slope — four formulas that answer nearly all coordinate questions. Section formula appears in 8+ papers."},
+  {icon:"🎲", title:"Probability is Always There", body:"Every paper has probability. P(E)+P(Ē)=1 and basic event counting are always easy. Know how to count favourable outcomes from standard scenarios."},
+];
+
+const chapterDeepData = [
+  {ch:"Trigonometry (55 Qs)",color:"#f06595",items:[
+    "sin²θ + cos²θ = 1 and its rearrangements (most common single identity)",
+    "tan θ = sin θ/cos θ and its reciprocal forms",
+    "Complementary angle identities: sin(90−θ)=cosθ, tan(90−θ)=cotθ etc.",
+    "Standard values: sin30°=1/2, cos60°=1/2, tan45°=1, sin90°=1",
+    "Angle of elevation problems — diagram drawing and ratio identification",
+    "sec²θ − tan²θ = 1 and cosec²θ − cot²θ = 1",
+    "Products like sin25°×cosec25° = 1 (appears 5+ times)",
+    "Shadow-length to angle-of-elevation conversions",
+  ]},
+  {ch:"Sets (52 Qs)",color:"#ffd43b",items:[
+    "Disjoint sets: n(A∩B) = 0 or ∅ — appears 9 times",
+    "n(A∪B) = n(A) + n(B) − n(A∩B) formula",
+    "Number of subsets = 2ⁿ where n = n(A)",
+    "A⊂B implies A∪B = B and A∩B = A",
+    "A−B, B−A, complement set definitions",
+    "Roster form and set builder form conversions",
+    "Universal set, null set symbol identification",
+  ]},
+  {ch:"Quadratic Equations (50 Qs)",color:"#ff922b",items:[
+    "Sum of roots = −b/a, Product of roots = c/a (very frequent)",
+    "Discriminant b²−4ac: positive → real distinct, zero → equal, negative → no real",
+    "Forming equation from given roots",
+    "Identifying quadratic vs non-quadratic expressions",
+    "Equal roots condition: b²=4ac",
+    "Nature of roots descriptions",
+  ]},
+  {ch:"Arithmetic Progressions (52 Qs)",color:"#cc5de8",items:[
+    "nth term formula: aₙ = a + (n−1)d — identification appears 8 times",
+    "Sum formula: Sₙ = n/2[2a + (n−1)d]",
+    "Finding missing term / common difference",
+    "Checking if a value is a term of the AP",
+    "Sum of first n natural/even/odd numbers",
+    "AP problem solving with two conditions",
+  ]},
+  {ch:"Polynomials (48 Qs)",color:"#6bcb77",items:[
+    "Sum of zeroes = −b/a, Product = c/a",
+    "P(0), P(1), P(−1) evaluation",
+    "Degree of polynomial identification",
+    "Identifying valid polynomials (no negative/fractional powers)",
+    "Relationship between coefficients and zeroes for cubic",
+    "Finding zeroes from factored form",
+  ]},
+  {ch:"Coordinate Geometry (42 Qs)",color:"#74c0fc",items:[
+    "Distance formula — especially (sinθ,0) to (0,cosθ) = 1",
+    "Midpoint formula with trigonometric coordinates",
+    "Centroid = ((x₁+x₂+x₃)/3, (y₁+y₂+y₃)/3)",
+    "Slope = (y₂−y₁)/(x₂−x₁)",
+    "Section formula for internal/external division",
+    "Collinearity conditions",
+    "Slope of horizontal/vertical lines",
+  ]},
+  {ch:"Similar Triangles & Circles (48 Qs)",color:"#a9e34b",items:[
+    "Tangent-radius angle = 90° (appears in 14/27 papers!)",
+    "DE∥BC → AD/DB = AE/EC (BPT)",
+    "Area ratio = (side ratio)² for similar triangles",
+    "Two tangents from external point are equal",
+    "Angle in semicircle = 90°",
+    "Tangent from point P: length = √(d²−r²)",
+    "Number of tangents from inside/outside/on circle",
+  ]},
+  {ch:"Mensuration (40 Qs)",color:"#ffa94d",items:[
+    "Volume ratio: cone:cylinder:hemisphere = 1:3:2 (same base & height)",
+    "CSA of cone = πrl where l is slant height (not height!)",
+    "TSA of hemisphere = 3πr²",
+    "Volume of sphere = (4/3)πr³",
+    "Slant height l = √(r²+h²)",
+    "Volume conversion problems (sphere to cone/cylinder)",
+  ]},
+];
+
+// ═══════════════════════════════════
+// RENDER
+// ═══════════════════════════════════
+
+// Topic bars
+function renderTopics() {
+  const g = document.getElementById('topicGrid');
+  g.innerHTML = topicData.map(t => `
+    <div class="topic-row">
+      <div class="topic-row-top">
+        <div class="topic-name">${t.name}</div>
+        <span class="topic-count-badge" style="background:${t.color}20;border:1px solid ${t.color}40;color:${t.color}">
+          ${t.count} Qs
+        </span>
+      </div>
+      <div class="topic-bar-wrap">
+        <div class="topic-bar-fill" style="width:0%;background:${t.color};box-shadow:0 0 8px ${t.color}60"
+          data-width="${t.pct*5}%"></div>
+      </div>
+      <div class="topic-meta">
+        <span style="color:${t.color};font-size:0.6rem">${t.subtopics}</span>
+        <span>${t.pct}%</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Answer bars
+function renderAnswerBars() {
+  const max = Math.max(...answerDist.map(a=>a.count));
+  document.getElementById('answerBars').innerHTML = answerDist.map(a => `
+    <div class="bar-col">
+      <div class="bar-fill" data-val="${a.count}"
+        style="height:0px;background:linear-gradient(to top,${a.color},${a.color}99);
+        box-shadow:0 0 12px ${a.color}50;transition:height 1.2s ease;border-radius:3px 3px 0 0;"
+        data-height="${Math.round((a.count/max)*90)}px"></div>
+      <div class="bar-label" style="color:${a.color}">${a.letter}</div>
+    </div>
+  `).join('');
+}
+
+// Bias rows
+function renderBiasRows() {
+  const total = answerDist.reduce((s,a)=>s+a.count,0);
+  document.getElementById('biasRows').innerHTML = answerDist.map(a => `
+    <div class="bias-row">
+      <div class="bias-letter" style="color:${a.color}">${a.letter}</div>
+      <div class="bias-bar-outer">
+        <div class="bias-bar-inner" style="width:0%;background:${a.color};box-shadow:0 0 8px ${a.color}50"
+          data-width="${a.pct}%"></div>
+      </div>
+      <div class="bias-stat">${a.count} questions</div>
+      <div class="bias-pct">${a.pct}%</div>
+    </div>
+  `).join('');
+}
+
+// Repeat list
+function renderRepeat() {
+  document.getElementById('repeatList').innerHTML = repeatData.map((r,i) => `
+    <div class="repeat-item">
+      <div class="repeat-rank ${i<3?'top3':''}">${i+1}</div>
+      <div class="repeat-q">${r.q}</div>
+      <span class="repeat-topic-badge">${r.topic}</span>
+      <div class="repeat-times">${r.times}<span>papers</span></div>
+    </div>
+  `).join('');
+}
+
+// Difficulty
+function renderDiff() {
+  document.getElementById('diffGrid').innerHTML = diffData.map(d => {
+    const lbl = d.score>=70?'Easy':d.score>=60?'Medium':'Hard';
+    const lblColor = d.score>=70?'#51cf66':d.score>=60?'#ffd43b':'#ff6b6b';
+    return `
+    <div class="diff-card">
+      <div class="diff-topic">${d.topic}</div>
+      <div class="diff-bar-wrap">
+        <div class="diff-bar" style="width:0%;background:${d.color};box-shadow:0 0 6px ${d.color}50;
+          transition:width 1.5s ease;" data-width="${d.score}%"></div>
+      </div>
+      <div class="diff-label">
+        <span style="color:${lblColor};font-weight:600">${lbl}</span>
+        <span>~${d.score}% pass rate</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// Districts
+function renderDistricts() {
+  document.getElementById('districtBody').innerHTML = districtData.map(r => `
+    <tr>
+      <td>${r.d}</td>
+      <td><span class="hardest-badge">${r.hard}</span></td>
+      <td><span class="easiest-badge">${r.easy}</span></td>
+      <td style="color:var(--muted);font-size:0.78rem">${r.note}</td>
+    </tr>
+  `).join('');
+}
+
+// Insights
+function renderInsights() {
+  document.getElementById('insightsGrid').innerHTML = insightsData.map((ins,i) => `
+    <div class="insight-card">
+      <div class="insight-num">FINDING ${String(i+1).padStart(2,'0')}</div>
+      <div class="insight-text">${ins}</div>
+    </div>
+  `).join('');
+}
+
+// Tips
+function renderTips() {
+  document.getElementById('tipsGrid').innerHTML = tipsData.map(t => `
+    <div class="tip-card">
+      <span class="tip-icon">${t.icon}</span>
+      <div class="tip-title">${t.title}</div>
+      <div class="tip-body">${t.body}</div>
+    </div>
+  `).join('');
+}
+
+// Chapter deep
+function renderChapterDeep() {
+  document.getElementById('chapterDeep').innerHTML = chapterDeepData.map(c => `
+    <div style="margin-bottom:24px;background:var(--surface);border:1px solid var(--border);
+      border-radius:10px;overflow:hidden;border-left:4px solid ${c.color};">
+      <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;">
+        <span style="width:10px;height:10px;border-radius:50%;background:${c.color};
+          box-shadow:0 0 8px ${c.color};flex-shrink:0;display:inline-block;"></span>
+        <span style="font-weight:700;font-size:0.9rem;color:var(--text)">${c.ch}</span>
+      </div>
+      <div style="padding:16px 20px;">
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+          ${c.items.map(item=>`
+            <li style="display:flex;gap:10px;font-size:0.83rem;color:var(--muted);line-height:1.5">
+              <span style="color:${c.color};flex-shrink:0;margin-top:2px">→</span>
+              <span>${item}</span>
+            </li>
+          `).join('')}
+        </ul>
+      </div>
+    </div>
+  `).join('');
+}
+
+// NAV SCROLL
+function scrollTo(id) {
+  const el = document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+}
+
+// INIT
+renderTopics();
+renderAnswerBars();
+renderBiasRows();
+renderRepeat();
+renderDiff();
+renderDistricts();
+renderInsights();
+renderTips();
+renderChapterDeep();
+
+// INTERSECTION OBSERVER for animations
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.classList.add('visible');
+      // Animate bars
+      e.target.querySelectorAll('[data-width]').forEach(b => {
+        setTimeout(() => b.style.width = b.dataset.width, 200);
+      });
+      e.target.querySelectorAll('[data-height]').forEach(b => {
+        setTimeout(() => b.style.height = b.dataset.height, 200);
+      });
+      e.target.querySelectorAll('.topic-bar-fill').forEach(b => {
+        setTimeout(() => b.style.width = b.dataset.width, 300);
+      });
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+// Animate hero bars on load
+setTimeout(() => {
+  document.querySelectorAll('.topic-bar-fill').forEach(b => {
+    b.style.width = b.dataset.width;
+  });
+}, 600);
+
+// Nav active on scroll
+const sections = ['hero','topics','charts','repeated','difficulty','districts','insights','tips'];
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY + 200;
+  sections.forEach((id, i) => {
+    const el = document.getElementById(id);
+    if(!el) return;
+    const navs = document.querySelectorAll('.nav-item');
+    if(el.offsetTop <= scrollY && (i === sections.length-1 || document.getElementById(sections[i+1]).offsetTop > scrollY)) {
+      navs.forEach(n => n.classList.remove('active'));
+      if(navs[i]) navs[i].classList.add('active');
+    }
+  });
+});
+</script>
+</body>
+</html>

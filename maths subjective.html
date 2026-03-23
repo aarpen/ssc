@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class X Maths — Question Bank 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f5f0;
+    --white: #ffffff;
+    --ink: #1a1a2e;
+    --ink2: #2d2d44;
+    --muted: #7a7a8c;
+    --border: #e2dfd8;
+    --border2: #d0ccc4;
+    --m2-color: #1a6b4a;
+    --m2-bg: #edf7f2;
+    --m2-border: #b8e0ce;
+    --m4-color: #1e4f8f;
+    --m4-bg: #eef3fb;
+    --m4-border: #b8cef0;
+    --m6-color: #7b2d8b;
+    --m6-bg: #f5eef8;
+    --m6-border: #d9b8e6;
+    --tag-bg: #f0ede8;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.1), 0 8px 32px rgba(0,0,0,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; font-size: 15px; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── TOP HEADER ── */
+  .topbar {
+    background: var(--ink);
+    color: white;
+    padding: 0 40px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    border-bottom: 2px solid rgba(255,255,255,0.06);
+  }
+  .topbar-brand {
+    font-family: 'Lora', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: white;
+  }
+  .topbar-brand span { color: #f5c842; }
+  .topbar-meta {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.05em;
+  }
+  .topbar-pills {
+    display: flex;
+    gap: 6px;
+  }
+  .topbar-pill {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.62rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    border: 1px solid;
+  }
+  .pill-2m { color: var(--m2-color); border-color: rgba(26,107,74,0.4); background: rgba(26,107,74,0.12); }
+  .pill-4m { color: #5b9bd5; border-color: rgba(91,155,213,0.4); background: rgba(91,155,213,0.12); }
+  .pill-6m { color: #c06dd9; border-color: rgba(192,109,217,0.4); background: rgba(192,109,217,0.12); }
+  .pill-all { color: rgba(255,255,255,0.7); border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.06); }
+  .topbar-pill:hover, .topbar-pill.active { opacity: 1; transform: translateY(-1px); }
+  .pill-2m.active { background: rgba(26,107,74,0.25); }
+  .pill-4m.active { background: rgba(91,155,213,0.25); }
+  .pill-6m.active { background: rgba(192,109,217,0.25); }
+  .pill-all.active { background: rgba(255,255,255,0.15); }
+
+  /* ── LAYOUT ── */
+  .layout {
+    display: flex;
+    min-height: calc(100vh - 56px);
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: var(--white);
+    border-right: 1px solid var(--border);
+    position: sticky;
+    top: 56px;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border2) transparent;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+  .sidebar-search {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--white);
+    z-index: 10;
+  }
+  .sidebar-search input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.78rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .sidebar-search input:focus { border-color: var(--m4-color); }
+  .sidebar-search input::placeholder { color: var(--muted); }
+
+  .sidebar-section-head {
+    padding: 14px 16px 6px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--ink2);
+    cursor: pointer;
+    transition: all 0.12s;
+    border-left: 2px solid transparent;
+    text-decoration: none;
+  }
+  .sidebar-item:hover {
+    background: var(--bg);
+    color: var(--ink);
+    border-left-color: var(--border2);
+  }
+  .sidebar-item.active {
+    background: #eef3fb;
+    color: var(--m4-color);
+    border-left-color: var(--m4-color);
+    font-weight: 600;
+  }
+  .sidebar-item-code {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.62rem;
+    color: var(--muted);
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  .sidebar-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 8px 0;
+  }
+
+  /* ── CONTENT ── */
+  .content {
+    flex: 1;
+    padding: 32px 40px 80px;
+    max-width: 1000px;
+  }
+
+  /* ── PAPER BLOCK ── */
+  .paper-block {
+    margin-bottom: 56px;
+    animation: fadeUp 0.4s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .paper-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--border);
+  }
+  .paper-code-badge {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 5px 12px;
+    background: var(--ink);
+    color: white;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  .paper-header-text {}
+  .paper-title {
+    font-family: 'Lora', serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .paper-subtitle {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-family: 'Fira Code', monospace;
+    letter-spacing: 0.04em;
+  }
+  .paper-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+  .pstat {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+  .pstat-2m { background: var(--m2-bg); color: var(--m2-color); border: 1px solid var(--m2-border); }
+  .pstat-4m { background: var(--m4-bg); color: var(--m4-color); border: 1px solid var(--m4-border); }
+  .pstat-6m { background: var(--m6-bg); color: var(--m6-color); border: 1px solid var(--m6-border); }
+
+  /* ── MARK GROUP ── */
+  .mark-group {
+    margin-bottom: 28px;
+  }
+  .mark-group-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .mark-label {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.68rem;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+  }
+  .ml-2m { background: var(--m2-bg); color: var(--m2-color); border: 1px solid var(--m2-border); }
+  .ml-4m { background: var(--m4-bg); color: var(--m4-color); border: 1px solid var(--m4-border); }
+  .ml-6m { background: var(--m6-bg); color: var(--m6-color); border: 1px solid var(--m6-border); }
+
+  .mark-rule {
+    flex: 1;
+    height: 1px;
+  }
+  .mr-2m { background: var(--m2-border); }
+  .mr-4m { background: var(--m4-border); }
+  .mr-6m { background: var(--m6-border); }
+
+  /* ── QUESTION CARD ── */
+  .q-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+    box-shadow: var(--shadow);
+  }
+  .q-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-1px);
+  }
+  .q-card-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+  }
+  .q-accent-bar {
+    width: 3px;
+    align-self: stretch;
+    flex-shrink: 0;
+    border-radius: 8px 0 0 8px;
+  }
+  .qab-2m { background: linear-gradient(to bottom, var(--m2-color), #3d9e75); }
+  .qab-4m { background: linear-gradient(to bottom, var(--m4-color), #4a7fc1); }
+  .qab-6m { background: linear-gradient(to bottom, var(--m6-color), #a84fc4); }
+
+  .q-body {
+    flex: 1;
+    padding: 14px 18px;
+  }
+  .q-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .q-num {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+  .q-text {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.65;
+    flex: 1;
+  }
+  .q-text .math { font-style: italic; }
+  .q-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+    padding-left: 30px;
+  }
+  .q-tag {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.58rem;
+    padding: 2px 7px;
+    border-radius: 3px;
+    background: var(--tag-bg);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    letter-spacing: 0.03em;
+  }
+  .q-diagram-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 8px;
+    margin-left: 30px;
+    font-size: 0.74rem;
+    color: #b45309;
+    background: #fef3c7;
+    border: 1px solid #fde68a;
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-style: italic;
+  }
+  .q-diagram-note svg { flex-shrink: 0; }
+
+  /* ── EMPTY STATE ── */
+  .empty-state {
+    text-align: center;
+    padding: 80px 40px;
+    color: var(--muted);
+  }
+  .empty-state h3 {
+    font-family: 'Lora', serif;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+    color: var(--ink2);
+  }
+  .empty-state p { font-size: 0.85rem; }
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    padding: 32px 0 24px;
+    margin-bottom: 8px;
+  }
+  .page-hero-kicker {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .page-hero-title {
+    font-family: 'Lora', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .page-hero-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+  .page-hero-counts {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .phcount { text-align: center; }
+  .phcount-val {
+    font-family: 'Lora', serif;
+    font-size: 1.8rem;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .phcount-lbl {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* ── FILTER BAR ── */
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 0 20px;
+    flex-wrap: wrap;
+  }
+  .filter-label {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+  .filter-btn {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  .fb-all { border-color: var(--border2); color: var(--ink2); background: var(--white); }
+  .fb-all.on { background: var(--ink); color: white; border-color: var(--ink); }
+  .fb-2m { border-color: var(--m2-border); color: var(--m2-color); background: var(--m2-bg); }
+  .fb-2m.on { background: var(--m2-color); color: white; border-color: var(--m2-color); }
+  .fb-4m { border-color: var(--m4-border); color: var(--m4-color); background: var(--m4-bg); }
+  .fb-4m.on { background: var(--m4-color); color: white; border-color: var(--m4-color); }
+  .fb-6m { border-color: var(--m6-border); color: var(--m6-color); background: var(--m6-bg); }
+  .fb-6m.on { background: var(--m6-color); color: white; border-color: var(--m6-color); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .content { padding: 20px; }
+    .topbar { padding: 0 20px; }
+    .topbar-meta { display: none; }
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    .topbar, .sidebar, .filter-bar { display: none; }
+    .content { padding: 0; }
+    .q-card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-brand">Class X <span>Mathematics</span> — Question Bank</div>
+  <div class="topbar-meta">PRE-FINAL · FEBRUARY 2026 · TELANGANA</div>
+  <div class="topbar-pills">
+    <span class="topbar-pill pill-all active" onclick="filterMarks('all',this)">ALL</span>
+    <span class="topbar-pill pill-2m" onclick="filterMarks('2',this)">2 Marks</span>
+    <span class="topbar-pill pill-4m" onclick="filterMarks('4',this)">4 Marks</span>
+    <span class="topbar-pill pill-6m" onclick="filterMarks('6',this)">6 Marks</span>
+  </div>
+</div>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-search">
+      <input type="text" id="sideSearch" placeholder="Search papers..." oninput="searchPapers(this.value)">
+    </div>
+    <div class="sidebar-section-head">All Papers</div>
+    <div id="sidebarLinks"></div>
+  </nav>
+
+  <!-- CONTENT -->
+  <main class="content" id="mainContent">
+    <div class="page-hero">
+      <div class="page-hero-kicker">// Class X Mathematics · Part-A Questions //</div>
+      <h1 class="page-hero-title">Question Bank</h1>
+      <p class="page-hero-desc">All Section I (2 marks), Section II (4 marks), and Section III (6 marks) questions from every pre-final paper — organised by paper, searchable and filterable.</p>
+      <div class="page-hero-counts">
+        <div class="phcount"><div class="phcount-val" id="cnt-papers">27</div><div class="phcount-lbl">Papers</div></div>
+        <div class="phcount"><div class="phcount-val" id="cnt-2m">—</div><div class="phcount-lbl">2-Mark Qs</div></div>
+        <div class="phcount"><div class="phcount-val" id="cnt-4m">—</div><div class="phcount-lbl">4-Mark Qs</div></div>
+        <div class="phcount"><div class="phcount-val" id="cnt-6m">—</div><div class="phcount-lbl">6-Mark Qs</div></div>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <span class="filter-label">FILTER BY MARKS:</span>
+      <button class="filter-btn fb-all on" onclick="filterMarks('all',this)">All Questions</button>
+      <button class="filter-btn fb-2m" onclick="filterMarks('2',this)">2 Marks Only</button>
+      <button class="filter-btn fb-4m" onclick="filterMarks('4',this)">4 Marks Only</button>
+      <button class="filter-btn fb-6m" onclick="filterMarks('6',this)">6 Marks Only</button>
+    </div>
+
+    <div id="papersContainer"></div>
+  </main>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+//  ALL PAPERS DATA
+// ══════════════════════════════════════════════════════
+const PAPERS = [
+  {
+    id:"jk82", code:"JK-82", name:"Rajanna Sircilla", district:"Rajanna Sircilla District",
+    exam:"Pre-Final, February 2026",
+    q2:[
+      {n:1, text:"If A = {x : x is an even prime} and B = {x : x is a factor of 16} then find the value of n(A ∪ B).", tags:["Sets","n(AUB)"]},
+      {n:2, text:"Srikanth says \"√2 and 2 is a zero of the polynomial p(x) = x² − 2x\". Do you agree with his answer? Give reason.", tags:["Polynomials","Zeroes"]},
+      {n:3, text:"Prove that the values of 2log₂2, log₂16, 4log₂4 are in geometric progression.", tags:["Logarithms","GP"]},
+      {n:4, text:"One card is selected from a well shuffled deck of 52 cards. Find the probability of getting a red card with prime number.", tags:["Probability"]},
+      {n:5, text:"The vertex angle of a cone is 60°. Find the ratio of the diameter with the height of the cone.", tags:["Mensuration","Trigonometry"], diagram:true},
+      {n:6, text:"If 2sinθ = 1 then find Tan²θ + Cos²θ.", tags:["Trigonometry"]},
+    ],
+    q4:[
+      {n:7, text:"Divide x³ − 4x² + 5x − 2 with x − 2, write quotient and remainder.", tags:["Polynomials","Division Algorithm"]},
+      {n:8, text:"Explain the terms in the formula Sₙ = n/2 [2a + (n−1)d].", tags:["AP","Formula Explanation"]},
+      {n:9, text:"Two boys on either side of their school building 20m height observe its top at the angles of elevation 30° and 60° respectively. Find the distance between two boys.", tags:["Heights & Distances","Trigonometry"]},
+      {n:10, text:"Show that (1 + cot²θ)(1 − cosθ)(1 + cosθ) / 1 = sin²30°", tags:["Trigonometric Identities"]},
+      {n:11, text:"Divide the line segment of length 6 cm in the ratio 3 : 5.", tags:["Constructions"], diagram:true},
+      {n:12, text:"Find the value of 'K' for which points (K, K), (3, 2) and (4, −1) are collinear.", tags:["Coordinate Geometry","Collinearity"]},
+    ],
+    q6:[
+      {n:13, text:"Prove that 2√2 + 2√3 is an irrational number.", tags:["Number Systems","Irrational Numbers"]},
+      {n:14, text:"Find mode for the given frequency distribution table. [📊 Refer to table in original PDF]", tags:["Statistics","Mode"], diagram:true},
+      {n:15, text:"If cosecθ + cotθ = k, then write all trigonometric ratios in terms of k.", tags:["Trigonometric Identities"]},
+      {n:16, text:"Find zeroes of polynomial x² + x − 6 using graphical method.", tags:["Polynomials","Graph"], diagram:true},
+      {n:17, text:"Draw a pair of tangents to the circle of radius 4 cm which are inclined to each other at an angle of 60°.", tags:["Constructions","Tangents"], diagram:true},
+    ]
+  },
+
+  {
+    id:"nk8", code:"NK-8", name:"Nagarkurnool", district:"Nagarkurnool District",
+    exam:"Grand Test 2025–2026",
+    q2:[
+      {n:1, text:"Find the centroid of the triangle whose vertices are (3, −5), (−7, 4) and (10, −2).", tags:["Coordinate Geometry","Centroid"]},
+      {n:2, text:"One card is drawn from a well-shuffled deck of 52 cards. What is the probability that it is a black face card?", tags:["Probability"]},
+      {n:3, text:"Express cotθ in terms of sinθ.", tags:["Trigonometry","Ratios"]},
+      {n:4, text:"A person observed the top of an electric pole at an angle of elevation of 60° when the observation point is 8 metres away from the foot of the pole. Draw the diagram for this data.", tags:["Heights & Distances"], diagram:true},
+      {n:5, text:"Check whether 1 and 3 are the roots of the equation 2x² − 5x + 3 = 0.", tags:["Quadratic Equations","Roots"]},
+      {n:6, text:"If A = {x : x ∈ N and x < 5} and B = {x : x ∈ N and x is the set of factors of 10} then find n(A ∩ B).", tags:["Sets","n(A∩B)"]},
+    ],
+    q4:[
+      {n:7, text:"If x² + y² = 18xy, then prove that 2log(x − y) = 4log2 + logx + logy.", tags:["Logarithms","Proof"]},
+      {n:8, text:"Two dice are thrown at the same time. What is the probability that the sum of the two numbers appearing on the top of the dice is (i) 7 and (ii) 10?", tags:["Probability","Two Dice"]},
+      {n:9, text:"From the given Venn diagram, prove that n(A ∪ B) = n(A) + n(B) − n(A ∩ B). [📊 Refer to Venn diagram in original PDF]", tags:["Sets","Venn Diagram","Proof"], diagram:true},
+      {n:10, text:"Find two consecutive positive integers, sum of whose squares is 613.", tags:["Quadratic Equations","Word Problem"]},
+      {n:11, text:"Which term of the G.P.: 3, 3√3, 3·3,... is 729?", tags:["GP","nth Term"]},
+      {n:12, text:"ABC is a right triangle right angled at C. Let BC = a, CA = b, AB = c and let p be the length of perpendicular from C on AB. Prove that: (i) pc = ab (ii) 1/p² = 1/a² + 1/b².", tags:["Similar Triangles","Proof"]},
+    ],
+    q6:[
+      {n:13, text:"Find the median for the given frequency distribution data. [📊 Refer to table in original PDF]", tags:["Statistics","Median"], diagram:true},
+      {n:14, text:"Draw the graph of the polynomial p(x) = x² − x − 2 and find zeroes of the polynomial from the graph.", tags:["Polynomials","Graph"], diagram:true},
+      {n:15, text:"Use division algorithm to show that the square of any positive integer is of the form 5p or 5p+1 or 5p+4.", tags:["Number Systems","Euclid Division"]},
+      {n:16, text:"A solid metallic sphere of diameter 28 cm is melted and recast into a number of smaller cones, each of diameter 4⅔ cm and height 3 cm. Find the number of cones so formed.", tags:["Mensuration","Volume"]},
+      {n:17, text:"Draw a pair of tangents to a circle of radius 5 cm which are inclined to each other at an angle 60°.", tags:["Constructions","Tangents"], diagram:true},
+      {n:18, text:"Solve the following pair of linear equations using elimination method: 8x + 5y = 9, 3x + 2y = 4.", tags:["Linear Equations","Elimination Method"]},
+    ]
+  },
+
+  {
+    id:"j8", code:"J-8", name:"Jayashankar Bhupalpally", district:"Jayashankar Bhupalpally District",
+    exam:"Pre-Final, February 2026",
+    q2:[
+      {n:1, text:"Find the HCF of 90, 144 by Euclid's division algorithm.", tags:["Number Systems","HCF","Euclid"]},
+      {n:2, text:"Write the first 10 prime numbers and find their median.", tags:["Statistics","Primes","Median"]},
+      {n:3, text:"For what value of k, −4 is a zero of the polynomial x² − x − (2k + 2)?", tags:["Polynomials","Zeroes"]},
+      {n:4, text:"Whether the following pair of linear equations are parallel? Justify. 6x − 4y + 10 = 0, 3x − 2y + 6 = 0.", tags:["Linear Equations","Parallel Lines"]},
+      {n:5, text:"Express tanθ in terms of sinθ.", tags:["Trigonometry","Ratios"]},
+      {n:6, text:"A person from the top of a building of height 25 m has observed another building's top and bottom at an angle of elevation of 45° and at an angle of depression 60° respectively. Draw a diagram for this data.", tags:["Heights & Distances"], diagram:true},
+    ],
+    q4:[
+      {n:7, text:"A bag contains 5 red, 8 white, 4 green colour balls. If a ball is selected randomly from the bag then find the probability that the selected ball is (i) a green ball (ii) not white ball.", tags:["Probability"]},
+      {n:8, text:"The area of the triangle is 18 sq. units, whose vertices are (3, 4), (−3, −2) and (p, −1); then find the value of p.", tags:["Coordinate Geometry","Area of Triangle"]},
+      {n:9, text:"Draw a line segment of length 8.1 cm and divide it in the ratio of 5 : 4. Then measure the divided two parts.", tags:["Constructions"], diagram:true},
+      {n:10, text:"The sum of the areas of two squares is 850 m². If the difference of their perimeters is 40 m. Find the sides of the two squares.", tags:["Quadratic Equations","Word Problem"]},
+      {n:11, text:"Prove that the lengths of tangents drawn from an external point to a circle are equal.", tags:["Circles","Tangents","Proof"]},
+      {n:12, text:"If secθ + tanθ = P, then show that sinθ = (P² − 1)/(P² + 1).", tags:["Trigonometric Identities","Proof"]},
+    ],
+    q6:[
+      {n:13, text:"If A = {x : 2x+1, x ∈ N, x ≤ 5}, B = {x : x is a composite number, x < 12}, then show that (A ∪ B) − (A ∩ B) = (A − B) ∪ (B − A).", tags:["Sets","Symmetric Difference","Proof"]},
+      {n:14, text:"Draw the Ogive curves for the given data and find its median from the graph. [📊 Refer to table in original PDF]", tags:["Statistics","Ogive","Median"], diagram:true},
+      {n:15, text:"Find the sum of all two-digit odd positive integers which are divisible by 3 but not by 2.", tags:["AP","Sum of AP","Number Theory"]},
+      {n:16, text:"If x² + y² = 10xy, prove that 2 log(x + y) = logx + logy + 2log2 + log3.", tags:["Logarithms","Proof"]},
+      {n:17, text:"How many silver coins of diameter 5 cm and thickness 4 mm have to be melted to prepare a cuboid of 12 cm × 11 cm × 5 cm dimension?", tags:["Mensuration","Volume","Cylinder to Cuboid"]},
+      {n:18, text:"Two poles are standing opposite to each other on either side of the road which is 90 feet wide. The angle of elevation from the bottom of the first pole to the top of the second pole is 45°. The angle of elevation from the bottom of the second pole to the top of the first pole is 30°. Find the heights of the poles.", tags:["Heights & Distances","Two Poles"]},
+    ]
+  },
+
+  {
+    id:"mp11", code:"MP-11", name:"Mancherial / Peddapalli", district:"Mancherial District",
+    exam:"Pre-Public, February 2026",
+    q2:[
+      {n:1, text:"Find the LCM and HCF of 54 and 45 by prime factorization method.", tags:["Number Systems","LCM","HCF"]},
+      {n:2, text:"If P(E) = 0.73, then find P(Ē).", tags:["Probability","Complementary Events"]},
+      {n:3, text:"Are 3 and −2 zeroes of the polynomial P(x) = x² − x − 6? Justify your answer.", tags:["Polynomials","Zeroes","Verification"]},
+      {n:4, text:"If 2k, k + 15, 3k + 15 are in Arithmetic Progression, then find the value of k.", tags:["AP","Common Difference"]},
+      {n:5, text:"A box contains 6 green, 4 blue and 5 red balls. A ball is selected randomly from the box. Find the probability to select (i) green ball (ii) not green ball.", tags:["Probability"]},
+      {n:6, text:"Draw Venn diagram for A − B, B − A, A ∪ B and A ∩ B.", tags:["Sets","Venn Diagram"], diagram:true},
+    ],
+    q4:[
+      {n:7, text:"A solid metallic sphere of radius 21 cm is melted and recast into a cylinder of radius 7 cm. Find the height of the cylinder.", tags:["Mensuration","Sphere to Cylinder"]},
+      {n:8, text:"Solve the equations: 6/(x−2) + 2/(y−1) = 8 and 7/(x−2) + 3/(y−1) = 10.", tags:["Linear Equations","Substitution Method"]},
+      {n:9, text:"Write the formula to find mode of the grouped data and explain each term in it.", tags:["Statistics","Mode","Formula"]},
+      {n:10, text:"Check whether the points (7, −2), (6, 4), (5, −2) are vertices of an equilateral triangle or not.", tags:["Coordinate Geometry","Distance Formula","Triangle"]},
+      {n:11, text:"Find x, y values from the given figure. [📊 Refer to the angle figure in original PDF]", tags:["Linear Equations","Angles"], diagram:true},
+      {n:12, text:"Show that tan²θ + tan⁴θ = sec⁴θ − sec²θ.", tags:["Trigonometric Identities","Proof"]},
+    ],
+    q6:[
+      {n:13, text:"Find the mean for the following distribution table. [📊 Refer to frequency table in original PDF]", tags:["Statistics","Mean"], diagram:true},
+      {n:14, text:"Two men on either side of the temple of height 40 m observe its top at angles of elevation 60° and 30° respectively. Find the distance between the two men.", tags:["Heights & Distances","Two Observers"]},
+      {n:15, text:"If cosecθ + cotθ = p, then prove that cosθ = (p² − 1)/(p² + 1).", tags:["Trigonometric Identities","Proof"]},
+      {n:16, text:"Two cubes of volume 27 cm³ are joined end to end together. Find the total surface area of the resulting cuboid.", tags:["Mensuration","Cuboid","Surface Area"]},
+      {n:17, text:"Draw a pair of tangents to a circle of radius 4 cm which are inclined to each other at an angle 60°.", tags:["Constructions","Tangents"], diagram:true},
+      {n:18, text:"Draw the graph of the polynomial p(x) = 2x² − 4x − 12 and find zeroes.", tags:["Polynomials","Graph"], diagram:true},
+    ]
+  },
+
+  {
+    id:"v11", code:"V-11", name:"Vikarabad", district:"Vikarabad District",
+    exam:"Pre-Public, February 2026",
+    q2:[
+      {n:1, text:"Varsha says 'If log₅, value of x = 1'. Do you agree with her? Give reason.", tags:["Logarithms"]},
+      {n:2, text:"Express cosθ in terms of cotθ.", tags:["Trigonometry","Ratios"]},
+      {n:3, text:"Find the nature of roots of quadratic equation 3x² − 5x + 2 = 0.", tags:["Quadratic Equations","Discriminant","Nature of Roots"]},
+      {n:4, text:"State whether the pair of linear equations 6x − 4y + 10 = 0, 3x − 2y + 6 = 0 are parallel or not. Justify your answer.", tags:["Linear Equations","Parallel Lines"]},
+      {n:5, text:"'The angle of elevation of top of a hill from foot of the tower is 60° and the angle of elevation of top of the tower from foot of the hill is 30°. The height of tower is 40 m.' Draw a suitable diagram for the given data.", tags:["Heights & Distances"], diagram:true},
+      {n:6, text:"Find the length of tangent drawn to a circle from a point 25 cm from the centre whose radius is 7 cm.", tags:["Circles","Tangent Length"]},
+    ],
+    q4:[
+      {n:7, text:"Write the formula to find the sum of n terms in A.P. and explain the terms in it.", tags:["AP","Formula Explanation"]},
+      {n:8, text:"Using Venn diagram, prove that n(A ∪ B) = n(A) + n(B) − n(A ∩ B).", tags:["Sets","Proof","Venn Diagram"], diagram:true},
+      {n:9, text:"Find a quadratic polynomial whose zeroes are log2⁷ and log₂¹.", tags:["Polynomials","Logarithms","Quadratic Polynomial"]},
+      {n:10, text:"In △ABC, PQ ∥ BC and AP = 3x − 19, PB = x − 5, AQ = x − 3, QC = 3 cm. Find the value of x.", tags:["Similar Triangles","BPT"]},
+      {n:11, text:"When two dice are rolled at the same time, find the probability of getting the sum (i) a prime (ii) an even number (iii) an odd number (iv) a multiple of 3.", tags:["Probability","Two Dice"]},
+      {n:12, text:"Find the value of (tan²A + cot²B)/(sin²B + cos²A) if sinA = 3/5 and tanB = 8/15.", tags:["Trigonometry","Values","Substitution"]},
+    ],
+    q6:[
+      {n:13, text:"Prove that 3√5 + √7 is an irrational number.", tags:["Number Systems","Irrational Numbers","Proof"]},
+      {n:14, text:"Find the co-ordinates of point of trisection of the line segment joining the points (2, −3) and (5, 6).", tags:["Coordinate Geometry","Section Formula","Trisection"]},
+      {n:15, text:"Draw a graph of polynomial P(x) = x² − 3x − 4 and find the zeroes of it.", tags:["Polynomials","Graph"], diagram:true},
+      {n:16, text:"Find the median of observed life span of 90 electrical components from the given distribution table. [📊 Refer to table in original PDF]", tags:["Statistics","Median"], diagram:true},
+      {n:17, text:"Construct a triangle ABC in which AB = 5.6 cm, ∠B = 60°, BC = 4.8 cm, then construct a triangle similar to it whose sides are 3/4 of the corresponding sides of △ABC.", tags:["Constructions","Similar Triangles"], diagram:true},
+      {n:18, text:"A toy is in the shape of hemisphere of radius 7 cm mounted by a cone of height 24 cm. How much material sheet is required to prepare the toy?", tags:["Mensuration","Cone on Hemisphere","Surface Area"]},
+    ]
+  },
+
+  {
+    id:"k8", code:"K-8", name:"Khammam", district:"Khammam District",
+    exam:"Pre-Final, February 2026",
+    q2:[
+      {n:1, text:"If P(x) = 8x³ − 4x² + 5x − 3, then find P(1) + P(−1).", tags:["Polynomials","Evaluation"]},
+      {n:2, text:"Radius and height of a right circular cylinder is 7 cm and 21 cm respectively. Find curved surface area of the cylinder.", tags:["Mensuration","CSA","Cylinder"]},
+      {n:3, text:"Write the formula to find the nth term of Geometric Progression and explain each letter in it.", tags:["GP","Formula Explanation"]},
+      {n:4, text:"If A = {x : x is a factor of 10} and B = {y : x is a factor of 15}, represent A, B in Venn diagram.", tags:["Sets","Venn Diagram"], diagram:true},
+      {n:5, text:"Sai said that A(−1, −2), B(−2, 8) and C(0, 4) are collinear. Do you agree? Justify your answer.", tags:["Coordinate Geometry","Collinearity"]},
+      {n:6, text:"Centre of a circle with radius 5 units is (2, −1). Does the point (6, 2) lie on the circle? Justify your answer.", tags:["Coordinate Geometry","Circle Equation","Distance"]},
+    ],
+    q4:[
+      {n:7, text:"Write the formula to find Mean of classified data using Step-deviation method and explain each letter in it.", tags:["Statistics","Mean","Step Deviation Method"]},
+      {n:8, text:"Solve the following pair of linear equations: 2x + 3y = 22 and −3x − 2y = 7.", tags:["Linear Equations"]},
+      {n:9, text:"In △ABC, DE ∥ BC. Area of △ADE is 36 sq.cm and the area of Trapezium DECB is 64 sq.cm, then show that AD/DB = 2/3. [📊 Refer to diagram in original PDF]", tags:["Similar Triangles","Area Ratio","Proof"], diagram:true},
+      {n:10, text:"Find the value of: (cos35°/sin55°) + (cos60° + sin²45°)/(tan²60° − sec²45°).", tags:["Trigonometry","Trigonometric Values"]},
+      {n:11, text:"Find the zeroes of x² − 5x + 6 and verify the relationship between zeroes and co-efficients.", tags:["Polynomials","Zeroes","Verification"]},
+      {n:12, text:"If 108 = 2ᵃ × 3ᵇ and 80 = 5ᶜ × 2ᵈ, then find the midpoint of line segment joining P(b, c) and Q(a, d).", tags:["Number Systems","Midpoint","Coordinate Geometry"]},
+    ],
+    q6:[
+      {n:13, text:"Find the points of trisection of line segment joining A(2, −2) and B(−7, 4).", tags:["Coordinate Geometry","Trisection","Section Formula"]},
+      {n:14, text:"Prove that 3√2 − 2√5 is an irrational number.", tags:["Number Systems","Irrational","Proof"]},
+      {n:15, text:"Construct a pair of tangents to a circle of radius 5 cm from a point which is 13 cm away from its centre.", tags:["Constructions","Tangents"], diagram:true},
+      {n:16, text:"Draw less than cumulative frequency Ogive for the given data and find Median through it on graph sheet. [📊 Refer to table in original PDF]", tags:["Statistics","Ogive","Median"], diagram:true},
+      {n:17, text:"A box contains cards numbered from 1 to 100. If one card is drawn at random then find the probability of getting (i) a prime number (ii) a factor of 12 (iii) a multiple of 23 (iv) an even number.", tags:["Probability","Cards 1-100"]},
+      {n:18, text:"Two boys are standing on either side of a tower of height 100 m and observed the top with angles of elevation 30° and 60° respectively. Find the distance between the two boys.", tags:["Heights & Distances","Two Observers"]},
+    ]
+  },
+
+  {
+    id:"r8", code:"R-8", name:"Rangareddy", district:"Rangareddy District",
+    exam:"Pre-Final, February 2026",
+    q2:[
+      {n:1, text:"Find the discriminant of quadratic equation 2x² − 5x + 3 = 0.", tags:["Quadratic Equations","Discriminant"]},
+      {n:2, text:"Write the set builder form of the set A = {4, 6, 8, 9, 10}.", tags:["Sets","Set Builder Form"]},
+      {n:3, text:"Check whether 135 is a term of the AP 15, 18, 21,...", tags:["AP","nth Term"]},
+      {n:4, text:"The radius of a circle is 5 cm. The distance between centre and external point is 13 cm. Find the length of the tangent drawn to this circle from the external point.", tags:["Circles","Tangent Length"]},
+      {n:5, text:"If E is any event and P(E) + P(Ē) = x then find the value of x² − 5x + 6.", tags:["Probability","Algebraic Application"]},
+      {n:6, text:"Two men are on either side of the temple of height 30 m and observe its top at angles of elevation 30° and 60° respectively. Draw the diagram for this data.", tags:["Heights & Distances"], diagram:true},
+    ],
+    q4:[
+      {n:7, text:"Write the formula to find Mode of grouped data and explain each letter in it.", tags:["Statistics","Mode","Formula"]},
+      {n:8, text:"If x² + y² = 17xy then prove that 2log(x − y) = logx + logy + log3 + log5.", tags:["Logarithms","Proof"]},
+      {n:9, text:"Find the quadratic equation whose roots are sec60° and cosec90°.", tags:["Quadratic Equations","Trigonometry","Roots"]},
+      {n:10, text:"Prove that cot⁴θ + cot²θ = cosec⁴θ − cosec²θ.", tags:["Trigonometric Identities","Proof"]},
+      {n:11, text:"If A = {1, 2, 3, 4, 5} and B = {4, 5, 6, 7, 8, 9, 10}, find (A ∪ B) − (A ∩ B).", tags:["Sets","Symmetric Difference"]},
+      {n:12, text:"Ravi says 'A sphere, cylinder and cone of the same base radius and same height then their curved surface areas are in the ratio 4 : 4 : 5'. Do you agree with his statement? Justify.", tags:["Mensuration","CSA Comparison"]},
+    ],
+    q6:[
+      {n:13, text:"Draw the graph of P(x) = x² − 2x − 8.", tags:["Polynomials","Graph"], diagram:true},
+      {n:14, text:"Construct △PQR in which PQ = 6 cm, QR = 5 cm and ∠Q = 60°. Construct another triangle similar to △PQR whose sides are 2/3 times the corresponding sides of △PQR.", tags:["Constructions","Similar Triangle"], diagram:true},
+      {n:15, text:"Show that the points (−1, −2), (4, 3), (2, 5) and (−3, 0) taken in order are the vertices of a rectangle.", tags:["Coordinate Geometry","Rectangle","Distance Formula"]},
+      {n:16, text:"Find the Median of the following data. [📊 Refer to table in original PDF]", tags:["Statistics","Median"], diagram:true},
+      {n:17, text:"Cards are numbered from 1 to 50. A card is selected randomly from it. Find the probability of getting (i) perfect square (ii) factors of 60 (iii) prime number.", tags:["Probability","Cards 1-50"]},
+      {n:18, text:"In a competitive exam 3 marks were awarded for every correct answer and 1 mark was deducted for every wrong answer. Madhu attempted all questions and scored 40 marks. If 4 marks had been awarded for each correct answer and 2 marks deducted for each incorrect answer, Madhu would have scored 50 marks. How many questions were there in the test?", tags:["Linear Equations","Word Problem"]},
+    ]
+  },
+
+  {
+    id:"rj82", code:"RJ-82", name:"Jagtial", district:"Jagtial District",
+    exam:"SSC Pre-Final, February 2026",
+    q2:[
+      {n:1, text:"Find the HCF of 24 and 42 by Euclid's Division Algorithm.", tags:["Number Systems","HCF","Euclid"]},
+      {n:2, text:"A = {x : x is a factor of 48}. Write the roster form of set A.", tags:["Sets","Roster Form"]},
+      {n:3, text:"Sanjay said that 'Roots of x² + 2x − 2 = 0 are equal'. Do you agree with him? Justify.", tags:["Quadratic Equations","Discriminant","Nature of Roots"]},
+      {n:4, text:"A tangent is drawn to a circle from a point 25 cm away from its centre. If length of tangent is 24 cm then find the radius of circle.", tags:["Circles","Tangent","Radius"]},
+      {n:5, text:"Two men on either side of a tower of 50 m height observe the top of a tower with angles of elevation 60° and 45° respectively. Draw a suitable diagram to the given data.", tags:["Heights & Distances"], diagram:true},
+      {n:6, text:"△ABC ~ △PQR are similar to each other. If AB = 4.8 cm and PQ = 6.4 cm then find the ratio of areas of △ABC and △PQR.", tags:["Similar Triangles","Area Ratio"]},
+    ],
+    q4:[
+      {n:7, text:"Write the formula to find Median of a grouped data and explain each literal.", tags:["Statistics","Median","Formula"]},
+      {n:8, text:"Solve the equations 2x + y − 8 = 0 and 3x + 2y − 13 = 0 by elimination method.", tags:["Linear Equations","Elimination Method"]},
+      {n:9, text:"Two dice are thrown simultaneously. Find the probability of getting: (a) sum of digits on top faces is a prime number and (b) sum of digits on top faces is a composite number.", tags:["Probability","Two Dice"]},
+      {n:10, text:"A hemisphere of radius 5 cm is melted and recast into a cone of radius of base 16 cm. Find the height of the cone.", tags:["Mensuration","Hemisphere to Cone"]},
+      {n:11, text:"If A, B, C are the interior angles of △ABC then show that cot(A/2) = tan((B+C)/2).", tags:["Trigonometry","Proof","Triangle Angles"]},
+      {n:12, text:"From the Venn Diagram, answer the following: (i) A ∪ B (ii) A ∩ B and verify n(A ∪ B) = n(A) + n(B) − n(A ∩ B). [📊 Refer to Venn diagram in original PDF]", tags:["Sets","Venn Diagram","Proof"], diagram:true},
+    ],
+    q6:[
+      {n:13, text:"Prove that √3 − √5 is an irrational number.", tags:["Number Systems","Irrational","Proof"]},
+      {n:14, text:"Draw the graph of polynomial P(x) = x² − x − 2. Find its zeroes from the graph.", tags:["Polynomials","Graph"], diagram:true},
+      {n:15, text:"Find the coordinates of the trisection points of the line segment joining (1, −3) and (−3, 5).", tags:["Coordinate Geometry","Trisection","Section Formula"]},
+      {n:16, text:"Calculate the Mean of the following frequency distribution. [📊 Refer to frequency table in original PDF]", tags:["Statistics","Mean"], diagram:true},
+      {n:17, text:"Construct a triangle of sides 5 cm, 6 cm, and 7 cm. After construct a triangle similar to it whose sides are 2/3 of the corresponding sides of the first triangle.", tags:["Constructions","Similar Triangle"], diagram:true},
+      {n:18, text:"Find the sum of 3-digit numbers which leave remainder 2 when divided by 5.", tags:["AP","Sum of AP","Number Theory"]},
+    ]
+  },
+
+  {
+    id:"c8", code:"C-8 / J-8", name:"Khammam / Nizamabad (Duplicate Paper)", district:"Multiple Districts",
+    exam:"Pre-Final, February 2026",
+    q2:[
+      {n:1, text:"Find the HCF of 90, 144 by Euclid's division algorithm.", tags:["Number Systems","HCF","Euclid"]},
+      {n:2, text:"Write the first 10 prime numbers and find their median.", tags:["Statistics","Primes","Median"]},
+      {n:3, text:"For what value of k, −4 is a zero of the polynomial x² − x − (2k + 2)?", tags:["Polynomials","Zeroes"]},
+      {n:4, text:"Whether the following pair of Linear Equations are parallel? Justify. 6x − 4y + 10 = 0, 3x − 2y + 6 = 0.", tags:["Linear Equations","Parallel Lines"]},
+      {n:5, text:"Express tanθ in terms of sinθ.", tags:["Trigonometry","Ratios"]},
+      {n:6, text:"A person from the top of a building of height 25 m has observed another building's top and bottom at an angle of elevation of 45° and at an angle of depression 60° respectively. Draw a diagram for this data.", tags:["Heights & Distances"], diagram:true},
+    ],
+    q4:[
+      {n:7, text:"Prove that √2 + √5 is an irrational number.", tags:["Number Systems","Irrational","Proof"]},
+      {n:8, text:"If α, β are the zeroes of the polynomial 2x² + 5x − 7, then find the value of α² + β².", tags:["Polynomials","Zeroes","Algebraic Identity"]},
+      {n:9, text:"Solve the quadratic equation √7x² − 6x − 13√7 = 0 by factorization method.", tags:["Quadratic Equations","Factorization"]},
+      {n:10, text:"Write the formula used to find the mean of grouped data by step deviation method and explain the terms in it.", tags:["Statistics","Mean","Step Deviation"]},
+      {n:11, text:"Find a point on Y-axis which is equidistant from the points A(6, 5) and B(−4, 3).", tags:["Coordinate Geometry","Equidistant Point"]},
+      {n:12, text:"In the adjacent figure, O is the centre of circle. QR is diameter, PQ = 8 cm, PR = 6 cm. Find the area of shaded region. (Use π = 3.14) [📊 Refer to diagram in original PDF]", tags:["Mensuration","Area","Circle"], diagram:true},
+    ],
+    q6:[
+      {n:13, text:"Find the mode of the given frequency distribution data. [📊 Refer to table in original PDF]", tags:["Statistics","Mode"], diagram:true},
+      {n:14, text:"Draw the graph of the polynomial p(x) = x² − x − 12 and hence find zeroes from the graph.", tags:["Polynomials","Graph"], diagram:true},
+      {n:15, text:"Draw a △ABC in which AB = 5 cm, BC = 6 cm and AC = 7 cm. Construct a triangle similar to △ABC with its sides equal to 3/4 of the corresponding sides of △ABC.", tags:["Constructions","Similar Triangle"], diagram:true},
+      {n:16, text:"Solve the pair of linear equations: 5/(x+1) + 1/(y−1) = 2 and 10/(x+1) − 3/(y−1) = 3 where (x ≠ −1, y ≠ 1).", tags:["Linear Equations","Substitution"]},
+      {n:17, text:"Prove that (Cotθ + Cosecθ − 1)/(Cotθ − Cosecθ + 1) = (1 + Cosθ)/Sinθ.", tags:["Trigonometric Identities","Proof"]},
+      {n:18, text:"Cards marked with the numbers 2 to 101 are placed in a box. One card is drawn at random. Find the probability that the number on the card is: (i) a perfect square (ii) a number less than 20 (iii) a prime number less than 25.", tags:["Probability","Cards 2-101"]},
+    ]
+  },
+
+  {
+    id:"w08", code:"W-08", name:"Wanaparthy", district:"Wanaparthy District",
+    exam:"Pre-Final, February 2026",
+    q2:[
+      {n:1, text:"Find the HCF of 36 and 48 by using Euclid's Division Algorithm.", tags:["Number Systems","HCF","Euclid"]},
+      {n:2, text:"Write the formula for mode for grouped data and explain each term in it.", tags:["Statistics","Mode","Formula"]},
+      {n:3, text:"Find the zeroes of the polynomial P(x) = x² + 5x + 6.", tags:["Polynomials","Zeroes"]},
+      {n:4, text:"Find the centroid of the triangle whose vertices are (3, −5), (−7, 4) and (10, −2).", tags:["Coordinate Geometry","Centroid"]},
+      {n:5, text:"Is it right to say cos(60° + 30°) = cos60° cos30° − sin60° sin30°?", tags:["Trigonometry","Compound Angles","Verification"]},
+      {n:6, text:"Verify the points (1, 5), (2, 3) and (−2, −1) are collinear or not.", tags:["Coordinate Geometry","Collinearity"]},
+    ],
+    q4:[
+      {n:7, text:"If A = {x : x is a factor of 12} and B = {x : x is a factor of 30}, then verify the relation n(A ∪ B) = n(A) + n(B) − n(A ∩ B).", tags:["Sets","Verification","n(AUB)"]},
+      {n:8, text:"Draw a circle of radius 6 cm. From a point 10 cm away from its centre, construct the pair of tangents to the circle and measure their lengths. Verify by using Pythagoras Theorem.", tags:["Constructions","Tangents","Verification"], diagram:true},
+      {n:9, text:"Anand buys 4 chairs and 3 tables for Rs. 2100. Renu buys 5 chairs and 2 tables of the same kind for Rs. 1750. Find the cost of one chair and one table separately.", tags:["Linear Equations","Word Problem"]},
+      {n:10, text:"From a well shuffled deck of 52 cards, if a card is drawn randomly, then find the probability of: (i) Getting a black face card.", tags:["Probability","Cards"]},
+      {n:11, text:"If x = p secθ + q tanθ and y = p tanθ + q secθ, then show that x² − y² = p² − q².", tags:["Trigonometric Identities","Proof"]},
+      {n:12, text:"Construct a triangle similar to △ABC with scale factor [📊 Refer to triangle figure in original PDF]", tags:["Constructions","Similar Triangle"], diagram:true},
+    ],
+    q6:[
+      {n:13, text:"Find the mean of the distribution followed by 140 students. [📊 Refer to frequency table in original PDF]", tags:["Statistics","Mean"], diagram:true},
+      {n:14, text:"The sum of the 3rd and 7th terms of an AP is 24 and the sum of the 6th and 10th terms is 44. Find the first three terms of the AP.", tags:["AP","System of Equations"]},
+      {n:15, text:"Find two numbers whose sum is 16 and their product is 48.", tags:["Quadratic Equations","Word Problem"]},
+      {n:16, text:"A lamp post of height h feet is standing. When he walked 40 m towards the tree, the angle of elevation changed to 60°. [📊 Refer to diagram in original PDF — details partially unclear]", tags:["Heights & Distances"], diagram:true},
+      {n:17, text:"[Section III questions — Refer to original PDF for Q17 and Q18]", tags:["Various"], diagram:true},
+    ]
+  },
+
+  {
+    id:"rm82", code:"RM-82", name:"Karimnagar", district:"Karimnagar District",
+    exam:"Pre-Final, February 2026",
+    q2:[
+      {n:1, text:"If x = log2 and y = log5, then express log20 in terms of x and y.", tags:["Logarithms","Log Laws"]},
+      {n:2, text:"'A − B and B − A are not equal sets', comment. Justify your answer.", tags:["Sets","Set Difference"]},
+      {n:3, text:"Show that the quadratic equation x² + 3x + 5 = 0 has no real roots.", tags:["Quadratic Equations","Discriminant","Nature of Roots"]},
+      {n:4, text:"Find the 10th term of the arithmetic progression 15, 12, 9,...", tags:["AP","nth Term"]},
+      {n:5, text:"Calculate the radius of the circle whose length of the tangent is 15 cm drawn from a point which is 17 cm away from the centre of the circle.", tags:["Circles","Tangent","Radius"]},
+      {n:6, text:"Express tanθ in terms of cosθ.", tags:["Trigonometry","Ratios"]},
+    ],
+    q4:[
+      {n:7, text:"If P = {x : x is a multiple of 4 and x < 20} and Q = {x : x = 2ⁿ, n < 5, n ∈ W}, then write the sets (i) P ∪ Q (ii) P ∩ Q and represent P and Q in Venn diagram.", tags:["Sets","Venn Diagram"], diagram:true},
+      {n:8, text:"Write the formula for finding the median of a grouped data and explain each term in it.", tags:["Statistics","Median","Formula"]},
+      {n:9, text:"Verify the relationship between the zeros and the coefficients of the quadratic polynomial 4y² + 4y − 3.", tags:["Polynomials","Zeroes","Verification"]},
+      {n:10, text:"A metallic sphere of diameter 30 cm is melted and recast into a cylinder of radius 10 cm. Find the height of the cylinder.", tags:["Mensuration","Sphere to Cylinder"]},
+      {n:11, text:"One card is selected from a well shuffled deck of 52 cards. Find the probability of getting: (i) a face card (ii) a red card with prime number (iii) a numbered card (iv) neither a face card nor a numbered card.", tags:["Probability","Cards"]},
+      {n:12, text:"Prove that √(cosecA + 1)/(cosecA − 1) − √(cosecA − 1)/(cosecA + 1) = 2tanA.", tags:["Trigonometric Identities","Proof"]},
+    ],
+    q6:[
+      {n:13, text:"Prove that 5√3 − √7 is irrational.", tags:["Number Systems","Irrational","Proof"]},
+      {n:14, text:"Solve 2x + y − 6 = 0 and 4x − 2y − 4 = 0 graphically.", tags:["Linear Equations","Graphical Method"], diagram:true},
+      {n:15, text:"Two students claim to have found the points of trisection of the line segment joining A(2, −2) and B(−7, 4) as: Bharath: (−1, 0) and (4, 2); Vinod: (1, 0) and (4, −2). Who is correct? Justify.", tags:["Coordinate Geometry","Trisection"]},
+      {n:16, text:"Construct a △ABC in which AB = 5 cm, BC = 7 cm and ∠ABC = 50°, then construct a triangle similar to it whose sides are 4/5 of the corresponding sides of first triangle.", tags:["Constructions","Similar Triangle"], diagram:true},
+      {n:17, text:"Find the mode of the following data. [📊 Refer to table in original PDF]", tags:["Statistics","Mode"], diagram:true},
+      {n:18, text:"Two pillars of equal heights are standing opposite to each other on either side of the road which is 200 feet wide. From a point between them on the road, the angles of elevation of the top of the pillars are 30° and 60° respectively. Find the height of the pillars and the distance of the point from the pillars.", tags:["Heights & Distances","Two Pillars"]},
+    ]
+  },
+
+  {
+    id:"s11", code:"S-11", name:"Suryapet", district:"Suryapet District",
+    exam:"Pre-Public, February 2026",
+    q2:[
+      {n:1, text:"If two positive integers a, b are written as a = x²y and b = xy³ where x, y are prime numbers then find LCM and HCF of a, b.", tags:["Number Systems","LCM","HCF"]},
+      {n:2, text:"If cosec(A + B) = 1 and cot(A − B) = √3, 0 < A + B < 90°, A > B, then find A and B.", tags:["Trigonometry","Compound Angles"]},
+      {n:3, text:"Write the formula of sum of n terms in A.P. and explain the terms in it.", tags:["AP","Formula Explanation"]},
+      {n:4, text:"Smrithi tosses two different coins simultaneously (Rs. 1 and Rs. 2). What is the probability that she gets at least one head?", tags:["Probability","Two Coins"]},
+      {n:5, text:"The vertex angle of a cone is 60°. Find the ratio of diameter with the height of the cone.", tags:["Mensuration","Trigonometry"]},
+      {n:6, text:"Ramya said 'All squares are similar'. Do you agree with her statement? Justify your answer.", tags:["Similar Figures","Reasoning"]},
+    ],
+    q4:[
+      {n:7, text:"Prove that 3√5 + √7 is an irrational number.", tags:["Number Systems","Irrational","Proof"]},
+      {n:8, text:"If the zeroes of the polynomial x³ − 9x² + 26x − 24 are a−b, a, a+b, then find the values of a and b.", tags:["Polynomials","Cubic Polynomial","Zeroes"]},
+      {n:9, text:"Find the 18th term from the end of the Arithmetic Progression 7, 10, 13, ..., 184.", tags:["AP","nth Term from End"]},
+      {n:10, text:"Solve the following pair of linear equations by substitution method: 2x − 3y = 19 and 3x − 2y = 21.", tags:["Linear Equations","Substitution Method"]},
+      {n:11, text:"In a trapezium ABCD, AB ∥ DC. If diagonals intersect each other at point O, show that AO/OC = BO/OD. [📊 Refer to diagram in original PDF]", tags:["Similar Triangles","Proof","Trapezium"], diagram:true},
+      {n:12, text:"A line intersects the Y-axis and X-axis at the points P and Q respectively. If (2, −5) is the mid point of PQ, then find the co-ordinates of P and Q.", tags:["Coordinate Geometry","Midpoint","Intercepts"]},
+    ],
+    q6:[
+      {n:13, text:"If A = {x : 2x+1, x ∈ N, x ≤ 5}, B = {x : x is a composite number, x < 12}, then show that (A ∪ B) − (A ∩ B) = (A − B) ∪ (B − A).", tags:["Sets","Symmetric Difference","Proof"]},
+      {n:14, text:"Draw the graph for the polynomial P(x) = x² − 3x + 2 and find the zeroes from the graph.", tags:["Polynomials","Graph"], diagram:true},
+      {n:15, text:"Find the median of the literacy rate data of 35 cities. [📊 Refer to table in original PDF]", tags:["Statistics","Median"], diagram:true},
+      {n:16, text:"Find the probability that a number selected at random from 1, 2, 3, ..., 35 is: (i) prime number (ii) multiple of 7 (iii) multiple of 3 or 5.", tags:["Probability"]},
+      {n:17, text:"Construct triangle ABC with BC = 7 cm, ∠B = 45° and ∠C = 60°. Then construct another triangle similar to △ABC whose sides are 3 times the corresponding sides of △ABC.", tags:["Constructions","Similar Triangle"], diagram:true},
+      {n:18, text:"How many silver coins of diameter 5 cm and thickness 4 mm have to be melted to prepare a cuboid of 12 cm × 11 cm × 5 cm dimensions?", tags:["Mensuration","Volume","Cylinder to Cuboid"]},
+    ]
+  },
+
+  {
+    id:"pr82", code:"PR-82", name:"Peddapalli", district:"Peddapalli District",
+    exam:"Pre-Final, February 2026",
+    q2:[
+      {n:1, text:"If the pair of linear equations 4x + 6y − 1 = 0 and 2x + my − 7 = 0 represents parallel lines, then find the value of m.", tags:["Linear Equations","Parallel Lines"]},
+      {n:2, text:"Sreenithya said, 'If the quadratic equation ax² + bx + c = 0 (a ≠ 0) has equal real roots then a = b²/4c'. Is she correct? Justify your answer.", tags:["Quadratic Equations","Equal Roots","Discriminant"]},
+      {n:3, text:"Write a geometric progression having log₂4 as the first term and cosec30° as the common ratio.", tags:["GP","Logarithms","Trigonometry"]},
+      {n:4, text:"In the following figure, AB ∥ QR. Find the value of x. [📊 Refer to diagram in original PDF]", tags:["Similar Triangles","BPT"], diagram:true},
+      {n:5, text:"An observer standing at a distance of d metres from the foot of a tower observes its top at an angle of elevation of θ. Draw a suitable diagram for this situation.", tags:["Heights & Distances"], diagram:true},
+      {n:6, text:"Express sinθ in terms of cotθ.", tags:["Trigonometry","Ratios"]},
+    ],
+    q4:[
+      {n:7, text:"Show that the points A(√8, 1), B(3, 4) and C(2, −3) are collinear.", tags:["Coordinate Geometry","Collinearity"]},
+      {n:8, text:"Write the formula for 'mode' of a grouped data and explain each term of it.", tags:["Statistics","Mode","Formula"]},
+      {n:9, text:"From the given Venn diagram, find the sets: (i) A ∪ B (ii) A ∩ B (iii) A − B (iv) B − A. [📊 Refer to Venn diagram in original PDF]", tags:["Sets","Venn Diagram"], diagram:true},
+      {n:10, text:"A number is randomly selected from {sin0°, sin30°, sin45°, sin60° and sin90°}. Find the probability of getting an irrational number.", tags:["Probability","Trigonometric Values"]},
+      {n:11, text:"Prove that 2 + 3√5 is an irrational number.", tags:["Number Systems","Irrational","Proof"]},
+      {n:12, text:"The perimeter of a right angled triangle is 60 cm and its hypotenuse is 25 cm. Find the remaining two sides.", tags:["Quadratic Equations","Right Triangle","Word Problem"]},
+    ],
+    q6:[
+      {n:13, text:"Draw the graph of the quadratic polynomial p(x) = x² + x − 6 and find the zeroes of the polynomial from the graph.", tags:["Polynomials","Graph"], diagram:true},
+      {n:14, text:"Show that (sinA + cosA − 1)/(sinA − cosA + 1) = sinA/(1 + cosA).", tags:["Trigonometric Identities","Proof"]},
+      {n:15, text:"Find the median of the given frequency distribution data. [📊 Refer to table in original PDF]", tags:["Statistics","Median"], diagram:true},
+      {n:16, text:"Draw a circle of radius 3 cm. Construct a pair of tangents to the circle from an external point which is at a distance of 5 cm from the centre of the circle.", tags:["Constructions","Tangents"], diagram:true},
+      {n:17, text:"The volume of a solid cuboid is 210 cm³ and its lateral surface area is 130 cm². If its height is 5 cm, find its length and breadth.", tags:["Mensuration","Cuboid","LSA"]},
+      {n:18, text:"The points P and Q are on the line segment joining A(−5, 7) and B(5, 13) such that AP = PQ = QB. Find the coordinates of points P and Q.", tags:["Coordinate Geometry","Trisection","Section Formula"]},
+    ]
+  },
+
+  {
+    id:"sk82", code:"SK-82", name:"Medak", district:"Medak District",
+    exam:"Pre-Final, February 2026",
+    q2:[
+      {n:1, text:"A chord of a circle of radius 10 cm subtends a right angle at the center. Find the length of the chord.", tags:["Circles","Chord Length"]},
+      {n:2, text:"Find the value of K if the points A(2, 3), B(4, K) and C(6, −3) are collinear.", tags:["Coordinate Geometry","Collinearity"]},
+      {n:3, text:"In △PQR, ST ∥ QR, PS/SQ = 3/5 and the total length of PR is 24 cm. Find the lengths of PT and TR. [📊 Refer to diagram in original PDF]", tags:["Similar Triangles","BPT"], diagram:true},
+      {n:4, text:"Show that 5 and −3 are zeros of the polynomial 2x² + 5x − 3.", tags:["Polynomials","Zeroes","Verification"]},
+      {n:5, text:"Express cosecθ in terms of tanθ.", tags:["Trigonometry","Ratios"]},
+      {n:6, text:"If A = {2, 3, 5, 7} and B = {1, 3, 5, 7, 9}, show that A − B ≠ B − A through a Venn diagram representation.", tags:["Sets","Set Difference","Venn Diagram"], diagram:true},
+    ],
+    q4:[
+      {n:7, text:"If cosθ = 5/13, find the value of (4tan²θ + 4secθ)/(2tanθ − cosecθ).", tags:["Trigonometry","Values","Calculation"]},
+      {n:8, text:"Find the values of x and y for: (x+3)/5 × 2 = (y−2)/3 + 1 = −1 and 3x − y = −1 [📊 Refer to equation figure in original PDF]", tags:["Linear Equations"], diagram:true},
+      {n:9, text:"Varun said that x² − 4x + 2 × x² + 1 = (x − 1)² is a quadratic equation. Do you agree? Give reasons.", tags:["Quadratic Equations","Identification"]},
+      {n:10, text:"Write the formula for finding the nth term of geometric progression and explain each term.", tags:["GP","Formula Explanation"]},
+      {n:11, text:"A solid metallic cylinder of base radius 2.1 cm and height 4 cm is melted and recast into a number of small solid spheres, each of radius 0.3 cm. Find the number of spheres that can be made.", tags:["Mensuration","Volume","Cylinder to Spheres"]},
+      {n:12, text:"There are two poles on either side of a river which is 50 m wide. From the top of the shorter pole, the angles of elevation and depression of the top and foot of the taller pole are observed to be 45° and 60° respectively. Find the height of the taller pole.", tags:["Heights & Distances","Two Poles"]},
+    ],
+    q6:[
+      {n:13, text:"A box contains cards with all the prime numbers between 10 and 50 written on them. One card is drawn at random. What is the probability that the sum of the digits of the number on the card is an even number?", tags:["Probability","Prime Numbers","Digit Sum"]},
+      {n:14, text:"Find the co-ordinates of the points of trisection of the line segment joining (4, −1) and (−2, −3).", tags:["Coordinate Geometry","Trisection"]},
+      {n:15, text:"Prove that √2 + √5 is an irrational number.", tags:["Number Systems","Irrational","Proof"]},
+      {n:16, text:"Find the median weight of the given distribution of 70 students. [📊 Refer to table in original PDF]", tags:["Statistics","Median"], diagram:true},
+      {n:17, text:"Draw the graph for the polynomial p(x) = x² + 3x − 4 and find its zeros from the graph.", tags:["Polynomials","Graph"], diagram:true},
+      {n:18, text:"Construct a triangle △PQR with QR = 7 cm, ∠Q = 60° and ∠R = 45°. Construct a triangle similar to △PQR such that each of its sides is 3/5 of the corresponding sides of △PQR.", tags:["Constructions","Similar Triangle"], diagram:true},
+    ]
+  },
+
+  {
+    id:"y8", code:"Y-8", name:"Yadadri Bhongir", district:"Yadadri Bhongir District",
+    exam:"SSC Pre-Final, February 2026",
+    q2:[
+      {n:1, text:"Find the centroid of the triangle whose vertices are (−4, 4), (−2, 2) and (6, −6).", tags:["Coordinate Geometry","Centroid"]},
+      {n:2, text:"In a right angled triangle ABC, if TanA = √3/2, find SinA × CosA.", tags:["Trigonometry","Trigonometric Ratios"]},
+      {n:3, text:"Check whether the pair of linear equations x + 3y − 6 = 0 and 2x + 6y − 18 = 0 is intersecting lines or parallel lines.", tags:["Linear Equations","Types of Lines"]},
+      {n:4, text:"'If a chord AB subtends an angle 60° at centre of a circle, the angle between the tangents at A and B is also 60°'. Whether the statement is true or false? Justify.", tags:["Circles","Tangents","Reasoning"]},
+      {n:5, text:"A solid metallic sphere of radius 3 cm is melted and recast into small spherical balls of radius 0.3 cm. Find the number of balls formed.", tags:["Mensuration","Sphere to Spheres"]},
+      {n:6, text:"'A vertical tower stands on a horizontal plane and is surmounted by a vertical flag containing the foot of the tower. From a point on the horizontal plane, the angle of elevation of top of the tower and top of the flag are α° and β° respectively.' Represent the above through a diagram.", tags:["Heights & Distances"], diagram:true},
+    ],
+    q4:[
+      {n:7, text:"From the given Venn diagram, find the sets A ∪ B, A ∩ B, A − B and B − A. [📊 Refer to Venn diagram in original PDF]", tags:["Sets","Venn Diagram"], diagram:true},
+      {n:8, text:"Write the formula to find Median of grouped data and explain each term of it.", tags:["Statistics","Median","Formula"]},
+      {n:9, text:"Show that the triangle with vertices A(4, 2), B(2, −4) and C(12, 6) forms a right angled triangle.", tags:["Coordinate Geometry","Right Triangle","Distance Formula"]},
+      {n:10, text:"If the 3rd and 9th terms of A.P. are 4 and −8 respectively, which term of A.P. is zero?", tags:["AP","nth Term","Finding Zero Term"]},
+      {n:11, text:"In △ABC, PQ ∥ BC, if AP = x − 2, PB = 5, AQ = 2x − 1, QC = 2x + 5, then find the value of x.", tags:["Similar Triangles","BPT"]},
+      {n:12, text:"Find: (cosec30° + tan²45° + sin²20° + sin²70°) / (cosec30° + sec60° − cot²30°).", tags:["Trigonometry","Trigonometric Values"]},
+    ],
+    q6:[
+      {n:13, text:"Draw the graph of the polynomial p(x) = x² − 2x − 3 and find zeroes of the polynomial from the graph.", tags:["Polynomials","Graph"], diagram:true},
+      {n:14, text:"Find the Mean of the following data by Step Deviation Method. [📊 Refer to frequency table in original PDF]", tags:["Statistics","Mean","Step Deviation"], diagram:true},
+      {n:15, text:"Draw a pair of tangents to a circle of radius 3 cm which are inclined to each other at an angle of 60°.", tags:["Constructions","Tangents"], diagram:true},
+      {n:16, text:"If x² + y² = 27xy, then show that 2log(x − y) = 2log5 + logx + logy.", tags:["Logarithms","Proof"]},
+      {n:17, text:"A solid toy is in the form of a right circular cylinder with a hemispherical shape at one end and a cone at the other end. Their common diameter is 4.2 cm and the height of the cylindrical and conical portions are 12 cm and 7 cm respectively. Find the volume of the solid toy.", tags:["Mensuration","Volume","Composite Solid"]},
+      {n:18, text:"From a pack of 52 playing cards, face cards are removed. From the remaining, a card is drawn at random. Find the probability that the card is: (i) Ace card (ii) Face card (iii) Black colour prime number.", tags:["Probability","Cards without Face Cards"]},
+    ]
+  },
+
+  {
+    id:"rp11", code:"RP-11", name:"Ranga Reddy (Practice)", district:"Ranga Reddy District",
+    exam:"Practice / Pre-Public, February 2026",
+    q2:[
+      {n:1, text:"Draw the Venn diagram of the following sets: (i) A − B (ii) A ∩ B.", tags:["Sets","Venn Diagram"], diagram:true},
+      {n:2, text:"If tanθ + cotθ = 2, then find the value of tan²θ + cot²θ.", tags:["Trigonometry","Algebraic Identity"]},
+      {n:3, text:"Show that −3, −4 are roots of the equation x² + 7x + 12 = 0.", tags:["Quadratic Equations","Roots","Verification"]},
+      {n:4, text:"The perimeter of two similar triangles are 27 cm and 18 cm respectively. If one side of the first triangle is 9 cm, determine the corresponding side of the second triangle.", tags:["Similar Triangles","Perimeter Ratio"]},
+      {n:5, text:"The length of the rectangular park is 2 m more than its breadth and the area of the rectangular park is 168 m². Form a quadratic equation using the above information.", tags:["Quadratic Equations","Word Problem","Forming Equation"]},
+      {n:6, text:"A ladder 25 m long reaches a window of a building 24 m above the ground. Determine the distance of the foot of the ladder from the building.", tags:["Pythagoras Theorem","Word Problem"]},
+    ],
+    q4:[
+      {n:7, text:"If A, B and C are interior angles of triangle ABC, then show that Tan((A+B)/2) = cot(C/2).", tags:["Trigonometry","Proof","Triangle Angles"]},
+      {n:8, text:"Solve the pair of linear equations using graph: 2x + 3y = 8 and 3x − 2y = −1.", tags:["Linear Equations","Graphical Method"], diagram:true},
+      {n:9, text:"In an arithmetic progression, 7th term is 84 and 3rd term is 36, then find its 10th term.", tags:["AP","nth Term"]},
+      {n:10, text:"Convert the following sets in Roster form: a) A = {x : x = nⁿ, n = prime, n < 17} b) B = {x : x = n, n = composite, n < 13} c) C = {x : x = 2n, n ∈ W, n < 7} d) D = {x : x = nⁿ, n ∈ N, n ≤ 6}.", tags:["Sets","Roster Form"]},
+      {n:11, text:"If three coins are tossed at a time, find the probability of getting at least two heads.", tags:["Probability","Three Coins"]},
+      {n:12, text:"The angle of elevation of the top of a tower from two points at a distance of 9 m and 16 m from the base are complementary. Find the height of the tower.", tags:["Heights & Distances","Complementary Angles"]},
+    ],
+    q6:[
+      {n:13, text:"If log((x+y)/2) = (1/2)(log x + log y + log 3), then show that x/y + y/x = 23.", tags:["Logarithms","Proof"]},
+      {n:14, text:"Find the zeroes of the polynomial x² + 3x + 4 using graph.", tags:["Polynomials","Graph"], diagram:true},
+      {n:15, text:"A solid toy is in the form of a right circular cylinder with hemispherical shape at one end and a cone at the other end. Their common diameter is 14 cm and the height of cylindrical and conical portions are 14 cm and 7 cm respectively. Find the volume of the solid toy.", tags:["Mensuration","Volume","Composite Solid"]},
+      {n:16, text:"Check whether the given points A(7, 3), B(6, 1), C(8, 2) and D(9, 4) form a rectangle.", tags:["Coordinate Geometry","Rectangle","Distance Formula"]},
+      {n:17, text:"A chord of a circle of radius 8 cm subtends an angle of 60° at the centre. Find the area of the corresponding minor segment of the circle.", tags:["Mensuration","Area","Sector & Segment"]},
+      {n:18, text:"Find the mode of the following data. [📊 Refer to frequency table in original PDF]", tags:["Statistics","Mode"], diagram:true},
+    ]
+  },
+
+  {
+    id:"dp13", code:"DP-13", name:"Comprehensive Practice", district:"Practice Paper",
+    exam:"Pre-Public, February 2026",
+    q2:[
+      {n:1, text:"Find the HCF of 234 and 630 by using Euclid's algorithm.", tags:["Number Systems","HCF","Euclid"]},
+      {n:2, text:"Find the mean of the given ungrouped data: 9/4, 1/2, 7/3, 3/4 (values in fraction form — refer to original PDF for exact fractions).", tags:["Statistics","Mean","Fractions"]},
+      {n:3, text:"Show that the 8th term of Geometric Progression 6/3 + √3, (3+√3)/3, ... is 1/3 (refer to original PDF for exact terms).", tags:["GP","nth Term"]},
+      {n:4, text:"Can 3/2 be the probability of an event? Explain reasons.", tags:["Probability","Range of Probability"]},
+      {n:5, text:"List all the subsets of A = {y / y ∈ N, x < 4}.", tags:["Sets","Subsets"]},
+      {n:6, text:"Draw a line segment of length 7.3 cm and divide it in 3 : 4 ratio.", tags:["Constructions"], diagram:true},
+    ],
+    q4:[
+      {n:7, text:"Write the formula to find the mean by step deviation of the grouped data and explain each term in it.", tags:["Statistics","Mean","Step Deviation","Formula"]},
+      {n:8, text:"From a well shuffled deck of cards, if a card is drawn randomly, then find the probability of getting: (i) a face card (ii) a prime numbered card (iii) not a prime numbered card.", tags:["Probability","Cards"]},
+      {n:9, text:"If x² + y² = 10xy, then prove that 2log(x + y) = logx + logy + 2log2 + log3.", tags:["Logarithms","Proof"]},
+      {n:10, text:"If A = {x / x ∈ N, x < 5} and B = {x / x is an even number and x < 15}, then verify n(A ∪ B) = n(A) + n(B) − n(A ∩ B).", tags:["Sets","Verification","n(AUB)"]},
+      {n:11, text:"Find the sixth term from the end of the Arithmetic Progression 7, 10, 13, ..., 301.", tags:["AP","nth Term from End"]},
+      {n:12, text:"In the given figure ABCD, show that AB ∥ DC. [📊 Refer to diagram in original PDF]", tags:["Similar Triangles","Parallel Lines","Proof"], diagram:true},
+    ],
+    q6:[
+      {n:13, text:"Draw the graph of quadratic polynomial x² + 2x − 3 and find the zeroes from the graph.", tags:["Polynomials","Graph"], diagram:true},
+      {n:14, text:"Construct a triangle of sides 4.5 cm, 5.4 cm and 7.6 cm. Then construct a triangle similar to it, whose sides are 1⅓ times of the corresponding sides of the first triangle.", tags:["Constructions","Similar Triangle"], diagram:true},
+      {n:15, text:"If secθ − tanθ = x, then prove that sinθ = (1 − x²)/(1 + x²).", tags:["Trigonometric Identities","Proof"]},
+      {n:16, text:"Find the value of k for x² + (3k+1)x + 25 = 0 quadratic equation to have equal roots.", tags:["Quadratic Equations","Equal Roots","Discriminant"]},
+      {n:17, text:"If A = {x / x is a factor of 42} and B = {x / x is a factor of 56}, then find A ∪ B, A ∩ B, A − B and B − A by using Venn diagrams.", tags:["Sets","Venn Diagram","Set Operations"], diagram:true},
+      {n:18, text:"Find the median of the following data. [📊 Refer to frequency table in original PDF]", tags:["Statistics","Median"], diagram:true},
+    ]
+  },
+
+  {
+    id:"g12", code:"G-12", name:"Practice Test Paper II", district:"Practice Paper",
+    exam:"Practice Test 2025–2026",
+    q2:[
+      {n:1, text:"Find the value of log₁₀2025.", tags:["Logarithms","Log Value"]},
+      {n:2, text:"Write the roster form of set A = {x : x = n² − 1, n ≤ 4, n ∈ N}.", tags:["Sets","Roster Form"]},
+      {n:3, text:"In G.P., l = 7 and aₛ = 448, then find a₄.", tags:["GP","nth Term"]},
+      {n:4, text:"Ganesh is standing on the ground and flying a kite with 200 metres of string at an elevation of 45°. Draw the sketch for this data.", tags:["Heights & Distances"], diagram:true},
+      {n:5, text:"Show that tan47° − cot43° + tan45° × cot45° = 2.", tags:["Trigonometry","Complementary Angles"]},
+      {n:6, text:"What is the probability of getting an even prime number when a die is rolled?", tags:["Probability","Die"]},
+    ],
+    q4:[
+      {n:7, text:"Express secθ − tanθ in terms of cotθ.", tags:["Trigonometry","Ratios","Identities"]},
+      {n:8, text:"Check that (2, 3), (6, 0) and (10, −3) are collinear or not.", tags:["Coordinate Geometry","Collinearity"]},
+      {n:9, text:"Two poles of heights 8 m and 14 m stand on a plane ground. If the distance between the feet of the poles is 8 m, find the distance between their tops.", tags:["Pythagoras Theorem","Two Poles"]},
+      {n:10, text:"Find the mode of the given data. [📊 Refer to frequency table in original PDF]", tags:["Statistics","Mode"], diagram:true},
+      {n:11, text:"For what value of K do the following pair of equations have a unique solution? 2x + 3y = 7 and 3x + Ky = 4.", tags:["Linear Equations","Unique Solution","Condition"]},
+      {n:12, text:"A sphere, a cylinder and a cone are of the same radius and same height. Find the ratio of their volumes.", tags:["Mensuration","Volume Ratio"]},
+    ],
+    q6:[
+      {n:13, text:"Draw a pair of tangents to a circle of radius 4 cm which are inclined to each other at an angle 60°.", tags:["Constructions","Tangents"], diagram:true},
+      {n:14, text:"Find the zeroes of p(x) = x² + 5x + 4 using Graphical Method.", tags:["Polynomials","Graph"], diagram:true},
+      {n:15, text:"In a right angled triangle, the hypotenuse is 4 more than 3 times the shortest side, and the remaining side is 3 more than 3 times the shortest side. Find the length of sides of the right angled triangle.", tags:["Quadratic Equations","Word Problem","Right Triangle"]},
+      {n:16, text:"Show that √11 is an irrational number.", tags:["Number Systems","Irrational","Proof"]},
+      {n:17, text:"Find the 31st term of an AP whose 11th term is 33 and 21st term is 73.", tags:["AP","nth Term"]},
+      {n:18, text:"Two dice — one blue and one red — are thrown at the same time. Find the probability that the sum is: (i) Prime Number (ii) Multiple of 3 (iii) Factor of 30.", tags:["Probability","Two Dice"]},
+    ]
+  },
+
+  {
+    id:"st82", code:"ST-82", name:"Siddipet", district:"Siddipet District",
+    exam:"Pre-Final, February 2026",
+    q2:[
+      {n:1, text:"Find HCF of 26 and 91 by using Euclid's division Lemma.", tags:["Number Systems","HCF","Euclid"]},
+      {n:2, text:"From the given Venn diagram, write the elements of set A and B and find: (i) A ∪ B (ii) A ∩ B. [📊 Refer to Venn diagram in original PDF]", tags:["Sets","Venn Diagram"], diagram:true},
+      {n:3, text:"Is the pair of linear equations 3x − 5y = 7 and 6x − 10y = 13 inconsistent? Justify your answer.", tags:["Linear Equations","Consistency"]},
+      {n:4, text:"Check whether −√50 is a term of the AP: 11, 8, 5, 2,...", tags:["AP","nth Term","Irrational"]},
+      {n:5, text:"Suresh says 'points A(1, 3), B(2, 2), C(5, 1) are collinear'. Do you agree with Suresh? Why?", tags:["Coordinate Geometry","Collinearity"]},
+      {n:6, text:"If tanθ = 5/6, then find the value of sinθ + cosθ.", tags:["Trigonometry","Trigonometric Values"]},
+    ],
+    q4:[
+      {n:7, text:"Prove that √3 − √5 is an irrational number.", tags:["Number Systems","Irrational","Proof"]},
+      {n:8, text:"In a right angle triangle, the hypotenuse is 9 cm more than the shortest side. If the third side is 1 cm less than the hypotenuse, find the sides of the triangle.", tags:["Quadratic Equations","Right Triangle","Word Problem"]},
+      {n:9, text:"A square OABC is inscribed in a quadrant OPBQ of a circle with OA = 1/√2 cm. Bhuvana said 'the area of shaded region is 224 cm²'. Do you agree with Bhuvana? Give reason. [📊 Refer to diagram in original PDF]", tags:["Mensuration","Area","Circle","Square"], diagram:true},
+      {n:10, text:"An observer observes the top of a tower from two points on the same side at distances of 5 m and 8 m, with angles of elevations 60° and 45° respectively. Draw a suitable diagram for the given data.", tags:["Heights & Distances"], diagram:true},
+      {n:11, text:"One card is selected from a well-shuffled deck of cards. Find the probability of getting: (i) A face card (ii) A spade card (iii) The jack of hearts (iv) A king of red colour.", tags:["Probability","Cards"]},
+      {n:12, text:"Milk is supplied from a milk center using a cylindrical container with radius 0.14 m and height 0.2 m. This milk is distributed to students in cylindrical glasses each having radius 2 cm and height 7 cm. How many students can be served?", tags:["Mensuration","Volume","Cylinder"]},
+    ],
+    q6:[
+      {n:13, text:"If A = {x : x is a prime number, x < 15} and B = {x : x is a factor of 12}, then find: (i) A ∪ B (ii) A ∩ B (iii) A − B (iv) B − A.", tags:["Sets","Set Operations"]},
+      {n:14, text:"Draw the graph of the polynomial p(x) = x² + x − 12 and find the zeroes of the polynomial from the graph.", tags:["Polynomials","Graph"], diagram:true},
+      {n:15, text:"Find the area of the quadrilateral formed by joining the points A(−1, −2), B(1, 0), C(−1, 2) and D(−3, 0).", tags:["Coordinate Geometry","Area of Quadrilateral"]},
+      {n:16, text:"Construct a triangle of sides 5 cm, 6 cm and 7 cm then construct a triangle similar to it whose sides are 3/4 times the corresponding sides of the first triangle.", tags:["Constructions","Similar Triangle"], diagram:true},
+      {n:17, text:"If SecA + TanA = P, then prove that SinA = (P² − 1)/(P² + 1).", tags:["Trigonometric Identities","Proof"]},
+      {n:18, text:"The mode of a distribution is 55. The modal class is 45–60. The frequency of the class preceding the modal class is 5 and the frequency of the succeeding modal class is 10. Find the frequency of the modal class.", tags:["Statistics","Mode","Frequency Calculation"]},
+    ]
+  },
+
+  {
+    id:"nk8b", code:"NK-8 (Part A)", name:"Nagarkurnool Part A", district:"Nagarkurnool District",
+    exam:"Grand Test 2025–2026",
+    q2:[
+      {n:1, text:"Using Euclid's algorithm find the HCF of 900 and 270.", tags:["Number Systems","HCF","Euclid"]},
+      {n:2, text:"If tanθ + cotθ = 12, then find tan²θ + cot²θ.", tags:["Trigonometry","Algebraic Identity"]},
+      {n:3, text:"If A = {x : x ∈ N, x < 6} and B = {x : x is prime, x < 8}. Draw the Venn diagram of A ∩ B.", tags:["Sets","Venn Diagram"], diagram:true},
+      {n:4, text:"Find the midpoint of the line segment joining the points (cos0°, 0) and (0, sin90°).", tags:["Coordinate Geometry","Midpoint","Trigonometry"]},
+      {n:5, text:"Raju says, 'degree of the polynomial (x+5)³ · (x² − 4) is 6'. Do you agree with him? Why?", tags:["Polynomials","Degree"]},
+      {n:6, text:"Find the sum and product of the roots of x² − 4√3x + 9 = 0.", tags:["Quadratic Equations","Sum & Product of Roots"]},
+    ],
+    q4:[
+      {n:7, text:"Two cubes each of volume 125 cm³ are joined each end to end. Find the surface area of the resulting cuboid.", tags:["Mensuration","Surface Area","Cuboid"]},
+      {n:8, text:"Write the formula to find median of the grouped data and describe the terms in it.", tags:["Statistics","Median","Formula"]},
+      {n:9, text:"If the base of a triangle is 4 cm more than its height and area of the triangle is 48 sq. cm, then find the base and height of the triangle.", tags:["Quadratic Equations","Area of Triangle","Word Problem"]},
+      {n:10, text:"Check whether −33 is a term of the A.P. 5, 2, −1, ...", tags:["AP","nth Term","Verification"]},
+      {n:11, text:"A jar contains 24 marbles, some are green and others are blue. If a marble is drawn at random, the probability that it is green is 5/8. Find the number of blue marbles in the jar.", tags:["Probability","Marbles"]},
+      {n:12, text:"If A, B and C are interior angles of △ABC, then show that cot((A+B)/2) = tan(C/2).", tags:["Trigonometry","Proof","Triangle Angles"]},
+    ],
+    q6:[
+      {n:13, text:"Draw the graph of the polynomial p(x) = x² + 3x − 4 and find the zeroes of the polynomial from the graph.", tags:["Polynomials","Graph"], diagram:true},
+      {n:14, text:"Draw a circle of radius 3 cm. And draw a tangent to the circle from a point which is at a distance of 8 cm from the centre of the circle.", tags:["Constructions","Tangents"], diagram:true},
+      {n:15, text:"Find the mean for the following data by step deviation method. [📊 Refer to frequency table in original PDF]", tags:["Statistics","Mean","Step Deviation"], diagram:true},
+      {n:16, text:"If the 11th term of A.P. is 38 and whose 16th term is 73. Find the 31st term in A.P.", tags:["AP","nth Term"]},
+      {n:17, text:"Two persons are on either side of the pillar whose height is 40 m and observe the top of the pillar with angles of elevation 30° and 60° respectively. Find the distance between the two persons.", tags:["Heights & Distances","Two Observers"]},
+      {n:18, text:"A solid metallic cuboid of dimensions 21 cm × 10 cm × 6 cm is melted and recast into three solid objects — a sphere, a right circular cone, and a right circular cylinder. Radius of sphere = 3.5 cm; radius of cone = 3.5 cm, height = 6 cm; radius of cylinder = 3.5 cm, height = h cm. Find the height h of the cylinder.", tags:["Mensuration","Volume","Composite Solid"]},
+    ]
+  },
+
+  {
+    id:"m8", code:"M-8", name:"Medchal-Malkajgiri", district:"Medchal District",
+    exam:"Pre-Final, February 2026",
+    q2:[
+      {n:1, text:"Find the HCF of 520 and 1325 by Euclid's division algorithm.", tags:["Number Systems","HCF","Euclid"]},
+      {n:2, text:"5 pencils and 7 pens together cost Rs. 50 whereas 7 pencils and 5 pens together cost Rs. 46. Prepare the linear equations in two variables.", tags:["Linear Equations","Word Problem","Forming Equations"]},
+      {n:3, text:"Find the discriminant of Quadratic Equation 2x² − 7x − 15.", tags:["Quadratic Equations","Discriminant"]},
+      {n:4, text:"You are observing the top of your school building at an angle of elevation θ from a point which is at d metres distance from foot of the building. Draw the suitable diagram.", tags:["Heights & Distances"], diagram:true},
+      {n:5, text:"Find the probability of getting a prime number card drawn from a box which has 1 to 100 number cards.", tags:["Probability","Cards 1-100"]},
+      {n:6, text:"Prove that (Tan³θ − 1)/(Tanθ − 1) = Sec²θ + Tanθ.", tags:["Trigonometric Identities","Proof"]},
+    ],
+    q4:[
+      {n:7, text:"If A = {1, 2, 3, 6, 12} and B = {2, 3, 5, 7, 11}, then find A ∪ B, A ∩ B, A − B and B − A.", tags:["Sets","Set Operations"]},
+      {n:8, text:"In △ABC a line drawn such that AD = 8 cm, DB = 6 cm, AE = 12 cm, EC = 9 cm. Is DE ∥ BC? Justify your answer.", tags:["Similar Triangles","BPT","Verification"]},
+      {n:9, text:"Find the area of the triangle whose vertices are A(log₂1, log₃1), B(log₂8, log₂8) and C(log₂32, log₃1).", tags:["Coordinate Geometry","Area of Triangle","Logarithms"]},
+      {n:10, text:"A boat crosses a river by making an angle of 60° with the bank of the river due to the stream and travels a distance of 600 m to reach the other side. What is the width of the river?", tags:["Trigonometry","Heights & Distances","River Crossing"]},
+      {n:11, text:"Find the sum of first 80 numbers which are multiples of 8.", tags:["AP","Sum of AP"]},
+      {n:12, text:"Write the formula to find the median of the grouped data and explain letters in it.", tags:["Statistics","Median","Formula"]},
+    ],
+    q6:[
+      {n:13, text:"Prove that 2√7 − √5 is an irrational number.", tags:["Number Systems","Irrational","Proof"]},
+      {n:14, text:"A solid wooden toy is in the shape of a right circular cone mounted on a hemisphere. If the radius of hemisphere is 4.2 cm and the total height of the toy is 10.2 cm, find the volume of the toy.", tags:["Mensuration","Volume","Composite Solid"]},
+      {n:15, text:"If secθ − tanθ = k, find the value of sinθ in terms of k.", tags:["Trigonometric Identities"]},
+      {n:16, text:"Find the mean of the following data using step deviation method. [📊 Refer to frequency table in original PDF]", tags:["Statistics","Mean","Step Deviation"], diagram:true},
+      {n:17, text:"Draw the tangents to a circle whose radius is 6 cm from a point 10 cm away from the centre of the circle.", tags:["Constructions","Tangents"], diagram:true},
+      {n:18, text:"Draw the graph of the polynomial p(x) = x² − x − 12 and find the zeroes of the polynomial from the graph.", tags:["Polynomials","Graph"], diagram:true},
+    ]
+  },
+
+  {
+    id:"m08", code:"M-08", name:"Mahabubnagar", district:"Mahabubnagar District",
+    exam:"Pre-Final, February 2026",
+    q2:[
+      {n:1, text:"Find the centroid of the triangle whose vertices are A(−5, 7), B(2, −3) and C(7, −10).", tags:["Coordinate Geometry","Centroid"]},
+      {n:2, text:"Show that the pair of Linear Equations 2x − 5y = 9 and 3x + 7y = 20 are consistent lines.", tags:["Linear Equations","Consistency"]},
+      {n:3, text:"Express secθ in terms of cotθ.", tags:["Trigonometry","Ratios"]},
+      {n:4, text:"Find the value of m, if 5 is one of the roots of quadratic equation 2x² + mx − 5 = 0.", tags:["Quadratic Equations","Finding Coefficient from Root"]},
+      {n:5, text:"In the given figure ∠PRQ = 90° and RS ⊥ PQ, prove that RS² = PS × SQ. [📊 Refer to diagram in original PDF]", tags:["Similar Triangles","Proof","Right Triangle"], diagram:true},
+      {n:6, text:"Two boys on either side of their school building of 15 m height observe its top at angles of elevation 45° and 60° respectively. Draw the suitable diagram to the given data.", tags:["Heights & Distances"], diagram:true},
+    ],
+    q4:[
+      {n:7, text:"Write the formula to find median of a grouped data and explain each term in it.", tags:["Statistics","Median","Formula"]},
+      {n:8, text:"Using the Venn diagram given, verify n(P ∪ Q) = n(P) + n(Q) − n(P ∩ Q). [📊 Refer to Venn diagram in original PDF]", tags:["Sets","Proof","Venn Diagram"], diagram:true},
+      {n:9, text:"Write a quadratic polynomial having the zeroes log₂27 and sec60°.", tags:["Polynomials","Logarithms","Quadratic Polynomial"]},
+      {n:10, text:"If cosθ/(1−sinθ) + cosθ/(1+sinθ) = 4 (where 0° < θ < 90°), then find the value of θ.", tags:["Trigonometric Equations","Solving for Angle"]},
+      {n:11, text:"If one card is randomly selected from a well shuffled deck of cards, find the probability of getting: (i) a prime number on it (ii) a red colour face card (iii) an Ace card.", tags:["Probability","Cards"]},
+      {n:12, text:"Solve the quadratic equation cosec²θ − 3cosecθ + 2 = 0 (where 0° < θ < 90°).", tags:["Quadratic Equations","Trigonometric Equation"]},
+    ],
+    q6:[
+      {n:13, text:"Prove that 2√3 + 3√5 is an irrational number.", tags:["Number Systems","Irrational","Proof"]},
+      {n:14, text:"Draw the graph of the quadratic polynomial P(x) = x² − 3x − 4 and find zeroes from the graph.", tags:["Polynomials","Graph"], diagram:true},
+      {n:15, text:"Find the mean of the following grouped data in step-deviation method. [📊 Refer to frequency table in original PDF]", tags:["Statistics","Mean","Step Deviation"], diagram:true},
+      {n:16, text:"Construct a triangle ABC in which AB = 4 cm, BC = 6 cm and ∠ABC = 50°, then construct a triangle similar to it whose sides are 1⅓ of the corresponding sides of first triangle.", tags:["Constructions","Similar Triangle"], diagram:true},
+      {n:17, text:"A solid toy is in the form of a right circular cylinder with a cone shape at one end and hemispherical shape at the other end. Common diameter is 6 cm, height of cylindrical portion is 12 cm and conical portion is 4 cm. Find total surface area of the toy.", tags:["Mensuration","Surface Area","Composite Solid"]},
+      {n:18, text:"Find the coordinates of the points of trisection of line segment joining the points A(−4, 7) and B(5, 13).", tags:["Coordinate Geometry","Trisection"]},
+    ]
+  },
+
+  {
+    id:"n11", code:"N-11", name:"Nalgonda", district:"Nalgonda District",
+    exam:"Pre-Public, February 2026",
+    q2:[
+      {n:1, text:"Find the value of log₂(log₃81).", tags:["Logarithms","Nested Logarithm"]},
+      {n:2, text:"Check whether the lines represented by equations 3x + 5y = 5 and 6x − 2y = −4 are parallel or not.", tags:["Linear Equations","Parallel Lines","Verification"]},
+      {n:3, text:"Express secθ in terms of cosecθ.", tags:["Trigonometry","Ratios"]},
+      {n:4, text:"From the top of a building, the angle of elevation of the top of a cell tower is 60° and the angle of depression of its foot is 45°. If the horizontal distance between the building and the tower is 5√30 m, draw a suitable diagram for the given data.", tags:["Heights & Distances"], diagram:true},
+      {n:5, text:"[Q5 details partially unclear — refer to original PDF]", tags:["Various"]},
+      {n:6, text:"[Q6 details partially unclear — refer to original PDF]", tags:["Various"]},
+    ],
+    q4:[
+      {n:7, text:"A student saves Rs. 500 in the first month and saves by a fixed amount every month. In 20th month he saves Rs. 9600. Find his savings in the first 8 months.", tags:["AP","Sum of AP","Word Problem"]},
+      {n:8, text:"Three coins are tossed simultaneously. Find the probability of getting: (i) exactly one head (ii) at least one head (iii) [refer to original PDF for (iii)].", tags:["Probability","Three Coins"]},
+      {n:9, text:"[Q9 — refer to original PDF]", tags:["Various"]},
+      {n:10, text:"[Q10 — refer to original PDF]", tags:["Various"]},
+      {n:11, text:"[Q11 — refer to original PDF]", tags:["Various"]},
+      {n:12, text:"[Q12 — refer to original PDF]", tags:["Various"]},
+    ],
+    q6:[
+      {n:13, text:"Using the Venn diagram, find A − B, A ∪ B and A ∩ B. Also verify n(A ∩ B) = n(A) − n(A ∩ B). [📊 Refer to Venn diagram in original PDF]", tags:["Sets","Venn Diagram","Proof"], diagram:true},
+      {n:14, text:"A boat goes 20 km upstream and 32 km downstream in 14 hours. In another trip, it goes 30 km upstream and 40 km downstream in 20 hours. Find the speed of the boat in still water and the speed of the stream.", tags:["Linear Equations","Word Problem","Speed Distance"]},
+      {n:15, text:"A hemispherical milk storage tank of internal radius 21 cm is full of milk. The milk is filled into cylindrical cans of radius 3.5 cm and height 14 cm. How many cans are needed to empty the tank?", tags:["Mensuration","Volume","Hemisphere to Cylinders"]},
+      {n:16, text:"Find the mode of incomes of the families in a locality. [📊 Refer to table in original PDF]", tags:["Statistics","Mode"], diagram:true},
+      {n:17, text:"Draw the graph of the polynomial p(x) = x² + 4x + 3 and find the zeroes of the polynomial.", tags:["Polynomials","Graph"], diagram:true},
+    ]
+  },
+
+  {
+    id:"y11", code:"Y-11", name:"Yadadri (Pre-Public)", district:"Yadadri Pre-Public",
+    exam:"Pre-Public, February 2026",
+    q2:[
+      {n:1, text:"If E and Ē are complementary events, P(E) = 0.753, then find P(Ē).", tags:["Probability","Complementary Events"]},
+      {n:2, text:"'A tree was broken due to storm and the broken part bends so that the top of the tree touches the ground making 30° angle with ground. The distance between the foot of the tree and the top of the tree on the ground is 6 m.' Draw diagram to this situation.", tags:["Trigonometry","Heights & Distances"], diagram:true},
+      {n:3, text:"Check whether −15 is a term of AP 5, 1, −3, −7,...", tags:["AP","nth Term","Verification"]},
+      {n:4, text:"Expand log(x·y·z).", tags:["Logarithms","Log Laws"]},
+      {n:5, text:"Write two examples of set A and set B such that A and B are disjoint sets.", tags:["Sets","Disjoint Sets","Examples"]},
+      {n:6, text:"In △ABC, DE ∥ BC, AD/DB = 2/3 and AE = 12 cm, then find AC. [📊 Refer to diagram in original PDF]", tags:["Similar Triangles","BPT"], diagram:true},
+    ],
+    q4:[
+      {n:7, text:"If A is a set of whole numbers less than 10, B is a set of factors of 10, then find A ∪ B, A ∩ B and A − B.", tags:["Sets","Set Operations"]},
+      {n:8, text:"Prove that √3 + √5 is irrational.", tags:["Number Systems","Irrational","Proof"]},
+      {n:9, text:"Check whether −1 and 6 are the roots of y² − 5y − 6 = 0.", tags:["Quadratic Equations","Roots","Verification"]},
+      {n:10, text:"Write the median formula for grouped data and explain the terms in it.", tags:["Statistics","Median","Formula"]},
+      {n:11, text:"A ball is dropped at random on a rectangular region shown in figure. What is the probability that it will land inside the circle with diameter 14 m? [📊 Refer to diagram in original PDF — rectangle 30m long]", tags:["Probability","Geometric Probability","Area"], diagram:true},
+      {n:12, text:"Evaluate: (sec²60° − tan²60°)/(cosec²30° − cot²30°) × (sin²30° + cos²30°)/(sin²60° + cos²60°).", tags:["Trigonometry","Trigonometric Values","Evaluation"]},
+    ],
+    q6:[
+      {n:13, text:"Divide x⁴ − 4x³ + x² + 3x + 1 by x² − 3x + 1 and verify division algorithm.", tags:["Polynomials","Division Algorithm","Verification"]},
+      {n:14, text:"Draw the graph of the lines 2x + 3y = 5 and 3x − 2y = 1 and find the solution.", tags:["Linear Equations","Graphical Method"], diagram:true},
+      {n:15, text:"Find the area of the triangle formed by the points (2, 3), (6, 3) and (2, 6) by using Heron's formula.", tags:["Coordinate Geometry","Area","Heron's Formula"]},
+      {n:16, text:"A cone of height 24 cm and radius of base 6 cm is made up of modelling clay. A child moulds it in the form of a sphere. Find the surface area of the sphere.", tags:["Mensuration","Volume","Cone to Sphere"]},
+      {n:17, text:"Construct a circle of radius 5 cm. From a point 8 cm away from its centre, construct the pair of tangents from this point to the circle.", tags:["Constructions","Tangents"], diagram:true},
+      {n:18, text:"Find the mode of the literacy rate data. [📊 Refer to table in original PDF]", tags:["Statistics","Mode"], diagram:true},
+    ]
+  },
+
+  {
+    id:"pf2026", code:"PF-2026", name:"Pre-Final General (Composite)", district:"Telangana State Board",
+    exam:"SSC Pre-Final, 2025–2026",
+    q2:[
+      {n:1, text:"Find the quadratic equation whose roots are sin30° and cos60°.", tags:["Quadratic Equations","Trigonometry","Forming Equation"]},
+      {n:2, text:"If A = {x : x is a prime number, x < 12} and B = {x : x is a prime factor of 30}, find A ∪ B and A ∩ B.", tags:["Sets","Set Operations"]},
+      {n:3, text:"Write the formula used to find the Median of grouped data.", tags:["Statistics","Median","Formula"]},
+      {n:4, text:"If the vertices of a triangle are (7, 2), (1, 6) and its centroid is (4, 6), then find the 3rd vertex.", tags:["Coordinate Geometry","Centroid","Finding Vertex"]},
+      {n:5, text:"Find the 10th term of GP 2, −4, 8, −16,...", tags:["GP","nth Term","Alternating Signs"]},
+      {n:6, text:"Laxmi says that 'one pair of parallel tangents can be drawn to a circle'. Do you agree? Draw them.", tags:["Circles","Tangents","Parallel Tangents"], diagram:true},
+    ],
+    q4:[
+      {n:7, text:"Find the coordinates of the points of trisection of the line segment joining the points A(2, −2) and B(−7, 4).", tags:["Coordinate Geometry","Trisection","Section Formula"]},
+      {n:8, text:"Prove that (tanθ + secθ − 1)/(tanθ − secθ + 1) = (1 + sinθ)/cosθ.", tags:["Trigonometric Identities","Proof"]},
+      {n:9, text:"Two dice are thrown simultaneously. List all possible outcomes and find the probability of: (i) Both dice show the same number (ii) Sum of numbers on top is 7.", tags:["Probability","Two Dice"]},
+      {n:10, text:"Find the area of the shaded region common between two quadrants of circles of radius 10 cm each. [📊 Refer to diagram in original PDF — square ABCD, 10 cm side]", tags:["Mensuration","Area","Sector","Shaded Region"], diagram:true},
+      {n:11, text:"For what value of K do the equations 2x − (K+1)y + 3 = 0 and 4x + 6y − 5 = 0 represent an inconsistent pair?", tags:["Linear Equations","Inconsistent","Condition"]},
+      {n:12, text:"Determine whether −128 is a term in the AP 16, 12, 8, 4,...", tags:["AP","nth Term","Verification"]},
+    ],
+    q6:[
+      {n:13, text:"Laddu states that √7 is an irrational. Do you agree with this statement? Prove it.", tags:["Number Systems","Irrational","Proof"]},
+      {n:14, text:"A solid cube of lead has an edge of 44 cm. How many spherical balls of diameter 4 cm can be made from it?", tags:["Mensuration","Volume","Cube to Spheres"]},
+      {n:15, text:"Find the mode from the given data of number of runs scored by top batsmen in ODI cricket matches. [📊 Refer to frequency table in original PDF]", tags:["Statistics","Mode"], diagram:true},
+      {n:16, text:"Draw the graph of the quadratic polynomial x² − x − 12. Find its zeroes.", tags:["Polynomials","Graph"], diagram:true},
+      {n:17, text:"Construct a triangle of sides 4 cm, 5 cm and 6 cm. Then construct a triangle similar to it whose sides are 2/3 of the corresponding sides of the first triangle.", tags:["Constructions","Similar Triangle"], diagram:true},
+      {n:18, text:"The angle of elevation of a jet plane from a point A on the ground is 60°. After a flight of 15 seconds, the angle of elevation changes to 30°. If the jet plane is flying at a constant height of 1500√3 metres, find the speed of the jet plane. (√3 = 1.732)", tags:["Heights & Distances","Speed Calculation","Jet Plane"]},
+    ]
+  },
+
+  {
+    id:"mf2026", code:"MF-2026", name:"Pre-Final 2026 (State Composite)", district:"Telangana State",
+    exam:"District Common Examinations Board, 2026",
+    q2:[
+      {n:1, text:"If a number x is chosen at random from the numbers −3, −2, −1, 0, 1, 2, 3. What is the probability that x² ≤ 4?", tags:["Probability","Random Variable"]},
+      {n:2, text:"A cow is tied with a rope of length 14 m at the corner of a rectangular field of dimensions 20 m × 16 m. Find the area of the field in which the cow can graze.", tags:["Mensuration","Area","Sector","Word Problem"]},
+      {n:3, text:"If the volumes of two spheres are in the ratio of 64 : 27, then find their ratio of surface areas.", tags:["Mensuration","Sphere","Volume & Surface Area Ratio"]},
+      {n:4, text:"If A(−2, 9), B(3, 7) and C(8, y) are the three vertices of a parallelogram, then find the fourth vertex D.", tags:["Coordinate Geometry","Parallelogram","Fourth Vertex"]},
+      {n:5, text:"If two towers of height 300 m and 100 m subtend angles of 60° and 30° respectively at the midpoint of the line joining their feet. Draw a suitable line diagram and depict the given measurements.", tags:["Heights & Distances"], diagram:true},
+      {n:6, text:"Is it true that the pair of equations −x + 2y + 2 = 0 and (1/2)x + y − 1 = 0 has a unique solution? Justify your answer.", tags:["Linear Equations","Unique Solution","Consistency"]},
+    ],
+    q4:[
+      {n:7, text:"Find the values of k if the points A(k+1, 2k), B(3k, 2k+3) and C(5k−1, 5k) are collinear.", tags:["Coordinate Geometry","Collinearity","Condition"]},
+      {n:8, text:"Prove that sin⁶θ + cos⁶θ + 3sin²θ cos²θ = 1.", tags:["Trigonometric Identities","Proof"]},
+      {n:9, text:"Find the sum of first 20 terms of an AP whose 4th and 9th terms are −15 and −30 respectively.", tags:["AP","Sum of AP"]},
+      {n:10, text:"Write the formula for finding the Median of a grouped data and explain its each and every term.", tags:["Statistics","Median","Formula"]},
+      {n:11, text:"The incircle of a triangle ABC touches the sides AB, BC and CA at the points F, D and E respectively. Show that AF + BD + CE = FB + DC + EA = ½ (Perimeter of △ABC). [📊 Refer to diagram in original PDF]", tags:["Circles","Tangents","Proof","Perimeter"], diagram:true},
+      {n:12, text:"If (5.2)ˣ − (0.52)ˣ = 10000, then find the value of x.", tags:["Logarithms","Exponential Equations"]},
+    ],
+    q6:[
+      {n:13, text:"Draw the graph of the polynomial p(x) = x² − 5x + 4 and find the zeroes through this graph.", tags:["Polynomials","Graph"], diagram:true},
+      {n:14, text:"If two dice are thrown together, find the probability that the numbers obtained have: (i) Sum is even (ii) Product is even (iii) Sum of the numbers is 13 (iv) A doublet.", tags:["Probability","Two Dice"]},
+      {n:15, text:"If tanθ + secθ = k, then prove that secθ = (k² + 1)/(2k).", tags:["Trigonometric Identities","Proof"]},
+      {n:16, text:"Draw a triangle ABC in which AB = 5 cm, BC = 6 cm and ∠ABC = 60°. Then construct a triangle similar to △ABC with scale factor 5/7. Justify the construction.", tags:["Constructions","Similar Triangle"], diagram:true},
+      {n:17, text:"From the top of a 20 m high building, the angle of elevation of the top of a tower is 30°. From the bottom of the same building, the angle of elevation of the top of the tower is 60°. Find the height of the tower and the distance between tower and the building.", tags:["Heights & Distances","Building and Tower"]},
+      {n:18, text:"Find the modal income from the given table of monthly income of 100 families. [📊 Refer to table in original PDF]", tags:["Statistics","Mode"], diagram:true},
+    ]
+  }
+];
+
+// ══════════════════════════════════════════════════════
+//  BUILD UI
+// ══════════════════════════════════════════════════════
+let currentFilter = 'all';
+
+function diagramNote() {
+  return `<div class="q-diagram-note">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/>
+      <line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
+    Diagram/Table — refer to original PDF
+  </div>`;
+}
+
+function renderQ(q, mark, idx) {
+  const cls = mark === 2 ? 'qab-2m' : mark === 4 ? 'qab-4m' : 'qab-6m';
+  const tags = (q.tags||[]).map(t => `<span class="q-tag">${t}</span>`).join('');
+  return `
+    <div class="q-card" data-mark="${mark}">
+      <div class="q-card-inner">
+        <div class="q-accent-bar ${cls}"></div>
+        <div class="q-body">
+          <div class="q-top">
+            <span class="q-num">Q${q.n}</span>
+            <div class="q-text">${q.text}</div>
+          </div>
+          ${q.diagram ? diagramNote() : ''}
+          ${tags ? `<div class="q-tags">${tags}</div>` : ''}
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderMarkGroup(questions, mark, label, cls) {
+  if (!questions || !questions.length) return '';
+  const qs = questions.map((q,i) => renderQ(q, mark, i)).join('');
+  return `
+    <div class="mark-group" data-group="${mark}">
+      <div class="mark-group-header">
+        <span class="mark-label ${cls}">${label}</span>
+        <div class="mark-rule mr-${mark === 2 ? '2m' : mark === 4 ? '4m' : '6m'}"></div>
+        <span style="font-family:'Fira Code',monospace;font-size:0.6rem;color:var(--muted)">${questions.length} questions</span>
+      </div>
+      ${qs}
+    </div>`;
+}
+
+function renderPapers(papers) {
+  const container = document.getElementById('papersContainer');
+  container.innerHTML = '';
+
+  let total2 = 0, total4 = 0, total6 = 0;
+  papers.forEach(p => {
+    total2 += (p.q2||[]).length;
+    total4 += (p.q4||[]).length;
+    total6 += (p.q6||[]).length;
+  });
+  document.getElementById('cnt-2m').textContent = total2;
+  document.getElementById('cnt-4m').textContent = total4;
+  document.getElementById('cnt-6m').textContent = total6;
+
+  papers.forEach((p, pi) => {
+    const has2 = p.q2 && p.q2.length;
+    const has4 = p.q4 && p.q4.length;
+    const has6 = p.q6 && p.q6.length;
+
+    const block = document.createElement('div');
+    block.className = 'paper-block';
+    block.id = `paper-${p.id}`;
+    block.style.animationDelay = `${pi * 0.04}s`;
+
+    block.innerHTML = `
+      <div class="paper-header">
+        <span class="paper-code-badge">${p.code}</span>
+        <div class="paper-header-text">
+          <div class="paper-title">${p.name}</div>
+          <div class="paper-subtitle">${p.district} · ${p.exam}</div>
+          <div class="paper-stats">
+            ${has2 ? `<span class="pstat pstat-2m">2M: ${p.q2.length} Qs</span>` : ''}
+            ${has4 ? `<span class="pstat pstat-4m">4M: ${p.q4.length} Qs</span>` : ''}
+            ${has6 ? `<span class="pstat pstat-6m">6M: ${p.q6.length} Qs</span>` : ''}
+          </div>
+        </div>
+      </div>
+      ${renderMarkGroup(p.q2, 2, '2 Marks — Section I', 'ml-2m')}
+      ${renderMarkGroup(p.q4, 4, '4 Marks — Section II', 'ml-4m')}
+      ${renderMarkGroup(p.q6, 6, '6 Marks — Section III', 'ml-6m')}
+    `;
+    container.appendChild(block);
+  });
+  applyFilter(currentFilter);
+}
+
+function buildSidebar() {
+  const links = document.getElementById('sidebarLinks');
+  links.innerHTML = PAPERS.map(p => `
+    <a class="sidebar-item" onclick="jumpTo('paper-${p.id}')">
+      ${p.name}
+      <span class="sidebar-item-code">${p.code}</span>
+    </a>
+  `).join('');
+}
+
+function jumpTo(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+    const idx = PAPERS.findIndex(p => `paper-${p.id}` === id);
+    if (idx >= 0) document.querySelectorAll('.sidebar-item')[idx]?.classList.add('active');
+  }
+}
+
+function filterMarks(mark, btn) {
+  currentFilter = mark;
+  document.querySelectorAll('.filter-btn, .topbar-pill').forEach(b => b.classList.remove('on', 'active'));
+  btn.classList.add(btn.classList.contains('topbar-pill') ? 'active' : 'on');
+  // sync the other set of buttons
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const topBtns = document.querySelectorAll('.topbar-pill');
+  filterBtns.forEach(b => {
+    const m = b.classList[1]?.replace('fb-','').replace('m','');
+    if ((mark === 'all' && b.classList.contains('fb-all')) ||
+        (mark === m)) b.classList.add('on');
+  });
+  topBtns.forEach(b => {
+    const txt = b.textContent.trim();
+    if ((mark === 'all' && txt === 'ALL') ||
+        (mark === '2' && txt === '2 Marks') ||
+        (mark === '4' && txt === '4 Marks') ||
+        (mark === '6' && txt === '6 Marks')) b.classList.add('active');
+  });
+  applyFilter(mark);
+}
+
+function applyFilter(mark) {
+  document.querySelectorAll('.mark-group').forEach(g => {
+    if (mark === 'all') {
+      g.style.display = '';
+    } else {
+      g.style.display = g.dataset.group === mark ? '' : 'none';
+    }
+  });
+  document.querySelectorAll('.paper-block').forEach(b => {
+    const visibleGroups = Array.from(b.querySelectorAll('.mark-group')).filter(g => g.style.display !== 'none');
+    b.style.display = visibleGroups.length ? '' : 'none';
+  });
+}
+
+function searchPapers(val) {
+  const low = val.toLowerCase();
+  document.querySelectorAll('.sidebar-item').forEach((item, i) => {
+    const p = PAPERS[i];
+    const match = p.name.toLowerCase().includes(low) || p.code.toLowerCase().includes(low) || p.district.toLowerCase().includes(low);
+    item.style.display = match ? '' : 'none';
+  });
+}
+
+// Sidebar active on scroll
+window.addEventListener('scroll', () => {
+  PAPERS.forEach((p, i) => {
+    const el = document.getElementById(`paper-${p.id}`);
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= 120 && rect.bottom > 120) {
+      document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.sidebar-item')[i]?.classList.add('active');
+    }
+  });
+});
+
+// Init
+renderPapers(PAPERS);
+buildSidebar();
+</script>
+</body>
+</html>

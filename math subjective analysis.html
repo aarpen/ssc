@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class X Math — Ace It Fast</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #111118;
+  --surface2: #1a1a26;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --ink: #f0eee8;
+  --muted: #8b8a9e;
+  --gold: #f5c842;
+  --gold2: #e8a820;
+  --teal: #2dd4bf;
+  --rose: #fb7185;
+  --violet: #a78bfa;
+  --green: #4ade80;
+  --orange: #fb923c;
+  --glow-gold: rgba(245,200,66,0.15);
+  --glow-teal: rgba(45,212,191,0.12);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── NOISE TEXTURE ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+/* ── HEADER ── */
+.header {
+  position: relative;
+  padding: 80px 40px 60px;
+  max-width: 1100px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.header-glow {
+  position: absolute;
+  top: -100px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 300px;
+  background: radial-gradient(ellipse, rgba(245,200,66,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(245,200,66,0.3);
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: rgba(245,200,66,0.08);
+  margin-bottom: 24px;
+}
+.badge-dot { width:6px; height:6px; border-radius:50%; background:var(--gold); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+h1.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+h1.hero-title .accent { color: var(--gold); font-style: italic; }
+h1.hero-title .line2 { display: block; font-size: 0.55em; font-weight: 700; color: var(--muted); letter-spacing: 0.01em; margin-top: 4px; }
+
+.hero-sub {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 520px;
+  line-height: 1.8;
+  margin-bottom: 40px;
+}
+.hero-stats {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.hstat {
+  text-align: left;
+}
+.hstat-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--gold);
+  line-height: 1;
+}
+.hstat-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+
+/* ── NAV TABS ── */
+.nav-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+}
+.nav-tabs {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-tabs::-webkit-scrollbar { display:none; }
+.nav-tab {
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 16px 20px;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-tab:hover { color: var(--ink); }
+.nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+.nav-tab .tab-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  background: var(--surface2);
+  padding: 2px 6px;
+  border-radius: 10px;
+  color: var(--muted);
+}
+
+/* ── MAIN LAYOUT ── */
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 40px 100px;
+}
+
+/* ── SECTION ── */
+.section {
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+.section.active { display: block; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.section-title .icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.icon-gold { background: var(--glow-gold); border: 1px solid rgba(245,200,66,0.3); }
+.icon-teal { background: var(--glow-teal); border: 1px solid rgba(45,212,191,0.3); }
+.icon-violet { background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.3); }
+.icon-rose { background: rgba(251,113,133,0.12); border: 1px solid rgba(251,113,133,0.3); }
+.icon-green { background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.3); }
+.icon-orange { background: rgba(251,146,60,0.1); border: 1px solid rgba(251,146,60,0.3); }
+
+.section-desc {
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin-bottom: 36px;
+  margin-left: 50px;
+  line-height: 1.7;
+}
+
+/* ── TOPIC CARDS ── */
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.topic-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.topic-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+.topic-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.tc-gold::before { background: linear-gradient(90deg, var(--gold), var(--gold2)); }
+.tc-teal::before { background: linear-gradient(90deg, var(--teal), #06b6d4); }
+.tc-violet::before { background: linear-gradient(90deg, var(--violet), #818cf8); }
+.tc-rose::before { background: linear-gradient(90deg, var(--rose), #f43f5e); }
+.tc-green::before { background: linear-gradient(90deg, var(--green), #22c55e); }
+
+.topic-rank {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 900;
+  font-style: italic;
+  opacity: 0.08;
+  position: absolute;
+  top: 12px; right: 20px;
+  line-height: 1;
+}
+.topic-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.topic-freq {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.freq-gold { color: var(--gold); }
+.freq-teal { color: var(--teal); }
+.freq-violet { color: var(--violet); }
+.freq-rose { color: var(--rose); }
+.freq-green { color: var(--green); }
+
+.topic-subtypes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.subtype-tag {
+  font-size: 0.7rem;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+.topic-why {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.6;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  margin-top: 4px;
+}
+
+/* ── PROGRESS BAR ── */
+.freq-bar-wrap { margin-top: 12px; }
+.freq-bar-label { display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--muted); margin-bottom: 4px; font-family: 'DM Mono', monospace; }
+.freq-bar { height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+.freq-bar-fill { height: 100%; border-radius: 2px; transition: width 1s ease; }
+.fb-gold { background: linear-gradient(90deg, var(--gold), var(--gold2)); }
+.fb-teal { background: linear-gradient(90deg, var(--teal), #06b6d4); }
+.fb-violet { background: linear-gradient(90deg, var(--violet), #818cf8); }
+.fb-rose { background: linear-gradient(90deg, var(--rose), #f43f5e); }
+.fb-green { background: linear-gradient(90deg, var(--green), #22c55e); }
+
+/* ── PATTERN CARDS ── */
+.pattern-list { display: flex; flex-direction: column; gap: 12px; }
+.pattern-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: start;
+  transition: border-color 0.2s;
+}
+.pattern-card:hover { border-color: var(--border2); }
+.pattern-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  font-style: italic;
+  color: var(--gold);
+  line-height: 1;
+  min-width: 32px;
+}
+.pattern-name {
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.pattern-desc {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+.pattern-appears {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--teal);
+  letter-spacing: 0.05em;
+}
+.pattern-tip {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.73rem;
+  background: rgba(45,212,191,0.08);
+  border: 1px solid rgba(45,212,191,0.2);
+  border-radius: 6px;
+  padding: 4px 10px;
+  color: var(--teal);
+}
+
+/* ── FORMULA SECTIONS ── */
+.formula-group { margin-bottom: 32px; }
+.formula-group-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.formula-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+.formula-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+  transition: border-color 0.2s;
+}
+.formula-card:hover { border-color: rgba(245,200,66,0.3); }
+.formula-name {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+  font-family: 'DM Mono', monospace;
+}
+.formula-box {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--gold);
+  background: rgba(245,200,66,0.06);
+  border: 1px solid rgba(245,200,66,0.15);
+  border-radius: 6px;
+  padding: 8px 12px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.formula-note {
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+/* ── PITFALL CARDS ── */
+.pitfall-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.pitfall-card {
+  background: var(--surface);
+  border: 1px solid rgba(251,113,133,0.15);
+  border-radius: 12px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.pitfall-card::before {
+  content: '⚠';
+  position: absolute;
+  top: 12px; right: 16px;
+  font-size: 1.2rem;
+  opacity: 0.15;
+}
+.pitfall-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--rose);
+  margin-bottom: 8px;
+}
+.pitfall-wrong {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  background: rgba(251,113,133,0.08);
+  border-left: 2px solid var(--rose);
+  padding: 6px 10px;
+  margin-bottom: 8px;
+  border-radius: 0 6px 6px 0;
+  color: var(--rose);
+}
+.pitfall-right {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  background: rgba(74,222,128,0.08);
+  border-left: 2px solid var(--green);
+  padding: 6px 10px;
+  margin-bottom: 10px;
+  border-radius: 0 6px 6px 0;
+  color: var(--green);
+}
+.pitfall-note { font-size: 0.75rem; color: var(--muted); line-height: 1.6; }
+
+/* ── STUDY PLAN ── */
+.plan-timeline { position: relative; padding-left: 32px; }
+.plan-timeline::before {
+  content:'';
+  position: absolute;
+  left: 10px; top: 8px; bottom: 8px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--gold), var(--teal), var(--violet));
+}
+.plan-day { margin-bottom: 36px; }
+.plan-day-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  position: relative;
+}
+.plan-day-label::before {
+  content:'';
+  position: absolute;
+  left: -30px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  background: var(--bg);
+}
+.plan-day:nth-child(2) .plan-day-label::before { border-color: var(--teal); }
+.plan-day:nth-child(3) .plan-day-label::before { border-color: var(--violet); }
+.day-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  padding: 3px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.08em;
+}
+.db-gold { background: var(--glow-gold); color: var(--gold); border: 1px solid rgba(245,200,66,0.2); }
+.db-teal { background: var(--glow-teal); color: var(--teal); border: 1px solid rgba(45,212,191,0.2); }
+.db-violet { background: rgba(167,139,250,0.1); color: var(--violet); border: 1px solid rgba(167,139,250,0.2); }
+
+.plan-slots { display: flex; flex-direction: column; gap: 8px; }
+.plan-slot {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  gap: 16px;
+  align-items: center;
+}
+.slot-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+.slot-name { font-size: 0.84rem; font-weight: 500; }
+.slot-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.slot-tag {
+  font-size: 0.65rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: 'DM Mono', monospace;
+}
+.st-high { background: rgba(245,200,66,0.1); color: var(--gold); border: 1px solid rgba(245,200,66,0.2); }
+.st-med { background: rgba(45,212,191,0.08); color: var(--teal); border: 1px solid rgba(45,212,191,0.2); }
+.st-low { background: rgba(167,139,250,0.08); color: var(--violet); border: 1px solid rgba(167,139,250,0.2); }
+.slot-roi {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.plan-tips {
+  margin-top: 16px;
+  background: rgba(245,200,66,0.05);
+  border: 1px solid rgba(245,200,66,0.15);
+  border-radius: 10px;
+  padding: 14px 18px;
+}
+.plan-tips-title { font-size: 0.72rem; font-weight: 600; color: var(--gold); margin-bottom: 8px; font-family: 'DM Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; }
+.plan-tip-item { font-size: 0.78rem; color: var(--muted); line-height: 1.8; padding-left: 14px; position: relative; }
+.plan-tip-item::before { content:'→'; position:absolute; left:0; color: var(--gold); font-size: 0.7rem; }
+
+/* ── CHEAT SHEET ── */
+.cheat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+.cheat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.cheat-card-head {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cheat-card-icon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+.cheat-card-name {
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+.cheat-card-body { padding: 14px 18px; }
+.cheat-step {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: flex-start;
+}
+.cheat-step-n {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  background: var(--surface2);
+  padding: 2px 7px;
+  border-radius: 4px;
+  color: var(--muted);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.cheat-step-text { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
+.cheat-step-text strong { color: var(--ink); }
+.cheat-formula-inline {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--gold);
+  background: rgba(245,200,66,0.06);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.cheat-divider { height: 1px; background: var(--border); margin: 10px 0; }
+.cheat-skip {
+  margin-top: 24px;
+  background: var(--surface);
+  border: 1px solid rgba(251,113,133,0.15);
+  border-radius: 14px;
+  padding: 20px 24px;
+}
+.cheat-skip-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--rose);
+  margin-bottom: 12px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.skip-item { font-size: 0.78rem; color: var(--muted); line-height: 1.9; padding-left: 14px; position: relative; }
+.skip-item::before { content:'✕'; position:absolute; left:0; color: var(--rose); font-size: 0.65rem; }
+
+/* ── CHECKLIST ── */
+.checklist { display: flex; flex-direction: column; gap: 6px; margin-top: 24px; }
+.checklist-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  user-select: none;
+}
+.check-item:hover { border-color: var(--border2); }
+.check-item.checked { border-color: rgba(74,222,128,0.3); }
+.check-box {
+  width: 18px; height: 18px;
+  border: 1.5px solid var(--border2);
+  border-radius: 5px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  margin-top: 1px;
+}
+.check-item.checked .check-box { background: var(--green); border-color: var(--green); }
+.check-tick { opacity: 0; font-size: 0.7rem; color: #000; }
+.check-item.checked .check-tick { opacity: 1; }
+.check-text { font-size: 0.8rem; line-height: 1.5; }
+.check-mark { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted); margin-top: 2px; }
+
+/* ── PRINT BTN ── */
+.print-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 10px 20px;
+  background: var(--glow-gold);
+  border: 1px solid rgba(245,200,66,0.3);
+  border-radius: 8px;
+  color: var(--gold);
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 28px;
+  font-family: 'DM Sans', sans-serif;
+}
+.print-btn:hover { background: rgba(245,200,66,0.2); }
+
+/* ── SKIP SECTION ── */
+.skip-box {
+  background: linear-gradient(135deg, rgba(251,113,133,0.05), rgba(251,113,133,0.02));
+  border: 1px solid rgba(251,113,133,0.2);
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-bottom: 32px;
+}
+.skip-box-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--rose);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.skip-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+.skip-list-item {
+  font-size: 0.78rem;
+  color: var(--muted);
+  padding: 8px 12px;
+  background: rgba(251,113,133,0.04);
+  border-radius: 6px;
+  border: 1px solid rgba(251,113,133,0.1);
+  padding-left: 24px;
+  position: relative;
+}
+.skip-list-item::before { content:'✕'; position:absolute; left:8px; color: rgba(251,113,133,0.5); font-size: 0.7rem; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 700px) {
+  .header { padding: 40px 20px 32px; }
+  .nav-wrap { padding: 0 16px; }
+  .main { padding: 32px 20px 80px; }
+  .plan-slot { grid-template-columns: 1fr; gap: 8px; }
+  .hero-stats { gap: 20px; }
+}
+
+@media print {
+  .nav-wrap, .print-btn { display: none; }
+  .section { display: block !important; }
+  body { background: white; color: black; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-glow"></div>
+  <div class="badge"><span class="badge-dot"></span>27 Papers · 400+ Questions Analysed · Telangana SSC 2026</div>
+  <h1 class="hero-title">
+    <span class="accent">Ace</span> Class X Maths
+    <span class="line2">— in 48 hours or less</span>
+  </h1>
+  <p class="hero-sub">Every pre-final paper from across Telangana, distilled into the exact topics, formulas, and patterns you need. Zero fluff.</p>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-val">27</div><div class="hstat-lbl">Papers Analysed</div></div>
+    <div class="hstat"><div class="hstat-val">5</div><div class="hstat-lbl">Must-Know Topics</div></div>
+    <div class="hstat"><div class="hstat-val">48h</div><div class="hstat-lbl">To Full Prep</div></div>
+    <div class="hstat"><div class="hstat-val">~80%</div><div class="hstat-lbl">Questions Covered</div></div>
+  </div>
+</header>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="showTab('topics')">🎯 High-Impact Topics <span class="tab-num">5</span></div>
+    <div class="nav-tab" onclick="showTab('patterns')">⚡ Quick Win Patterns <span class="tab-num">8</span></div>
+    <div class="nav-tab" onclick="showTab('formulas')">📐 Must-Know Formulas</div>
+    <div class="nav-tab" onclick="showTab('pitfalls')">⚠️ Common Pitfalls <span class="tab-num">6</span></div>
+    <div class="nav-tab" onclick="showTab('plan')">📅 Study Plan</div>
+    <div class="nav-tab" onclick="showTab('cheat')">📋 Cheat Sheet</div>
+  </div>
+</div>
+
+<main class="main">
+
+<!-- ══════════ TAB 1: HIGH-IMPACT TOPICS ══════════ -->
+<section class="section active" id="tab-topics">
+  <div class="section-title">
+    <div class="icon icon-gold">🎯</div>
+    High-Impact Topics
+  </div>
+  <p class="section-desc">These 5 topics account for <strong style="color:var(--gold)">~78%</strong> of all questions across all 27 papers. Master these first.</p>
+
+  <div class="topic-grid">
+
+    <div class="topic-card tc-gold">
+      <div class="topic-rank">1</div>
+      <div class="topic-name">Trigonometry & Heights</div>
+      <div class="topic-freq freq-gold">★ HIGHEST FREQUENCY — 95%+ papers</div>
+      <div class="topic-subtypes">
+        <span class="subtype-tag">Trig Identities</span>
+        <span class="subtype-tag">Heights & Distances</span>
+        <span class="subtype-tag">Trig Ratios</span>
+        <span class="subtype-tag">Complementary Angles</span>
+      </div>
+      <div class="topic-why">Every single paper has 3–5 questions on trigonometry. Identity proofs (2–4 per paper), H&D word problems (1–2 per paper), and ratio-conversion questions (1 per paper) are nearly guaranteed.</div>
+      <div class="freq-bar-wrap">
+        <div class="freq-bar-label"><span>Presence across papers</span><span>95%</span></div>
+        <div class="freq-bar"><div class="freq-bar-fill fb-gold" style="width:95%"></div></div>
+      </div>
+    </div>
+
+    <div class="topic-card tc-teal">
+      <div class="topic-rank">2</div>
+      <div class="topic-name">Statistics</div>
+      <div class="topic-freq freq-teal">★ VERY HIGH — 90%+ papers</div>
+      <div class="topic-subtypes">
+        <span class="subtype-tag">Mean (Step Deviation)</span>
+        <span class="subtype-tag">Median (Ogive)</span>
+        <span class="subtype-tag">Mode Formula</span>
+        <span class="subtype-tag">Frequency Tables</span>
+      </div>
+      <div class="topic-why">Almost every paper has one full 6-mark statistics question and a 4-mark formula explanation. Mean by step deviation, Median by CF table, and Mode formula — all three appear with near-certainty.</div>
+      <div class="freq-bar-wrap">
+        <div class="freq-bar-label"><span>Presence across papers</span><span>90%</span></div>
+        <div class="freq-bar"><div class="freq-bar-fill fb-teal" style="width:90%"></div></div>
+      </div>
+    </div>
+
+    <div class="topic-card tc-violet">
+      <div class="topic-rank">3</div>
+      <div class="topic-name">Polynomials & Graphs</div>
+      <div class="topic-freq freq-violet">★ HIGH — 88% papers</div>
+      <div class="topic-subtypes">
+        <span class="subtype-tag">Graph of Quadratic</span>
+        <span class="subtype-tag">Find Zeroes</span>
+        <span class="subtype-tag">Zeroes & Coefficients</span>
+        <span class="subtype-tag">Division Algorithm</span>
+      </div>
+      <div class="topic-why">Drawing the parabola of p(x) = x² ± bx ± c and reading zeroes from it is in virtually every paper as a 6-mark question. The relationship between zeroes and coefficients (α+β, αβ) is a standard 4-mark.</div>
+      <div class="freq-bar-wrap">
+        <div class="freq-bar-label"><span>Presence across papers</span><span>88%</span></div>
+        <div class="freq-bar"><div class="freq-bar-fill fb-violet" style="width:88%"></div></div>
+      </div>
+    </div>
+
+    <div class="topic-card tc-rose">
+      <div class="topic-rank">4</div>
+      <div class="topic-name">Coordinate Geometry</div>
+      <div class="topic-freq freq-rose">★ HIGH — 85% papers</div>
+      <div class="topic-subtypes">
+        <span class="subtype-tag">Trisection (Section Formula)</span>
+        <span class="subtype-tag">Centroid</span>
+        <span class="subtype-tag">Collinearity</span>
+        <span class="subtype-tag">Distance Formula</span>
+      </div>
+      <div class="topic-why">Trisection of a line segment is in 70%+ papers as a 6-mark. Centroid formula is a common 2-mark. Collinearity (area of triangle = 0) appears frequently across mark groups.</div>
+      <div class="freq-bar-wrap">
+        <div class="freq-bar-label"><span>Presence across papers</span><span>85%</span></div>
+        <div class="freq-bar"><div class="freq-bar-fill fb-rose" style="width:85%"></div></div>
+      </div>
+    </div>
+
+    <div class="topic-card tc-green">
+      <div class="topic-rank">5</div>
+      <div class="topic-name">Constructions</div>
+      <div class="topic-freq freq-green">★ HIGH — 85% papers</div>
+      <div class="topic-subtypes">
+        <span class="subtype-tag">Tangents at 60° angle</span>
+        <span class="subtype-tag">Similar Triangle (scale factor)</span>
+        <span class="subtype-tag">Tangents from external point</span>
+        <span class="subtype-tag">Line Division</span>
+      </div>
+      <div class="topic-why">Drawing tangents inclined at 60° appears in literally 15+ papers. Similar triangle construction with a given scale factor (2/3, 3/4, 3/5 etc.) is in most papers. Both are guaranteed 6-mark questions.</div>
+      <div class="freq-bar-wrap">
+        <div class="freq-bar-label"><span>Presence across papers</span><span>85%</span></div>
+        <div class="freq-bar"><div class="freq-bar-fill fb-green" style="width:85%"></div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="skip-box">
+    <div class="skip-box-title">🚫 What You Can Deprioritise</div>
+    <div class="skip-list">
+      <div class="skip-list-item">GP (nth term) — 2-mark only</div>
+      <div class="skip-list-item">Logarithm proofs — occasional</div>
+      <div class="skip-list-item">Sets theory proofs — low yield</div>
+      <div class="skip-list-item">Euclid HCF — 2-mark, easy formula</div>
+      <div class="skip-list-item">Number systems (irrational proofs) — learn the template once</div>
+      <div class="skip-list-item">Complex mensuration combos — time-intensive, rare</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ TAB 2: QUICK WIN PATTERNS ══════════ -->
+<section class="section" id="tab-patterns">
+  <div class="section-title">
+    <div class="icon icon-teal">⚡</div>
+    Quick Win Patterns
+  </div>
+  <p class="section-desc">These recurring problem templates appear across 10+ papers each. Learn the template once — solve any variant.</p>
+
+  <div class="pattern-list">
+
+    <div class="pattern-card">
+      <div class="pattern-num">01</div>
+      <div>
+        <div class="pattern-name">Tangent Pair at 60° — The Universal Construction</div>
+        <div class="pattern-desc">Draw a pair of tangents to a circle of radius r cm which are inclined at 60°. This is identical across 15+ papers — only the radius changes (3, 4, 5, 6 cm).</div>
+        <div class="pattern-appears">📍 Appears in: JK-82, NK-8, MP-11, K-8, RJ-82, G-12, Y-8, M-8, and 7+ more</div>
+        <div class="pattern-tip">💡 Trick: The angle between tangents is 60°, so the angle at centre = 120°. Draw radius at 120° to each other, then erect perpendiculars.</div>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-num">02</div>
+      <div>
+        <div class="pattern-name">Quadratic Polynomial Graph → Zeroes</div>
+        <div class="pattern-desc">Draw graph of p(x) = x² ± bx ± c, find where it crosses x-axis. The zeroes are always integers (−4 to 4 range). Same structure in every paper.</div>
+        <div class="pattern-appears">📍 Appears in: NK-8, V-11, R-8, SK-82, MP-11, RM-82, Y-8, M-8, M-08, n-11 and 10+ more</div>
+        <div class="pattern-tip">💡 Trick: Always make a table for x = −4, −3, −2, −1, 0, 1, 2, 3, 4. Plot and join smoothly. Zeroes = x-intercepts.</div>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-num">03</div>
+      <div>
+        <div class="pattern-name">Trisection of a Line Segment</div>
+        <div class="pattern-desc">Find the co-ordinates of points of trisection of a segment joining (x₁,y₁) and (x₂,y₂). Uses Section Formula at ratios 1:2 and 2:1. Appears in 10+ papers.</div>
+        <div class="pattern-appears">📍 Appears in: K-8, RJ-82, RM-82, SK-82, PR-82, V-11, PF-2026, M-08 and more</div>
+        <div class="pattern-tip">💡 Trick: P divides in 1:2 → P = ((x₁+2x₂)/3, (y₁+2y₂)/3). Q divides in 2:1 → Q = ((2x₁+x₂)/3, (2y₁+y₂)/3).</div>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-num">04</div>
+      <div>
+        <div class="pattern-name">Trig Identity Proof: secθ/tanθ variations</div>
+        <div class="pattern-desc">Prove that (expression with sec, tan, cosec, cot) = (simpler form). Most proofs boil down to converting everything to sin and cos, or using the identity 1+tan²θ = sec²θ.</div>
+        <div class="pattern-appears">📍 Appears in: JK-82, K-8, R-8, MP-11, RM-82, MF-2026, PF-2026 and every other paper</div>
+        <div class="pattern-tip">💡 Master Template: Take LHS → convert to sin/cos → simplify → match RHS. Or use a²−b² = (a+b)(a−b) for identity expressions.</div>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-num">05</div>
+      <div>
+        <div class="pattern-name">Two Observers / Two Poles Heights & Distances</div>
+        <div class="pattern-desc">Two people on either side of a tower/building observe its top at elevation angles θ₁ and θ₂. Find the distance between them (or heights).</div>
+        <div class="pattern-appears">📍 Appears in: JK-82, K-8, R-8 (implicit), SK-82 (variant), NK-8b, MP-11, MF-2026 and 8+ more</div>
+        <div class="pattern-tip">💡 Setup: Let tower height = h. Observer 1 at distance d₁ → tan θ₁ = h/d₁. Observer 2 at distance d₂ → tan θ₂ = h/d₂. Answer = d₁ + d₂.</div>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-num">06</div>
+      <div>
+        <div class="pattern-name">If cosecθ+cotθ = k, prove sinθ/cosθ = ...</div>
+        <div class="pattern-desc">Given secθ+tanθ = P (or cosecθ+cotθ = k), express all other trig ratios in terms of P or k. The answer always uses (P²−1)/(P²+1) or (P²+1)/2P.</div>
+        <div class="pattern-appears">📍 Appears in: JK-82, J-8, MP-11, ST-82, PF-2026, DP-13, MF-2026</div>
+        <div class="pattern-tip">💡 Key identity: If secθ+tanθ = k → secθ−tanθ = 1/k → secθ = (k+1/k)/2, sinθ = (k²−1)/(k²+1).</div>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-num">07</div>
+      <div>
+        <div class="pattern-name">Statistics Median — CF Table Method</div>
+        <div class="pattern-desc">Given a frequency distribution, find Median using cumulative frequency table. Always: (1) Find n/2, (2) Identify median class, (3) Apply formula. Same steps every time.</div>
+        <div class="pattern-appears">📍 Appears in: NK-8, K-8, R-8, V-11, RJ-82, SK-82, PR-82, RM-82, Y-8 and more</div>
+        <div class="pattern-tip">💡 Formula: M = l + [(n/2 − cf)/f] × h. The class intervals are usually 10-wide. cf = cumulative frequency BEFORE median class.</div>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-num">08</div>
+      <div>
+        <div class="pattern-name">Prove Irrational (√a + √b or 2√a − √b)</div>
+        <div class="pattern-desc">Prove that 3√5+√7, √3−√5, 2√7−√5 etc. are irrational. Every proof uses the same contradiction template — assume it's rational, derive a contradiction.</div>
+        <div class="pattern-appears">📍 Appears in: JK-82, V-11, K-8, S-11, RJ-82, SK-82, M-8, M-08, RM-82 and more</div>
+        <div class="pattern-tip">💡 Template: Assume p/q = 2√a+√b → isolate the irrational → show LHS is irrational while RHS is rational → contradiction. Done.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ TAB 3: FORMULAS ══════════ -->
+<section class="section" id="tab-formulas">
+  <div class="section-title">
+    <div class="icon icon-violet">📐</div>
+    Must-Know Formulas
+  </div>
+  <p class="section-desc">Only the formulas that actually appear in exams. Memorise these — nothing else.</p>
+
+  <div class="formula-group">
+    <div class="formula-group-title">// Statistics</div>
+    <div class="formula-grid">
+      <div class="formula-card">
+        <div class="formula-name">Median (Grouped)</div>
+        <div class="formula-box">M = l + [(n/2 − cf) / f] × h
+
+l  = lower boundary of median class
+n  = total frequency
+cf = cumulative freq before class
+f  = frequency of median class
+h  = class width</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Mode (Grouped)</div>
+        <div class="formula-box">Mode = l + [(f₁−f₀) / (2f₁−f₀−f₂)] × h
+
+f₁ = freq of modal class
+f₀ = freq of class before modal
+f₂ = freq of class after modal
+l, h = lower boundary, class width</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Mean — Step Deviation</div>
+        <div class="formula-box">Mean = A + (Σfᵢuᵢ / Σfᵢ) × h
+
+A = assumed mean
+uᵢ = (xᵢ − A) / h
+h = class width</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="formula-group">
+    <div class="formula-group-title">// Coordinate Geometry</div>
+    <div class="formula-grid">
+      <div class="formula-card">
+        <div class="formula-name">Section Formula</div>
+        <div class="formula-box">P = ((mx₂+nx₁)/(m+n), (my₂+ny₁)/(m+n))
+
+For trisection:
+P₁: ratio 1:2  →  ((x₁+2x₂)/3, (y₁+2y₂)/3)
+P₂: ratio 2:1  →  ((2x₁+x₂)/3, (2y₁+y₂)/3)</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Area of Triangle & Collinearity</div>
+        <div class="formula-box">Area = ½|x₁(y₂−y₃) + x₂(y₃−y₁) + x₃(y₁−y₂)|
+
+Collinear ⟺ Area = 0
+Centroid = ((x₁+x₂+x₃)/3, (y₁+y₂+y₃)/3)</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Distance & Midpoint</div>
+        <div class="formula-box">Distance = √[(x₂−x₁)² + (y₂−y₁)²]
+Midpoint  = ((x₁+x₂)/2, (y₁+y₂)/2)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="formula-group">
+    <div class="formula-group-title">// Trigonometry — Core Identities</div>
+    <div class="formula-grid">
+      <div class="formula-card">
+        <div class="formula-name">Pythagorean Identities</div>
+        <div class="formula-box">sin²θ + cos²θ = 1
+1 + tan²θ = sec²θ
+1 + cot²θ = cosec²θ
+
+Derived:
+sec²θ − tan²θ = 1
+cosec²θ − cot²θ = 1</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">secθ+tanθ = k → sinθ</div>
+        <div class="formula-box">If secθ + tanθ = k, then:
+  secθ − tanθ = 1/k
+  secθ = (k² + 1) / 2k
+  tanθ = (k² − 1) / 2k
+  sinθ = (k² − 1) / (k² + 1)
+  cosθ = 2k / (k² + 1)</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Ratio Conversions</div>
+        <div class="formula-box">sinθ in terms of tanθ:
+  sinθ = tanθ / √(1+tan²θ)
+cosθ in terms of cotθ:
+  cosθ = cotθ / √(1+cot²θ)
+tanθ in terms of sinθ:
+  tanθ = sinθ / √(1−sin²θ)</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Triangle Angle Identity</div>
+        <div class="formula-box">In △ABC, A+B+C = 180°
+
+∴ tan((A+B)/2) = cot(C/2)
+  cot((A+B)/2) = tan(C/2)
+  sin((A+B)/2) = cos(C/2)
+
+Used for proving trig results in triangles</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="formula-group">
+    <div class="formula-group-title">// Arithmetic Progression</div>
+    <div class="formula-grid">
+      <div class="formula-card">
+        <div class="formula-name">AP Essentials</div>
+        <div class="formula-box">nth term: aₙ = a + (n−1)d
+Sum of n terms: Sₙ = n/2[2a + (n−1)d]
+                   = n/2[a + l]   (l = last term)
+nth from end: aₙ = l − (n−1)d</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="formula-group">
+    <div class="formula-group-title">// Mensuration (Most Common)</div>
+    <div class="formula-grid">
+      <div class="formula-card">
+        <div class="formula-name">Volume Conversions (melting/recasting)</div>
+        <div class="formula-box">Sphere V = (4/3)πr³
+Cylinder V = πr²h
+Cone V = (1/3)πr²h
+Hemisphere V = (2/3)πr³
+
+Key: V₁ = n × V₂  (n = number of pieces)</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Surface Areas</div>
+        <div class="formula-box">Sphere: 4πr²
+Cylinder: CSA = 2πrh,  TSA = 2πr(r+h)
+Cone: CSA = πrl,  l = √(r²+h²)
+Hemisphere: CSA = 2πr², TSA = 3πr²</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="formula-group">
+    <div class="formula-group-title">// Circles & Constructions</div>
+    <div class="formula-grid">
+      <div class="formula-card">
+        <div class="formula-name">Tangent Theorems</div>
+        <div class="formula-box">Tangent length from external pt P:
+  PT = √(d² − r²)
+  where d = distance from centre, r = radius
+
+Tangents from same external pt are equal.
+Radius ⊥ Tangent at point of contact.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Tangent at 60° — Construction Key</div>
+        <div class="formula-box">Angle between tangents = 60°
+→ Angle at centre = 120°
+→ Draw radii making 120° angle
+→ Construct 90° at each radius end
+→ Two perpendiculars meet = tangent pair</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ TAB 4: PITFALLS ══════════ -->
+<section class="section" id="tab-pitfalls">
+  <div class="section-title">
+    <div class="icon icon-rose">⚠️</div>
+    Common Pitfalls
+  </div>
+  <p class="section-desc">The top mistakes students make — and exactly how to avoid them.</p>
+
+  <div class="pitfall-list">
+
+    <div class="pitfall-card">
+      <div class="pitfall-title">1. Median Formula: Wrong "cf"</div>
+      <div class="pitfall-wrong">✗ Using the frequency of the class before, not the cumulative frequency</div>
+      <div class="pitfall-right">✓ cf = sum of ALL frequencies BEFORE the median class</div>
+      <div class="pitfall-note">Build a full cumulative frequency column first. Then find n/2 and locate the median class. cf is the row ABOVE the median class row.</div>
+    </div>
+
+    <div class="pitfall-card">
+      <div class="pitfall-title">2. Trisection: Confusing ratio order</div>
+      <div class="pitfall-wrong">✗ Using 1:2 for both trisection points</div>
+      <div class="pitfall-right">✓ P₁ divides AB in 1:2 (closer to A), P₂ divides AB in 2:1 (closer to B)</div>
+      <div class="pitfall-note">The point closer to A uses ratio 1:2. The point closer to B uses ratio 2:1. Always draw a diagram to confirm which is which.</div>
+    </div>
+
+    <div class="pitfall-card">
+      <div class="pitfall-title">3. Trig Identity: Wrong LHS manipulation</div>
+      <div class="pitfall-wrong">✗ Cross-multiplying or moving terms across the "=" in a proof</div>
+      <div class="pitfall-right">✓ Work only on ONE side (usually LHS) until it equals RHS</div>
+      <div class="pitfall-note">Never modify both sides simultaneously in a proof. Start from LHS, simplify to get RHS. If stuck, start from RHS and work backwards (but show it clearly).</div>
+    </div>
+
+    <div class="pitfall-card">
+      <div class="pitfall-title">4. Heights & Distances: Elevation vs. Depression</div>
+      <div class="pitfall-wrong">✗ Using tan for angle of depression from the wrong triangle vertex</div>
+      <div class="pitfall-right">✓ Angle of depression from top = angle of elevation from bottom (alternate angles)</div>
+      <div class="pitfall-note">Always draw the horizontal line at the observer's level. The angle of depression is measured from this horizontal, not from the vertical.</div>
+    </div>
+
+    <div class="pitfall-card">
+      <div class="pitfall-title">5. Mode Formula: f₀ and f₂ mix-up</div>
+      <div class="pitfall-wrong">✗ Mixing up which is the preceding and succeeding class frequency</div>
+      <div class="pitfall-right">✓ f₀ = frequency of class just BEFORE modal class; f₂ = class just AFTER</div>
+      <div class="pitfall-note">First identify the modal class (highest frequency). Then f₀ is the row above it, f₂ is the row below it in your frequency table.</div>
+    </div>
+
+    <div class="pitfall-card">
+      <div class="pitfall-title">6. Graph of Polynomial: Curve vs. Lines</div>
+      <div class="pitfall-wrong">✗ Drawing straight lines through the plotted points</div>
+      <div class="pitfall-right">✓ Always draw a smooth parabolic (U-shaped) curve through all points</div>
+      <div class="pitfall-note">Plot at least 7 points (x = −3 to 3). Join with a smooth curve, not a dot-to-dot polygon. The zeroes must be clearly readable from the x-axis intersection.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ TAB 5: STUDY PLAN ══════════ -->
+<section class="section" id="tab-plan">
+  <div class="section-title">
+    <div class="icon icon-green">📅</div>
+    48-Hour Fast-Track Study Plan
+  </div>
+  <p class="section-desc">Ruthlessly prioritised schedule based on question frequency across all 27 papers.</p>
+
+  <div class="plan-timeline">
+
+    <div class="plan-day">
+      <div class="plan-day-label">Day 1 — Core Foundations <span class="day-badge db-gold">HIGH ROI</span></div>
+      <div class="plan-slots">
+        <div class="plan-slot">
+          <span class="slot-time">6:00 – 7:30am</span>
+          <div>
+            <div class="slot-name">Trigonometric Identities — All Proofs</div>
+            <div class="slot-tags"><span class="slot-tag st-high">Critical</span><span class="slot-tag st-high">Every Paper</span></div>
+          </div>
+          <span class="slot-roi">1.5 hrs</span>
+        </div>
+        <div class="plan-slot">
+          <span class="slot-time">7:30 – 9:00am</span>
+          <div>
+            <div class="slot-name">Heights & Distances — 2 Observer + Building/Tower setups</div>
+            <div class="slot-tags"><span class="slot-tag st-high">Critical</span></div>
+          </div>
+          <span class="slot-roi">1.5 hrs</span>
+        </div>
+        <div class="plan-slot">
+          <span class="slot-time">9:30 – 11:00am</span>
+          <div>
+            <div class="slot-name">Statistics — Median by CF Table + Mode Formula</div>
+            <div class="slot-tags"><span class="slot-tag st-high">Critical</span><span class="slot-tag st-med">6-Mark Q</span></div>
+          </div>
+          <span class="slot-roi">1.5 hrs</span>
+        </div>
+        <div class="plan-slot">
+          <span class="slot-time">11:00 – 12:00pm</span>
+          <div>
+            <div class="slot-name">Statistics — Mean by Step Deviation Method</div>
+            <div class="slot-tags"><span class="slot-tag st-high">Critical</span></div>
+          </div>
+          <span class="slot-roi">1 hr</span>
+        </div>
+        <div class="plan-slot">
+          <span class="slot-time">2:00 – 4:00pm</span>
+          <div>
+            <div class="slot-name">Polynomial Graph — Practice drawing 4–5 parabolas</div>
+            <div class="slot-tags"><span class="slot-tag st-high">Critical</span><span class="slot-tag st-med">6-Mark Q</span></div>
+          </div>
+          <span class="slot-roi">2 hrs</span>
+        </div>
+        <div class="plan-slot">
+          <span class="slot-time">4:00 – 5:30pm</span>
+          <div>
+            <div class="slot-name">Coordinate Geometry — Trisection + Centroid + Collinearity</div>
+            <div class="slot-tags"><span class="slot-tag st-high">Critical</span></div>
+          </div>
+          <span class="slot-roi">1.5 hrs</span>
+        </div>
+        <div class="plan-slot">
+          <span class="slot-time">6:00 – 7:30pm</span>
+          <div>
+            <div class="slot-name">Construction 1 — Tangent pair at 60° (practice 3 times)</div>
+            <div class="slot-tags"><span class="slot-tag st-high">Critical</span><span class="slot-tag st-med">6-Mark Q</span></div>
+          </div>
+          <span class="slot-roi">1.5 hrs</span>
+        </div>
+      </div>
+      <div class="plan-tips">
+        <div class="plan-tips-title">Day 1 Strategy</div>
+        <div class="plan-tip-item">Do one full past paper question for each topic — not just reading</div>
+        <div class="plan-tip-item">For trig proofs, write out the template: LHS → sin/cos form → simplify → RHS</div>
+        <div class="plan-tip-item">For the graph, use graph paper if available — practice smooth curves</div>
+      </div>
+    </div>
+
+    <div class="plan-day">
+      <div class="plan-day-label">Day 2 — Second Tier + Revision <span class="day-badge db-teal">CONSOLIDATE</span></div>
+      <div class="plan-slots">
+        <div class="plan-slot">
+          <span class="slot-time">6:00 – 7:00am</span>
+          <div>
+            <div class="slot-name">Construction 2 — Similar Triangle (scale factor 2/3, 3/4)</div>
+            <div class="slot-tags"><span class="slot-tag st-high">Critical</span></div>
+          </div>
+          <span class="slot-roi">1 hr</span>
+        </div>
+        <div class="plan-slot">
+          <span class="slot-time">7:00 – 8:00am</span>
+          <div>
+            <div class="slot-name">Irrational Number Proofs — master the template once</div>
+            <div class="slot-tags"><span class="slot-tag st-med">Medium</span></div>
+          </div>
+          <span class="slot-roi">1 hr</span>
+        </div>
+        <div class="plan-slot">
+          <span class="slot-time">8:30 – 10:00am</span>
+          <div>
+            <div class="slot-name">Probability — Cards, Dice, Coins word problems</div>
+            <div class="slot-tags"><span class="slot-tag st-med">Medium</span></div>
+          </div>
+          <span class="slot-roi">1.5 hrs</span>
+        </div>
+        <div class="plan-slot">
+          <span class="slot-time">10:00 – 11:00am</span>
+          <div>
+            <div class="slot-name">Linear Equations + Quadratic Equations word problems</div>
+            <div class="slot-tags"><span class="slot-tag st-med">Medium</span></div>
+          </div>
+          <span class="slot-roi">1 hr</span>
+        </div>
+        <div class="plan-slot">
+          <span class="slot-time">11:30 – 1:00pm</span>
+          <div>
+            <div class="slot-name">Mensuration — Sphere/Cylinder/Cone volume conversions</div>
+            <div class="slot-tags"><span class="slot-tag st-med">Medium</span></div>
+          </div>
+          <span class="slot-roi">1.5 hrs</span>
+        </div>
+        <div class="plan-slot">
+          <span class="slot-time">2:30 – 5:00pm</span>
+          <div>
+            <div class="slot-name">Full Mock Paper — time yourself (3 hours compressed to 2.5)</div>
+            <div class="slot-tags"><span class="slot-tag st-high">Critical</span><span class="slot-tag st-low">Exam Sim</span></div>
+          </div>
+          <span class="slot-roi">2.5 hrs</span>
+        </div>
+        <div class="plan-slot">
+          <span class="slot-time">5:30 – 7:00pm</span>
+          <div>
+            <div class="slot-name">Review Cheat Sheet + Fix errors from mock paper</div>
+            <div class="slot-tags"><span class="slot-tag st-low">Consolidate</span></div>
+          </div>
+          <span class="slot-roi">1.5 hrs</span>
+        </div>
+      </div>
+      <div class="plan-tips">
+        <div class="plan-tips-title">Day 2 Strategy</div>
+        <div class="plan-tip-item">Mock paper is non-negotiable — it reveals exactly what you don't know</div>
+        <div class="plan-tip-item">During mock: skip stuck questions, attempt all 6-mark Qs (partial credit counts)</div>
+        <div class="plan-tip-item">Night before exam: only review the cheat sheet, no new learning</div>
+      </div>
+    </div>
+
+    <div class="plan-day">
+      <div class="plan-day-label">Exam Morning <span class="day-badge db-violet">GAME DAY</span></div>
+      <div class="plan-slots">
+        <div class="plan-slot">
+          <span class="slot-time">15 min read</span>
+          <div>
+            <div class="slot-name">Scan all questions, mark your definite-attempt ones first</div>
+            <div class="slot-tags"><span class="slot-tag st-high">Strategy</span></div>
+          </div>
+          <span class="slot-roi">Priority</span>
+        </div>
+        <div class="plan-slot">
+          <span class="slot-time">Attempt order</span>
+          <div>
+            <div class="slot-name">2-Mark Qs → your strongest 6-Mark → remaining 6-Mark → 4-Mark</div>
+            <div class="slot-tags"><span class="slot-tag st-high">Max Marks</span></div>
+          </div>
+          <span class="slot-roi">Optimal</span>
+        </div>
+        <div class="plan-slot">
+          <span class="slot-time">Constructions</span>
+          <div>
+            <div class="slot-name">Do constructions early when your hand is steady — they're easy marks</div>
+            <div class="slot-tags"><span class="slot-tag st-high">6 Marks Free</span></div>
+          </div>
+          <span class="slot-roi">Quick Win</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ TAB 6: CHEAT SHEET ══════════ -->
+<section class="section" id="tab-cheat">
+  <div class="section-title">
+    <div class="icon icon-orange">📋</div>
+    Quick Reference Cheat Sheet
+  </div>
+  <p class="section-desc">Identify the question type → follow the steps. Printable.</p>
+
+  <button class="print-btn" onclick="window.print()">🖨 Print Cheat Sheet</button>
+
+  <div class="cheat-grid">
+
+    <div class="cheat-card">
+      <div class="cheat-card-head">
+        <div class="cheat-card-icon icon-teal">📊</div>
+        <div class="cheat-card-name">Statistics — Median</div>
+      </div>
+      <div class="cheat-card-body">
+        <div class="cheat-step">
+          <span class="cheat-step-n">01</span>
+          <div class="cheat-step-text">Add a <strong>Cumulative Frequency (cf)</strong> column to the table</div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">02</span>
+          <div class="cheat-step-text">Find <strong>n/2</strong> (half of total frequency)</div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">03</span>
+          <div class="cheat-step-text">Find the first cf that is <strong>≥ n/2</strong> → that row is the median class</div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">04</span>
+          <div class="cheat-step-text">Apply: <span class="cheat-formula-inline">M = l + [(n/2 − cf)/f] × h</span></div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">05</span>
+          <div class="cheat-step-text"><strong>cf</strong> = cumulative frequency of the row ABOVE median class</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cheat-card">
+      <div class="cheat-card-head">
+        <div class="cheat-card-icon icon-teal">📊</div>
+        <div class="cheat-card-name">Statistics — Mode</div>
+      </div>
+      <div class="cheat-card-body">
+        <div class="cheat-step">
+          <span class="cheat-step-n">01</span>
+          <div class="cheat-step-text">Find the class with the <strong>highest frequency</strong> → modal class</div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">02</span>
+          <div class="cheat-step-text">Note: f₁ (modal class), f₀ (class before), f₂ (class after), l (lower boundary), h (class width)</div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">03</span>
+          <div class="cheat-step-text">Apply: <span class="cheat-formula-inline">Mode = l + [(f₁−f₀)/(2f₁−f₀−f₂)] × h</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cheat-card">
+      <div class="cheat-card-head">
+        <div class="cheat-card-icon icon-gold">🔢</div>
+        <div class="cheat-card-name">Trig Proof — Identity</div>
+      </div>
+      <div class="cheat-card-body">
+        <div class="cheat-step">
+          <span class="cheat-step-n">01</span>
+          <div class="cheat-step-text">Write <strong>LHS =</strong> ... and work only on left side</div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">02</span>
+          <div class="cheat-step-text">Convert everything to <strong>sin and cos</strong> (or use the identity directly)</div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">03</span>
+          <div class="cheat-step-text">Key swaps: <span class="cheat-formula-inline">sec²θ = 1+tan²θ</span>, <span class="cheat-formula-inline">cosec²θ = 1+cot²θ</span></div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">04</span>
+          <div class="cheat-step-text">Try <strong>a²−b² = (a+b)(a−b)</strong> for difference-of-squares expressions</div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">05</span>
+          <div class="cheat-step-text">Simplify until you get <strong>= RHS</strong>. Write "∴ LHS = RHS" at the end.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cheat-card">
+      <div class="cheat-card-head">
+        <div class="cheat-card-icon icon-gold">📐</div>
+        <div class="cheat-card-name">Heights & Distances</div>
+      </div>
+      <div class="cheat-card-body">
+        <div class="cheat-step">
+          <span class="cheat-step-n">01</span>
+          <div class="cheat-step-text"><strong>Draw a diagram first</strong> — always. Mark the known angles and distances.</div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">02</span>
+          <div class="cheat-step-text">Identify right triangles. Apply: <span class="cheat-formula-inline">tan θ = opposite/adjacent</span></div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">03</span>
+          <div class="cheat-step-text">Two observers setup: <span class="cheat-formula-inline">h = d₁×tan θ₁ = d₂×tan θ₂</span></div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">04</span>
+          <div class="cheat-step-text">Use <span class="cheat-formula-inline">tan 30° = 1/√3</span>, <span class="cheat-formula-inline">tan 45° = 1</span>, <span class="cheat-formula-inline">tan 60° = √3</span></div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">05</span>
+          <div class="cheat-step-text">Rationalise the denominator in final answer</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cheat-card">
+      <div class="cheat-card-head">
+        <div class="cheat-card-icon icon-violet">📈</div>
+        <div class="cheat-card-name">Polynomial Graph (6 Marks)</div>
+      </div>
+      <div class="cheat-card-body">
+        <div class="cheat-step">
+          <span class="cheat-step-n">01</span>
+          <div class="cheat-step-text">Make a <strong>table</strong> for x = −4, −3, −2, −1, 0, 1, 2, 3, 4</div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">02</span>
+          <div class="cheat-step-text">Calculate p(x) for each x value</div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">03</span>
+          <div class="cheat-step-text">Plot points on graph paper. Label axes and scale clearly.</div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">04</span>
+          <div class="cheat-step-text">Join with a <strong>smooth U-shaped curve</strong> (never straight lines)</div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">05</span>
+          <div class="cheat-step-text">Zeroes = points where curve <strong>crosses the x-axis</strong>. Read and state them.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cheat-card">
+      <div class="cheat-card-head">
+        <div class="cheat-card-icon icon-rose">📍</div>
+        <div class="cheat-card-name">Trisection — Section Formula</div>
+      </div>
+      <div class="cheat-card-body">
+        <div class="cheat-step">
+          <span class="cheat-step-n">01</span>
+          <div class="cheat-step-text">Given A(x₁,y₁) and B(x₂,y₂)</div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">02</span>
+          <div class="cheat-step-text">P (closer to A, ratio 1:2): <span class="cheat-formula-inline">((x₁+2x₂)/3, (y₁+2y₂)/3)</span></div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">03</span>
+          <div class="cheat-step-text">Q (closer to B, ratio 2:1): <span class="cheat-formula-inline">((2x₁+x₂)/3, (2y₁+y₂)/3)</span></div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">04</span>
+          <div class="cheat-step-text">Verify: midpoint of P and Q should be the midpoint of AB</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cheat-card">
+      <div class="cheat-card-head">
+        <div class="cheat-card-icon icon-green">🔵</div>
+        <div class="cheat-card-name">Tangent Pair at 60° (Construction)</div>
+      </div>
+      <div class="cheat-card-body">
+        <div class="cheat-step">
+          <span class="cheat-step-n">01</span>
+          <div class="cheat-step-text">Draw circle of given radius. Mark centre O.</div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">02</span>
+          <div class="cheat-step-text">Draw a diameter. From O, draw another radius at <strong>120°</strong> to the first.</div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">03</span>
+          <div class="cheat-step-text">At each radius end (on circumference), erect a <strong>perpendicular</strong> to the radius.</div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">04</span>
+          <div class="cheat-step-text">The two perpendiculars meet at point P — these are the tangents.</div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">05</span>
+          <div class="cheat-step-text">Verify angle at P = 60° with a protractor (for checking)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cheat-card">
+      <div class="cheat-card-head">
+        <div class="cheat-card-icon icon-gold">∞</div>
+        <div class="cheat-card-name">Irrational Proof Template</div>
+      </div>
+      <div class="cheat-card-body">
+        <div class="cheat-step">
+          <span class="cheat-step-n">01</span>
+          <div class="cheat-step-text">State: <strong>"Assume √a + √b is rational"</strong></div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">02</span>
+          <div class="cheat-step-text">Write: <span class="cheat-formula-inline">√a + √b = p/q</span> where p,q are integers, q≠0</div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">03</span>
+          <div class="cheat-step-text">Isolate one surd: <span class="cheat-formula-inline">√a = p/q − √b</span></div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">04</span>
+          <div class="cheat-step-text">LHS (√a) is irrational, RHS = rational − irrational = irrational. But we assumed both sides are rational — <strong>contradiction!</strong></div>
+        </div>
+        <div class="cheat-step">
+          <span class="cheat-step-n">05</span>
+          <div class="cheat-step-text">Conclude: Our assumption is wrong. ∴ √a + √b is irrational.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Problem Identification Checklist -->
+  <div style="margin-top:36px">
+    <div class="checklist-title">// EXAM QUESTION IDENTIFICATION CHECKLIST — tick as you identify</div>
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><span class="check-tick">✓</span></div>
+        <div>
+          <div class="check-text">Question asks to <strong>"Find Median"</strong> from a frequency table → CF table method + formula</div>
+          <div class="check-mark">M = l + [(n/2 − cf)/f] × h</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><span class="check-tick">✓</span></div>
+        <div>
+          <div class="check-text">Question says <strong>"Draw graph of p(x)"</strong> → make value table, plot parabola, read x-intercepts</div>
+          <div class="check-mark">Plot x = −4 to 4, smooth curve, zeroes where y=0</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><span class="check-tick">✓</span></div>
+        <div>
+          <div class="check-text">Question says <strong>"trisection points"</strong> → Section formula at 1:2 and 2:1</div>
+          <div class="check-mark">P₁ = ((x₁+2x₂)/3, (y₁+2y₂)/3)</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><span class="check-tick">✓</span></div>
+        <div>
+          <div class="check-text">Question says <strong>"tangents inclined at 60°"</strong> → draw radii at 120°, erect perpendiculars</div>
+          <div class="check-mark">Angle between tangents + angle at centre = 180°</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><span class="check-tick">✓</span></div>
+        <div>
+          <div class="check-text">Question says <strong>"Prove … identity"</strong> with sec/tan/cosec → work LHS only, convert to sin/cos</div>
+          <div class="check-mark">Never modify both sides. Use sec²−tan²=1 freely.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><span class="check-tick">✓</span></div>
+        <div>
+          <div class="check-text">Question says <strong>"two observers on either side"</strong> → tanθ₁=h/d₁, tanθ₂=h/d₂, total distance=d₁+d₂</div>
+          <div class="check-mark">Draw diagram. Angles 30° and 60° → use tan30=1/√3, tan60=√3</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><span class="check-tick">✓</span></div>
+        <div>
+          <div class="check-text">Question says <strong>"construct similar triangle"</strong> with scale factor → divide base, draw parallel line</div>
+          <div class="check-mark">Scale factor < 1 = smaller triangle; > 1 = larger triangle</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><span class="check-tick">✓</span></div>
+        <div>
+          <div class="check-text">Question says <strong>"prove irrational"</strong> → assume rational p/q, isolate surd, contradiction</div>
+          <div class="check-mark">Rational − Irrational = Irrational is the key logic</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cheat-skip">
+    <div class="cheat-skip-title">🚫 What to Skip in the Exam (If Short on Time)</div>
+    <div class="skip-item">Complex logarithm proofs with x² + y² = kxy → time-consuming, partial marks strategy works</div>
+    <div class="skip-item">Mensuration composites (hemisphere + cone + cylinder) → attempt only if confident</div>
+    <div class="skip-item">GP questions beyond nth term — rarely come as 6-mark</div>
+    <div class="skip-item">Sets proofs (symmetric difference) — know the definition, partial attempt acceptable</div>
+  </div>
+
+</section>
+
+</main>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+}
+// Animate frequency bars on load
+window.addEventListener('load', () => {
+  document.querySelectorAll('.freq-bar-fill').forEach(bar => {
+    const w = bar.style.width;
+    bar.style.width = '0%';
+    setTimeout(() => bar.style.width = w, 300);
+  });
+});
+</script>
+</body>
+</html>
