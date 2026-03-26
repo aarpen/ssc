@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class X Maths — Chapter Question Bank 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0f14;
+  --surface: #13151c;
+  --surface2: #1a1d27;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #e8e9f0;
+  --muted: #666880;
+  --muted2: #8889a0;
+  --accent: #f5c842;
+  --accent2: #ff7043;
+
+  --c1: #4fc3f7; /* Real Numbers */
+  --c2: #81c784; /* Sets */
+  --c3: #ce93d8; /* Polynomials */
+  --c4: #ffb74d; /* Linear Equations */
+  --c5: #f48fb1; /* Quadratic */
+  --c6: #80cbc4; /* Progressions */
+  --c7: #fff176; /* Coordinate Geometry */
+  --c8: #ef9a9a; /* Similar Triangles */
+  --c9: #b0bec5; /* Tangents */
+  --c10: #a5d6a7; /* Mensuration */
+  --c11: #90caf9; /* Trigonometry */
+  --c12: #ffcc80; /* Applications */
+  --c13: #f8bbd0; /* Probability */
+  --c14: #bcaaa4; /* Statistics */
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; font-size:15px; }
+
+body {
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+/* ─── HEADER ─── */
+header {
+  position:sticky; top:0; z-index:200;
+  background:rgba(13,15,20,0.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border2);
+  padding:0 24px;
+  height:60px;
+  display:flex; align-items:center; gap:20px;
+}
+.logo {
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem; font-weight:700;
+  color:var(--text);
+  white-space:nowrap;
+}
+.logo span { color:var(--accent); }
+.header-center {
+  flex:1;
+  display:flex; align-items:center; gap:8px;
+  max-width:440px;
+  background:var(--surface2);
+  border:1px solid var(--border2);
+  border-radius:10px;
+  padding:0 14px;
+}
+.header-center input {
+  flex:1; background:none; border:none; outline:none;
+  font-family:'DM Sans',sans-serif; font-size:0.82rem;
+  color:var(--text); padding:10px 0;
+}
+.header-center input::placeholder { color:var(--muted); }
+.search-icon { color:var(--muted); font-size:0.9rem; }
+
+.header-right {
+  display:flex; gap:6px; margin-left:auto;
+}
+.hbtn {
+  font-family:'DM Mono',monospace; font-size:0.62rem;
+  padding:5px 12px; border-radius:6px; border:1px solid;
+  cursor:pointer; transition:all 0.15s; font-weight:500;
+  letter-spacing:0.04em;
+}
+.hbtn-all { border-color:var(--border2); color:var(--muted2); background:transparent; }
+.hbtn-all.active, .hbtn-all:hover { background:var(--surface2); color:var(--text); border-color:var(--border2); }
+.hbtn-2 { border-color:rgba(129,199,132,0.4); color:#81c784; background:rgba(129,199,132,0.07); }
+.hbtn-2.active { background:rgba(129,199,132,0.18); }
+.hbtn-4 { border-color:rgba(79,195,247,0.4); color:#4fc3f7; background:rgba(79,195,247,0.07); }
+.hbtn-4.active { background:rgba(79,195,247,0.18); }
+.hbtn-6 { border-color:rgba(206,147,216,0.4); color:#ce93d8; background:rgba(206,147,216,0.07); }
+.hbtn-6.active { background:rgba(206,147,216,0.18); }
+
+/* ─── LAYOUT ─── */
+.layout { display:flex; min-height:calc(100vh - 60px); }
+
+/* ─── SIDEBAR ─── */
+.sidebar {
+  width:252px; flex-shrink:0;
+  background:var(--surface);
+  border-right:1px solid var(--border);
+  position:sticky; top:60px;
+  height:calc(100vh - 60px);
+  overflow-y:auto;
+  scrollbar-width:thin;
+  scrollbar-color:var(--surface2) transparent;
+}
+.sidebar::-webkit-scrollbar { width:3px; }
+.sidebar::-webkit-scrollbar-thumb { background:var(--border2); border-radius:2px; }
+
+.sb-section {
+  padding:14px 16px 6px;
+  font-family:'DM Mono',monospace; font-size:0.58rem;
+  letter-spacing:0.12em; text-transform:uppercase; color:var(--muted);
+}
+.sb-item {
+  display:flex; align-items:center; gap:10px;
+  padding:9px 16px; cursor:pointer;
+  font-size:0.79rem; font-weight:500;
+  color:var(--muted2);
+  border-left:2px solid transparent;
+  transition:all 0.12s; text-decoration:none;
+  position:relative;
+}
+.sb-item:hover { color:var(--text); background:var(--surface2); border-left-color:var(--border2); }
+.sb-item.active { color:var(--text); background:rgba(255,255,255,0.04); }
+.sb-dot {
+  width:8px; height:8px; border-radius:50%; flex-shrink:0;
+}
+.sb-count {
+  font-family:'DM Mono',monospace; font-size:0.6rem;
+  margin-left:auto; color:var(--muted); background:var(--surface2);
+  padding:2px 7px; border-radius:4px;
+}
+
+/* ─── CONTENT ─── */
+.content {
+  flex:1; padding:32px 36px 80px;
+  max-width:1000px;
+}
+
+/* ─── HERO ─── */
+.hero {
+  margin-bottom:36px;
+  padding-bottom:32px;
+  border-bottom:1px solid var(--border);
+}
+.hero-kicker {
+  font-family:'DM Mono',monospace; font-size:0.62rem;
+  color:var(--muted); letter-spacing:0.18em; text-transform:uppercase;
+  margin-bottom:14px;
+}
+.hero-title {
+  font-family:'Playfair Display',serif;
+  font-size:2.4rem; font-weight:900; color:var(--text);
+  line-height:1.05; margin-bottom:12px;
+}
+.hero-title em { color:var(--accent); font-style:italic; }
+.hero-desc {
+  font-size:0.85rem; color:var(--muted2); max-width:580px;
+  line-height:1.7; margin-bottom:22px;
+}
+.hero-stats {
+  display:flex; gap:20px; flex-wrap:wrap;
+}
+.hs {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:14px 22px;
+  text-align:center;
+}
+.hs-val {
+  font-family:'Playfair Display',serif;
+  font-size:1.9rem; font-weight:700; font-style:italic;
+  color:var(--accent); line-height:1;
+}
+.hs-lbl {
+  font-family:'DM Mono',monospace; font-size:0.6rem;
+  color:var(--muted); letter-spacing:0.1em; text-transform:uppercase;
+  margin-top:4px;
+}
+
+/* ─── FILTER BAR ─── */
+.filter-bar {
+  display:flex; align-items:center; gap:8px;
+  margin-bottom:28px; flex-wrap:wrap;
+}
+.filter-label {
+  font-family:'DM Mono',monospace; font-size:0.62rem;
+  color:var(--muted); letter-spacing:0.1em;
+}
+.fbtn {
+  font-size:0.74rem; font-weight:600;
+  padding:6px 16px; border-radius:8px; border:1px solid;
+  cursor:pointer; transition:all 0.15s;
+  font-family:'DM Sans',sans-serif;
+}
+.fbtn-all { border-color:var(--border2); color:var(--text); background:var(--surface); }
+.fbtn-all.on { background:var(--text); color:var(--bg); border-color:var(--text); }
+.fbtn-2 { border-color:rgba(129,199,132,0.35); color:#81c784; background:rgba(129,199,132,0.06); }
+.fbtn-2.on { background:#81c784; color:#0d0f14; border-color:#81c784; }
+.fbtn-4 { border-color:rgba(79,195,247,0.35); color:#4fc3f7; background:rgba(79,195,247,0.06); }
+.fbtn-4.on { background:#4fc3f7; color:#0d0f14; border-color:#4fc3f7; }
+.fbtn-6 { border-color:rgba(206,147,216,0.35); color:#ce93d8; background:rgba(206,147,216,0.06); }
+.fbtn-6.on { background:#ce93d8; color:#0d0f14; border-color:#ce93d8; }
+
+/* ─── CHAPTER BLOCK ─── */
+.chapter-block {
+  margin-bottom:48px;
+  animation:fadeUp 0.4s ease both;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(16px); }
+  to { opacity:1; transform:none; }
+}
+
+.chapter-header {
+  display:flex; align-items:center; gap:16px;
+  margin-bottom:20px;
+  padding:18px 20px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  position:relative; overflow:hidden;
+}
+.chapter-header::before {
+  content:'';
+  position:absolute; left:0; top:0; bottom:0; width:3px;
+  background:var(--chcolor);
+}
+.chapter-icon {
+  width:40px; height:40px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.1rem;
+  background:rgba(255,255,255,0.05);
+  flex-shrink:0;
+}
+.chapter-info { flex:1; }
+.chapter-num {
+  font-family:'DM Mono',monospace; font-size:0.6rem;
+  color:var(--muted); letter-spacing:0.12em; text-transform:uppercase;
+  margin-bottom:3px;
+}
+.chapter-name {
+  font-family:'Playfair Display',serif;
+  font-size:1.25rem; font-weight:700; color:var(--text);
+}
+.chapter-badges {
+  display:flex; gap:8px; flex-shrink:0;
+}
+.ch-badge {
+  font-family:'DM Mono',monospace; font-size:0.62rem;
+  padding:4px 10px; border-radius:6px; font-weight:500;
+}
+.ch-2m { background:rgba(129,199,132,0.12); color:#81c784; border:1px solid rgba(129,199,132,0.25); }
+.ch-4m { background:rgba(79,195,247,0.12); color:#4fc3f7; border:1px solid rgba(79,195,247,0.25); }
+.ch-6m { background:rgba(206,147,216,0.12); color:#ce93d8; border:1px solid rgba(206,147,216,0.25); }
+
+/* ─── MARK GROUP ─── */
+.mark-group { margin-bottom:20px; }
+.mark-group-header {
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:10px;
+}
+.mg-label {
+  font-family:'DM Mono',monospace; font-size:0.62rem; font-weight:500;
+  padding:4px 12px; border-radius:20px; letter-spacing:0.04em;
+  white-space:nowrap;
+}
+.mg-2 { background:rgba(129,199,132,0.1); color:#81c784; border:1px solid rgba(129,199,132,0.2); }
+.mg-4 { background:rgba(79,195,247,0.1); color:#4fc3f7; border:1px solid rgba(79,195,247,0.2); }
+.mg-6 { background:rgba(206,147,216,0.1); color:#ce93d8; border:1px solid rgba(206,147,216,0.2); }
+.mg-rule { flex:1; height:1px; background:var(--border); }
+.mg-count {
+  font-family:'DM Mono',monospace; font-size:0.6rem; color:var(--muted);
+}
+
+/* ─── QUESTION CARD ─── */
+.q-card {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  margin-bottom:6px;
+  overflow:hidden;
+  transition:border-color 0.2s, background 0.2s;
+  cursor:default;
+}
+.q-card:hover {
+  border-color:var(--border2);
+  background:var(--surface2);
+}
+.q-card-inner { display:flex; align-items:stretch; }
+.q-bar {
+  width:3px; flex-shrink:0;
+  background:var(--chcolor);
+  opacity:0.6;
+}
+.q-card:hover .q-bar { opacity:1; }
+.q-body { flex:1; padding:13px 18px; }
+.q-top {
+  display:flex; align-items:flex-start; gap:12px;
+}
+.q-num {
+  font-family:'DM Mono',monospace; font-size:0.6rem;
+  color:var(--muted); white-space:nowrap; padding-top:3px; flex-shrink:0;
+}
+.q-text {
+  font-size:0.86rem; line-height:1.7; color:var(--text); flex:1;
+}
+.q-meta {
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+  margin-top:8px; padding-left:30px;
+}
+.q-src {
+  font-family:'DM Mono',monospace; font-size:0.58rem;
+  padding:2px 8px; border-radius:4px;
+  background:rgba(255,255,255,0.04); color:var(--muted);
+  border:1px solid var(--border); letter-spacing:0.03em;
+}
+.q-tag {
+  font-family:'DM Mono',monospace; font-size:0.56rem;
+  padding:2px 7px; border-radius:4px;
+  background:rgba(255,255,255,0.03); color:var(--muted);
+  border:1px solid var(--border);
+}
+.q-diagram {
+  display:inline-flex; align-items:center; gap:5px;
+  font-size:0.7rem; color:#ffb74d;
+  background:rgba(255,183,77,0.08); border:1px solid rgba(255,183,77,0.2);
+  border-radius:4px; padding:2px 8px; font-style:italic;
+}
+
+/* ─── EMPTY ─── */
+.empty-state {
+  text-align:center; padding:60px 20px; color:var(--muted);
+}
+.empty-state h3 {
+  font-family:'Playfair Display',serif; font-size:1.2rem; margin-bottom:8px; color:var(--muted2);
+}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:768px) {
+  .sidebar { display:none; }
+  .content { padding:20px; }
+  header { padding:0 16px; }
+  .header-center { display:none; }
+  .hero-title { font-size:1.8rem; }
+}
+
+@media print {
+  header,.sidebar,.filter-bar { display:none; }
+  .content { padding:0; }
+  .q-card { break-inside:avoid; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Class X <span>Maths</span></div>
+  <div class="header-center">
+    <span class="search-icon">⌕</span>
+    <input type="text" id="globalSearch" placeholder="Search questions, chapters, topics..." oninput="globalSearch(this.value)">
+  </div>
+  <div class="header-right">
+    <span class="hbtn hbtn-all active" onclick="filterMark('all',this)">ALL</span>
+    <span class="hbtn hbtn-2" onclick="filterMark('2',this)">2M</span>
+    <span class="hbtn hbtn-4" onclick="filterMark('4',this)">4M</span>
+    <span class="hbtn hbtn-6" onclick="filterMark('6',this)">6M</span>
+  </div>
+</header>
+
+<div class="layout">
+<nav class="sidebar" id="sidebar"></nav>
+<main class="content" id="content">
+
+<div class="hero">
+  <div class="hero-kicker">// Telangana SSC · Pre-Final 2026 · Class X //</div>
+  <h1 class="hero-title">Chapter-wise <em>Question Bank</em></h1>
+  <p class="hero-desc">All 2-mark, 4-mark, and 6-mark questions from 27 district pre-final papers — extracted, deduplicated where possible, and organised by chapter for focused revision.</p>
+  <div class="hero-stats">
+    <div class="hs"><div class="hs-val" id="cnt-ch">14</div><div class="hs-lbl">Chapters</div></div>
+    <div class="hs"><div class="hs-val" id="cnt-2">—</div><div class="hs-lbl">2-Mark Qs</div></div>
+    <div class="hs"><div class="hs-val" id="cnt-4">—</div><div class="hs-lbl">4-Mark Qs</div></div>
+    <div class="hs"><div class="hs-val" id="cnt-6">—</div><div class="hs-lbl">6-Mark Qs</div></div>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <span class="filter-label">FILTER:</span>
+  <button class="fbtn fbtn-all on" onclick="filterMark('all',this)">All Questions</button>
+  <button class="fbtn fbtn-2" onclick="filterMark('2',this)">2 Marks</button>
+  <button class="fbtn fbtn-4" onclick="filterMark('4',this)">4 Marks</button>
+  <button class="fbtn fbtn-6" onclick="filterMark('6',this)">6 Marks</button>
+</div>
+
+<div id="chaptersContainer"></div>
+</main>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  CHAPTER DATA (classified from all 27 papers)
+// ═══════════════════════════════════════════════
+const CHAPTERS = [
+
+  {
+    id:"real-numbers", num:"Ch 01", name:"Real Numbers", icon:"∞", color:"#4fc3f7",
+    q2:[
+      { text:"Find the LCM and HCF of 54 and 45 by prime factorization method.", src:"MP-11", tags:["LCM","HCF","Prime Factorization"] },
+      { text:"Find the HCF of 90, 144 by Euclid's division algorithm.", src:"J-8", tags:["HCF","Euclid's Algorithm"] },
+      { text:"Find the HCF of 36 and 48 by using Euclid's Division Algorithm.", src:"W-08", tags:["HCF","Euclid's Algorithm"] },
+      { text:"Find the HCF of 24 and 42 by Euclid's Division Algorithm.", src:"RJ-82", tags:["HCF","Euclid"] },
+      { text:"Find the HCF of 234 and 630 by using Euclid's algorithm.", src:"DP-13", tags:["HCF","Euclid"] },
+      { text:"Find the HCF of 26 and 91 by using Euclid's division Lemma.", src:"ST-82", tags:["HCF","Euclid's Lemma"] },
+      { text:"If two positive integers a, b are written as a = x²y and b = xy³ where x, y are prime numbers, then find LCM and HCF of a, b.", src:"S-11", tags:["LCM","HCF","Algebraic"] },
+      { text:"Find the HCF of 520 and 1325 by Euclid's division algorithm.", src:"M-8", tags:["HCF","Euclid"] },
+      { text:"Using Euclid's algorithm find the HCF of 900 and 270.", src:"NK-8B", tags:["HCF","Euclid"] },
+    ],
+    q4:[
+      { text:"Prove that √2 + √5 is an irrational number.", src:"C-8/J-8", tags:["Irrational","Proof"] },
+      { text:"Prove that 2 + 3√5 is an irrational number.", src:"PR-82", tags:["Irrational","Proof"] },
+      { text:"Prove that √3 − √5 is an irrational number.", src:"ST-82", tags:["Irrational","Proof"] },
+      { text:"Show that √11 is an irrational number.", src:"G-12", tags:["Irrational","Proof"] },
+      { text:"Prove that √3 + √5 is irrational.", src:"Y-11", tags:["Irrational","Proof"] },
+      { text:"Use division algorithm to show that the square of any positive integer is of the form 5p or 5p+1 or 5p+4.", src:"NK-8", tags:["Euclid Division","Number Theory"] },
+    ],
+    q6:[
+      { text:"Prove that 2√2 + 2√3 is an irrational number.", src:"JK-82", tags:["Irrational","Proof"] },
+      { text:"Prove that 3√5 + √7 is an irrational number.", src:"V-11/S-11", tags:["Irrational","Proof"] },
+      { text:"Prove that 3√2 − 2√5 is an irrational number.", src:"K-8", tags:["Irrational","Proof"] },
+      { text:"Prove that √3 − √5 is an irrational number.", src:"RJ-82", tags:["Irrational","Proof"] },
+      { text:"Prove that 5√3 − √7 is irrational.", src:"RM-82", tags:["Irrational","Proof"] },
+      { text:"Prove that 2√7 − √5 is an irrational number.", src:"M-8", tags:["Irrational","Proof"] },
+      { text:"Prove that √2 + √5 is an irrational number.", src:"SK-82", tags:["Irrational","Proof"] },
+      { text:"Prove that 2√3 + 3√5 is an irrational number.", src:"M-08", tags:["Irrational","Proof"] },
+      { text:"Laddu states that √7 is an irrational. Do you agree? Prove it.", src:"PF-2026", tags:["Irrational","Proof"] },
+      { text:"Find the sum of all two-digit odd positive integers which are divisible by 3 but not by 2.", src:"J-8", tags:["Number Theory","Odd Numbers"] },
+    ]
+  },
+
+  {
+    id:"sets", num:"Ch 02", name:"Sets", icon:"∪", color:"#81c784",
+    q2:[
+      { text:"If A = {x : x is an even prime} and B = {x : x is a factor of 16}, find the value of n(A ∪ B).", src:"JK-82", tags:["n(AUB)"] },
+      { text:"If A = {x : x ∈ N and x < 5} and B = {x : x ∈ N and x is the set of factors of 10}, find n(A ∩ B).", src:"NK-8", tags:["n(A∩B)"] },
+      { text:"Draw Venn diagram for A − B, B − A, A ∪ B and A ∩ B.", src:"MP-11", tags:["Venn Diagram"], diagram:true },
+      { text:"Write the set builder form of the set A = {4, 6, 8, 9, 10}.", src:"R-8", tags:["Set Builder Form"] },
+      { text:"A = {x : x is a factor of 48}. Write the roster form of set A.", src:"RJ-82", tags:["Roster Form"] },
+      { text:"If A = {2, 3, 5, 7} and B = {1, 3, 5, 7, 9}, show that A − B ≠ B − A through a Venn diagram.", src:"SK-82", tags:["Set Difference","Venn Diagram"], diagram:true },
+      { text:"'A − B and B − A are not equal sets', comment. Justify your answer.", src:"RM-82", tags:["Set Difference"] },
+      { text:"Write two examples of set A and set B such that A and B are disjoint sets.", src:"Y-11", tags:["Disjoint Sets"] },
+      { text:"Write the roster form of set A = {x : x = n² − 1, n ≤ 4, n ∈ N}.", src:"G-12", tags:["Roster Form"] },
+      { text:"List all the subsets of A = {y / y ∈ N, x < 4}.", src:"DP-13", tags:["Subsets"] },
+      { text:"Draw the Venn diagram of the following sets: (i) A − B (ii) A ∩ B.", src:"RP-11", tags:["Venn Diagram"], diagram:true },
+      { text:"From the given Venn diagram, write the elements of set A and B and find: (i) A ∪ B (ii) A ∩ B.", src:"ST-82", tags:["Venn Diagram","Elements"], diagram:true },
+      { text:"If A = {x : x ∈ N, x < 6} and B = {x : x is prime, x < 8}. Draw the Venn diagram of A ∩ B.", src:"NK-8B", tags:["Venn Diagram"], diagram:true },
+    ],
+    q4:[
+      { text:"From the given Venn diagram, prove that n(A ∪ B) = n(A) + n(B) − n(A ∩ B).", src:"NK-8", tags:["Proof","Venn Diagram"], diagram:true },
+      { text:"If A = {x : x is a factor of 12} and B = {x : x is a factor of 30}, verify n(A ∪ B) = n(A) + n(B) − n(A ∩ B).", src:"W-08", tags:["Verification","n(AUB)"] },
+      { text:"Using Venn diagram, prove that n(A ∪ B) = n(A) + n(B) − n(A ∩ B).", src:"V-11", tags:["Proof","Venn Diagram"], diagram:true },
+      { text:"If A = {1, 2, 3, 4, 5} and B = {4, 5, 6, 7, 8, 9, 10}, find (A ∪ B) − (A ∩ B).", src:"R-8", tags:["Symmetric Difference"] },
+      { text:"If P = {x : x is a multiple of 4 and x < 20} and Q = {x : x = 2ⁿ, n < 5, n ∈ W}, write the sets P ∪ Q and P ∩ Q. Represent in Venn diagram.", src:"RM-82", tags:["Venn Diagram"], diagram:true },
+      { text:"From the given Venn diagram, find the sets: (i) A ∪ B (ii) A ∩ B (iii) A − B (iv) B − A.", src:"PR-82", tags:["Venn Diagram"], diagram:true },
+      { text:"From the given Venn diagram, find A ∪ B, A ∩ B, A − B and B − A.", src:"Y-8", tags:["Venn Diagram"], diagram:true },
+      { text:"Verify n(A ∪ B) = n(A) + n(B) − n(A ∩ B) using Venn diagram for sets P and Q.", src:"M-08", tags:["Proof","Venn Diagram"], diagram:true },
+      { text:"If A is a set of whole numbers less than 10, B is a set of factors of 10, find A ∪ B, A ∩ B and A − B.", src:"Y-11", tags:["Set Operations"] },
+      { text:"If A = {1, 2, 3, 6, 12} and B = {2, 3, 5, 7, 11}, find A ∪ B, A ∩ B, A − B and B − A.", src:"M-8", tags:["Set Operations"] },
+      { text:"Convert the following sets in Roster form: A = {x : x = nⁿ, n = prime, n < 17}, B = {x : x = n, composite, n < 13}, etc.", src:"RP-11", tags:["Roster Form"] },
+      { text:"If A = {x / x ∈ N, x < 5} and B = {x / x is an even number and x < 15}, verify n(A ∪ B) = n(A) + n(B) − n(A ∩ B).", src:"DP-13", tags:["Verification"] },
+      { text:"From the Venn Diagram, answer: (i) A ∪ B (ii) A ∩ B and verify n(A ∪ B) = n(A) + n(B) − n(A ∩ B).", src:"RJ-82", tags:["Venn Diagram"], diagram:true },
+    ],
+    q6:[
+      { text:"If A = {x : 2x+1, x ∈ N, x ≤ 5}, B = {x : x is a composite number, x < 12}, show that (A ∪ B) − (A ∩ B) = (A − B) ∪ (B − A).", src:"J-8/S-11", tags:["Symmetric Difference","Proof"] },
+      { text:"If A = {x : x is a prime number, x < 15} and B = {x : x is a factor of 12}, find: (i) A ∪ B (ii) A ∩ B (iii) A − B (iv) B − A.", src:"ST-82", tags:["Set Operations"] },
+      { text:"If A = {x / x is a factor of 42} and B = {x / x is a factor of 56}, find A ∪ B, A ∩ B, A − B and B − A using Venn diagrams.", src:"DP-13", tags:["Venn Diagram","Set Operations"], diagram:true },
+      { text:"Using the Venn diagram, find A − B, A ∪ B and A ∩ B. Also verify n(A ∩ B) = n(A) − n(A ∩ B).", src:"N-11", tags:["Venn Diagram","Proof"], diagram:true },
+    ]
+  },
+
+  {
+    id:"polynomials", num:"Ch 03", name:"Polynomials", icon:"f(x)", color:"#ce93d8",
+    q2:[
+      { text:"Srikanth says '√2 and 2 is a zero of the polynomial p(x) = x² − 2x'. Do you agree? Give reason.", src:"JK-82", tags:["Zeroes","Verification"] },
+      { text:"For what value of k, −4 is a zero of the polynomial x² − x − (2k + 2)?", src:"J-8", tags:["Zeroes","Finding k"] },
+      { text:"Are 3 and −2 zeroes of the polynomial P(x) = x² − x − 6? Justify your answer.", src:"MP-11", tags:["Zeroes","Verification"] },
+      { text:"Find the zeroes of the polynomial P(x) = x² + 5x + 6.", src:"W-08", tags:["Zeroes"] },
+      { text:"If P(x) = 8x³ − 4x² + 5x − 3, then find P(1) + P(−1).", src:"K-8", tags:["Evaluation"] },
+      { text:"Show that 5 and −3 are zeros of the polynomial 2x² + 5x − 3.", src:"SK-82", tags:["Zeroes","Verification"] },
+      { text:"Raju says, 'degree of the polynomial (x+5)³ · (x² − 4) is 6'. Do you agree with him? Why?", src:"NK-8B", tags:["Degree"] },
+    ],
+    q4:[
+      { text:"Divide x³ − 4x² + 5x − 2 with x − 2, write quotient and remainder.", src:"JK-82", tags:["Division Algorithm"] },
+      { text:"Find the zeroes of x² − 5x + 6 and verify the relationship between zeroes and co-efficients.", src:"K-8", tags:["Zeroes","Verification"] },
+      { text:"If α, β are the zeroes of the polynomial 2x² + 5x − 7, find the value of α² + β².", src:"C-8/J-8", tags:["Zeroes","Algebraic Identity"] },
+      { text:"Verify the relationship between the zeros and the coefficients of the quadratic polynomial 4y² + 4y − 3.", src:"RM-82", tags:["Zeroes","Verification"] },
+      { text:"Find a quadratic polynomial whose zeroes are log₂7 and log₂1.", src:"V-11", tags:["Quadratic Polynomial","Logarithms"] },
+      { text:"Solve the quadratic equation √7x² − 6x − 13√7 = 0 by factorization method.", src:"C-8/J-8", tags:["Factorization"] },
+      { text:"If the zeroes of the polynomial x³ − 9x² + 26x − 24 are a−b, a, a+b, then find the values of a and b.", src:"S-11", tags:["Cubic Polynomial","Zeroes"] },
+      { text:"Write a quadratic polynomial having the zeroes log₂27 and sec60°.", src:"M-08", tags:["Quadratic Polynomial","Logarithms"] },
+      { text:"Find the sum and product of the roots of x² − 4√3x + 9 = 0.", src:"NK-8B", tags:["Sum & Product of Roots"] },
+    ],
+    q6:[
+      { text:"Find zeroes of polynomial x² + x − 6 using graphical method.", src:"JK-82", tags:["Graph","Zeroes"], diagram:true },
+      { text:"Draw the graph of the polynomial p(x) = x² − x − 2 and find zeroes from the graph.", src:"NK-8/RJ-82", tags:["Graph"], diagram:true },
+      { text:"Draw the graph of polynomial P(x) = x² − 3x − 4 and find the zeroes.", src:"V-11", tags:["Graph"], diagram:true },
+      { text:"Draw the graph of P(x) = x² − 2x − 8.", src:"R-8", tags:["Graph"], diagram:true },
+      { text:"Draw the graph of the polynomial p(x) = 2x² − 4x − 12 and find zeroes.", src:"MP-11", tags:["Graph"], diagram:true },
+      { text:"Draw the graph of the polynomial p(x) = x² − x − 12 and find zeroes.", src:"C-8/M-8", tags:["Graph"], diagram:true },
+      { text:"Draw the graph of polynomial p(x) = x² − 2x − 3 and find zeroes.", src:"Y-8", tags:["Graph"], diagram:true },
+      { text:"Draw the graph of the polynomial p(x) = x² + x − 6 and find zeroes.", src:"PR-82", tags:["Graph"], diagram:true },
+      { text:"Draw the graph of the polynomial p(x) = x² + 3x − 4 and find its zeros.", src:"SK-82/NK-8B", tags:["Graph"], diagram:true },
+      { text:"Draw the graph of the quadratic polynomial P(x) = x² − 3x − 4 and find zeroes.", src:"M-08", tags:["Graph"], diagram:true },
+      { text:"Draw the graph of the polynomial p(x) = x² + x − 12 and find zeroes.", src:"ST-82", tags:["Graph"], diagram:true },
+      { text:"Draw the graph of the polynomial p(x) = x² + 3x + 4 using graph.", src:"RP-11", tags:["Graph","No Real Zeroes"], diagram:true },
+      { text:"Draw the graph of the quadratic polynomial x² + 2x − 3 and find zeroes.", src:"DP-13", tags:["Graph"], diagram:true },
+      { text:"Find the zeroes of p(x) = x² + 5x + 4 using Graphical Method.", src:"G-12", tags:["Graph"], diagram:true },
+      { text:"Draw the graph of the polynomial p(x) = x² + 4x + 3 and find zeroes.", src:"N-11", tags:["Graph"], diagram:true },
+      { text:"Draw the graph of the quadratic polynomial x² − x − 12. Find its zeroes.", src:"PF-2026", tags:["Graph"], diagram:true },
+      { text:"Draw the graph of the polynomial p(x) = x² − 5x + 4 and find zeroes.", src:"MF-2026", tags:["Graph"], diagram:true },
+      { text:"Draw the graph for the polynomial P(x) = x² − 3x + 2 and find the zeroes from the graph.", src:"S-11", tags:["Graph"], diagram:true },
+      { text:"Divide x⁴ − 4x³ + x² + 3x + 1 by x² − 3x + 1 and verify division algorithm.", src:"Y-11", tags:["Division Algorithm","Verification"] },
+    ]
+  },
+
+  {
+    id:"linear-equations", num:"Ch 04", name:"Pair of Linear Equations", icon:"=", color:"#ffb74d",
+    q2:[
+      { text:"Whether the following pair of linear equations are parallel? Justify. 6x − 4y + 10 = 0, 3x − 2y + 6 = 0.", src:"J-8/V-11", tags:["Parallel Lines"] },
+      { text:"If the pair of linear equations 4x + 6y − 1 = 0 and 2x + my − 7 = 0 represents parallel lines, find m.", src:"PR-82", tags:["Parallel Lines","Finding m"] },
+      { text:"5 pencils and 7 pens together cost Rs. 50 whereas 7 pencils and 5 pens together cost Rs. 46. Prepare the linear equations.", src:"M-8", tags:["Forming Equations","Word Problem"] },
+      { text:"Show that the pair of Linear Equations 2x − 5y = 9 and 3x + 7y = 20 are consistent lines.", src:"M-08", tags:["Consistency"] },
+      { text:"Check whether the pair of linear equations x + 3y − 6 = 0 and 2x + 6y − 18 = 0 is intersecting or parallel.", src:"Y-8", tags:["Types of Lines"] },
+      { text:"Is it right that the pair of equations −x + 2y + 2 = 0 and (1/2)x + y − 1 = 0 has a unique solution? Justify.", src:"MF-2026", tags:["Unique Solution"] },
+      { text:"Is the pair of linear equations 3x − 5y = 7 and 6x − 10y = 13 inconsistent? Justify.", src:"ST-82", tags:["Inconsistency"] },
+      { text:"Check whether the lines 3x + 5y = 5 and 6x − 2y = −4 are parallel or not.", src:"N-11", tags:["Parallel Lines","Verification"] },
+    ],
+    q4:[
+      { text:"Solve the equations: 6/(x−2) + 2/(y−1) = 8 and 7/(x−2) + 3/(y−1) = 10.", src:"MP-11", tags:["Substitution Method"] },
+      { text:"Solve the following pair of linear equations: 2x + 3y = 22 and −3x − 2y = 7.", src:"K-8", tags:["Elimination"] },
+      { text:"Solve the equations 2x + y − 8 = 0 and 3x + 2y − 13 = 0 by elimination method.", src:"RJ-82", tags:["Elimination Method"] },
+      { text:"Anand buys 4 chairs and 3 tables for Rs. 2100. Renu buys 5 chairs and 2 tables for Rs. 1750. Find the cost of one chair and one table.", src:"W-08", tags:["Word Problem"] },
+      { text:"Solve 2x + 3y = 19 and 3x − 2y = 21 by substitution method.", src:"S-11", tags:["Substitution Method"] },
+      { text:"Solve the pair of linear equations 8x + 5y = 9, 3x + 2y = 4 using elimination method.", src:"NK-8", tags:["Elimination Method"] },
+      { text:"For what value of K do the equations 2x + 3y = 7 and 3x + Ky = 4 have a unique solution?", src:"G-12", tags:["Unique Solution","Condition"] },
+      { text:"For what value of K do the equations 2x − (K+1)y + 3 = 0 and 4x + 6y − 5 = 0 represent an inconsistent pair?", src:"PF-2026", tags:["Inconsistent","Condition"] },
+    ],
+    q6:[
+      { text:"Solve 2x + y − 6 = 0 and 4x − 2y − 4 = 0 graphically.", src:"RM-82", tags:["Graphical Method"], diagram:true },
+      { text:"Solve the pair of linear equations using graph: 2x + 3y = 8 and 3x − 2y = −1.", src:"RP-11", tags:["Graphical Method"], diagram:true },
+      { text:"Solve 5/(x+1) + 1/(y−1) = 2 and 10/(x+1) − 3/(y−1) = 3 where (x ≠ −1, y ≠ 1).", src:"C-8/J-8", tags:["Substitution"] },
+      { text:"In a competitive exam 3 marks for every correct answer, 1 mark deducted for wrong. Madhu scored 40. If 4 marks for correct and 2 deducted, she'd score 50. How many questions?", src:"R-8", tags:["Word Problem"] },
+      { text:"A boat goes 20 km upstream and 32 km downstream in 14 hours. In another trip, 30 km upstream and 40 km downstream in 20 hours. Find speed of boat and stream.", src:"N-11", tags:["Word Problem","Speed Distance"] },
+      { text:"Draw the graph of the lines 2x + 3y = 5 and 3x − 2y = 1 and find the solution.", src:"Y-11", tags:["Graphical Method"], diagram:true },
+    ]
+  },
+
+  {
+    id:"quadratic-equations", num:"Ch 05", name:"Quadratic Equations", icon:"x²", color:"#f48fb1",
+    q2:[
+      { text:"Check whether 1 and 3 are the roots of the equation 2x² − 5x + 3 = 0.", src:"NK-8", tags:["Roots","Verification"] },
+      { text:"Find the discriminant of quadratic equation 2x² − 5x + 3 = 0.", src:"R-8", tags:["Discriminant"] },
+      { text:"Find the nature of roots of quadratic equation 3x² − 5x + 2 = 0.", src:"V-11", tags:["Nature of Roots","Discriminant"] },
+      { text:"Sanjay said that 'Roots of x² + 2x − 2 = 0 are equal'. Do you agree? Justify.", src:"RJ-82", tags:["Equal Roots","Discriminant"] },
+      { text:"Show that the quadratic equation x² + 3x + 5 = 0 has no real roots.", src:"RM-82", tags:["No Real Roots","Discriminant"] },
+      { text:"Find the discriminant of Quadratic Equation 2x² − 7x − 15.", src:"M-8", tags:["Discriminant"] },
+      { text:"Sreenithya said 'If ax² + bx + c = 0 has equal real roots then a = b²/4c'. Is she correct? Justify.", src:"PR-82", tags:["Equal Roots","Discriminant"] },
+      { text:"Find the value of m, if 5 is one of the roots of quadratic equation 2x² + mx − 5 = 0.", src:"M-08", tags:["Finding Coefficient from Root"] },
+      { text:"The length of the rectangular park is 2 m more than its breadth and area is 168 m². Form a quadratic equation.", src:"RP-11", tags:["Forming Equation","Word Problem"] },
+      { text:"Find the quadratic equation whose roots are sin30° and cos60°.", src:"PF-2026", tags:["Roots","Trigonometry"] },
+    ],
+    q4:[
+      { text:"Find two consecutive positive integers, sum of whose squares is 613.", src:"NK-8", tags:["Word Problem"] },
+      { text:"The sum of the areas of two squares is 850 m². If the difference of their perimeters is 40 m. Find the sides.", src:"J-8", tags:["Word Problem"] },
+      { text:"Find two numbers whose sum is 16 and their product is 48.", src:"W-08", tags:["Word Problem"] },
+      { text:"Find the value of k for x² + (3k+1)x + 25 = 0 to have equal roots.", src:"DP-13", tags:["Equal Roots","Discriminant"] },
+      { text:"In a right angle triangle, the hypotenuse is 9 cm more than the shortest side. If the third side is 1 cm less than the hypotenuse, find the sides.", src:"ST-82", tags:["Right Triangle","Word Problem"] },
+      { text:"If the base of a triangle is 4 cm more than its height and area is 48 sq.cm, find the base and height.", src:"NK-8B", tags:["Word Problem"] },
+      { text:"Find the quadratic equation whose roots are sec60° and cosec90°.", src:"R-8", tags:["Trigonometry","Forming Equation"] },
+      { text:"The perimeter of a right angled triangle is 60 cm and its hypotenuse is 25 cm. Find the remaining two sides.", src:"PR-82", tags:["Right Triangle","Word Problem"] },
+      { text:"Varun said that x² − 4x + 2 × x² + 1 = (x − 1)² is a quadratic equation. Do you agree? Give reasons.", src:"SK-82", tags:["Identification"] },
+      { text:"Solve the quadratic equation cosec²θ − 3cosecθ + 2 = 0 (0° < θ < 90°).", src:"M-08", tags:["Trigonometric Equation"] },
+    ],
+    q6:[
+      { text:"In a right angled triangle, the hypotenuse is 4 more than 3 times the shortest side, and the remaining side is 3 more than 3 times the shortest side. Find the lengths.", src:"G-12", tags:["Right Triangle","Word Problem"] },
+    ]
+  },
+
+  {
+    id:"progressions", num:"Ch 06", name:"Progressions (AP & GP)", icon:"∑", color:"#80cbc4",
+    q2:[
+      { text:"If 2k, k + 15, 3k + 15 are in Arithmetic Progression, find the value of k.", src:"MP-11", tags:["AP","Common Difference"] },
+      { text:"Check whether 135 is a term of the AP 15, 18, 21,...", src:"R-8", tags:["AP","nth Term"] },
+      { text:"Find the 10th term of the AP 15, 12, 9,...", src:"RM-82", tags:["AP","nth Term"] },
+      { text:"Write the formula of sum of n terms in A.P. and explain the terms in it.", src:"S-11", tags:["AP","Formula"] },
+      { text:"Write the formula for the nth term of GP and explain each letter in it.", src:"K-8", tags:["GP","Formula"] },
+      { text:"Write a GP having log₂4 as the first term and cosec30° as the common ratio.", src:"PR-82", tags:["GP","Logarithms"] },
+      { text:"Check whether −15 is a term of AP 5, 1, −3, −7,...", src:"Y-11", tags:["AP","Verification"] },
+      { text:"Check whether −√50 is a term of the AP 11, 8, 5, 2,...", src:"ST-82", tags:["AP","Irrational Term"] },
+      { text:"Prove that the values of 2log₂2, log₂16, 4log₂4 are in geometric progression.", src:"JK-82", tags:["GP","Logarithms","Proof"] },
+      { text:"Find the 10th term of GP 2, −4, 8, −16,...", src:"PF-2026", tags:["GP","Alternating Signs"] },
+    ],
+    q4:[
+      { text:"Explain the terms in the formula Sₙ = n/2 [2a + (n−1)d].", src:"JK-82", tags:["AP","Formula Explanation"] },
+      { text:"Which term of the G.P.: 3, 3√3, 3·3,... is 729?", src:"NK-8", tags:["GP","nth Term"] },
+      { text:"Find the 18th term from the end of the AP 7, 10, 13, ..., 184.", src:"S-11", tags:["AP","nth Term from End"] },
+      { text:"Find the sixth term from the end of the AP 7, 10, 13, ..., 301.", src:"DP-13", tags:["AP","nth Term from End"] },
+      { text:"In AP, 7th term is 84 and 3rd term is 36, find its 10th term.", src:"RP-11", tags:["AP","nth Term"] },
+      { text:"If the 3rd and 9th terms of AP are 4 and −8 respectively, which term is zero?", src:"Y-8", tags:["AP","Finding Zero Term"] },
+      { text:"Find the 31st term of an AP whose 11th term is 33 and 21st term is 73.", src:"G-12", tags:["AP","nth Term"] },
+      { text:"Check whether −33 is a term of the A.P. 5, 2, −1, ...", src:"NK-8B", tags:["AP","Verification"] },
+      { text:"In G.P., l = 7 and a₅ = 448, then find a₄.", src:"G-12", tags:["GP","nth Term"] },
+    ],
+    q6:[
+      { text:"Find the sum of 3-digit numbers which leave remainder 2 when divided by 5.", src:"RJ-82", tags:["AP","Sum","Number Theory"] },
+      { text:"Find the sum of all two-digit odd positive integers divisible by 3 but not by 2.", src:"J-8", tags:["AP","Sum","Number Theory"] },
+      { text:"The sum of the 3rd and 7th terms of AP is 24 and sum of the 6th and 10th terms is 44. Find the first three terms.", src:"W-08", tags:["AP","System of Equations"] },
+      { text:"Find the sum of first 80 numbers which are multiples of 8.", src:"M-8", tags:["AP","Sum"] },
+      { text:"A student saves Rs. 500 in the first month and saves by a fixed amount every month. In 20th month he saves Rs. 9600. Find his savings in the first 8 months.", src:"N-11", tags:["AP","Word Problem"] },
+      { text:"If the 11th term of A.P. is 38 and whose 16th term is 73. Find the 31st term.", src:"NK-8B", tags:["AP","nth Term"] },
+      { text:"Find the sum of first 20 terms of an AP whose 4th and 9th terms are −15 and −30 respectively.", src:"MF-2026", tags:["AP","Sum"] },
+    ]
+  },
+
+  {
+    id:"coordinate-geometry", num:"Ch 07", name:"Coordinate Geometry", icon:"(x,y)", color:"#fff176",
+    q2:[
+      { text:"Find the centroid of the triangle whose vertices are (3, −5), (−7, 4) and (10, −2).", src:"NK-8/W-08", tags:["Centroid"] },
+      { text:"Find the centroid of the triangle whose vertices are (−4, 4), (−2, 2) and (6, −6).", src:"Y-8", tags:["Centroid"] },
+      { text:"Find the centroid of the triangle whose vertices are A(−5, 7), B(2, −3) and C(7, −10).", src:"M-08", tags:["Centroid"] },
+      { text:"Find the value of K if the points A(2, 3), B(4, K) and C(6, −3) are collinear.", src:"SK-82", tags:["Collinearity"] },
+      { text:"Find the midpoint of the line segment joining the points (cos0°, 0) and (0, sin90°).", src:"NK-8B", tags:["Midpoint","Trigonometry"] },
+      { text:"Verify the points (1, 5), (2, 3) and (−2, −1) are collinear or not.", src:"W-08", tags:["Collinearity"] },
+      { text:"Centre of a circle with radius 5 units is (2, −1). Does the point (6, 2) lie on the circle? Justify.", src:"K-8", tags:["Distance Formula","Circle"] },
+      { text:"Sai said that A(−1, −2), B(−2, 8) and C(0, 4) are collinear. Do you agree? Justify.", src:"K-8", tags:["Collinearity"] },
+      { text:"If A(−2, 9), B(3, 7) and C(8, y) are vertices of a parallelogram, find the fourth vertex D.", src:"MF-2026", tags:["Parallelogram","Fourth Vertex"] },
+      { text:"If the vertices of a triangle are (7, 2), (1, 6) and its centroid is (4, 6), find the 3rd vertex.", src:"PF-2026", tags:["Centroid","Finding Vertex"] },
+    ],
+    q4:[
+      { text:"Find the 'K' for which points (K, K), (3, 2) and (4, −1) are collinear.", src:"JK-82", tags:["Collinearity"] },
+      { text:"The area of the triangle is 18 sq. units, whose vertices are (3, 4), (−3, −2) and (p, −1). Find p.", src:"J-8", tags:["Area of Triangle"] },
+      { text:"Check whether the points (7, −2), (6, 4), (5, −2) are vertices of an equilateral triangle.", src:"MP-11", tags:["Distance Formula","Triangle"] },
+      { text:"Show that the points A(√8, 1), B(3, 4) and C(2, −3) are collinear.", src:"PR-82", tags:["Collinearity"] },
+      { text:"Check that (2, 3), (6, 0) and (10, −3) are collinear or not.", src:"G-12", tags:["Collinearity"] },
+      { text:"Show that the triangle with vertices A(4, 2), B(2, −4) and C(12, 6) forms a right angled triangle.", src:"Y-8", tags:["Right Triangle","Distance Formula"] },
+      { text:"A line intersects the Y-axis and X-axis at points P and Q respectively. If (2, −5) is the midpoint of PQ, find P and Q.", src:"S-11", tags:["Midpoint","Intercepts"] },
+      { text:"If 108 = 2ᵃ × 3ᵇ and 80 = 5ᶜ × 2ᵈ, find the midpoint of line segment joining P(b, c) and Q(a, d).", src:"K-8", tags:["Midpoint","Number Systems"] },
+      { text:"Find values of k if the points A(k+1, 2k), B(3k, 2k+3) and C(5k−1, 5k) are collinear.", src:"MF-2026", tags:["Collinearity","Condition"] },
+      { text:"Find the area of the triangle whose vertices are A(log₂1, log₃1), B(log₂8, log₂8) and C(log₂32, log₃1).", src:"M-8", tags:["Area","Logarithms"] },
+      { text:"Two students claim to have found the points of trisection of A(2,−2) and B(−7,4): Bharath: (−1,0) and (4,2); Vinod: (1,0) and (4,−2). Who is correct? Justify.", src:"RM-82", tags:["Trisection","Section Formula"] },
+    ],
+    q6:[
+      { text:"Find the points of trisection of line segment joining A(2, −2) and B(−7, 4).", src:"K-8/PF-2026", tags:["Trisection","Section Formula"] },
+      { text:"Find co-ordinates of point of trisection of the line segment joining (2, −3) and (5, 6).", src:"V-11", tags:["Trisection","Section Formula"] },
+      { text:"Find the co-ordinates of the points of trisection of the line segment joining (1, −3) and (−3, 5).", src:"RJ-82", tags:["Trisection"] },
+      { text:"Find co-ordinates of the points of trisection of (4, −1) and (−2, −3).", src:"SK-82", tags:["Trisection"] },
+      { text:"The points P and Q are on the line segment joining A(−5, 7) and B(5, 13) such that AP = PQ = QB. Find P and Q.", src:"PR-82", tags:["Trisection","Section Formula"] },
+      { text:"Find the coordinates of the points of trisection of A(−4, 7) and B(5, 13).", src:"M-08", tags:["Trisection"] },
+      { text:"Show that the points (−1, −2), (4, 3), (2, 5) and (−3, 0) taken in order are vertices of a rectangle.", src:"R-8", tags:["Rectangle","Distance Formula"] },
+      { text:"Check whether the given points A(7, 3), B(6, 1), C(8, 2) and D(9, 4) form a rectangle.", src:"RP-11", tags:["Rectangle","Distance Formula"] },
+      { text:"Find the area of the triangle formed by (2, 3), (6, 3) and (2, 6) using Heron's formula.", src:"Y-11", tags:["Area","Heron's Formula"] },
+      { text:"Find the area of the quadrilateral formed by A(−1, −2), B(1, 0), C(−1, 2) and D(−3, 0).", src:"ST-82", tags:["Area of Quadrilateral"] },
+    ]
+  },
+
+  {
+    id:"similar-triangles", num:"Ch 08", name:"Similar Triangles", icon:"△", color:"#ef9a9a",
+    q2:[
+      { text:"△ABC ~ △PQR. If AB = 4.8 cm and PQ = 6.4 cm, find the ratio of areas of △ABC and △PQR.", src:"RJ-82", tags:["Area Ratio"] },
+      { text:"In △PQR, ST ∥ QR, PS/SQ = 3/5 and PR = 24 cm. Find the lengths of PT and TR.", src:"SK-82", tags:["BPT"], diagram:true },
+      { text:"In △ABC, DE ∥ BC, AD/DB = 2/3 and AE = 12 cm, find AC.", src:"Y-11", tags:["BPT"], diagram:true },
+      { text:"In the given figure, AB ∥ QR. Find the value of x.", src:"PR-82", tags:["BPT"], diagram:true },
+    ],
+    q4:[
+      { text:"ABC is a right triangle right angled at C. Let BC = a, CA = b, AB = c, p = perpendicular from C on AB. Prove: (i) pc = ab (ii) 1/p² = 1/a² + 1/b².", src:"NK-8", tags:["Proof","Right Triangle"] },
+      { text:"In △ABC, DE ∥ BC. Area of △ADE is 36 sq.cm and area of Trapezium DECB is 64 sq.cm. Show AD/DB = 2/3.", src:"K-8", tags:["Area Ratio","Proof"], diagram:true },
+      { text:"In △ABC, PQ ∥ BC and AP = 3x − 19, PB = x − 5, AQ = x − 3, QC = 3 cm. Find x.", src:"V-11", tags:["BPT"] },
+      { text:"In △ABC, PQ ∥ BC, if AP = x − 2, PB = 5, AQ = 2x − 1, QC = 2x + 5, find x.", src:"Y-8", tags:["BPT"] },
+      { text:"In a trapezium ABCD, AB ∥ DC. Diagonals intersect at O. Show AO/OC = BO/OD.", src:"S-11", tags:["Trapezium","Proof"], diagram:true },
+      { text:"In △ABC, AD = 8 cm, DB = 6 cm, AE = 12 cm, EC = 9 cm. Is DE ∥ BC? Justify.", src:"M-8", tags:["BPT","Verification"] },
+      { text:"The perimeter of two similar triangles are 27 cm and 18 cm. If one side of the first is 9 cm, find the corresponding side.", src:"RP-11", tags:["Perimeter Ratio"] },
+      { text:"In the given figure ∠PRQ = 90° and RS ⊥ PQ, prove that RS² = PS × SQ.", src:"M-08", tags:["Proof","Right Triangle"], diagram:true },
+      { text:"Two poles of heights 8 m and 14 m stand on plane ground. Distance between feet is 8 m. Find distance between their tops.", src:"G-12", tags:["Pythagoras Theorem"] },
+      { text:"A ladder 25 m long reaches a window 24 m above the ground. Find the distance of foot of the ladder.", src:"RP-11", tags:["Pythagoras Theorem"] },
+    ],
+    q6:[
+      { text:"Construct △PQR with QR = 7 cm, ∠Q = 60°, ∠R = 45°. Construct similar △ with each side = 3/5 of corresponding sides of △PQR.", src:"SK-82", tags:["Construction","Similar Triangle"], diagram:true },
+      { text:"Construct △ABC in which AB = 5.6 cm, ∠B = 60°, BC = 4.8 cm, then construct similar △ whose sides are 3/4 of △ABC.", src:"V-11", tags:["Construction","Similar Triangle"], diagram:true },
+      { text:"Construct △PQR where PQ = 6 cm, QR = 5 cm, ∠Q = 60°. Construct similar △ with sides 2/3 times △PQR.", src:"R-8", tags:["Construction","Similar Triangle"], diagram:true },
+      { text:"Construct △ABC with AB = 5 cm, BC = 6 cm, AC = 7 cm. Construct similar △ with sides = 3/4 of △ABC.", src:"C-8/ST-82", tags:["Construction","Similar Triangle"], diagram:true },
+      { text:"Construct △ABC in which AB = 5 cm, BC = 7 cm, ∠ABC = 50°. Construct similar △ with sides 4/5 of △ABC.", src:"RM-82", tags:["Construction","Similar Triangle"], diagram:true },
+      { text:"Construct △ABC in which AB = 4 cm, BC = 6 cm, ∠ABC = 50°. Construct similar △ with sides 1⅓ of △ABC.", src:"M-08", tags:["Construction","Similar Triangle"], diagram:true },
+      { text:"Construct △ of sides 5 cm, 6 cm, 7 cm. Construct similar △ whose sides are 3/4 of first △.", src:"PF-2026", tags:["Construction"], diagram:true },
+      { text:"Construct △ of sides 4 cm, 5 cm, 6 cm. Construct similar △ with sides 2/3 of first △.", src:"DP-13/MF-2026", tags:["Construction"], diagram:true },
+      { text:"Construct △ with BC = 7 cm, ∠B = 45°, ∠C = 60°. Construct similar △ with sides 3 times △ABC.", src:"S-11", tags:["Construction","Scale Factor > 1"], diagram:true },
+      { text:"Construct △ of sides 4.5 cm, 5.4 cm, 7.6 cm. Construct similar △ with sides 1⅓ times.", src:"DP-13", tags:["Construction"], diagram:true },
+      { text:"Construct △ with AB = 5 cm, BC = 6 cm, ∠ABC = 60°. Construct similar △ with scale factor 5/7. Justify.", src:"MF-2026", tags:["Construction"], diagram:true },
+    ]
+  },
+
+  {
+    id:"tangents", num:"Ch 09", name:"Tangents & Secants to a Circle", icon:"⊙", color:"#b0bec5",
+    q2:[
+      { text:"Find the length of tangent drawn to a circle from a point 25 cm from the centre whose radius is 7 cm.", src:"V-11", tags:["Tangent Length"] },
+      { text:"The radius of a circle is 5 cm. Distance between centre and external point is 13 cm. Find the length of the tangent.", src:"R-8", tags:["Tangent Length"] },
+      { text:"A tangent is drawn to a circle from a point 25 cm away from its centre. If length of tangent is 24 cm, find the radius.", src:"RJ-82", tags:["Tangent","Radius"] },
+      { text:"Calculate the radius if length of tangent is 15 cm drawn from a point 17 cm away from the centre.", src:"RM-82", tags:["Tangent","Radius"] },
+      { text:"A chord of a circle of radius 10 cm subtends a right angle at the center. Find the length of the chord.", src:"SK-82", tags:["Chord Length"] },
+      { text:"'A chord AB subtends an angle 60° at centre of a circle; the angle between the tangents at A and B is also 60°.' True or false? Justify.", src:"Y-8", tags:["Tangent Angle","Reasoning"] },
+      { text:"Laxmi says 'one pair of parallel tangents can be drawn to a circle'. Do you agree? Draw them.", src:"PF-2026", tags:["Parallel Tangents"], diagram:true },
+    ],
+    q4:[
+      { text:"Prove that the lengths of tangents drawn from an external point to a circle are equal.", src:"J-8", tags:["Proof"] },
+      { text:"If A, B, C are interior angles of △ABC, show that cot(A/2) = tan((B+C)/2).", src:"RJ-82", tags:["Proof","Triangle Angles"] },
+      { text:"A chord of a circle of radius 8 cm subtends an angle of 60° at the centre. Find the area of the corresponding minor segment.", src:"RP-11", tags:["Area","Segment"] },
+    ],
+    q6:[
+      { text:"Draw a pair of tangents to the circle of radius 4 cm which are inclined to each other at 60°.", src:"JK-82/MP-11/G-12", tags:["Construction","Tangents"], diagram:true },
+      { text:"Draw a pair of tangents to a circle of radius 5 cm which are inclined to each other at 60°.", src:"NK-8", tags:["Construction","Tangents"], diagram:true },
+      { text:"Draw a pair of tangents to a circle of radius 3 cm which are inclined to each other at 60°.", src:"Y-8/NK-8B", tags:["Construction","Tangents"], diagram:true },
+      { text:"Construct a pair of tangents to a circle of radius 5 cm from a point which is 13 cm away from its centre.", src:"K-8", tags:["Construction","Tangents"], diagram:true },
+      { text:"Draw a circle of radius 3 cm. Construct a pair of tangents from a point 5 cm from the centre.", src:"PR-82", tags:["Construction","Tangents"], diagram:true },
+      { text:"Draw a circle of radius 3 cm. Draw a tangent from a point 8 cm from the centre.", src:"NK-8B", tags:["Construction","Tangents"], diagram:true },
+      { text:"Draw tangents to a circle of radius 6 cm from a point 10 cm away from the centre.", src:"M-8", tags:["Construction","Tangents"], diagram:true },
+      { text:"Construct a circle of radius 5 cm. From a point 8 cm away, construct pair of tangents.", src:"Y-11", tags:["Construction","Tangents"], diagram:true },
+      { text:"Draw a circle of radius 6 cm. From a point 10 cm away, construct the pair of tangents. Verify by Pythagoras Theorem.", src:"W-08", tags:["Construction","Tangents","Verification"], diagram:true },
+      { text:"The incircle of △ABC touches sides AB, BC and CA at F, D, E respectively. Show that AF + BD + CE = FB + DC + EA = ½ (Perimeter of △ABC).", src:"MF-2026", tags:["Proof","Perimeter"], diagram:true },
+    ]
+  },
+
+  {
+    id:"mensuration", num:"Ch 10", name:"Mensuration", icon:"∛", color:"#a5d6a7",
+    q2:[
+      { text:"Radius and height of a right circular cylinder is 7 cm and 21 cm respectively. Find curved surface area.", src:"K-8", tags:["CSA","Cylinder"] },
+      { text:"The vertex angle of a cone is 60°. Find the ratio of the diameter with the height.", src:"JK-82/S-11", tags:["Cone","Trigonometry"] },
+      { text:"A solid metallic sphere of radius 3 cm is melted and recast into spherical balls of radius 0.3 cm. Find number of balls.", src:"Y-8", tags:["Sphere to Spheres","Volume"] },
+      { text:"If the volumes of two spheres are in the ratio 64 : 27, find their ratio of surface areas.", src:"MF-2026", tags:["Sphere","Ratio"] },
+      { text:"A cow is tied with a rope of 14 m at the corner of a rectangular field 20 m × 16 m. Find the area in which the cow can graze.", src:"MF-2026", tags:["Area","Sector","Word Problem"] },
+    ],
+    q4:[
+      { text:"A solid metallic sphere of radius 21 cm is melted and recast into a cylinder of radius 7 cm. Find height of cylinder.", src:"MP-11", tags:["Sphere to Cylinder"] },
+      { text:"A solid metallic cylinder of base radius 2.1 cm and height 4 cm is melted into small spheres of radius 0.3 cm. Find number of spheres.", src:"SK-82", tags:["Cylinder to Spheres"] },
+      { text:"A hemisphere of radius 5 cm is melted and recast into a cone of radius 16 cm. Find height of cone.", src:"RJ-82", tags:["Hemisphere to Cone"] },
+      { text:"A metallic sphere of diameter 30 cm is melted and recast into a cylinder of radius 10 cm. Find height.", src:"RM-82", tags:["Sphere to Cylinder"] },
+      { text:"Two cubes each of volume 125 cm³ are joined end to end. Find the surface area of the resulting cuboid.", src:"NK-8B", tags:["Cuboid","Surface Area"] },
+      { text:"A sphere, a cylinder and a cone are of the same radius and same height. Find the ratio of their volumes.", src:"G-12", tags:["Volume Ratio"] },
+      { text:"Ravi says 'A sphere, cylinder and cone of the same base radius and height — their CSAs are in ratio 4:4:5'. Do you agree? Justify.", src:"R-8", tags:["CSA Comparison","Proof"] },
+      { text:"In the figure, O is centre, QR is diameter, PQ = 8 cm, PR = 6 cm. Find area of shaded region. (π = 3.14)", src:"C-8", tags:["Area","Circle","Shaded Region"], diagram:true },
+    ],
+    q6:[
+      { text:"A solid metallic sphere of diameter 28 cm is melted into cones of diameter 4⅔ cm and height 3 cm. Find number of cones.", src:"NK-8", tags:["Sphere to Cones","Volume"] },
+      { text:"How many silver coins of diameter 5 cm and thickness 4 mm are needed to prepare a cuboid of 12 cm × 11 cm × 5 cm?", src:"J-8/S-11", tags:["Cylinder to Cuboid","Volume"] },
+      { text:"Two cubes of volume 27 cm³ are joined end to end. Find total surface area of the resulting cuboid.", src:"MP-11", tags:["Cuboid","Surface Area"] },
+      { text:"A toy in the shape of hemisphere of radius 7 cm mounted by a cone of height 24 cm. Find material sheet required.", src:"V-11", tags:["Composite Solid","Surface Area"] },
+      { text:"A solid wooden toy: right circular cone on a hemisphere. Radius of hemisphere = 4.2 cm, total height = 10.2 cm. Find volume.", src:"M-8", tags:["Composite Solid","Volume"] },
+      { text:"A solid toy: right circular cylinder with hemispherical shape at one end and cone at the other. Diameter = 4.2 cm, heights 12 cm and 7 cm. Find volume.", src:"Y-8", tags:["Composite Solid","Volume"] },
+      { text:"A solid toy: right circular cylinder with cone at one end and hemisphere at the other. Diameter = 6 cm, heights 12 cm and 4 cm. Find total surface area.", src:"M-08", tags:["Composite Solid","Surface Area"] },
+      { text:"A solid toy: right circular cylinder with hemisphere at one end and cone at the other. Diameter = 14 cm, heights 14 cm and 7 cm. Find volume.", src:"RP-11", tags:["Composite Solid","Volume"] },
+      { text:"The volume of a solid cuboid is 210 cm³ and LSA is 130 cm². Height is 5 cm. Find length and breadth.", src:"PR-82", tags:["Cuboid","Volume","LSA"] },
+      { text:"A cone of height 24 cm and radius 6 cm is made of clay. A child moulds it into a sphere. Find the surface area of the sphere.", src:"Y-11", tags:["Cone to Sphere","Surface Area"] },
+      { text:"A solid cube of lead has edge 44 cm. How many spherical balls of diameter 4 cm can be made from it?", src:"PF-2026", tags:["Cube to Spheres","Volume"] },
+      { text:"A hemispherical milk storage tank of internal radius 21 cm is filled with milk. Filled into cylindrical cans of radius 3.5 cm and height 14 cm. How many cans?", src:"N-11", tags:["Hemisphere to Cylinders","Volume"] },
+      { text:"A cuboid of dimensions 21 cm × 10 cm × 6 cm melted into a sphere (r = 3.5 cm), cone (r = 3.5 cm, h = 6 cm), cylinder (r = 3.5 cm, height = h). Find h.", src:"NK-8B", tags:["Composite","Volume"] },
+      { text:"Milk in a cylindrical container (r = 0.14 m, h = 0.2 m) is distributed in glasses (r = 2 cm, h = 7 cm). How many students served?", src:"ST-82", tags:["Cylinder","Volume"] },
+      { text:"Find the area of the shaded region common between two quadrants of circles of radius 10 cm. [Square ABCD, 10 cm side]", src:"PF-2026", tags:["Area","Sector","Shaded Region"], diagram:true },
+      { text:"A chord of a circle of radius 8 cm subtends 60° at centre. Find area of the minor segment.", src:"RP-11", tags:["Area","Segment"] },
+    ]
+  },
+
+  {
+    id:"trigonometry", num:"Ch 11", name:"Trigonometry", icon:"sinθ", color:"#90caf9",
+    q2:[
+      { text:"If 2sinθ = 1 then find Tan²θ + Cos²θ.", src:"JK-82", tags:["Trigonometric Values"] },
+      { text:"Express cotθ in terms of sinθ.", src:"NK-8", tags:["Expressing Ratios"] },
+      { text:"Express tanθ in terms of sinθ.", src:"J-8/C-8", tags:["Expressing Ratios"] },
+      { text:"Express cosθ in terms of cotθ.", src:"V-11", tags:["Expressing Ratios"] },
+      { text:"Express tanθ in terms of cosθ.", src:"RM-82", tags:["Expressing Ratios"] },
+      { text:"Express cosecθ in terms of tanθ.", src:"SK-82", tags:["Expressing Ratios"] },
+      { text:"Express secθ in terms of cotθ.", src:"M-08", tags:["Expressing Ratios"] },
+      { text:"Express sinθ in terms of cotθ.", src:"PR-82", tags:["Expressing Ratios"] },
+      { text:"Express secθ in terms of cosecθ.", src:"N-11", tags:["Expressing Ratios"] },
+      { text:"In a right angled triangle ABC, if TanA = √3/2, find SinA × CosA.", src:"Y-8", tags:["Trigonometric Ratios"] },
+      { text:"If tanθ = 5/6, then find the value of sinθ + cosθ.", src:"ST-82", tags:["Values"] },
+      { text:"If cosec(A + B) = 1 and cot(A − B) = √3, 0 < A+B < 90°, A > B, find A and B.", src:"S-11", tags:["Compound Angles"] },
+      { text:"Is it right to say cos(60° + 30°) = cos60°cos30° − sin60°sin30°?", src:"W-08", tags:["Compound Angles","Verification"] },
+      { text:"Show that tan47° − cot43° + tan45° × cot45° = 2.", src:"G-12", tags:["Complementary Angles"] },
+      { text:"Prove that (Tan³θ − 1)/(Tanθ − 1) = Sec²θ + Tanθ.", src:"M-8", tags:["Identities","Proof"] },
+    ],
+    q4:[
+      { text:"Show that (1 + cot²θ)(1 − cosθ)(1 + cosθ) / 1 = sin²30°.", src:"JK-82", tags:["Identities","Proof"] },
+      { text:"Show that tan²θ + tan⁴θ = sec⁴θ − sec²θ.", src:"MP-11", tags:["Identities","Proof"] },
+      { text:"Prove that cot⁴θ + cot²θ = cosec⁴θ − cosec²θ.", src:"R-8", tags:["Identities","Proof"] },
+      { text:"If x = p secθ + q tanθ and y = p tanθ + q secθ, show that x² − y² = p² − q².", src:"W-08", tags:["Identities","Proof"] },
+      { text:"If cosθ = 5/13, find the value of (4tan²θ + 4secθ)/(2tanθ − cosecθ).", src:"SK-82", tags:["Values","Calculation"] },
+      { text:"Find the value of (tan²A + cot²B)/(sin²B + cos²A) if sinA = 3/5 and tanB = 8/15.", src:"V-11", tags:["Values","Substitution"] },
+      { text:"Find the value of (cos35°/sin55°) + (cos60° + sin²45°)/(tan²60° − sec²45°).", src:"K-8", tags:["Trigonometric Values"] },
+      { text:"Find: (cosec30° + tan²45° + sin²20° + sin²70°)/(cosec30° + sec60° − cot²30°).", src:"Y-8", tags:["Values","Evaluation"] },
+      { text:"Prove √(cosecA + 1)/(cosecA − 1) − √(cosecA − 1)/(cosecA + 1) = 2tanA.", src:"RM-82", tags:["Identities","Proof"] },
+      { text:"Prove that 2 + 3√5 is an irrational number (moved here — verify topic).", src:"PR-82", tags:["Proof"] },
+      { text:"If A, B, C are interior angles of △ABC, show that Tan((A+B)/2) = cot(C/2).", src:"RP-11", tags:["Triangle Angles","Proof"] },
+      { text:"If A, B, C are interior angles of △ABC, show that cot((A+B)/2) = tan(C/2).", src:"NK-8B", tags:["Triangle Angles","Proof"] },
+      { text:"Express secθ − tanθ in terms of cotθ.", src:"G-12", tags:["Expressing Ratios","Identities"] },
+      { text:"Prove that sin⁶θ + cos⁶θ + 3sin²θcos²θ = 1.", src:"MF-2026", tags:["Identities","Proof"] },
+      { text:"If cosθ/(1−sinθ) + cosθ/(1+sinθ) = 4 (0° < θ < 90°), find θ.", src:"M-08", tags:["Trigonometric Equation","Solving"] },
+      { text:"Evaluate: (sec²60° − tan²60°)/(cosec²30° − cot²30°) × (sin²30° + cos²30°)/(sin²60° + cos²60°).", src:"Y-11", tags:["Values","Evaluation"] },
+    ],
+    q6:[
+      { text:"If cosecθ + cotθ = k, write all trigonometric ratios in terms of k.", src:"JK-82", tags:["Expressing All Ratios"] },
+      { text:"If cosecθ + cotθ = p, then prove that cosθ = (p² − 1)/(p² + 1).", src:"MP-11", tags:["Identities","Proof"] },
+      { text:"If secθ + tanθ = P, show that sinθ = (P² − 1)/(P² + 1).", src:"J-8", tags:["Identities","Proof"] },
+      { text:"Prove that (Cotθ + Cosecθ − 1)/(Cotθ − Cosecθ + 1) = (1 + Cosθ)/Sinθ.", src:"C-8/J-8", tags:["Identities","Proof"] },
+      { text:"Prove that (tanθ + secθ − 1)/(tanθ − secθ + 1) = (1 + sinθ)/cosθ.", src:"PF-2026", tags:["Identities","Proof"] },
+      { text:"Show that (sinA + cosA − 1)/(sinA − cosA + 1) = sinA/(1 + cosA).", src:"PR-82", tags:["Identities","Proof"] },
+      { text:"If SecA + TanA = P, prove that SinA = (P² − 1)/(P² + 1).", src:"ST-82", tags:["Identities","Proof"] },
+      { text:"If secθ − tanθ = k, find the value of sinθ in terms of k.", src:"M-8", tags:["Expressing in terms of k"] },
+      { text:"If secθ − tanθ = x, prove that sinθ = (1 − x²)/(1 + x²).", src:"DP-13", tags:["Identities","Proof"] },
+      { text:"If tanθ + secθ = k, prove that secθ = (k² + 1)/(2k).", src:"MF-2026", tags:["Identities","Proof"] },
+    ]
+  },
+
+  {
+    id:"applications-trig", num:"Ch 12", name:"Applications of Trigonometry", icon:"📐", color:"#ffcc80",
+    q2:[
+      { text:"The vertex angle of a cone is 60°. Find the ratio of the diameter with the height of the cone.", src:"JK-82", tags:["Cone","Heights & Distances"], diagram:true },
+      { text:"A person observed the top of an electric pole at an angle of elevation of 60° when 8 metres away. Draw the diagram.", src:"NK-8", tags:["Diagram"], diagram:true },
+      { text:"A person from the top of a building of height 25 m observed another building's top at 45° elevation and bottom at 60° depression. Draw a diagram.", src:"J-8", tags:["Diagram"], diagram:true },
+      { text:"'The angle of elevation of top of a hill from foot of the tower is 60° and vice versa is 30°. Height of tower is 40 m.' Draw diagram.", src:"V-11", tags:["Diagram"], diagram:true },
+      { text:"Two men on either side of temple of height 30 m observe its top at angles 30° and 60°. Draw the diagram.", src:"R-8", tags:["Diagram"], diagram:true },
+      { text:"Two men on either side of a tower of 50 m height observe top at angles 60° and 45°. Draw diagram.", src:"RJ-82", tags:["Diagram"], diagram:true },
+      { text:"An observer standing d metres from foot of a tower observes top at angle θ. Draw diagram.", src:"PR-82", tags:["Diagram"], diagram:true },
+      { text:"From top of building, angle of elevation of top of cell tower is 60° and angle of depression of its foot is 45°, horizontal distance = 5√30 m. Draw diagram.", src:"N-11", tags:["Diagram"], diagram:true },
+      { text:"'A vertical tower surmounted by a vertical flag. From a point, angles of elevation of top of tower and flag are α° and β°.' Draw diagram.", src:"Y-8", tags:["Diagram"], diagram:true },
+      { text:"'A tree broken due to storm, top touches ground making 30° with ground, distance between foot and top on ground is 6 m.' Draw diagram.", src:"Y-11", tags:["Diagram"], diagram:true },
+      { text:"You are observing the top of your school building at angle θ from d metres distance from foot. Draw diagram.", src:"M-8", tags:["Diagram"], diagram:true },
+      { text:"Two boys on either side of school building of 15 m observe its top at 45° and 60°. Draw diagram.", src:"M-08", tags:["Diagram"], diagram:true },
+      { text:"Ganesh flying a kite with 200 m string at elevation of 45°. Draw the sketch.", src:"G-12", tags:["Diagram"], diagram:true },
+      { text:"Two towers of height 300 m and 100 m subtend angles 60° and 30° at midpoint of line joining their feet. Draw diagram.", src:"MF-2026", tags:["Diagram"], diagram:true },
+    ],
+    q4:[
+      { text:"Two boys on either side of their school building 20 m height observe its top at 30° and 60°. Find distance between two boys.", src:"JK-82", tags:["Heights & Distances","Two Observers"] },
+      { text:"Two men on either side of temple of height 40 m observe at 60° and 30°. Find distance between the two men.", src:"MP-11", tags:["Heights & Distances","Two Observers"] },
+      { text:"The angle of elevation of top of a tower from two points at distance 9 m and 16 m from base are complementary. Find height of tower.", src:"RP-11", tags:["Complementary Angles"] },
+      { text:"A boat crosses a river at 60° with the bank, travels 600 m to reach other side. What is the width of the river?", src:"M-8", tags:["River Crossing"] },
+      { text:"An observer observes top of a tower from two points 5 m and 8 m away, with angles 60° and 45°. Draw diagram.", src:"ST-82", tags:["Diagram"], diagram:true },
+    ],
+    q6:[
+      { text:"Two boys are standing on either side of a tower of height 100 m, observed at angles 30° and 60°. Find distance between the two boys.", src:"K-8", tags:["Two Observers"] },
+      { text:"Two poles standing opposite each other on either side of road 90 feet wide. Angle of elevation from foot of 1st pole to top of 2nd is 45°. From foot of 2nd to top of 1st is 30°. Find heights.", src:"J-8", tags:["Two Poles"] },
+      { text:"Two pillars of equal heights, road 200 feet wide. Angles of elevation of tops from a point between them are 30° and 60°. Find height of pillars and distance of point.", src:"RM-82", tags:["Two Pillars"] },
+      { text:"Two poles on either side of river 50 m wide. From top of shorter pole, angles of elevation and depression to top and foot of taller pole are 45° and 60°. Find height of taller pole.", src:"SK-82", tags:["Two Poles","River"] },
+      { text:"Two persons on either side of pillar of height 40 m observe top at 30° and 60°. Find distance between the two persons.", src:"NK-8B", tags:["Two Observers"] },
+      { text:"The angle of elevation of a jet plane from point A on ground is 60°. After 15 seconds it changes to 30°. Jet is at height 1500√3 m. Find speed of jet. (√3 = 1.732)", src:"PF-2026", tags:["Speed Calculation"] },
+      { text:"From top of 20 m high building, angle of elevation of top of tower is 30°. From bottom of building, angle is 60°. Find height of tower and distance between them.", src:"MF-2026", tags:["Building and Tower"] },
+      { text:"Two boys on either side of school building 20 m height observe top at 45° and 60°.", src:"M-08", tags:["Two Observers"] },
+    ]
+  },
+
+  {
+    id:"probability", num:"Ch 13", name:"Probability", icon:"P(E)", color:"#f8bbd0",
+    q2:[
+      { text:"One card is selected from a well shuffled deck of 52 cards. Find the probability of getting a red card with prime number.", src:"JK-82", tags:["Cards"] },
+      { text:"One card is drawn from a well-shuffled deck of 52 cards. What is the probability that it is a black face card?", src:"NK-8", tags:["Cards"] },
+      { text:"If P(E) = 0.73, then find P(Ē).", src:"MP-11", tags:["Complementary Events"] },
+      { text:"A box contains 6 green, 4 blue and 5 red balls. A ball is selected randomly. Find probability of: (i) green ball (ii) not green ball.", src:"MP-11", tags:["Balls"] },
+      { text:"If E and Ē are complementary events, P(E) = 0.753, find P(Ē).", src:"Y-11", tags:["Complementary Events"] },
+      { text:"If E is any event and P(E) + P(Ē) = x, find the value of x² − 5x + 6.", src:"R-8", tags:["Algebraic Application"] },
+      { text:"Smrithi tosses two different coins simultaneously. What is the probability of at least one head?", src:"S-11", tags:["Two Coins"] },
+      { text:"What is the probability of getting an even prime number when a die is rolled?", src:"G-12", tags:["Die"] },
+      { text:"If a number x is chosen at random from −3, −2, −1, 0, 1, 2, 3. What is the probability that x² ≤ 4?", src:"MF-2026", tags:["Random Variable"] },
+      { text:"Can 3/2 be the probability of an event? Explain reasons.", src:"DP-13", tags:["Range of Probability"] },
+    ],
+    q4:[
+      { text:"Two dice are thrown at the same time. Find probability that sum is (i) 7 and (ii) 10.", src:"NK-8", tags:["Two Dice"] },
+      { text:"A bag contains 5 red, 8 white, 4 green colour balls. If a ball is selected randomly, find probability of: (i) green ball (ii) not white ball.", src:"J-8", tags:["Balls"] },
+      { text:"From a well shuffled deck of 52 cards, if a card is drawn randomly, find probability of getting a black face card.", src:"W-08", tags:["Cards"] },
+      { text:"Two dice are thrown simultaneously. Find probability of getting sum: (i) a prime (ii) an even (iii) an odd number (iv) a multiple of 3.", src:"V-11", tags:["Two Dice"] },
+      { text:"Two dice are thrown simultaneously. Find probability of: (a) sum is a prime number and (b) sum is a composite number.", src:"RJ-82", tags:["Two Dice"] },
+      { text:"One card is selected from well shuffled deck of 52 cards. Find probability of getting: (i) a face card (ii) a red card with prime number (iii) a numbered card (iv) neither face nor numbered.", src:"RM-82", tags:["Cards"] },
+      { text:"A number is randomly selected from {sin0°, sin30°, sin45°, sin60°, sin90°}. Find probability of getting an irrational number.", src:"PR-82", tags:["Trigonometric Values"] },
+      { text:"Three coins are tossed simultaneously. Find probability of getting at least two heads.", src:"RP-11", tags:["Three Coins"] },
+      { text:"Three coins are tossed simultaneously. Find probability of getting: (i) exactly one head (ii) at least one head.", src:"N-11", tags:["Three Coins"] },
+      { text:"A jar contains 24 marbles. Probability of drawing green = 5/8. Find number of blue marbles.", src:"NK-8B", tags:["Marbles"] },
+      { text:"From a well shuffled deck of cards: (i) a face card (ii) a prime numbered card (iii) not a prime numbered card.", src:"DP-13", tags:["Cards"] },
+      { text:"One card is randomly selected. Find probability of: (i) a prime number (ii) a red colour face card (iii) an Ace card.", src:"M-08", tags:["Cards"] },
+      { text:"A ball is dropped on a rectangular region. What is the probability it lands inside a circle with diameter 14 m? [Rectangle 30 m long]", src:"Y-11", tags:["Geometric Probability","Area"], diagram:true },
+    ],
+    q6:[
+      { text:"A box contains cards numbered from 1 to 100. Find probability of getting: (i) a prime number (ii) a factor of 12 (iii) a multiple of 23 (iv) an even number.", src:"K-8", tags:["Cards 1-100"] },
+      { text:"Cards numbered from 1 to 50. Find probability of getting: (i) perfect square (ii) factors of 60 (iii) prime number.", src:"R-8", tags:["Cards 1-50"] },
+      { text:"Cards marked 2 to 101. Find probability of: (i) a perfect square (ii) number less than 20 (iii) a prime number less than 25.", src:"C-8/J-8", tags:["Cards 2-101"] },
+      { text:"Find probability that a number from 1 to 35 is: (i) prime (ii) multiple of 7 (iii) multiple of 3 or 5.", src:"S-11", tags:["Numbers 1-35"] },
+      { text:"From a pack of 52 cards, face cards are removed. From remaining, find probability of: (i) Ace (ii) Face card (iii) Black colour prime.", src:"Y-8", tags:["Cards without Face"] },
+      { text:"Two dice thrown simultaneously. Find probability that numbers obtained have: (i) Sum is even (ii) Product is even (iii) Sum = 13 (iv) A doublet.", src:"MF-2026", tags:["Two Dice"] },
+      { text:"Two dice — one blue, one red. Find probability that sum is: (i) Prime (ii) Multiple of 3 (iii) Factor of 30.", src:"G-12", tags:["Two Dice"] },
+      { text:"Two dice thrown simultaneously. List all outcomes. Find probability: (i) Both same number (ii) Sum is 7.", src:"PF-2026", tags:["Two Dice"] },
+      { text:"A box contains cards with all prime numbers between 10 and 50. One drawn at random. Probability that sum of digits is even?", src:"SK-82", tags:["Prime Numbers","Digit Sum"] },
+    ]
+  },
+
+  {
+    id:"statistics", num:"Ch 14", name:"Statistics", icon:"x̄", color:"#bcaaa4",
+    q2:[
+      { text:"Write the first 10 prime numbers and find their median.", src:"J-8/C-8", tags:["Median","Primes"] },
+      { text:"Write the formula for mode for grouped data and explain each term in it.", src:"W-08", tags:["Mode","Formula"] },
+      { text:"Write the formula to find Mean of classified data using Step-deviation method and explain each letter.", src:"K-8", tags:["Mean","Step Deviation","Formula"] },
+    ],
+    q4:[
+      { text:"Write the formula to find mode of the grouped data and explain each term in it.", src:"MP-11/PR-82", tags:["Mode","Formula Explanation"] },
+      { text:"Write the formula to find Mode of grouped data and explain each letter in it.", src:"R-8/RJ-82", tags:["Mode","Formula Explanation"] },
+      { text:"Write the formula to find Median of grouped data and explain each term.", src:"RM-82/Y-8/M-8/M-08/Y-11", tags:["Median","Formula Explanation"] },
+      { text:"Write the formula to find Mean by step deviation of grouped data and explain each term.", src:"DP-13", tags:["Mean","Step Deviation","Formula"] },
+      { text:"Find the mode of the given data. [Refer to frequency table in original PDF]", src:"G-12", tags:["Mode"], diagram:true },
+      { text:"In △ABC, DE ∥ BC. Area of △ADE is 36 sq.cm, Trapezium DECB is 64 sq.cm. Show AD/DB = 2/3.", src:"K-8", tags:["Proof"] },
+    ],
+    q6:[
+      { text:"Find mode for the given frequency distribution table.", src:"JK-82", tags:["Mode"], diagram:true },
+      { text:"Find the median for the given frequency distribution data.", src:"NK-8/V-11/R-8/PR-82/SK-82/Y-11", tags:["Median"], diagram:true },
+      { text:"Draw Ogive curves for the given data and find its median from the graph.", src:"J-8", tags:["Ogive","Median"], diagram:true },
+      { text:"Draw less than cumulative frequency Ogive for the given data and find Median from graph.", src:"K-8", tags:["Ogive","Median"], diagram:true },
+      { text:"Find the mean for the following distribution table.", src:"MP-11/W-08/NK-8B/DP-13", tags:["Mean"], diagram:true },
+      { text:"Calculate the Mean of the following frequency distribution.", src:"RJ-82", tags:["Mean"], diagram:true },
+      { text:"Find the Mean using Step Deviation Method.", src:"Y-8/M-8/M-08/NK-8B", tags:["Mean","Step Deviation"], diagram:true },
+      { text:"Find the mode of the following data.", src:"C-8/RM-82/ST-82/N-11/MF-2026", tags:["Mode"], diagram:true },
+      { text:"The mode of distribution is 55. Modal class is 45–60. Frequency preceding modal class is 5, succeeding is 10. Find frequency of modal class.", src:"ST-82", tags:["Mode","Back Calculation"] },
+      { text:"Find the median weight of the given distribution of 70 students.", src:"SK-82", tags:["Median"], diagram:true },
+      { text:"Find the median of the literacy rate data of 35 cities.", src:"S-11", tags:["Median"], diagram:true },
+      { text:"Find the mode of incomes of families in a locality.", src:"N-11", tags:["Mode"], diagram:true },
+    ]
+  },
+
+  {
+    id:"logarithms", num:"Bonus", name:"Logarithms", icon:"log", color:"#ce93d8",
+    q2:[
+      { text:"If x = log2 and y = log5, express log20 in terms of x and y.", src:"RM-82", tags:["Log Laws"] },
+      { text:"Varsha says 'If log₅, value of x = 1'. Do you agree? Give reason.", src:"V-11", tags:["Log Value"] },
+      { text:"Find the value of log₂(log₃81).", src:"N-11", tags:["Nested Logarithm"] },
+      { text:"Find the value of log₁₀2025.", src:"G-12", tags:["Log Value"] },
+      { text:"Expand log(x·y·z).", src:"Y-11", tags:["Log Laws","Expansion"] },
+    ],
+    q4:[
+      { text:"If x² + y² = 18xy, prove that 2log(x − y) = 4log2 + logx + logy.", src:"NK-8", tags:["Proof"] },
+      { text:"If x² + y² = 17xy, prove that 2log(x − y) = logx + logy + log3 + log5.", src:"R-8", tags:["Proof"] },
+      { text:"If x² + y² = 10xy, prove that 2log(x + y) = logx + logy + 2log2 + log3.", src:"J-8/DP-13", tags:["Proof"] },
+      { text:"If (5.2)ˣ − (0.52)ˣ = 10000, find the value of x.", src:"MF-2026", tags:["Exponential Equations"] },
+    ],
+    q6:[
+      { text:"If log((x+y)/2) = (1/2)(logx + logy + log3), show that x/y + y/x = 23.", src:"RP-11", tags:["Proof"] },
+      { text:"If x² + y² = 27xy, show that 2log(x − y) = 2log5 + logx + logy.", src:"Y-8", tags:["Proof"] },
+    ]
+  }
+
+];
+
+// ═══════════════════════════════════════════════
+//  STATE & FILTER
+// ═══════════════════════════════════════════════
+let currentMark = 'all';
+let searchVal = '';
+
+const CHAPTER_COLORS = {};
+CHAPTERS.forEach(c => CHAPTER_COLORS[c.id] = c.color);
+
+// ═══════════════════════════════════════════════
+//  RENDER SIDEBAR
+// ═══════════════════════════════════════════════
+function buildSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  sidebar.innerHTML = `<div class="sb-section">Chapters</div>` +
+    CHAPTERS.map((ch, i) => {
+      const total = (ch.q2||[]).length + (ch.q4||[]).length + (ch.q6||[]).length;
+      return `<div class="sb-item" id="sb-${ch.id}" onclick="scrollToChapter('${ch.id}')">
+        <div class="sb-dot" style="background:${ch.color}"></div>
+        <span>${ch.name}</span>
+        <span class="sb-count">${total}</span>
+      </div>`;
+    }).join('');
+}
+
+// ═══════════════════════════════════════════════
+//  RENDER CHAPTERS
+// ═══════════════════════════════════════════════
+function buildChapters() {
+  let total2 = 0, total4 = 0, total6 = 0;
+  CHAPTERS.forEach(ch => {
+    total2 += (ch.q2||[]).length;
+    total4 += (ch.q4||[]).length;
+    total6 += (ch.q6||[]).length;
+  });
+  document.getElementById('cnt-2').textContent = total2;
+  document.getElementById('cnt-4').textContent = total4;
+  document.getElementById('cnt-6').textContent = total6;
+
+  const container = document.getElementById('chaptersContainer');
+  container.innerHTML = CHAPTERS.map((ch, ci) => buildChapterBlock(ch, ci)).join('');
+  applyFilters();
+}
+
+function buildChapterBlock(ch, ci) {
+  const q2html = buildMarkGroup(ch.q2 || [], 2, ch.color);
+  const q4html = buildMarkGroup(ch.q4 || [], 4, ch.color);
+  const q6html = buildMarkGroup(ch.q6 || [], 6, ch.color);
+  const has2 = (ch.q2||[]).length, has4 = (ch.q4||[]).length, has6 = (ch.q6||[]).length;
+
+  return `
+  <div class="chapter-block" id="ch-${ch.id}" style="animation-delay:${ci * 0.035}s; --chcolor:${ch.color}">
+    <div class="chapter-header">
+      <div class="chapter-icon">${ch.icon}</div>
+      <div class="chapter-info">
+        <div class="chapter-num">${ch.num}</div>
+        <div class="chapter-name">${ch.name}</div>
+      </div>
+      <div class="chapter-badges">
+        ${has2 ? `<span class="ch-badge ch-2m">2M: ${has2}</span>` : ''}
+        ${has4 ? `<span class="ch-badge ch-4m">4M: ${has4}</span>` : ''}
+        ${has6 ? `<span class="ch-badge ch-6m">6M: ${has6}</span>` : ''}
+      </div>
+    </div>
+    ${q2html}${q4html}${q6html}
+  </div>`;
+}
+
+function buildMarkGroup(questions, mark, color) {
+  if (!questions.length) return '';
+  const label = mark === 2 ? '2 Marks — Section I' : mark === 4 ? '4 Marks — Section II' : '6 Marks — Section III';
+  const mgCls = `mg-${mark}`;
+  const cards = questions.map((q, i) => buildQCard(q, mark, i + 1, color)).join('');
+  return `
+  <div class="mark-group" data-mark="${mark}">
+    <div class="mark-group-header">
+      <span class="mg-label ${mgCls}">${label}</span>
+      <div class="mg-rule"></div>
+      <span class="mg-count">${questions.length} questions</span>
+    </div>
+    ${cards}
+  </div>`;
+}
+
+function buildQCard(q, mark, num, color) {
+  const tags = (q.tags || []).map(t => `<span class="q-tag">${t}</span>`).join('');
+  const diagram = q.diagram ? `<span class="q-diagram">📊 refer to original PDF</span>` : '';
+  return `
+  <div class="q-card" data-mark="${mark}" data-text="${q.text.toLowerCase()}">
+    <div class="q-card-inner">
+      <div class="q-bar" style="background:${color}"></div>
+      <div class="q-body">
+        <div class="q-top">
+          <span class="q-num">Q${num}</span>
+          <div class="q-text">${q.text}</div>
+        </div>
+        <div class="q-meta">
+          <span class="q-src">${q.src}</span>
+          ${diagram}
+          ${tags}
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════
+//  FILTER & SEARCH
+// ═══════════════════════════════════════════════
+function filterMark(mark, btn) {
+  currentMark = mark;
+  document.querySelectorAll('.hbtn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('on'));
+  btn.classList.add(btn.classList.contains('hbtn') ? 'active' : 'on');
+  // sync
+  document.querySelectorAll('.hbtn').forEach(b => {
+    if ((mark === 'all' && b.classList.contains('hbtn-all')) ||
+        (mark === '2' && b.classList.contains('hbtn-2')) ||
+        (mark === '4' && b.classList.contains('hbtn-4')) ||
+        (mark === '6' && b.classList.contains('hbtn-6'))) b.classList.add('active');
+  });
+  document.querySelectorAll('.fbtn').forEach(b => {
+    if ((mark === 'all' && b.classList.contains('fbtn-all')) ||
+        (mark === '2' && b.classList.contains('fbtn-2')) ||
+        (mark === '4' && b.classList.contains('fbtn-4')) ||
+        (mark === '6' && b.classList.contains('fbtn-6'))) b.classList.add('on');
+  });
+  applyFilters();
+}
+
+function globalSearch(val) {
+  searchVal = val.toLowerCase();
+  applyFilters();
+}
+
+function applyFilters() {
+  document.querySelectorAll('.chapter-block').forEach(block => {
+    let anyVisible = false;
+    block.querySelectorAll('.mark-group').forEach(mg => {
+      const m = mg.dataset.mark;
+      const markOk = currentMark === 'all' || currentMark === m;
+      if (!markOk) { mg.style.display = 'none'; return; }
+      mg.style.display = '';
+      let groupHasVisible = false;
+      mg.querySelectorAll('.q-card').forEach(card => {
+        const textOk = !searchVal || card.dataset.text.includes(searchVal);
+        card.style.display = textOk ? '' : 'none';
+        if (textOk) groupHasVisible = true;
+      });
+      mg.style.display = groupHasVisible ? '' : 'none';
+      if (groupHasVisible) anyVisible = true;
+    });
+    block.style.display = anyVisible ? '' : 'none';
+  });
+}
+
+function scrollToChapter(id) {
+  const el = document.getElementById('ch-' + id);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.querySelectorAll('.sb-item').forEach(s => s.classList.remove('active'));
+    document.getElementById('sb-' + id)?.classList.add('active');
+  }
+}
+
+// Sidebar active on scroll
+window.addEventListener('scroll', () => {
+  let found = false;
+  CHAPTERS.slice().reverse().forEach(ch => {
+    if (found) return;
+    const el = document.getElementById('ch-' + ch.id);
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= 100) {
+      document.querySelectorAll('.sb-item').forEach(s => s.classList.remove('active'));
+      document.getElementById('sb-' + ch.id)?.classList.add('active');
+      found = true;
+    }
+  });
+});
+
+// Init
+buildSidebar();
+buildChapters();
+</script>
+</body>
+</html>
