@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIO BLITZ — SSC CRUSHER</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Share+Tech+Mono&family=Bebas+Neue&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --acid: #39FF14;
+    --hot: #FF2D55;
+    --blue: #00D4FF;
+    --gold: #FFD700;
+    --bg: #050508;
+    --panel: #0d0d18;
+    --border: #1a1a2e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Nunito', sans-serif;
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 16px; height: 16px;
+    border: 2px solid var(--acid);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s, background 0.1s;
+    mix-blend-mode: difference;
+  }
+  .cursor-trail {
+    width: 6px; height: 6px;
+    background: var(--acid);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.5;
+    transition: 0.08s;
+  }
+
+  /* SCANLINES */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.08) 2px,
+      rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* GRID BG */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      linear-gradient(rgba(57,255,20,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(57,255,20,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* HEADER */
+  header {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 40px 20px 20px;
+  }
+
+  .title-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--acid);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    animation: blink 1.5s infinite;
+  }
+
+  @keyframes blink {
+    0%,100%{opacity:1} 50%{opacity:0.3}
+  }
+
+  h1 {
+    font-family: 'Black Ops One', cursive;
+    font-size: clamp(48px, 10vw, 100px);
+    line-height: 0.9;
+    background: linear-gradient(135deg, var(--acid) 0%, var(--blue) 50%, var(--hot) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    letter-spacing: -2px;
+    animation: shimmer 3s infinite linear;
+    background-size: 200% 200%;
+  }
+
+  @keyframes shimmer {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+
+  .subtitle {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 18px;
+    letter-spacing: 8px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 8px;
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    position: relative;
+    z-index: 10;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    background: var(--panel);
+    border: 1px solid rgba(57,255,20,0.2);
+    padding: 12px 24px;
+    text-align: center;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    min-width: 100px;
+  }
+
+  .stat-val {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 32px;
+    color: var(--acid);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS */
+  .progress-container {
+    max-width: 700px;
+    margin: 0 auto 30px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .progress-bar-bg {
+    height: 4px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--acid), var(--blue));
+    border-radius: 2px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    box-shadow: 0 0 8px var(--acid);
+  }
+
+  .progress-text {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 3px;
+    margin-bottom: 6px;
+    text-align: right;
+  }
+
+  /* QUIZ CARD */
+  .quiz-area {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .question-card {
+    background: var(--panel);
+    border: 1px solid rgba(255,255,255,0.07);
+    padding: 36px 36px 28px;
+    position: relative;
+    overflow: hidden;
+    animation: cardIn 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  @keyframes cardIn {
+    from { opacity:0; transform: translateY(20px) scale(0.98); }
+    to { opacity:1; transform: translateY(0) scale(1); }
+  }
+
+  .question-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--acid), var(--blue), var(--hot));
+    animation: shimmer 2s infinite linear;
+    background-size: 200%;
+  }
+
+  .question-card::after {
+    content: attr(data-num);
+    font-family: 'Black Ops One', cursive;
+    font-size: 120px;
+    color: rgba(57,255,20,0.04);
+    position: absolute;
+    bottom: -20px;
+    right: -10px;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .q-number {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--acid);
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  .question-text {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 28px;
+    padding-right: 20px;
+  }
+
+  /* OPTIONS */
+  .options {
+    display: grid;
+    gap: 10px;
+  }
+
+  .option-btn {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #fff;
+    padding: 14px 20px;
+    text-align: left;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: none;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .option-btn::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 0;
+    background: rgba(57,255,20,0.08);
+    transition: width 0.3s;
+  }
+
+  .option-btn:hover::before { width: 100%; }
+
+  .option-btn:hover {
+    border-color: var(--acid);
+    transform: translateX(4px);
+    box-shadow: -4px 0 0 var(--acid);
+  }
+
+  .option-key {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 20px;
+    color: rgba(255,255,255,0.3);
+    min-width: 24px;
+    transition: color 0.2s;
+  }
+
+  .option-btn:hover .option-key {
+    color: var(--acid);
+  }
+
+  /* STATES */
+  .option-btn.correct {
+    background: rgba(57,255,20,0.1);
+    border-color: var(--acid);
+    box-shadow: 0 0 20px rgba(57,255,20,0.2), -4px 0 0 var(--acid);
+  }
+
+  .option-btn.correct .option-key { color: var(--acid); }
+
+  .option-btn.wrong {
+    background: rgba(255,45,85,0.1);
+    border-color: var(--hot);
+    box-shadow: 0 0 20px rgba(255,45,85,0.2), -4px 0 0 var(--hot);
+    animation: shake 0.4s;
+  }
+
+  .option-btn.wrong .option-key { color: var(--hot); }
+
+  @keyframes shake {
+    0%,100%{transform:translateX(0)}
+    20%{transform:translateX(-8px)}
+    40%{transform:translateX(8px)}
+    60%{transform:translateX(-5px)}
+    80%{transform:translateX(5px)}
+  }
+
+  .option-btn:disabled { cursor: not-allowed; }
+  .option-btn:disabled:hover { transform: none; }
+  .option-btn:disabled:hover::before { width: 0; }
+  .option-btn:disabled:hover { border-color: rgba(255,255,255,0.1); box-shadow: none; }
+  .option-btn.correct:disabled:hover, .option-btn.wrong:disabled:hover {
+    transform: none;
+  }
+
+  /* EXPLANATION */
+  .explanation {
+    margin-top: 20px;
+    padding: 16px 20px;
+    background: rgba(57,255,20,0.05);
+    border-left: 3px solid var(--acid);
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+    display: none;
+    animation: fadeIn 0.3s;
+  }
+
+  .explanation.show { display: block; }
+
+  @keyframes fadeIn {
+    from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:none}
+  }
+
+  .explanation strong { color: var(--acid); }
+
+  /* NEXT BTN */
+  .next-btn {
+    display: none;
+    margin-top: 20px;
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--acid);
+    color: var(--acid);
+    font-family: 'Bebas Neue', cursive;
+    font-size: 20px;
+    letter-spacing: 6px;
+    padding: 14px;
+    cursor: none;
+    transition: all 0.2s;
+    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .next-btn::before {
+    content: '';
+    position: absolute;
+    left: -100%;
+    top: 0; bottom: 0;
+    width: 100%;
+    background: var(--acid);
+    transition: left 0.25s;
+    z-index: -1;
+  }
+
+  .next-btn:hover::before { left: 0; }
+  .next-btn:hover { color: #000; }
+  .next-btn.show { display: block; animation: fadeIn 0.3s; }
+
+  /* FLASH FEEDBACK */
+  .feedback-flash {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 998;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  .feedback-flash.correct { background: rgba(57,255,20,0.06); }
+  .feedback-flash.wrong { background: rgba(255,45,85,0.06); }
+  .feedback-flash.show { opacity: 1; }
+
+  /* RESULT SCREEN */
+  .result-screen {
+    display: none;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    animation: cardIn 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .result-screen.show { display: block; }
+
+  .result-grade {
+    font-family: 'Black Ops One', cursive;
+    font-size: clamp(80px, 20vw, 160px);
+    line-height: 1;
+    margin: 20px 0;
+  }
+
+  .result-grade.S { color: var(--gold); text-shadow: 0 0 40px rgba(255,215,0,0.5); }
+  .result-grade.A { color: var(--acid); text-shadow: 0 0 40px rgba(57,255,20,0.5); }
+  .result-grade.B { color: var(--blue); text-shadow: 0 0 40px rgba(0,212,255,0.5); }
+  .result-grade.C { color: #FF9500; text-shadow: 0 0 40px rgba(255,149,0,0.4); }
+  .result-grade.D { color: var(--hot); text-shadow: 0 0 40px rgba(255,45,85,0.5); }
+
+  .result-message {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 28px;
+    letter-spacing: 6px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 30px;
+  }
+
+  .result-stats {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .result-stat {
+    background: var(--panel);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 20px 30px;
+    min-width: 120px;
+  }
+
+  .result-stat-val {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 40px;
+    line-height: 1;
+  }
+
+  .correct-stat { color: var(--acid); }
+  .wrong-stat { color: var(--hot); }
+  .acc-stat { color: var(--blue); }
+
+  .result-stat-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .restart-btn {
+    background: transparent;
+    border: 2px solid var(--acid);
+    color: var(--acid);
+    font-family: 'Black Ops One', cursive;
+    font-size: 22px;
+    letter-spacing: 5px;
+    padding: 18px 50px;
+    cursor: none;
+    transition: all 0.25s;
+    clip-path: polygon(16px 0%, 100% 0%, calc(100% - 16px) 100%, 0% 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .restart-btn::before {
+    content: '';
+    position: absolute;
+    left: -100%; top: 0; bottom: 0; width: 100%;
+    background: var(--acid);
+    transition: left 0.25s;
+    z-index: -1;
+  }
+
+  .restart-btn:hover::before { left: 0; }
+  .restart-btn:hover { color: #000; }
+
+  /* GLITCH TEXT */
+  @keyframes glitch1 {
+    0%,100%{clip-path:inset(0 0 95% 0);transform:translate(-2px,0)}
+    20%{clip-path:inset(30% 0 50% 0);transform:translate(2px,0)}
+    40%{clip-path:inset(60% 0 20% 0);transform:translate(-1px,0)}
+    60%{clip-path:inset(80% 0 5% 0);transform:translate(1px,0)}
+    80%{clip-path:inset(10% 0 75% 0);transform:translate(-2px,0)}
+  }
+
+  .corner-tl, .corner-tr, .corner-bl, .corner-br {
+    position: absolute;
+    width: 16px; height: 16px;
+    border-color: rgba(57,255,20,0.4);
+    border-style: solid;
+  }
+
+  .corner-tl { top: 0; left: 0; border-width: 2px 0 0 2px; }
+  .corner-tr { top: 0; right: 0; border-width: 2px 2px 0 0; }
+  .corner-bl { bottom: 0; left: 0; border-width: 0 0 2px 2px; }
+  .corner-br { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
+
+  /* PARTICLES */
+  .particle {
+    position: fixed;
+    pointer-events: none;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: rgba(57,255,20,0.3);
+    z-index: 1;
+    animation: floatUp linear forwards;
+  }
+
+  @keyframes floatUp {
+    from { opacity: 0.5; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-200px); }
+  }
+
+  /* TIMER */
+  .timer-ring {
+    display: none;
+  }
+
+  /* STREAK */
+  .streak-banner {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold);
+    color: #000;
+    font-family: 'Black Ops One', cursive;
+    font-size: 14px;
+    letter-spacing: 4px;
+    padding: 8px 24px;
+    z-index: 500;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    animation: streakIn 0.3s cubic-bezier(0.4,0,0.2,1), streakOut 0.3s 1.2s forwards;
+    pointer-events: none;
+  }
+
+  @keyframes streakIn { from{opacity:0;transform:translateX(-50%) scale(0.8)} to{opacity:1;transform:translateX(-50%) scale(1)} }
+  @keyframes streakOut { to{opacity:0;transform:translateX(-50%) translateY(-20px)} }
+
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+<div class="feedback-flash" id="feedbackFlash"></div>
+
+<header>
+  <div class="title-tag">⚡ SSC BIOLOGY · TELANGANA BOARD ⚡</div>
+  <h1>BIO BLITZ</h1>
+  <div class="subtitle">Missed Questions Crusher</div>
+</header>
+
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-val" id="scoreDisplay">0</div>
+    <div class="stat-label">Score</div>
+  </div>
+  <div class="stat">
+    <div class="stat-val" id="streakDisplay">0</div>
+    <div class="stat-label">Streak 🔥</div>
+  </div>
+  <div class="stat">
+    <div class="stat-val" id="accuracyDisplay">—</div>
+    <div class="stat-label">Accuracy</div>
+  </div>
+</div>
+
+<div class="quiz-area" id="quizArea">
+  <div class="progress-container">
+    <div class="progress-text" id="progressText">Q1 / 25</div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div class="question-card" id="questionCard" data-num="1">
+    <div class="corner-tl"></div>
+    <div class="corner-tr"></div>
+    <div class="corner-bl"></div>
+    <div class="corner-br"></div>
+    <div class="q-number" id="qNumber">QUESTION 01</div>
+    <div class="question-text" id="questionText">Loading...</div>
+    <div class="options" id="optionsContainer"></div>
+    <div class="explanation" id="explanation"></div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">NEXT QUESTION →</button>
+  </div>
+</div>
+
+<div class="result-screen" id="resultScreen">
+  <div class="title-tag">MISSION COMPLETE</div>
+  <div class="result-grade" id="resultGrade">S</div>
+  <div class="result-message" id="resultMessage">LEGENDARY</div>
+  <div class="result-stats">
+    <div class="result-stat">
+      <div class="result-stat-val correct-stat" id="rCorrect">0</div>
+      <div class="result-stat-label">Correct</div>
+    </div>
+    <div class="result-stat">
+      <div class="result-stat-val wrong-stat" id="rWrong">0</div>
+      <div class="result-stat-label">Wrong</div>
+    </div>
+    <div class="result-stat">
+      <div class="result-stat-val acc-stat" id="rAccuracy">0%</div>
+      <div class="result-stat-label">Accuracy</div>
+    </div>
+  </div>
+  <button class="restart-btn" onclick="restartQuiz()">RETRY MISSION</button>
+</div>
+
+<script>
+const questions = [
+  {
+    q: "1 ATP is equivalent to how many Kilocalories of energy?",
+    opts: ["7.2 K.cal", "72 K.cal", "7200 K.cal", "720 K.cal"],
+    ans: 3,
+    exp: "<strong>720 K.cal</strong> — Each ATP molecule releases ~720 K.cal of energy upon hydrolysis under standard physiological conditions."
+  },
+  {
+    q: "Which group of organisms are NOT correctly arranged as a food chain?",
+    opts: [
+      "Grass → Grasshopper → Frog → Snake",
+      "Rat → Snake → Eagle → Grass",
+      "Plankton → Fish → Grasshopper",
+      "Deer → Lion → Grass"
+    ],
+    ans: 2,
+    exp: "<strong>Plankton → Fish → Grasshopper</strong> — Fish don't eat grasshoppers; grasshoppers are terrestrial while fish are aquatic. The chain is ecologically invalid."
+  },
+  {
+    q: "What is the total number of Molars in an adult human mouth?",
+    opts: ["4", "6", "8", "12"],
+    ans: 3,
+    exp: "<strong>12 Molars</strong> — Humans have 3 molars per quadrant × 4 quadrants = 12 molars in total (including wisdom teeth)."
+  },
+  {
+    q: "Which conservation intervention is shown by 'Broad Bed Furrows' in a farming diagram?",
+    opts: ["Contour farming", "Broad bed furrows", "Mini percolation pits", "Positing sheds"],
+    ans: 1,
+    exp: "<strong>Broad Bed Furrows</strong> — A farmer-based conservation practice that improves water retention and reduces soil erosion through raised beds and furrow irrigation channels."
+  },
+  {
+    q: "Which vegetative propagation pair is NOT correctly matched?",
+    opts: ["Runner — Oxalis", "Stolons — Jasmine", "Bulb — Ginger", "Corm — Colocasia"],
+    ans: 0,
+    exp: "<strong>Runner — Oxalis is incorrect</strong> — Oxalis produces bulbs, not runners. Runners are produced by plants like Strawberry. Ginger produces rhizomes (not bulbs)."
+  },
+  {
+    q: "Which organ produces urine?",
+    opts: ["Kidney", "Lungs", "Blood", "Liver"],
+    ans: 0,
+    exp: "<strong>Kidney</strong> — The kidneys filter blood through nephrons, producing urine as a byproduct containing urea, excess salts, and water."
+  },
+  {
+    q: "Which chemical is used to detect the absence of oxygen in glucose solution during an anaerobic respiration experiment?",
+    opts: ["Diazine green", "Iodine", "Glycerin", "KOH"],
+    ans: 0,
+    exp: "<strong>Diazine green (Methylene blue)</strong> — It acts as an oxygen indicator; decolorizes in anaerobic conditions, confirming absence of dissolved oxygen."
+  },
+  {
+    q: "Which statement about the brain is CORRECT?",
+    opts: [
+      "Cerebrum — centre for muscular activities",
+      "Cerebrum — controls thinking, memory and intelligence",
+      "Cerebellum — posture, equilibrium and coordination",
+      "Hind brain — coordinates reflexes like swallowing, coughing, sneezing"
+    ],
+    ans: 2,
+    exp: "<strong>Cerebellum</strong> maintains posture, equilibrium, and coordinates muscular movements. Note: Medulla oblongata controls swallowing/coughing/sneezing. Cerebrum handles thinking and memory."
+  },
+  {
+    q: "What is the correct sequence of phases in the human cardiac cycle?",
+    opts: [
+      "Ventricular systole → Auricular systole → Ventricular diastole → Auricular diastole",
+      "Auricular systole → Auricular diastole → Ventricular systole → Ventricular diastole",
+      "Ventricular diastole → Ventricular systole → Auricular systole → Auricular diastole",
+      "Auricular diastole → Ventricular diastole → Auricular systole → Ventricular systole"
+    ],
+    ans: 1,
+    exp: "<strong>Auricular systole → Auricular diastole → Ventricular systole → Ventricular diastole</strong> — Atria contract first (systole), then relax (diastole), followed by ventricles contracting then relaxing."
+  },
+  {
+    q: "Bioaccumulation is defined as the process of:",
+    opts: [
+      "Entering of pollutants in a food chain",
+      "Entering of pollutants in a food web",
+      "Entering of pollutants in an ecosystem",
+      "Entering of pollutants into biosphere"
+    ],
+    ans: 0,
+    exp: "<strong>Entering of pollutants in a food chain</strong> — Bioaccumulation refers to the build-up of toxic substances through successive trophic levels of a food chain (e.g., DDT)."
+  },
+  {
+    q: "Which acid is present in gastric juice?",
+    opts: ["Acetic acid", "Hydrochloric acid", "Sulphuric acid", "Nitric acid"],
+    ans: 1,
+    exp: "<strong>Hydrochloric acid (HCl)</strong> — Gastric juice contains HCl secreted by parietal cells. It activates pepsinogen to pepsin and creates an acidic environment (pH ~1.5–3.5)."
+  },
+  {
+    q: "Which pair of (organism — respiratory organ) is INCORRECT?",
+    opts: [
+      "Trachea — Cockroach",
+      "Lungs — Human being",
+      "Skin — Fish",
+      "Gills — Prawn"
+    ],
+    ans: 2,
+    exp: "<strong>Skin — Fish is incorrect</strong> — Fish respire through gills, not skin. Skin respiration (cutaneous) is seen in earthworms and amphibians, not fish."
+  },
+  {
+    q: "Identify the correct pair (Gland — Effect of its hormone):",
+    opts: [
+      "Pituitary — Thyrotropin",
+      "Thyroid — General growth rate and metabolism",
+      "Glucagon — Decreases glucose percentage in blood",
+      "Adrenalin — Increase in heart beat rate"
+    ],
+    ans: 0,
+    exp: "<strong>Pituitary — Thyrotropin (TSH)</strong> — The pituitary gland secretes TSH (Thyroid Stimulating Hormone). Note: Glucagon INCREASES blood glucose; Insulin decreases it."
+  },
+  {
+    q: "Which female human body cell contains the correct chromosome composition?",
+    opts: ["44 + XX", "22 + XY", "44 + XY", "22 + XX"],
+    ans: 0,
+    exp: "<strong>44 + XX</strong> — Female humans have 44 autosomes + 2 X chromosomes = 46 chromosomes total. Males have 44 + XY. (22 pairs of autosomes + 1 pair of sex chromosomes)"
+  },
+  {
+    q: "Which hormone is responsible for suppressing hunger?",
+    opts: ["Ghrelin", "Pepsin", "Leptin", "Enterokinase"],
+    ans: 2,
+    exp: "<strong>Leptin</strong> — Produced by adipose (fat) cells, leptin signals the hypothalamus to suppress appetite. Ghrelin is the 'hunger hormone' that STIMULATES appetite."
+  },
+  {
+    q: "Which vegetative propagation pair is correctly matched?",
+    opts: [
+      "Stolons — Oxalis",
+      "Runner — Jasmine",
+      "Stem tuber — Radish",
+      "Rhizome — Turmeric"
+    ],
+    ans: 3,
+    exp: "<strong>Rhizome — Turmeric</strong> — Turmeric propagates via underground rhizomes. Ginger also uses rhizomes. Radish is a root modification (tap root), not a stem tuber."
+  },
+  {
+    q: "Match the asexual reproduction types with correct organisms:\nFission — Budding — Fragmentation — Parthenocarpy",
+    opts: [
+      "Paramecium — Yeast — Spirogyra — Watermelon",
+      "Spirogyra — Yeast — Paramecium — Watermelon",
+      "Paramecium — Spirogyra — Yeast — Watermelon",
+      "Watermelon — Paramecium — Yeast — Spirogyra"
+    ],
+    ans: 0,
+    exp: "<strong>Paramecium (Fission) — Yeast (Budding) — Spirogyra (Fragmentation) — Watermelon (Parthenocarpy)</strong> — Classic SSC match."
+  },
+  {
+    q: "The Germplasm theory of heredity was proposed by:",
+    opts: ["Mendel", "Darwin", "Lamarck", "Weismann"],
+    ans: 3,
+    exp: "<strong>August Weismann</strong> — He proposed the Germplasm theory in the late 1800s, stating that hereditary information is passed only through germ cells (sperm/egg), not somatic cells."
+  },
+  {
+    q: "Which of the following statements about ecological pyramids is INCORRECT?",
+    opts: [
+      "Pyramid of biomass can be inverted in aquatic ecosystems",
+      "Pyramid of energy is always inverted",
+      "Pyramid of numbers can be inverted",
+      "Pyramid of energy is always upright"
+    ],
+    ans: 1,
+    exp: "<strong>Pyramid of energy is NEVER inverted</strong> — It is always upright because energy is always lost at each trophic level (10% rule). The statement 'Pyramid of energy is always inverted' is INCORRECT."
+  },
+  {
+    q: "Match the vegetative propagation methods:\nStolon — Bulb — Tuber",
+    opts: [
+      "Potato — Onion — Strawberry",
+      "Strawberry — Onion — Potato",
+      "Onion — Potato — Strawberry",
+      "Strawberry — Potato — Onion"
+    ],
+    ans: 1,
+    exp: "<strong>Strawberry (Stolon) — Onion (Bulb) — Potato (Tuber)</strong> — Strawberry uses runners/stolons, Onion has bulbs (with fleshy leaves), Potato has stem tubers with eyes."
+  },
+  {
+    q: "In the equation: xH₂ + yO₂ → 2zH₂O\nWhat are the values of x, y, z?",
+    opts: ["x=1, y=1, z=1", "x=2, y=1, z=2", "x=2, y=2, z=2", "x=2, y=1, z=1"],
+    ans: 1,
+    exp: "<strong>x=2, y=1, z=2</strong> — Balanced equation: 2H₂ + O₂ → 2H₂O. This is the formation of water, requiring 2 molecules of hydrogen and 1 molecule of oxygen."
+  },
+  {
+    q: "Identify the correct pair (organ — protective covering):\nWhich pair is INCORRECTLY matched?",
+    opts: [
+      "Brain — Meninges",
+      "Heart — Pericardium",
+      "Kidney — Skin",
+      "Lungs — Pleural membrane"
+    ],
+    ans: 2,
+    exp: "<strong>Kidney — Skin is incorrect</strong> — Kidneys are covered by a fibrous renal capsule, not skin. Skin covers the entire body externally."
+  },
+  {
+    q: "Identify the correctly matched pair (sphincter — location):",
+    opts: [
+      "Pyloric sphincter — Oesophagus",
+      "Anal sphincter — Anus",
+      "Cardiac muscles — Oesophagus",
+      "Gastric muscles — Large intestine"
+    ],
+    ans: 1,
+    exp: "<strong>Anal sphincter — Anus</strong> — The anal sphincter controls the exit of feces. Pyloric sphincter is between stomach and small intestine, NOT oesophagus."
+  },
+  {
+    q: "Which mitotic stage shows chromosomes aligned at the cell's equatorial plate (metaphase plate)?",
+    opts: ["Telophase", "Metaphase", "Anaphase", "Prophase"],
+    ans: 1,
+    exp: "<strong>Metaphase</strong> — During metaphase, chromosomes are fully condensed and align at the metaphase plate (cell equator), making it the best stage for karyotyping."
+  },
+  {
+    q: "Match Platyhelminthes — Annelida — Echinodermata — Mollusca with their excretory/circulatory structures:\nWhich option shows Platyhelminthes (a) → Flame cells correctly?",
+    opts: [
+      "a-Flame cells, b-Metanephridia, c-Water vascular system, d-Open circulatory",
+      "a-Metanephridia, b-Flame cells, c-Open circulatory, d-Water vascular system",
+      "a-Water vascular, b-Flame cells, c-Metanephridia, d-Open circulatory",
+      "a-Open circulatory, b-Metanephridia, c-Flame cells, d-Water vascular"
+    ],
+    ans: 0,
+    exp: "<strong>Platyhelminthes → Flame cells</strong> (protonephridia), <strong>Annelida → Metanephridia</strong>, <strong>Echinodermata → Water vascular system</strong>, <strong>Mollusca → Open circulatory system</strong>."
+  }
+];
+
+let current = 0;
+let score = 0;
+let streak = 0;
+let correct = 0;
+let wrong = 0;
+let answered = false;
+let shuffled = [];
+
+// Shuffle questions
+function shuffle(arr) {
+  let a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function restartQuiz() {
+  current = 0; score = 0; streak = 0; correct = 0; wrong = 0;
+  shuffled = shuffle(questions);
+  document.getElementById('resultScreen').classList.remove('show');
+  document.getElementById('quizArea').style.display = 'block';
+  updateStats();
+  loadQuestion();
+}
+
+function updateStats() {
+  document.getElementById('scoreDisplay').textContent = score;
+  document.getElementById('streakDisplay').textContent = streak;
+  const total = correct + wrong;
+  document.getElementById('accuracyDisplay').textContent = total ? Math.round((correct/total)*100) + '%' : '—';
+}
+
+function loadQuestion() {
+  answered = false;
+  const q = shuffled[current];
+  const card = document.getElementById('questionCard');
+  card.setAttribute('data-num', current + 1);
+  card.style.animation = 'none';
+  card.offsetHeight;
+  card.style.animation = 'cardIn 0.4s cubic-bezier(0.4,0,0.2,1)';
+
+  document.getElementById('qNumber').textContent = `QUESTION ${String(current+1).padStart(2,'0')}`;
+  document.getElementById('questionText').textContent = q.q;
+  document.getElementById('progressText').textContent = `Q${current+1} / ${shuffled.length}`;
+  document.getElementById('progressFill').style.width = (current / shuffled.length * 100) + '%';
+
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+
+  const keys = ['A', 'B', 'C', 'D'];
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="option-key">${keys[i]}</span><span>${opt}</span>`;
+    btn.onclick = () => selectAnswer(i, btn);
+    container.appendChild(btn);
+  });
+
+  document.getElementById('explanation').className = 'explanation';
+  document.getElementById('explanation').innerHTML = '';
+  document.getElementById('nextBtn').className = 'next-btn';
+}
+
+function selectAnswer(idx, btn) {
+  if (answered) return;
+  answered = true;
+  const q = shuffled[current];
+  const btns = document.querySelectorAll('.option-btn');
+  btns.forEach(b => b.disabled = true);
+
+  const flash = document.getElementById('feedbackFlash');
+
+  if (idx === q.ans) {
+    btn.classList.add('correct');
+    correct++;
+    streak++;
+    score += 10 + (streak > 2 ? streak * 2 : 0);
+    flash.className = 'feedback-flash correct show';
+    if (streak >= 3) showStreak();
+    spawnParticles(btn, true);
+  } else {
+    btn.classList.add('wrong');
+    btns[q.ans].classList.add('correct');
+    wrong++;
+    streak = 0;
+    flash.className = 'feedback-flash wrong show';
+  }
+
+  setTimeout(() => flash.className = 'feedback-flash', 300);
+  updateStats();
+
+  const exp = document.getElementById('explanation');
+  exp.innerHTML = q.exp;
+  exp.classList.add('show');
+  document.getElementById('nextBtn').classList.add('show');
+}
+
+function nextQuestion() {
+  current++;
+  if (current >= shuffled.length) {
+    showResult();
+    return;
+  }
+  loadQuestion();
+}
+
+function showResult() {
+  document.getElementById('quizArea').style.display = 'none';
+  const rs = document.getElementById('resultScreen');
+  rs.classList.add('show');
+
+  const total = correct + wrong;
+  const acc = Math.round((correct/total)*100);
+  document.getElementById('rCorrect').textContent = correct;
+  document.getElementById('rWrong').textContent = wrong;
+  document.getElementById('rAccuracy').textContent = acc + '%';
+
+  let grade, msg;
+  if (acc >= 92) { grade = 'S'; msg = 'ABSOLUTELY LEGENDARY'; }
+  else if (acc >= 80) { grade = 'A'; msg = 'ELITE PERFORMANCE'; }
+  else if (acc >= 65) { grade = 'B'; msg = 'SOLID WORK'; }
+  else if (acc >= 50) { grade = 'C'; msg = 'ROOM TO GROW'; }
+  else { grade = 'D'; msg = 'GRIND HARDER'; }
+
+  const gradeEl = document.getElementById('resultGrade');
+  gradeEl.textContent = grade;
+  gradeEl.className = 'result-grade ' + grade;
+  document.getElementById('resultMessage').textContent = msg;
+}
+
+function showStreak() {
+  const existing = document.querySelector('.streak-banner');
+  if (existing) existing.remove();
+  const el = document.createElement('div');
+  el.className = 'streak-banner';
+  el.textContent = `🔥 ${streak}× STREAK`;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1600);
+}
+
+function spawnParticles(el, correct) {
+  const syms = correct ? ['✓', '+10', '⚡', '★', '🔥'] : ['✗', '!'];
+  for (let i = 0; i < 6; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.textContent = syms[Math.floor(Math.random() * syms.length)];
+    p.style.left = (Math.random() * 100) + 'vw';
+    p.style.top = '60vh';
+    p.style.animationDuration = (1 + Math.random()) + 's';
+    p.style.animationDelay = (Math.random() * 0.3) + 's';
+    p.style.color = correct ? 'rgba(57,255,20,0.6)' : 'rgba(255,45,85,0.6)';
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 2000);
+  }
+}
+
+// Cursor
+const cursor = document.getElementById('cursor');
+const trail = document.getElementById('cursorTrail');
+let tx = 0, ty = 0;
+
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX - 8 + 'px';
+  cursor.style.top = e.clientY - 8 + 'px';
+  setTimeout(() => {
+    trail.style.left = e.clientX - 3 + 'px';
+    trail.style.top = e.clientY - 3 + 'px';
+  }, 80);
+});
+
+document.addEventListener('mousedown', () => {
+  cursor.style.transform = 'scale(1.6)';
+  cursor.style.background = 'rgba(57,255,20,0.3)';
+});
+
+document.addEventListener('mouseup', () => {
+  cursor.style.transform = 'scale(1)';
+  cursor.style.background = 'transparent';
+});
+
+// Init
+shuffled = shuffle(questions);
+loadQuestion();
+</script>
+</body>
+</html>
