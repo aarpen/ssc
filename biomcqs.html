@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class X Biology — MCQ Practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1A1816;
+    --ink-light: #4A4540;
+    --ink-muted: #8A8480;
+    --paper: #F6F0E4;
+    --paper-warm: #EDE7D8;
+    --card: #FDFAF4;
+    --red: #C41A1A;
+    --red-light: #F5E8E8;
+    --green: #1A6B3A;
+    --green-light: #E6F5EC;
+    --gold: #B8860B;
+    --border: #D8D0C0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* ── PROGRESS BAR ── */
+  #progress-track {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 3px; background: var(--border); z-index: 100;
+  }
+  #progress-fill {
+    height: 100%; background: var(--red);
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+
+  /* ── LAYOUT ── */
+  .screen { display: none; min-height: 100vh; }
+  .screen.active { display: flex; flex-direction: column; }
+
+  /* ── START SCREEN ── */
+  #start-screen {
+    align-items: center; justify-content: center;
+    padding: 40px 24px;
+  }
+
+  .start-inner {
+    max-width: 600px; width: 100%; text-align: left;
+  }
+
+  .eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--red);
+    margin-bottom: 20px;
+  }
+
+  .start-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 6vw, 64px);
+    line-height: 1.05;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .start-title em {
+    font-style: italic; color: var(--red);
+  }
+
+  .start-sub {
+    font-size: 15px; color: var(--ink-light);
+    margin-bottom: 40px; max-width: 440px;
+    font-weight: 400;
+    border-left: 2px solid var(--red);
+    padding-left: 16px;
+    margin-top: 20px;
+  }
+
+  .stats-row {
+    display: flex; gap: 32px; margin-bottom: 44px;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: flex; flex-direction: column; gap: 2px;
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px; font-weight: 700; color: var(--ink);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 12px; color: var(--ink-muted);
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+
+  .divider-stat { width: 1px; background: var(--border); }
+
+  .cat-tags {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px;
+  }
+
+  .cat-tag {
+    font-size: 12px; font-weight: 500;
+    padding: 5px 12px; border-radius: 2px;
+    border: 1px solid var(--border);
+    color: var(--ink-light);
+    background: var(--card);
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: var(--ink); color: var(--paper);
+    border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; font-weight: 600;
+    padding: 16px 32px; letter-spacing: 0.02em;
+    transition: all 0.2s;
+    border-radius: 2px;
+  }
+
+  .btn-primary:hover { background: var(--red); transform: translateY(-1px); }
+  .btn-primary svg { transition: transform 0.2s; }
+  .btn-primary:hover svg { transform: translateX(4px); }
+
+  /* ── QUIZ SCREEN ── */
+  #quiz-screen {
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .quiz-header {
+    padding: 20px 32px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    background: var(--card);
+    position: sticky; top: 3px; z-index: 50;
+  }
+
+  .quiz-meta {
+    display: flex; align-items: center; gap: 20px;
+  }
+
+  .q-counter {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px; color: var(--ink-muted);
+  }
+
+  .q-counter span { color: var(--ink); font-weight: 600; }
+
+  .q-cat-badge {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px; border-radius: 2px;
+    background: var(--paper-warm); color: var(--ink-light);
+    border: 1px solid var(--border);
+  }
+
+  .score-live {
+    font-size: 13px; color: var(--ink-muted); font-weight: 500;
+  }
+
+  .score-live strong { color: var(--green); }
+
+  /* ── QUESTION AREA ── */
+  .quiz-body {
+    flex: 1; display: flex; align-items: flex-start;
+    justify-content: center;
+    padding: 48px 24px 100px;
+  }
+
+  .question-card {
+    max-width: 720px; width: 100%;
+    animation: slideIn 0.35s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-number-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--red);
+    margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+  }
+
+  .q-number-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  .question-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 2.5vw, 24px);
+    line-height: 1.5; color: var(--ink);
+    margin-bottom: 36px;
+    font-weight: 600;
+  }
+
+  .options-grid {
+    display: flex; flex-direction: column; gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  .option-btn {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    padding: 14px 18px;
+    cursor: pointer; text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; color: var(--ink);
+    border-radius: 3px;
+    transition: all 0.15s;
+    line-height: 1.5;
+    font-weight: 400;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .option-btn::before {
+    content: ''; position: absolute; inset: 0;
+    background: var(--ink); opacity: 0;
+    transition: opacity 0.15s;
+    pointer-events: none;
+  }
+
+  .option-btn:hover:not(.locked)::before { opacity: 0.03; }
+  .option-btn:hover:not(.locked) { border-color: var(--ink-muted); transform: translateX(3px); }
+
+  .option-letter {
+    display: flex; align-items: center; justify-content: center;
+    min-width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--paper-warm);
+    border: 1.5px solid var(--border);
+    font-size: 12px; font-weight: 700;
+    color: var(--ink-muted);
+    flex-shrink: 0;
+    transition: all 0.2s;
+    margin-top: 1px;
+  }
+
+  .option-btn.correct {
+    background: var(--green-light);
+    border-color: var(--green);
+    transform: translateX(0) !important;
+  }
+
+  .option-btn.correct .option-letter {
+    background: var(--green); border-color: var(--green);
+    color: white;
+  }
+
+  .option-btn.wrong {
+    background: var(--red-light);
+    border-color: var(--red);
+    transform: translateX(0) !important;
+  }
+
+  .option-btn.wrong .option-letter {
+    background: var(--red); border-color: var(--red);
+    color: white;
+  }
+
+  .option-btn.locked { cursor: default; }
+
+  /* ── FEEDBACK ── */
+  .feedback-bar {
+    display: none;
+    padding: 14px 20px;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 24px;
+    animation: fadeIn 0.25s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .feedback-bar.correct-fb { background: var(--green-light); color: var(--green); border: 1px solid #A8D8BB; }
+  .feedback-bar.wrong-fb   { background: var(--red-light);   color: var(--red);   border: 1px solid #E8AAAA; }
+
+  .feedback-icon { font-size: 16px; margin-right: 8px; }
+
+  /* ── NEXT BTN ── */
+  #next-btn {
+    display: none;
+    background: var(--ink); color: var(--paper);
+    border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 600;
+    padding: 13px 28px;
+    border-radius: 3px;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+
+  #next-btn:hover { background: var(--red); }
+
+  /* ── RESULTS SCREEN ── */
+  #result-screen {
+    align-items: center; justify-content: flex-start;
+    padding: 60px 24px 80px;
+    flex-direction: column;
+  }
+
+  .result-inner { max-width: 700px; width: 100%; }
+
+  .result-header {
+    text-align: left; margin-bottom: 48px;
+  }
+
+  .result-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.1; margin-bottom: 12px;
+  }
+
+  .result-title em { font-style: italic; color: var(--red); }
+
+  .result-sub {
+    font-size: 15px; color: var(--ink-muted);
+  }
+
+  /* ── SCORE DISPLAY ── */
+  .score-display {
+    display: flex; gap: 24px; margin-bottom: 48px;
+    flex-wrap: wrap;
+  }
+
+  .score-big {
+    background: var(--ink); color: var(--paper);
+    padding: 32px 40px; border-radius: 3px;
+    flex: 1; min-width: 200px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+
+  .score-percent {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px; font-weight: 700; line-height: 1;
+    letter-spacing: -2px;
+  }
+
+  .score-label-big {
+    font-size: 12px; letter-spacing: 0.12em;
+    text-transform: uppercase; opacity: 0.6;
+  }
+
+  .score-breakdown {
+    display: flex; flex-direction: column; gap: 12px;
+    flex: 1; min-width: 200px;
+  }
+
+  .score-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 20px; border-radius: 3px;
+    border: 1.5px solid var(--border);
+    background: var(--card);
+    font-size: 14px;
+  }
+
+  .score-row.correct-row { border-color: var(--green); background: var(--green-light); }
+  .score-row.wrong-row   { border-color: var(--red);   background: var(--red-light); }
+
+  .score-row-label { font-weight: 500; color: var(--ink-light); }
+  .score-row-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700; color: var(--ink);
+  }
+
+  .correct-row .score-row-val { color: var(--green); }
+  .wrong-row   .score-row-val { color: var(--red); }
+
+  /* ── CATEGORY BREAKDOWN ── */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 600;
+    margin-bottom: 20px; color: var(--ink);
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .section-title::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  .cat-breakdown { margin-bottom: 48px; }
+
+  .cat-row {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 12px; font-size: 13px;
+  }
+
+  .cat-row-name { width: 150px; color: var(--ink-light); font-weight: 500; flex-shrink: 0; }
+  .cat-bar-track { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .cat-bar-fill  { height: 100%; border-radius: 3px; background: var(--green); transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
+  .cat-score { width: 50px; text-align: right; font-weight: 600; color: var(--ink); }
+
+  /* ── REVIEW ── */
+  .review-section { margin-bottom: 40px; }
+
+  .review-toggle {
+    display: flex; align-items: center; gap: 10px;
+    background: none; border: 1.5px solid var(--border);
+    padding: 12px 20px; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 600; color: var(--ink);
+    width: 100%; text-align: left; border-radius: 3px;
+    margin-bottom: 20px;
+    transition: all 0.2s;
+  }
+
+  .review-toggle:hover { border-color: var(--ink); }
+
+  .review-list { display: none; }
+  .review-list.open { display: block; }
+
+  .review-item {
+    padding: 18px 20px;
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    margin-bottom: 10px;
+    background: var(--card);
+    font-size: 14px;
+  }
+
+  .review-item.r-correct { border-left: 4px solid var(--green); }
+  .review-item.r-wrong   { border-left: 4px solid var(--red); }
+
+  .review-q { font-weight: 500; margin-bottom: 8px; line-height: 1.5; }
+  .review-chosen { color: var(--red); font-size: 13px; }
+  .review-correct { color: var(--green); font-size: 13px; font-weight: 600; }
+  .review-tag {
+    font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    font-weight: 600; padding: 2px 8px; border-radius: 2px;
+    display: inline-block; margin-bottom: 8px;
+  }
+
+  .r-correct .review-tag { background: var(--green-light); color: var(--green); }
+  .r-wrong   .review-tag { background: var(--red-light);   color: var(--red); }
+
+  /* ── ACTION BUTTONS ── */
+  .result-actions {
+    display: flex; gap: 14px; flex-wrap: wrap;
+  }
+
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: none; color: var(--ink);
+    border: 1.5px solid var(--border); cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 600;
+    padding: 13px 24px; border-radius: 3px;
+    transition: all 0.2s;
+  }
+
+  .btn-outline:hover { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+
+  /* ── FILTER BAR (start screen) ── */
+  .filter-note {
+    font-size: 13px; color: var(--ink-muted);
+    margin-bottom: 16px;
+  }
+
+  /* ── DECORATIVE RULE ── */
+  .deco-rule {
+    display: flex; align-items: center; gap: 12px;
+    margin: 32px 0; color: var(--border);
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  }
+
+  .deco-rule::before, .deco-rule::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .quiz-header { padding: 14px 16px; flex-wrap: wrap; gap: 8px; }
+    .quiz-body { padding: 32px 16px 80px; }
+    .score-display { flex-direction: column; }
+    .stats-row { gap: 20px; }
+    .cat-row-name { width: 110px; font-size: 12px; }
+  }
+
+  /* ── UTILITY ── */
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div id="progress-track"><div id="progress-fill"></div></div>
+
+<!-- ════════════ START ════════════ -->
+<div id="start-screen" class="screen active">
+  <div class="start-inner">
+    <div class="eyebrow">District Common Examination Board — Telangana</div>
+
+    <div class="start-title">
+      Class X<br>
+      <em>Biology</em><br>
+      MCQ Practice
+    </div>
+
+    <p class="start-sub">
+      Compiled from Pre-Final &amp; Pre-Public examinations, February 2026 — all districts.
+      Every objective question, one place.
+    </p>
+
+    <div class="stats-row">
+      <div class="stat">
+        <span class="stat-number" id="total-count">150</span>
+        <span class="stat-label">Questions</span>
+      </div>
+      <div class="divider-stat"></div>
+      <div class="stat">
+        <span class="stat-number">13</span>
+        <span class="stat-label">Topics</span>
+      </div>
+      <div class="divider-stat"></div>
+      <div class="stat">
+        <span class="stat-number">20+</span>
+        <span class="stat-label">Papers</span>
+      </div>
+    </div>
+
+    <p class="filter-note">Topics covered:</p>
+    <div class="cat-tags" id="cat-tags-display"></div>
+
+    <button class="btn-primary" onclick="startQuiz()">
+      Begin Practice
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<!-- ════════════ QUIZ ════════════ -->
+<div id="quiz-screen" class="screen">
+  <div class="quiz-header">
+    <div class="quiz-meta">
+      <div class="q-counter">Question <span id="q-num">1</span> of <span id="q-total">150</span></div>
+      <div class="q-cat-badge" id="q-cat">—</div>
+    </div>
+    <div class="score-live">Correct: <strong id="live-score">0</strong></div>
+  </div>
+
+  <div class="quiz-body">
+    <div class="question-card" id="question-card">
+      <div class="q-number-label" id="q-label">Question 1</div>
+      <div class="question-text" id="question-text"></div>
+
+      <div class="options-grid" id="options-grid"></div>
+
+      <div class="feedback-bar" id="feedback-bar"></div>
+
+      <button id="next-btn" onclick="nextQuestion()">
+        Next Question →
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ RESULTS ════════════ -->
+<div id="result-screen" class="screen">
+  <div class="result-inner">
+    <div class="result-header">
+      <div class="eyebrow">Quiz Complete</div>
+      <div class="result-title" id="result-title">Good<br><em>effort!</em></div>
+      <p class="result-sub" id="result-sub"></p>
+    </div>
+
+    <div class="score-display">
+      <div class="score-big">
+        <div class="score-percent" id="score-percent">—</div>
+        <div class="score-label-big">Percentage Score</div>
+      </div>
+      <div class="score-breakdown">
+        <div class="score-row correct-row">
+          <span class="score-row-label">✓ Correct</span>
+          <span class="score-row-val" id="res-correct">—</span>
+        </div>
+        <div class="score-row wrong-row">
+          <span class="score-row-label">✗ Wrong</span>
+          <span class="score-row-val" id="res-wrong">—</span>
+        </div>
+        <div class="score-row">
+          <span class="score-row-label">Total</span>
+          <span class="score-row-val" id="res-total">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cat-breakdown">
+      <div class="section-title">By Topic</div>
+      <div id="cat-chart"></div>
+    </div>
+
+    <div class="review-section">
+      <button class="review-toggle" onclick="toggleReview(this)">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 5l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Review Wrong Answers
+      </button>
+      <div class="review-list" id="review-list"></div>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn-primary" onclick="restartQuiz()">Retry All Questions</button>
+      <button class="btn-outline" onclick="retryWrong()">Retry Wrong Only</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════════
+// ALL MCQs — COMPILED FROM ALL EXAM PAPERS
+// ════════════════════════════════════════════════════════════════
+const MASTER = [
+  // ── CELL BIOLOGY ──
+  { q:"Cellular respiration occurs in:", opts:["Ribosome","Chloroplast","Mitochondria","Golgi Complex"], ans:2, cat:"Cell Biology" },
+  { q:"Energy currency of the cell is:", opts:["ADP","ATP","Chloroplast","Mitochondria"], ans:1, cat:"Cell Biology" },
+  { q:"The end product of anaerobic respiration is:", opts:["CO₂ and Heat Energy","CO₂, Heat Energy and Ethyl Alcohol","CO₂, Heat Energy and Glucose","CO₂, Oxygen and Heat Energy"], ans:1, cat:"Cell Biology" },
+  { q:"Energy released during respiration is stored in:", opts:["Glucose","ATP","Oxygen","Carbon Dioxide"], ans:1, cat:"Cell Biology" },
+  { q:"Which phase of Mitosis shows chromosomes aligned at the equatorial plate?", opts:["Prophase","Metaphase","Anaphase","Telophase"], ans:1, cat:"Cell Biology" },
+  { q:"Match the phases of Mitosis with events — Prophase, Metaphase, Anaphase, Telophase:", opts:["Nuclear membrane reforms, Chromosomes at equator, Daughter chromosomes form, Nuclear membrane dissolves","Nuclear membrane dissolves, Chromosomes at equator, Daughter chromosomes form, Nuclear membrane reforms","Chromosomes at equator, Nuclear membrane reforms, Nuclear membrane dissolves, Daughter chromosomes form","Daughter chromosomes form, Nuclear membrane dissolves, Chromosomes at equator, Nuclear membrane reforms"], ans:1, cat:"Cell Biology" },
+  { q:"The correct statement about photosynthesis is:", opts:["Conversion of light energy into heat energy","Conversion of light energy into chemical energy","Conversion of light energy into electrical energy","Conversion of heat energy into chemical energy"], ans:1, cat:"Cell Biology" },
+
+  // ── NUTRITION ──
+  { q:"Deficiency disease caused by Niacin (Vitamin B3) deficiency is:", opts:["Beri Beri","Glossitis","Pellagra","Anaemia"], ans:2, cat:"Nutrition" },
+  { q:"The vitamin deficiency that causes Scurvy disease is:", opts:["Vitamin A","Vitamin B","Vitamin C","Vitamin D"], ans:2, cat:"Nutrition" },
+  { q:"Which vitamin is synthesized by bacteria present in the digestive system?", opts:["Folic acid","Pantothenic acid","Ascorbic acid","Cyanocobalamin (B12)"], ans:3, cat:"Nutrition" },
+  { q:"Identify the correct pair of fat-soluble vitamins:", opts:["Thiamin - Calciferol","Biotin - Phylloquinone","Calciferol - Tocoferol","Retinol - Niacin"], ans:2, cat:"Nutrition" },
+  { q:"Which is NOT a malnutrition disease?", opts:["Kwashiorkor","Marasmus","Obesity","Rickets"], ans:2, cat:"Nutrition" },
+  { q:"Which type of teeth are present in the least number in adult humans?", opts:["Incisors","Canines","Premolars","Molars"], ans:1, cat:"Nutrition" },
+  { q:"In the dentition formula 2:1:2:3, the digit '1' represents:", opts:["Incisors","Pre-molars","Canines","Molars"], ans:2, cat:"Nutrition" },
+  { q:"The hormone that stimulates hunger is:", opts:["Leptin","Ghrelin","Secretin","Cholecystokinin"], ans:1, cat:"Nutrition" },
+  { q:"Which hormone suppresses hunger?", opts:["Ghrelin","Pepsin","Leptin","Enterokinase"], ans:2, cat:"Nutrition" },
+  { q:"Identify the correct pair for Vitamin deficiency diseases:", opts:["Vitamin C – Scurvy","Vitamin D – Rickets","Vitamin E – Pellagra","Vitamin K – problems related to blood clotting"], ans:2, cat:"Nutrition" },
+  { q:"Riboflavin (Vitamin B2) deficiency causes:", opts:["Anaemia","Rickets","Nerves Disorder","Burning Feet"], ans:0, cat:"Nutrition" },
+  { q:"Identify the CORRECT pair (Vitamin deficiency – Disease):", opts:["Riboflavin – Anaemia","Tocoferol – Rickets","Biotin – Nerves Disorder","Folic acid – Burning Feet"], ans:2, cat:"Nutrition" },
+
+  // ── DIGESTION ──
+  { q:"Choose the correct order of the human digestive pathway:", opts:["Mouth → Stomach → Pharynx → Buccal cavity","Mouth → Buccal cavity → Pharynx → Stomach","Stomach → Mouth → Pharynx → Buccal cavity","Mouth → Pharynx → Stomach → Buccal cavity"], ans:1, cat:"Digestion" },
+  { q:"Identify the correct sequence of the human alimentary canal:", opts:["Mouth → Rectum → Oesophagus → Stomach → Small intestine → Large intestine → Anus","Mouth → Stomach → Oesophagus → Small intestine → Large intestine → Rectum → Anus","Mouth → Oesophagus → Stomach → Small intestine → Large intestine → Rectum → Anus","Mouth → Large intestine → Small intestine → Stomach → Oesophagus → Rectum → Anus"], ans:2, cat:"Digestion" },
+  { q:"The pair of enzymes that convert proteins to peptones are:", opts:["Amylase – Sucrase","Pepsin – Trypsin","Peptidases – Lipase","Ptyalin – Trypsin"], ans:1, cat:"Digestion" },
+  { q:"Identify the INCORRECT pair (Digestive juice – Enzyme):", opts:["Saliva – Ptyalin","Pancreatic juice – Amylase","Intestinal juice – Peptidases","Gastric juice – Lipase"], ans:3, cat:"Digestion" },
+  { q:"The acid present in gastric juice is:", opts:["Acetic acid","Hydrochloric acid","Sulphuric acid","Nitric acid"], ans:1, cat:"Digestion" },
+  { q:"The chemical reagent used to test starch in the saliva experiment is:", opts:["Potassium hydroxide","Hydrochloric acid","Iodine","Methylated Spirit"], ans:2, cat:"Digestion" },
+  { q:"In the cycle tube and potato experiment, oil is compared with:", opts:["Enzymes","Mucus","Blood","Water"], ans:1, cat:"Digestion" },
+  { q:"The correct sequence of the digestion process is:", opts:["Mastication → Digestion → Absorption → Defecation","Digestion → Mastication → Absorption → Defecation","Mastication → Absorption → Digestion → Defecation","Absorption → Digestion → Mastication → Defecation"], ans:0, cat:"Digestion" },
+  { q:"Common passage for food and air in humans is:", opts:["Epiglottis","Glottis","Pharynx","Larynx"], ans:2, cat:"Digestion" },
+  { q:"The cycle tube and potato peristalsis experiment demonstrates:", opts:["Action of saliva on flour","Simplification of food","Peristalsis in oesophagus","Waste expulsion in large intestines"], ans:2, cat:"Digestion" },
+  { q:"Reverse peristalsis is the common process seen in:", opts:["Dog","Buffalo","Man","Sparrow"], ans:0, cat:"Digestion" },
+  { q:"The vaseline applied on the leaf in the acid-leaf experiment is compared with:", opts:["Mucus","HCl","Enzyme","Bolus"], ans:0, cat:"Digestion" },
+  { q:"The acid-leaf experiment demonstrates:", opts:["Effect of sulphuric acid on stomach lining","Protection of stomach with the mucus layer","Peristaltic movement of oesophagus","Opening of pyloric sphincter"], ans:1, cat:"Digestion" },
+  { q:"Arrange the parts of the human digestive system in correct order: Buccal cavity (i), Duodenum (ii), Large intestine (iii), Stomach (iv), Small intestine (v), Pharynx (vi), Oesophagus (vii):", opts:["iii, ii, v, vi, i, vii, iv","vii, vi, v, iv, iii, ii, i","i, vi, vii, iv, ii, v, iii","ii, vii, vi, iv, ii, v, iii"], ans:2, cat:"Digestion" },
+  { q:"Which is NOT a correct statement about digestion?", opts:["Pepsin digests proteins in stomach","Bile emulsifies fats","Ptyalin digests starch in mouth","Lipase digests proteins in small intestine"], ans:3, cat:"Digestion" },
+
+  // ── CIRCULATION ──
+  { q:"The valve present between the Right atrium and Right ventricle is:", opts:["Bicuspid valve","Tricuspid valve","Pulmonary valve","Systemic valve"], ans:1, cat:"Circulation" },
+  { q:"The reason for heart sounds (lub-dub) is:", opts:["Closing of valves","Blood pressure in heart","Blood flows rapidly","Flow of blood in ventricles"], ans:0, cat:"Circulation" },
+  { q:"What converts Fibrinogen to Fibrin during blood clotting?", opts:["Prothrombrin","Thrombokinase","Thrombin","Serum"], ans:2, cat:"Circulation" },
+  { q:"Identify the correct pair regarding blood vessels:", opts:["Superior & inferior venacava – Deoxygenated blood","Pulmonary vein – Deoxygenated blood","Pulmonary artery – Oxygenated blood","Aorta – Deoxygenated blood"], ans:0, cat:"Circulation" },
+  { q:"The correct sequence of blood flow from lungs back to the body:", opts:["Pulmonary vein → left ventricle → left atrium → body","Pulmonary vein → lungs → left atrium → left ventricle","Lungs → pulmonary vein → left atrium → left ventricle","Lungs → left atrium → left ventricle → pulmonary vein"], ans:2, cat:"Circulation" },
+  { q:"Which organism does NOT have a double circulation system?", opts:["Bird","Frog","Fish","Human being"], ans:2, cat:"Circulation" },
+  { q:"Normal blood pressure of a human being is:", opts:["120/80 mm Hg","80/120 mm Hg","210/80 mm Hg","120/100 mm Hg"], ans:0, cat:"Circulation" },
+  { q:"Device used to measure blood pressure:", opts:["Sphygmomanometer","Barometer","Thermometer","Anemometer"], ans:0, cat:"Circulation" },
+  { q:"Identify the CORRECT pair about heart valves:", opts:["Tricuspid valve – Between Right atrium and Right ventricle","Bicuspid valve – Between Left ventricle and systemic aorta","Pulmonary valve – Between left atrium and left ventricle","Systemic valve – Between Right ventricle and Pulmonary aorta"], ans:0, cat:"Circulation" },
+  { q:"Choose the INCORRECT statement about the circulatory system:", opts:["Coronary arteries supply blood to muscles of heart","Arteries supply blood from heart to body organs","Pulmonary vein carries deoxygenated blood from lungs to heart","Arteries carry blood away from the heart"], ans:2, cat:"Circulation" },
+  { q:"Choose the INCORRECT statement about arteries and veins:", opts:["Arteries have thin walls","Bicuspid valve is also called mitral valve","Veins have thin walls","Aorta is the largest artery"], ans:0, cat:"Circulation" },
+  { q:"Identify the incorrect pair (organ – protective covering):", opts:["Heart – Pericardium","Lungs – Pleura","Kidneys – Skin","Brain – Meninges"], ans:2, cat:"Circulation" },
+  { q:"Find the odd one from the following (not a blood vessel):", opts:["Arteries","Veins","Coronary vessels","Renal tubules"], ans:3, cat:"Circulation" },
+  { q:"In insects, the circulatory system seen is:", opts:["Closed","Open","Double circulation","Single closed"], ans:1, cat:"Circulation" },
+  { q:"The sequence of the cardiac cycle is:", opts:["Ventricle systole → Auricle systole → Ventricle diastole → Auricle diastole","Auricle systole → Auricle diastole → Ventricle systole → Ventricle diastole","Auricle diastole → Ventricle systole → Auricle systole → Ventricle diastole","Auricle systole → Ventricle systole → Auricle diastole → Ventricle diastole"], ans:1, cat:"Circulation" },
+  { q:"Identify the organ that pumps blood in the human body:", opts:["Lungs","Kidney","Heart","Brain"], ans:2, cat:"Circulation" },
+
+  // ── RESPIRATION ──
+  { q:"What percentage of oxygen is present in exhaled air?", opts:["21%","78%","16%","4.4%"], ans:2, cat:"Respiration" },
+  { q:"What percentage of CO₂ is present in inhaled (atmospheric) air?", opts:["2%","1%","4.4%","0.03%"], ans:3, cat:"Respiration" },
+  { q:"Structural and functional units of lungs are called:", opts:["Capillaries","Bronchioles","Alveoli","Bronchus"], ans:2, cat:"Respiration" },
+  { q:"Potassium Hydroxide (KOH) is used in Mohl's half-leaf experiment to:", opts:["Release carbon dioxide","Absorb water","Absorb light","Absorb carbon dioxide"], ans:3, cat:"Respiration" },
+  { q:"Which of the following is NOT directly involved in the mechanism of respiration?", opts:["Ribs","Diaphragm","Chest cavity","Blood vessels"], ans:3, cat:"Respiration" },
+  { q:"Identify the correct sequence of events in respiration:", opts:["Breathing → gaseous exchange in lungs → gas transport by blood → gaseous exchange at tissue → cellular respiration","Cellular respiration → gaseous exchange in lungs → gas transport → gaseous exchange at tissue → breathing","Cellular respiration → gaseous exchange at tissue → gas transport → gaseous exchange in lungs → breathing","Breathing → gaseous exchange at tissue → gas transport → gaseous exchange in lungs → cellular respiration"], ans:0, cat:"Respiration" },
+  { q:"The experiment using sprouted seeds and lime water demonstrates:", opts:["Heat is released during respiration","Heat is released during photosynthesis","CO₂ is released during respiration","O₂ is released during respiration"], ans:2, cat:"Respiration" },
+  { q:"The substance used to test carbon dioxide is:", opts:["KOH","Lime water","Iodine","Methylated spirit"], ans:1, cat:"Respiration" },
+  { q:"Which chemical is used to detect oxygen in glucose solution during the anaerobic respiration experiment?", opts:["Diazine green","Iodine","Glycerin","KOH"], ans:0, cat:"Respiration" },
+  { q:"Odd one out (related to respiration mechanism):", opts:["Lungs","Heart","Skin","Liver"], ans:1, cat:"Respiration" },
+  { q:"Identify the INCORRECT pair (organism – respiratory organ):", opts:["Trachea – Cockroach","Lungs – Human being","Skin – Fish","Gills – Prawn"], ans:2, cat:"Respiration" },
+
+  // ── EXCRETION ──
+  { q:"The cup-shaped structure found at one end of the nephron is:", opts:["Calyces","Henle's loop","Urinary bladder","Bowman's capsule"], ans:3, cat:"Excretion" },
+  { q:"Identify the correct sequence in the human excretory system:", opts:["Kidneys → Urinary Bladder → Urethra → Ureter","Kidneys → Ureter → Urinary Bladder → Urethra","Kidneys → Urethra → Ureter → Urinary Bladder","Kidneys → Urethra → Urinary Bladder → Ureter"], ans:1, cat:"Excretion" },
+  { q:"Function of the Malpighian body is:", opts:["Stores urine","Micturation","Protect the kidneys","Filtration of substances in the blood"], ans:3, cat:"Excretion" },
+  { q:"The correct sequence for urine formation is:", opts:["Glomerular filtration → Tubular Secretion → Tubular re-absorption → Concentrated urine","Glomerular filtration → Tubular secretion → Concentrated urine → Tubular reabsorption","Tubular Secretion → Tubular reabsorption → Glomerular filtration → Concentrated urine","Glomerular filtration → Tubular reabsorption → Tubular secretion → Concentrated urine"], ans:3, cat:"Excretion" },
+  { q:"The artificial kidney machine is called:", opts:["Stethoscope","Sphygmomanometer","Dialysis machine","pH scale"], ans:2, cat:"Excretion" },
+  { q:"Identify the INCORRECT pair of excretory organs (organism – organ):", opts:["Flame cells – Earthworm","Malpighian tubules – Cockroach","Kidney – Frog","Renette cells – Round worm"], ans:0, cat:"Excretion" },
+  { q:"Diabetes insipidus means:", opts:["Concentrated urine, less urination","Dilute urine, excessive urination","Concentrated urine, excessive urination","Dilute urine, less urination"], ans:1, cat:"Excretion" },
+  { q:"Less secretion of vasopressin (ADH) hormone leads to:", opts:["Diabetes mellitus","Diabetes insipidus","Uremia","Micturition"], ans:1, cat:"Excretion" },
+  { q:"Identify the correct pair of excretory products in organisms:", opts:["Aquatic animals – Ammonia","Mammals – Uric acid","Birds – Urea","Plants – Oxygen"], ans:0, cat:"Excretion" },
+  { q:"Match the phyla to their excretory organs: Platyhelminthes – Nematoda – Annelida – Arthropoda:", opts:["Nephridia – Green glands – Flame cells – Renette cells","Green glands – Renette cells – Nephridia – Flame cells","Flame cells – Renette cells – Nephridia – Green glands","Renette cells – Nephridia – Green glands – Flame cells"], ans:2, cat:"Excretion" },
+  { q:"Identify the wrong pair (organism – excretory organ):", opts:["Nematoda – Renette cells","Mollusca – Meta nephridia","Aves – Kidneys","Annelids – Water vascular system"], ans:3, cat:"Excretion" },
+  { q:"Match excretory organs: Annelids – Arthropods – Mollusca – Nematoda:", opts:["Nephridia – Malpighian tubules – Meta nephridia – Renette cells","Renette cells – Meta nephridia – Nephridia – Malpighian tubules","Malpighian tubules – Nephridia – Renette cells – Meta nephridia","Meta nephridia – Renette cells – Malpighian tubules – Nephridia"], ans:0, cat:"Excretion" },
+  { q:"Urine is produced by:", opts:["Kidney","Lungs","Blood","Liver"], ans:0, cat:"Excretion" },
+
+  // ── NERVOUS SYSTEM ──
+  { q:"The part of the brain that controls hunger pangs is:", opts:["Cerebrum","Mid brain","Medulla oblongata","Diencephalon"], ans:3, cat:"Nervous System" },
+  { q:"Identify the INCORRECT statement about neurons:", opts:["Synapse is the contact between two neurons","Sensory neurons carry messages from sense organs to brain","Medulla oblongata is the centre for cardiac and vasomotor activities","Motor neurons carry messages from sensory organs to brain"], ans:3, cat:"Nervous System" },
+  { q:"The correct sequence of the nerve pathway is:", opts:["Sense organ → afferent nerve → Brain → efferent nerve → effector organ","Brain → efferent nerve → effector organ → sense organ → afferent nerve","Efferent nerve → effector organ → Brain → sense organ → afferent nerve","Effector organ → efferent nerve → Brain → afferent nerve → sense organ"], ans:0, cat:"Nervous System" },
+  { q:"Number of cranial nerve pairs in humans is:", opts:["10 pairs","12 pairs","13 pairs","8 pairs"], ans:1, cat:"Nervous System" },
+  { q:"Identify the INCORRECT pair (number of biological structures):", opts:["Cranial nerves – 13 pairs","Vestigial organs – 180","Human chromosomes – 46","Nephrons in one kidney – 1.3–1.8 million"], ans:0, cat:"Nervous System" },
+  { q:"Both statements are correct: (1) Gaseous exchange takes place at alveoli; (2) Inhaled and exhaled air composition differs:", opts:["Only Statement 1 is correct","Only Statement 2 is correct","Both statements are wrong","Both statements are correct"], ans:3, cat:"Nervous System" },
+  { q:"Ghrelin stimulates hunger AND Diencephalon carries hunger signals to brain — which is correct?", opts:["Only Ghrelin statement correct","Only Diencephalon statement incorrect","Both are correct","Both are incorrect"], ans:2, cat:"Nervous System" },
+
+  // ── ENDOCRINE SYSTEM ──
+  { q:"The hormone responsible for the development of secondary sexual characters in males is:", opts:["Estrogen","Progesterone","Testosterone","LH"], ans:2, cat:"Endocrine System" },
+  { q:"Hormones secreted by the ovaries in females are:", opts:["Only Progesterone","Only Estrogen","Progesterone and Estrogen","Progesterone, Estrogen and Testosterone"], ans:2, cat:"Endocrine System" },
+  { q:"Identify the correct pair (Gland – Hormone):", opts:["Pituitary – Thyroxine","Adrenal – Testosterone","Ovary – Estrogen","Pancreas – Gonadotropin"], ans:2, cat:"Endocrine System" },
+  { q:"Which hormone is NOT secreted by the pituitary gland?", opts:["Growth hormone","Luteinizing hormone","Progesterone","Follicle stimulating hormone"], ans:2, cat:"Endocrine System" },
+  { q:"Which gland is called the 'master gland' of the body?", opts:["Thyroid","Adrenal","Pituitary","Pancreas"], ans:2, cat:"Endocrine System" },
+  { q:"The correct pair for reproductive hormones is:", opts:["Testis – Estrogen","Ovary – Testosterone","Testis – Testosterone","Kidney – Progesterone"], ans:2, cat:"Endocrine System" },
+  { q:"Glucagon hormone functions to:", opts:["Decrease blood glucose level","Increase blood glucose level","Convert glucose to glycogen","Stimulate insulin release"], ans:1, cat:"Endocrine System" },
+  { q:"Identify the INCORRECT match (Gland – Effect of hormone):", opts:["Pituitary – Thyrotropin","Thyroid – General growth rate and metabolism","Glucagon – Decreases glucose percentage in blood","Adrenalin – Increase in heart beat rate"], ans:2, cat:"Endocrine System" },
+  { q:"Which is NOT correctly matched (Gland – Hormone secreted)?", opts:["Ovary – Estrogen","Pituitary – Thyrotrophin","Pancreas – Vasopressin","Adrenal – Adrenalin"], ans:2, cat:"Endocrine System" },
+  { q:"The sex of a baby is determined by:", opts:["Mother","Father","Both parents equally","Environment"], ans:1, cat:"Endocrine System" },
+
+  // ── REPRODUCTION & GENETICS ──
+  { q:"Embryo sac in flowering plants has:", opts:["7 cells and 8 nuclei","7 cells and 7 nuclei","8 cells and 7 nuclei","8 cells and 8 nuclei"], ans:0, cat:"Genetics" },
+  { q:"Placenta is formed during:", opts:["3 weeks","6 weeks","9 weeks","12 weeks"], ans:3, cat:"Genetics" },
+  { q:"Number of male nuclei observed in a pollen grain during the pollen grain activity:", opts:["1","2","3","4"], ans:1, cat:"Genetics" },
+  { q:"Number of chromosomes in male human body cells:", opts:["44 + XY","22 + XY","46 + XY","23 + XX"], ans:0, cat:"Genetics" },
+  { q:"Chromosomes in female human body cells:", opts:["44 + XX","22 + XY","44 + XY","22 + XX"], ans:0, cat:"Genetics" },
+  { q:"Which is NOT a contraceptive method?", opts:["Vasectomy","Condom","Tubectomy","Fertilization"], ans:3, cat:"Genetics" },
+  { q:"The fluid that develops immunity of the new-born baby is:", opts:["Colostrum","Plasma","Serum","Blood"], ans:0, cat:"Genetics" },
+  { q:"Government helps HIV patients through:", opts:["ICRISAT","ART Centres","IUCN","BOD"], ans:1, cat:"Genetics" },
+  { q:"Sperms are stored in:", opts:["Seminal vesicles","Urethra","Ejaculatory duct","Epididymis"], ans:3, cat:"Genetics" },
+  { q:"Which of the following indicates the homozygous state?", opts:["yy","Yy","yY","Yr"], ans:0, cat:"Genetics" },
+  { q:"The genotype ratio of a monohybrid cross (F2 generation) is:", opts:["1:2:1","1:3","3:1","4:1"], ans:0, cat:"Genetics" },
+  { q:"Recessive traits correctly paired in pea plant:", opts:["Yellow Seeds – Green pods","Green Seeds – Yellow pods","Axial flowers – White flowers","Terminal flowers – Purple flowers"], ans:1, cat:"Genetics" },
+  { q:"Match the phylum to excretory organ: Platyhelminthes, Nematoda, Annelida, Arthropoda:", opts:["i-Flame cells, ii-Renette cells, iii-Nephridia, iv-Green glands","i-Nephridia, ii-Flame cells, iii-Green glands, iv-Renette cells","i-Renette cells, ii-Green glands, iii-Flame cells, iv-Nephridia","i-Green glands, ii-Nephridia, iii-Renette cells, iv-Flame cells"], ans:0, cat:"Genetics" },
+
+  // ── EVOLUTION ──
+  { q:"Homologous organs are:", opts:["Similar in origin with dissimilar functions","Dissimilar in origin and dissimilar in functions","Dissimilar in origin but similar in functions","Similar in origin and functions"], ans:0, cat:"Evolution" },
+  { q:"An insect wing and a bird wing are examples of:", opts:["Homologous organs","Analogous organs","Vestigial organs","Fossils"], ans:1, cat:"Evolution" },
+  { q:"The age of fossils is determined by:", opts:["Carbon dating method","X-ray method","DNA analysis","Microscopy"], ans:0, cat:"Evolution" },
+  { q:"Connecting link between aves and reptiles is:", opts:["Dinosaur","Archeopteryx","Cheetah","Diopithicus"], ans:1, cat:"Evolution" },
+  { q:"Correct matching of evolutionists and their contributions:", opts:["Darwin–Origin of Species, Lamarck–Inheritance of acquired chars, Mendel–Law of dominance, Lyell–Principle of geology","Darwin–Law of dominance, Lamarck–Natural selection, Mendel–Origin of Species, Lyell–Inheritance","Darwin–Inheritance, Lamarck–Origin of Species, Mendel–Natural selection, Lyell–Law of dominance","Darwin–Principle of geology, Lamarck–Law of dominance, Mendel–Inheritance, Lyell–Natural selection"], ans:0, cat:"Evolution" },
+  { q:"The Germplasm theory was proposed by:", opts:["Mendel","Darwin","Lamarck","Weismann"], ans:3, cat:"Evolution" },
+  { q:"Identify the INCORRECT pair in evolution theories:", opts:["Mendel – Law of independent assortment","Malthus – Principles of population","Charles Lyell – Principles of geology","August Weismann – Inheritance of acquired characters"], ans:3, cat:"Evolution" },
+  { q:"Identify the INCORRECT statement about evolution:", opts:["Darwin proposed the theory of natural selection","Lamarck proposed inheritance of acquired characters","Mendel proposed the law of dominance","Alfred Wallace proved bodily changes are not inherited"], ans:3, cat:"Evolution" },
+  { q:"Identify the INCORRECT pair (evolutionist – theory):", opts:["Mendel – Law of inheritance","Darwin – Natural selection","Lamarck – Use and disuse","Mendel – Theory of Evolution"], ans:3, cat:"Evolution" },
+  { q:"Statement 1: Age of fossils is determined by carbon dating. Statement 2: Insect wing and bird wing are homologous organs.", opts:["Statement 1 correct, Statement 2 wrong","Both statements wrong","Statement 1 wrong, Statement 2 correct","Both statements correct"], ans:0, cat:"Evolution" },
+  { q:"The INCORRECT statement about evolutionary evidence:", opts:["Monohybrid cross genotype ratio is 1:2:1","44+XY chromosomes are present in male human cells","Homologous and analogous organs explain the formation of fossil fuels","Atavism is when vestigial organs appear abruptly in humans"], ans:2, cat:"Evolution" },
+  { q:"Match the scientists: Charles Darwin, Lamarck, Mendel, Charles Lyell:", opts:["Darwin–Natural selection, Lamarck–Inheritance of acquired chars, Mendel–Law of dominance, Lyell–Geological changes in uniform rate","Darwin–Geological changes, Lamarck–Natural selection, Mendel–Inheritance, Lyell–Law of dominance","Darwin–Law of dominance, Lamarck–Natural selection, Mendel–Geological, Lyell–Inheritance","Darwin–Inheritance, Lamarck–Geological, Mendel–Natural selection, Lyell–Law of dominance"], ans:0, cat:"Evolution" },
+
+  // ── PLANT PHYSIOLOGY ──
+  { q:"Identify the missing reactant/product: C₆H₁₂O₆ + [?] → [?] + 6H₂O + Energy:", opts:["6CO₂ only","6O₂ only","6O₂ and 6CO₂","6H₂O and 6CO₂"], ans:2, cat:"Plant Physiology" },
+  { q:"A plant is kept in darkness for 48 hours before photosynthesis experiments in order to:", opts:["Remove chlorophyll from leaves","Remove water from leaves","Ensure that no photosynthesis occurred","Ensure that leaves are free from starch"], ans:3, cat:"Plant Physiology" },
+  { q:"The plant used in the experiment to show that oxygen is released in photosynthesis:", opts:["Hibiscus","Rose","Hydrilla","Aloe vera"], ans:2, cat:"Plant Physiology" },
+  { q:"Chemical used to prove CO₂ is essential for photosynthesis (it absorbs CO₂):", opts:["Sodium hydroxide","Sodium carbonate","Iodine","Potassium hydroxide"], ans:3, cat:"Plant Physiology" },
+  { q:"Stomata : Leaves :: Lenticels : ?", opts:["Root","Leaf","Stem","Flower"], ans:2, cat:"Plant Physiology" },
+  { q:"The correct sequential events in photosynthesis:", opts:["Splitting of water → Chlorophyll absorbs light → CO₂ fixed → Assimilatory power formed","Chlorophyll absorbs light → Splitting of water → CO₂ fixed → Assimilatory power formed","Chlorophyll absorbs light → Splitting of water → Assimilatory power formed → CO₂ fixed","CO₂ fixed → Chlorophyll absorbs light → Splitting of water → Assimilatory power formed"], ans:2, cat:"Plant Physiology" },
+  { q:"Which phytohormone promotes cell division?", opts:["Auxin","Gibberellin","Cytokinin","Ethylene"], ans:2, cat:"Plant Physiology" },
+  { q:"Movement in tendrils is called:", opts:["Thigmotropism","Geotropism","Phototropism","Hydrotropism"], ans:0, cat:"Plant Physiology" },
+  { q:"Match the tropisms with their stimuli: Phototropism, Geotropism, Hydrotropism, Chemotropism:", opts:["Light, Gravity, Water, Chemicals","Gravity, Light, Water, Chemicals","Light, Water, Gravity, Chemicals","Chemicals, Gravity, Water, Light"], ans:0, cat:"Plant Physiology" },
+  { q:"Which plant hormone is associated with fruit ripening?", opts:["Auxin","Gibberellin","Cytokinin","Ethylene"], ans:3, cat:"Plant Physiology" },
+  { q:"Gas essential for photosynthesis:", opts:["CO₂","O₂","N₂","SO₂"], ans:0, cat:"Plant Physiology" },
+  { q:"The secondary metabolite obtained from Hevea brasiliensis is:", opts:["Gums","Latex","Alkaloids","Tannins"], ans:1, cat:"Plant Physiology" },
+  { q:"Which of the following is NOT an alkaloid?", opts:["Nimbin","Caffeine","Rubber","Nicotine"], ans:2, cat:"Plant Physiology" },
+  { q:"Factor playing important role in movement of water from root hairs to xylem:", opts:["Osmosis","Root pressure","Transpiration","Cell sap"], ans:0, cat:"Plant Physiology" },
+  { q:"The wrong statement about water transport in plants:", opts:["Root pressure helps transport in small plants","Water transport occurs through xylem","Plants absorb water rapidly with the help of transpiration","Osmotic pressure helps phloem transport food"], ans:2, cat:"Plant Physiology" },
+  { q:"Correct statement about Cytokinins and Abscisic acid (ABA):", opts:["Both statements about Cytokinins and ABA are incorrect","Cytokinins promote cell division and open stomata; ABA closes stomata and promotes seed dormancy","Only the Cytokinin statement is correct","Only the ABA statement is correct"], ans:1, cat:"Plant Physiology" },
+  { q:"Identify the correct pair (root – structure):", opts:["Root hair – Present on shoot","Xylem – Transport food material","Stomata – Transpiration","Phloem – Transport water"], ans:2, cat:"Plant Physiology" },
+  { q:"Biodiesel is obtained from which part of Jatropha plant?", opts:["Leaf","Root","Seed","Stem"], ans:2, cat:"Plant Physiology" },
+  { q:"Micro irrigation technique is:", opts:["Drip irrigation","Percolation tank","Contour trench","Masonry dams"], ans:0, cat:"Plant Physiology" },
+
+  // ── VEGETATIVE REPRODUCTION ──
+  { q:"Identify the INCORRECT pair (vegetative propagation):", opts:["Leaves – Bryophyllum","Roots – Turmeric","Bulbs – Onion","Stolons – Strawberry"], ans:1, cat:"Reproduction" },
+  { q:"Identify the CORRECT pair for vegetative reproduction:", opts:["Stolons – Oxalis","Runner – Jasmine","Stem tuber – Radish","Rhizome – Turmeric"], ans:3, cat:"Reproduction" },
+  { q:"Match vegetative reproductive structures: Stolon – Bulb – Tuber:", opts:["Potato – Onion – Strawberry","Strawberry – Onion – Potato","Onion – Potato – Strawberry","Strawberry – Potato – Onion"], ans:1, cat:"Reproduction" },
+  { q:"Identify the INCORRECT pair (vegetative propagation structure):", opts:["Runner – Oxalis","Stolons – Jasmine","Bulb – Ginger","Corm – Colocasia"], ans:0, cat:"Reproduction" },
+
+  // ── MICROORGANISMS ──
+  { q:"Bread mould (Rhizopus) grows best under conditions of:", opts:["Dry and Cold","Hot and Dry","Warm and Moist","Cold and Wet"], ans:2, cat:"Microorganisms" },
+  { q:"The diagram showing parts of Planaria regenerating represents:", opts:["Regeneration in Spirogyra","Fragmentation in Planaria","Regeneration in Planaria","Fragmentation in Spirogyra"], ans:2, cat:"Microorganisms" },
+  { q:"Match asexual reproduction types: Fission – Budding – Fragmentation – Parthenocarpy:", opts:["Paramecium – Yeast – Spirogyra – Watermelon","Spirogyra – Yeast – Paramecium – Watermelon","Paramecium – Spirogyra – Yeast – Watermelon","Watermelon – Paramecium – Yeast – Spirogyra"], ans:0, cat:"Microorganisms" },
+
+  // ── ECOLOGY ──
+  { q:"The process of entry of pollutants into a food chain is:", opts:["Bioremediation","Biomagnification","Bio accumulation","Phytoremediation"], ans:2, cat:"Ecology" },
+  { q:"Tendency of pollutants to concentrate from one trophic level to the next is:", opts:["Bio-accumulation","Bio-magnification","Eutrophication","Bio-remediation"], ans:1, cat:"Ecology" },
+  { q:"Bioaccumulation is the process of:", opts:["Entering of pollutants in a food chain","Entering of pollutants in a food web","Entering of pollutants in an ecosystem","Entering of pollutants into biosphere"], ans:0, cat:"Ecology" },
+  { q:"The accumulation of harmful chemicals in higher trophic levels is called:", opts:["Biodegradation","Biomagnification","Bioremediation","Biofertilizer"], ans:1, cat:"Ecology" },
+  { q:"In an ecosystem, herbivores represent:", opts:["Producers","Primary consumers","Secondary consumers","Tertiary consumers"], ans:1, cat:"Ecology" },
+  { q:"Identify the INCORRECT pair (food chain positions):", opts:["Producer – Grass","Primary consumers – Rabbit","Secondary consumers – Deer","Decomposers – Bacteria"], ans:2, cat:"Ecology" },
+  { q:"The base of the food pyramid always consists of:", opts:["Producers","Primary consumers","Secondary consumers","Tertiary consumers"], ans:0, cat:"Ecology" },
+  { q:"Which of the following is NOT a biotic component of an ecosystem?", opts:["Sunlight","Fauna","Flora","Micro organisms"], ans:0, cat:"Ecology" },
+  { q:"Special position of an animal within the food web is called:", opts:["Food chain","Habitat","Food web","Niche"], ans:3, cat:"Ecology" },
+  { q:"'Forests are the lungs of nature.' What are called forests in this context?", opts:["Oceans","Forests","Rivers","Villages"], ans:1, cat:"Ecology" },
+  { q:"Missing items in food chain: [?] → Primary Consumers → [?] → Tertiary Consumers:", opts:["Decomposers, Producers","Producers, Secondary consumers","Abiotic factors, Producers","Decomposers, Abiotic factors"], ans:1, cat:"Ecology" },
+  { q:"Pyramid of biomass in an aquatic ecosystem is:", opts:["Always upright","Inverted","Always irregular","Depends on season"], ans:1, cat:"Ecology" },
+  { q:"In which ecosystem is the pyramid of biomass inverted?", opts:["Forest ecosystem","Desert ecosystem","Grassland ecosystem","Pond ecosystem"], ans:3, cat:"Ecology" },
+  { q:"According to Charles Elton, which is correct about ecological pyramid?", opts:["Omnivores at top of pyramid","Energy trapping is high at top","No producers at top of pyramid","Pyramid of Biomass in aquatic ecosystem always upright"], ans:2, cat:"Ecology" },
+  { q:"Odd one out (renewable vs non-renewable resource):", opts:["Water","Air","Sunlight","Petroleum"], ans:3, cat:"Ecology" },
+  { q:"ICRISAT is located at:", opts:["Mumbai","Hyderabad","Bangalore","Chennai"], ans:1, cat:"Ecology" },
+  { q:"Sustainable development means:", opts:["Prevention of wastage","Stable growth","Development without damaging natural resources","High yielding in less time"], ans:2, cat:"Ecology" },
+  { q:"The process of converting waste materials into new materials is called:", opts:["Reuse","Recycle","Reduce","Recover"], ans:1, cat:"Ecology" },
+  { q:"Tree plantation belongs to which of the 4R principles?", opts:["Reuse","Recover","Reduce","Recycle"], ans:1, cat:"Ecology" },
+  { q:"Which is NOT a biological pest control method?", opts:["Crop rotation","Biological control","Environmental ethics","Pesticide usage"], ans:3, cat:"Ecology" },
+  { q:"Identify the INCORRECT statement about producers:", opts:["All green plants and blue-green algae are producers","Green plants get their food from organic compounds","Producers prepare food from inorganic substances","Plants convert solar energy to chemical energy"], ans:1, cat:"Ecology" },
+  { q:"Which organism is NOT a constituent of a typical food chain?", opts:["Grass, Grasshopper, Frog, Snake","Rat, Snake, Eagle, Grass","Plankton, Fish, Grasshopper (no base producer connecting all)","Deer, Lion, Grass"], ans:2, cat:"Ecology" },
+  { q:"Identify the missing organism: Grass → Grasshopper → ? → Snake → Hawk:", opts:["Rabbit","Frog","Wolf","Man"], ans:1, cat:"Ecology" },
+  { q:"Both these statements about ecological terms: (A) Entry of pollutants into food chain = Bio-accumulation; (B) Tendency to concentrate trophic levels = Bio-magnification:", opts:["A correct, B wrong","B correct, A wrong","Both A and B correct","Both A and B wrong"], ans:2, cat:"Ecology" },
+];
+
+// ════════════════════════
+// STATE
+// ════════════════════════
+let questions = [];
+let current = 0;
+let score = 0;
+let userAnswers = [];
+let quizMode = 'all'; // 'all' | 'wrong'
+
+// ════════════════════════
+// INIT
+// ════════════════════════
+function init() {
+  const cats = [...new Set(MASTER.map(q => q.cat))];
+  const tagsEl = document.getElementById('cat-tags-display');
+  cats.forEach(c => {
+    const span = document.createElement('span');
+    span.className = 'cat-tag';
+    span.textContent = c;
+    tagsEl.appendChild(span);
+  });
+  document.getElementById('total-count').textContent = MASTER.length;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startQuiz(mode) {
+  quizMode = mode || 'all';
+  if (quizMode === 'wrong') {
+    questions = shuffle(userAnswers.filter(a => !a.correct).map(a => a.question));
+    if (!questions.length) { alert('No wrong answers to retry!'); return; }
+  } else {
+    questions = shuffle(MASTER);
+  }
+  current = 0; score = 0; userAnswers = [];
+  showScreen('quiz-screen');
+  document.getElementById('q-total').textContent = questions.length;
+  renderQuestion();
+}
+
+function restartQuiz() { startQuiz('all'); }
+function retryWrong()  { startQuiz('wrong'); }
+
+// ════════════════════════
+// RENDERING
+// ════════════════════════
+function renderQuestion() {
+  const q = questions[current];
+  const total = questions.length;
+
+  document.getElementById('q-num').textContent  = current + 1;
+  document.getElementById('q-label').textContent = `Question ${current + 1}`;
+  document.getElementById('q-cat').textContent   = q.cat;
+  document.getElementById('question-text').textContent = q.q;
+  document.getElementById('live-score').textContent = score;
+  document.getElementById('progress-fill').style.width = ((current / total) * 100) + '%';
+
+  const grid = document.getElementById('options-grid');
+  grid.innerHTML = '';
+
+  const letters = ['A', 'B', 'C', 'D'];
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span>${opt}</span>`;
+    btn.onclick = () => selectAnswer(i, q.ans);
+    grid.appendChild(btn);
+  });
+
+  // Reset UI
+  const fb = document.getElementById('feedback-bar');
+  fb.style.display = 'none';
+  fb.className = 'feedback-bar';
+  document.getElementById('next-btn').style.display = 'none';
+
+  // Re-animate
+  const card = document.getElementById('question-card');
+  card.style.animation = 'none';
+  void card.offsetWidth;
+  card.style.animation = 'slideIn 0.35s cubic-bezier(0.4,0,0.2,1)';
+}
+
+function selectAnswer(chosen, correct) {
+  const btns = document.querySelectorAll('.option-btn');
+  btns.forEach(b => { b.classList.add('locked'); b.onclick = null; });
+
+  const isCorrect = chosen === correct;
+  if (isCorrect) score++;
+
+  btns[correct].classList.add('correct');
+  if (!isCorrect) btns[chosen].classList.add('wrong');
+
+  // Feedback
+  const fb = document.getElementById('feedback-bar');
+  if (isCorrect) {
+    fb.className = 'feedback-bar correct-fb';
+    fb.innerHTML = `<span class="feedback-icon">✓</span> Correct! Well done.`;
+  } else {
+    const letters = ['A', 'B', 'C', 'D'];
+    fb.className = 'feedback-bar wrong-fb';
+    fb.innerHTML = `<span class="feedback-icon">✗</span> Incorrect. Correct answer: <strong>${letters[correct]}. ${questions[current].opts[correct]}</strong>`;
+  }
+  fb.style.display = 'block';
+
+  document.getElementById('next-btn').style.display = 'inline-flex';
+  document.getElementById('live-score').textContent = score;
+
+  userAnswers.push({
+    question: questions[current],
+    chosen, correct: isCorrect,
+    chosenText: questions[current].opts[chosen],
+    correctText: questions[current].opts[correct]
+  });
+}
+
+function nextQuestion() {
+  current++;
+  if (current >= questions.length) {
+    showResults();
+  } else {
+    renderQuestion();
+  }
+}
+
+// ════════════════════════
+// RESULTS
+// ════════════════════════
+function showResults() {
+  document.getElementById('progress-fill').style.width = '100%';
+  showScreen('result-screen');
+
+  const total = questions.length;
+  const pct = Math.round((score / total) * 100);
+
+  document.getElementById('score-percent').textContent = pct + '%';
+  document.getElementById('res-correct').textContent = score;
+  document.getElementById('res-wrong').textContent   = total - score;
+  document.getElementById('res-total').textContent   = total;
+
+  // Title & message
+  let title, sub;
+  if (pct >= 90) { title = 'Excellent<br><em>work!</em>';     sub = "Outstanding performance. You've mastered this content."; }
+  else if (pct >= 75) { title = 'Good<br><em>score!</em>';   sub = "Strong result. Review the missed questions to push higher."; }
+  else if (pct >= 55) { title = 'Keep<br><em>going!</em>';   sub = "A solid start. Focus on the topics where you dropped marks."; }
+  else { title = 'More<br><em>practice!</em>';                sub = "Don't give up — consistent revision will improve your score."; }
+  document.getElementById('result-title').innerHTML = title;
+  document.getElementById('result-sub').textContent = sub;
+
+  // Category breakdown
+  const catData = {};
+  userAnswers.forEach(a => {
+    const c = a.question.cat;
+    if (!catData[c]) catData[c] = { right: 0, total: 0 };
+    catData[c].total++;
+    if (a.correct) catData[c].right++;
+  });
+
+  const chartEl = document.getElementById('cat-chart');
+  chartEl.innerHTML = '';
+  Object.entries(catData).sort((a,b)=>b[1].right/b[1].total - a[1].right/a[1].total).forEach(([cat, d]) => {
+    const pctCat = Math.round((d.right / d.total) * 100);
+    chartEl.innerHTML += `
+      <div class="cat-row">
+        <div class="cat-row-name">${cat}</div>
+        <div class="cat-bar-track"><div class="cat-bar-fill" style="width:${pctCat}%"></div></div>
+        <div class="cat-score">${d.right}/${d.total}</div>
+      </div>`;
+  });
+
+  // Wrong answers review
+  const reviewEl = document.getElementById('review-list');
+  const wrong = userAnswers.filter(a => !a.correct);
+  if (!wrong.length) {
+    reviewEl.innerHTML = '<p style="color:var(--green);font-weight:600;padding:16px 0;">🎉 No wrong answers to review!</p>';
+    document.querySelector('.review-toggle').style.display = 'none';
+  } else {
+    wrong.forEach((a, i) => {
+      const div = document.createElement('div');
+      div.className = 'review-item r-wrong';
+      div.innerHTML = `
+        <span class="review-tag">Wrong</span>
+        <div class="review-q">${i+1}. ${a.question.q}</div>
+        <div class="review-chosen">Your answer: ${a.chosenText}</div>
+        <div class="review-correct">✓ Correct: ${a.correctText}</div>`;
+      reviewEl.appendChild(div);
+    });
+  }
+}
+
+function toggleReview(btn) {
+  const list = document.getElementById('review-list');
+  list.classList.toggle('open');
+  btn.querySelector('svg').style.transform = list.classList.contains('open') ? 'rotate(180deg)' : '';
+}
+
+// ════════════════════════
+// NAVIGATION
+// ════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+  if (id !== 'quiz-screen') document.getElementById('progress-fill').style.width = '0%';
+}
+
+// Start
+init();
+</script>
+</body>
+</html>
