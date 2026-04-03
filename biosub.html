@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class X Biology — Pre-Final Question Bank 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
+    --border: #2a2a2a; --border-bright: #3a3a3a;
+    --text: #e8e8e0; --text-muted: #888880;
+    --accent: #c8f000; --accent-dim: #8aaa00; --accent-bg: rgba(200,240,0,0.06);
+    --c1: #ff6b35; --c2: #00d4ff; --c3: #ff3366; --c4: #ffd700; --c5: #a855f7;
+    --c6: #00ff9f; --c7: #ff8c00; --c8: #00bfff; --c9: #ff4500; --c10: #39ff14;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+    --font-body: 'DM Sans', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 15px; line-height: 1.6; cursor: none; overflow-x: hidden; }
+  .cursor { position: fixed; width: 20px; height: 20px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 9999; mix-blend-mode: difference; transform: translate(-50%,-50%); transition: transform 0.1s, width 0.2s, height 0.2s; }
+  .cursor.hover { width: 48px; height: 48px; }
+  .cursor-dot { position: fixed; width: 4px; height: 4px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 9999; mix-blend-mode: difference; transform: translate(-50%,-50%); }
+  #progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent); z-index: 9998; width: 0%; transition: width 0.1s linear; }
+  .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 clamp(20px,4vw,60px) clamp(40px,6vh,80px); overflow: hidden; border-bottom: 2px solid var(--border-bright); }
+  .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px); background-size: 60px 60px; opacity: 0.5; animation: gridPulse 8s ease-in-out infinite; }
+  @keyframes gridPulse { 0%,100%{opacity:.4}50%{opacity:.7} }
+  .hero-grid-accent { position: absolute; top: -200px; right: -200px; width: 600px; height: 600px; border: 1px solid var(--accent); border-radius: 50%; opacity: .08; animation: rotateSlow 30s linear infinite; }
+  .hero-grid-accent::before { content:''; position:absolute; inset:40px; border:1px solid var(--accent); border-radius:50%; }
+  .hero-grid-accent::after { content:''; position:absolute; inset:80px; border:1px solid var(--accent); border-radius:50%; }
+  @keyframes rotateSlow { from{transform:rotate(0deg)}to{transform:rotate(360deg)} }
+  .hero-eyebrow { font-family:var(--font-mono); font-size:11px; color:var(--accent); letter-spacing:.25em; text-transform:uppercase; margin-bottom:16px; position:relative; z-index:1; }
+  .hero-eyebrow::before { content:'//'; margin-right:8px; opacity:.5; }
+  .hero-title { font-family:var(--font-display); font-size:clamp(72px,12vw,200px); line-height:.9; letter-spacing:-.02em; position:relative; z-index:1; color:var(--text); }
+  .hero-title span { color:var(--accent); display:block; }
+  .hero-meta { display:flex; gap:40px; margin-top:32px; position:relative; z-index:1; flex-wrap:wrap; }
+  .hero-stat { display:flex; flex-direction:column; gap:2px; }
+  .hero-stat-num { font-family:var(--font-display); font-size:42px; color:var(--accent); line-height:1; }
+  .hero-stat-label { font-family:var(--font-mono); font-size:10px; color:var(--text-muted); letter-spacing:.2em; text-transform:uppercase; }
+  .hero-divider { position:absolute; bottom:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--accent) 0%,transparent 60%); }
+  .sticky-nav { position:sticky; top:0; z-index:100; background:rgba(10,10,10,.95); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); padding:12px clamp(20px,4vw,60px); display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+  .nav-label { font-family:var(--font-mono); font-size:9px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.2em; margin-right:12px; }
+  .nav-chip { font-family:var(--font-mono); font-size:10px; padding:4px 10px; border:1px solid var(--border-bright); color:var(--text-muted); text-decoration:none; transition:all .15s; letter-spacing:.05em; white-space:nowrap; }
+  .nav-chip:hover { border-color:var(--accent); color:var(--accent); background:var(--accent-bg); }
+  .content { padding:0 clamp(20px,4vw,60px); max-width:1400px; margin:0 auto; }
+  .chapter-section { margin:0; border-bottom:2px solid var(--border); }
+  .chapter-header { display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:24px; padding:32px 0 28px; cursor:pointer; user-select:none; }
+  .chapter-num { font-family:var(--font-display); font-size:100px; line-height:1; opacity:.12; color:var(--chapter-color); min-width:90px; transition:opacity .2s; }
+  .chapter-section:hover .chapter-num { opacity:.25; }
+  .chapter-tag { font-family:var(--font-mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--chapter-color); margin-bottom:4px; }
+  .chapter-title { font-family:var(--font-display); font-size:clamp(32px,5vw,64px); letter-spacing:.02em; line-height:1; color:var(--text); transition:opacity .2s; }
+  .chapter-stats { display:flex; flex-direction:column; gap:4px; text-align:right; }
+  .chapter-count { font-family:var(--font-display); font-size:48px; color:var(--chapter-color); line-height:1; }
+  .chapter-count-label { font-family:var(--font-mono); font-size:9px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.2em; }
+  .chapter-toggle { grid-column:3; grid-row:1; display:flex; align-items:center; gap:8px; }
+  .toggle-icon { width:32px; height:32px; border:1px solid var(--border-bright); display:flex; align-items:center; justify-content:center; transition:all .3s; flex-shrink:0; }
+  .toggle-icon svg { transition:transform .3s cubic-bezier(.4,0,.2,1); fill:var(--text-muted); }
+  .chapter-section.open .toggle-icon svg { transform:rotate(45deg); fill:var(--accent); }
+  .chapter-section.open .toggle-icon { border-color:var(--accent); }
+  .chapter-body { display:grid; grid-template-rows:0fr; transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1); }
+  .chapter-section.open .chapter-body { grid-template-rows:1fr; }
+  .chapter-body-inner { overflow:hidden; }
+  .chapter-body-content { padding-bottom:48px; }
+  .marker-groups { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-bottom:2px; }
+  @media(max-width:900px){.marker-groups{grid-template-columns:1fr}}
+  .marker-group { background:var(--bg2); padding:24px; border-top:3px solid var(--marker-color); }
+  .marker-group-header { display:flex; align-items:baseline; gap:12px; margin-bottom:20px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+  .marker-badge { font-family:var(--font-display); font-size:52px; line-height:1; color:var(--marker-color); }
+  .marker-label { display:flex; flex-direction:column; }
+  .marker-label-main { font-family:var(--font-mono); font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.15em; }
+  .marker-label-sub { font-family:var(--font-mono); font-size:9px; color:var(--text-muted); opacity:.6; letter-spacing:.1em; }
+  .marker-count { margin-left:auto; font-family:var(--font-display); font-size:24px; color:var(--text-muted); opacity:.5; }
+  .question-list { display:flex; flex-direction:column; gap:12px; }
+  .question-item { display:grid; grid-template-columns:auto 1fr; gap:12px; align-items:flex-start; }
+  .q-index { font-family:var(--font-mono); font-size:10px; color:var(--marker-color); padding-top:2px; min-width:24px; opacity:.7; }
+  .q-text { font-family:var(--font-body); font-size:13.5px; line-height:1.55; color:var(--text); }
+  .q-src { font-family:var(--font-mono); font-size:8px; color:var(--text-muted); opacity:.5; display:block; margin-top:2px; letter-spacing:.05em; }
+  .q-tag { display:inline-block; font-family:var(--font-mono); font-size:9px; padding:2px 6px; background:var(--bg3); border:1px solid var(--border); color:var(--text-muted); letter-spacing:.1em; text-transform:uppercase; margin-top:5px; margin-right:3px; vertical-align:middle; }
+  .q-tag.diagram { border-color:var(--accent-dim); color:var(--accent); }
+  .q-tag.table { border-color:#888; color:#aaa; }
+  .q-tag.experiment { border-color:#ff6b35; color:#ff9966; }
+  .q-tag.activity { border-color:#a855f7; color:#c084fc; }
+  .q-tag.repeated { border-color:#ffd700; color:#ffd700; }
+  .q-divider { height:1px; background:var(--border); margin:4px 0 0 36px; }
+  footer { border-top:2px solid var(--border-bright); padding:48px clamp(20px,4vw,60px); display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px; margin-top:80px; }
+  .footer-brand { font-family:var(--font-display); font-size:64px; line-height:1; color:var(--border-bright); letter-spacing:.02em; }
+  .footer-meta { font-family:var(--font-mono); font-size:11px; color:var(--text-muted); text-align:right; line-height:2; }
+  .legend-bar { display:flex; gap:24px; padding:16px clamp(20px,4vw,60px); background:var(--bg2); border-bottom:1px solid var(--border); flex-wrap:wrap; }
+  .legend-item { display:flex; align-items:center; gap:8px; }
+  .legend-dot { width:8px; height:8px; border-radius:50%; }
+  .legend-text { font-family:var(--font-mono); font-size:10px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.1em; }
+  .ticker-wrap { overflow:hidden; border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:var(--bg2); padding:8px 0; }
+  .ticker { display:flex; animation:ticker 30s linear infinite; white-space:nowrap; }
+  .ticker-item { font-family:var(--font-mono); font-size:10px; color:var(--text-muted); letter-spacing:.15em; text-transform:uppercase; padding:0 40px; }
+  .ticker-item::before { content:'◆'; margin-right:20px; color:var(--accent); opacity:.5; }
+  @keyframes ticker { from{transform:translateX(0)}to{transform:translateX(-50%)} }
+  [data-ch="1"]{--chapter-color:var(--c1)} [data-ch="2"]{--chapter-color:var(--c2)} [data-ch="3"]{--chapter-color:var(--c3)} [data-ch="4"]{--chapter-color:var(--c4)} [data-ch="5"]{--chapter-color:var(--c5)} [data-ch="6"]{--chapter-color:var(--c6)} [data-ch="7"]{--chapter-color:var(--c7)} [data-ch="8"]{--chapter-color:var(--c8)} [data-ch="9"]{--chapter-color:var(--c9)} [data-ch="10"]{--chapter-color:var(--c10)}
+  [data-m="2"]{--marker-color:#888880} [data-m="4"]{--marker-color:var(--accent)} [data-m="6"]{--marker-color:var(--c3)}
+  .fade-in { opacity:0; transform:translateY(20px); transition:opacity .6s ease,transform .6s ease; }
+  .fade-in.visible { opacity:1; transform:translateY(0); }
+  ::-webkit-scrollbar{width:6px} ::-webkit-scrollbar-track{background:var(--bg)} ::-webkit-scrollbar-thumb{background:var(--border-bright)} ::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+  ::selection{background:var(--accent);color:var(--bg)}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div id="progress-bar"></div>
+
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-grid-accent"></div>
+  <p class="hero-eyebrow">Telangana Pre-Final / Pre-Public Exam Papers — February 2026</p>
+  <h1 class="hero-title">CLASS X<br><span>BIOLOGY</span>QUESTION<br>BANK</h1>
+  <div class="hero-meta">
+    <div class="hero-stat"><span class="hero-stat-num">10</span><span class="hero-stat-label">Chapters</span></div>
+    <div class="hero-stat"><span class="hero-stat-num" id="total2">—</span><span class="hero-stat-label">2-Markers</span></div>
+    <div class="hero-stat"><span class="hero-stat-num" id="total4">—</span><span class="hero-stat-label">4-Markers</span></div>
+    <div class="hero-stat"><span class="hero-stat-num" id="total6">—</span><span class="hero-stat-label">6-Markers</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">20+</span><span class="hero-stat-label">Paper Sets</span></div>
+  </div>
+  <div class="hero-divider"></div>
+</section>
+
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item">Nutrition</span><span class="ticker-item">Respiration</span><span class="ticker-item">Transportation</span><span class="ticker-item">Excretion</span><span class="ticker-item">Coordination</span><span class="ticker-item">Reproduction</span><span class="ticker-item">Coordination in Life Processes</span><span class="ticker-item">Heredity &amp; Evolution</span><span class="ticker-item">Our Environment</span><span class="ticker-item">Natural Resources</span><span class="ticker-item">Nutrition</span><span class="ticker-item">Respiration</span><span class="ticker-item">Transportation</span><span class="ticker-item">Excretion</span><span class="ticker-item">Coordination</span><span class="ticker-item">Reproduction</span><span class="ticker-item">Coordination in Life Processes</span><span class="ticker-item">Heredity &amp; Evolution</span><span class="ticker-item">Our Environment</span><span class="ticker-item">Natural Resources</span>
+  </div>
+</div>
+
+<nav class="sticky-nav">
+  <span class="nav-label">Jump to</span>
+  <a class="nav-chip" href="#ch1">Ch.1 Nutrition</a>
+  <a class="nav-chip" href="#ch2">Ch.2 Respiration</a>
+  <a class="nav-chip" href="#ch3">Ch.3 Transportation</a>
+  <a class="nav-chip" href="#ch4">Ch.4 Excretion</a>
+  <a class="nav-chip" href="#ch5">Ch.5 Coordination</a>
+  <a class="nav-chip" href="#ch6">Ch.6 Reproduction</a>
+  <a class="nav-chip" href="#ch7">Ch.7 Life Processes</a>
+  <a class="nav-chip" href="#ch8">Ch.8 Heredity &amp; Evo</a>
+  <a class="nav-chip" href="#ch9">Ch.9 Environment</a>
+  <a class="nav-chip" href="#ch10">Ch.10 Resources</a>
+</nav>
+
+<div class="legend-bar">
+  <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);letter-spacing:.15em;text-transform:uppercase;margin-right:8px;">Tags:</span>
+  <div class="legend-item"><span class="legend-dot" style="background:#ff9966"></span><span class="legend-text">Experiment</span></div>
+  <div class="legend-item"><span class="legend-dot" style="background:#c084fc"></span><span class="legend-text">Lab Activity</span></div>
+  <div class="legend-item"><span class="legend-dot" style="background:#c8f000"></span><span class="legend-text">Requires Diagram</span></div>
+  <div class="legend-item"><span class="legend-dot" style="background:#aaa"></span><span class="legend-text">Refer Table/Fig in Paper</span></div>
+  <div class="legend-item"><span class="legend-dot" style="background:#ffd700"></span><span class="legend-text">★ Repeated across papers</span></div>
+</div>
+
+<main class="content" id="main-content">
+
+<!-- ======== CH1: NUTRITION ======== -->
+<section class="chapter-section fade-in" id="ch1" data-ch="1">
+  <div class="chapter-header" onclick="toggleChapter(this)">
+    <div class="chapter-num">01</div>
+    <div class="chapter-title-block">
+      <div class="chapter-tag">Chapter 1</div>
+      <div class="chapter-title">Nutrition</div>
+    </div>
+    <div class="chapter-toggle">
+      <div class="chapter-stats"><div class="chapter-count" id="count-ch1">—</div><div class="chapter-count-label">Questions</div></div>
+      <div class="toggle-icon"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12"/></svg></div>
+    </div>
+  </div>
+  <div class="chapter-body"><div class="chapter-body-inner"><div class="chapter-body-content">
+    <div class="marker-groups">
+
+      <div class="marker-group" data-m="2">
+        <div class="marker-group-header"><div class="marker-badge">2</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">3–4 sentences</span></div><div class="marker-count" id="cnt-ch1-2">—</div></div>
+        <div class="question-list" id="ql-ch1-2">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">Write any two healthy habits to overcome malnutrition.<span class="q-tag repeated">★ Repeated</span><span class="q-src">RJ-85 (×2), RM-85 (implied)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">What will you do in your daily life to overcome malnutrition?<span class="q-tag repeated">★ Repeated</span><span class="q-src">MP-13 (×4 sets), DP-15</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">Write required materials to conduct an experiment to prove that light is necessary for photosynthesis.<span class="q-tag experiment">Experiment</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">G010 (×3 sets), W010 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">Write the materials required to conduct an experiment to prove that light is essential for photosynthesis.<span class="q-tag experiment">Experiment</span><span class="q-src">K-10</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">05</span><span class="q-text">Write the materials and chemicals required in an activity conducted to observe the presence of starch in the leaf.<span class="q-tag experiment">Experiment</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">c-10 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">06</span><span class="q-text">What are the materials needed to do the experiment showing that sunlight is necessary for photosynthesis?<span class="q-tag experiment">Experiment</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">DP-15 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">07</span><span class="q-text">What happens if there is no microvilli in the small intestine?<span class="q-tag repeated">★ Repeated</span><span class="q-src">G010 (×3), W010 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">08</span><span class="q-text">Write the materials required to do the experiment that tests the pH of the mouth.<span class="q-tag experiment">Experiment</span><span class="q-src">DCEB (district paper)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">09</span><span class="q-text">Write the materials required for the observation of internal structure of heart.<span class="q-tag activity">Activity</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">20E (×3 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">10</span><span class="q-text">What happens if the salivary glands don't release their secretions properly?<span class="q-src">Y-10</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">11</span><span class="q-text">What happens if the size and shape of the small intestine is like the oesophagus in the human digestive system?<span class="q-src">G-14</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">12</span><span class="q-text">Write the materials required to observe "action of saliva on flour" activity and analyse the result.<span class="q-tag activity">Activity</span><span class="q-src">G-14</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">13</span><span class="q-text">Write the materials required to examine the action of saliva on flour activity.<span class="q-tag activity">Activity</span><span class="q-src">RM-85</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">14</span><span class="q-text">What food habits will you follow after reading the Nutrition chapter?<span class="q-tag repeated">★ Repeated</span><span class="q-src">V-13 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">15</span><span class="q-text">Suggest any two healthy food habits to prevent malnutrition.<span class="q-src">S-13</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">16</span><span class="q-text">Write any two suggestions you may suggest to elders to avoid oedema (edema).<span class="q-tag repeated">★ Repeated</span><span class="q-src">NP-10, G-14</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">17</span><span class="q-text">What will happen if there is no mucus in the oesophagus?<span class="q-tag repeated">★ Repeated</span><span class="q-src">SK-85 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">18</span><span class="q-text">Write any two chemicals required to conduct an experiment to prove how the stomach walls are protected from its own juices.<span class="q-tag experiment">Experiment</span><span class="q-src">DCEB-Warangal</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">19</span><span class="q-text">Write required materials and precautions of Mohl's half leaf experiment.<span class="q-tag experiment">Experiment</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">JK-85 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">20</span><span class="q-text">Why is KOH used in Mohl's half leaf experiment?<span class="q-src">Y-10</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">21</span><span class="q-text">Write the two chemicals required to prove that CO₂ is essential for photosynthesis (KOH-based experiment).<span class="q-tag experiment">Experiment</span><span class="q-src">Y-13</span></span></div>
+        </div>
+      </div>
+
+      <div class="marker-group" data-m="4">
+        <div class="marker-group-header"><div class="marker-badge">4</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">5–6 sentences</span></div><div class="marker-count" id="cnt-ch1-4">—</div></div>
+        <div class="question-list" id="ql-ch1-4">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">What is malnutrition? Explain the diseases caused due to malnutrition.<span class="q-tag repeated">★ Repeated</span><span class="q-src">V-13, Y-13, RP-13A, Section-II level</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">Mention the names of glands and organs which help in digestion.<span class="q-tag repeated">★ Repeated</span><span class="q-src">V-13 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">Observe the given vitamin-deficiency table and answer: (i) Water-soluble vitamins in the table (ii) Fat-soluble vitamins in the table (iii) Vitamin-E deficiency disease (iv) Symptoms of Beriberi disease.<span class="q-tag table">Refer Table</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">SK-85 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">Observe the digestive enzyme table and answer: (i) Enzymes acting on proteins (ii) Digestive juice secreted without enzymes (iii) Products of carbohydrate digestion (iv) Gland secreting enzymes for all food components.<span class="q-tag table">Refer Table</span><span class="q-src">NP-10</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">05</span><span class="q-text">Observe the digestion table (ST-85 paper) and answer: (i) Enzymes present in pancreatic juice (ii) Lipase enzyme acts on which substance? (iii) Enzymes acting on proteins (iv) Digestive juice secreted from small intestine.<span class="q-tag table">Refer Table</span><span class="q-src">ST-85</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">06</span><span class="q-text">Explain the light-dependent reactions that occur in the process of photosynthesis.<span class="q-src">DP-15 (×2 sets)</span></span></div>
+        </div>
+      </div>
+
+      <div class="marker-group" data-m="6">
+        <div class="marker-group-header"><div class="marker-badge">6</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">8–10 sentences</span></div><div class="marker-count" id="cnt-ch1-6">—</div></div>
+        <div class="question-list" id="ql-ch1-6">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">What is malnutrition? What are the diseases caused by malnutrition? Explain.<span class="q-tag repeated">★ Repeated</span><span class="q-src">G010 (×3), W010 (×2), NP-10</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">Write the action of saliva on flour — procedure, observations, and precautions.<span class="q-tag experiment">Experiment</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">20E (×3), ST-85, section papers</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">What is malnutrition? Explain any three nutritional deficiency diseases.<span class="q-src">V-13 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">Describe the Human Digestive System with the help of a labelled diagram.<span class="q-tag diagram">Diagram</span><span class="q-src">PR-85</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">05</span><span class="q-text">Describe the structure of chloroplast with a labelled diagram.<span class="q-tag diagram">Diagram</span><span class="q-src">Y-13</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">06</span><span class="q-text">How do you prove that sunlight is necessary for photosynthesis? Write materials, procedure and observations.<span class="q-tag experiment">Experiment</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">R-10 (×2), S-13, K-10</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">07</span><span class="q-text">Write the materials required, procedure and observations for the experiment — Carbon dioxide is necessary for photosynthesis.<span class="q-tag experiment">Experiment</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">RJ-85 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">08</span><span class="q-text">Write the procedure of an activity which shows that CO₂ is essential for photosynthesis.<span class="q-tag experiment">Experiment</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">MP-13 (×4 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">09</span><span class="q-text">What apparatus have you used, procedure followed, observations seen and precautions taken while conducting an experiment to show CO₂ is essential for photosynthesis?<span class="q-tag experiment">Experiment</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">J-10 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">10</span><span class="q-text">Write about the experiment done in your school to prove that oxygen is evolved in photosynthesis. Mention precautions taken.<span class="q-tag experiment">Experiment</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">M010 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">11</span><span class="q-text">Write the procedure and precautions of the experiment to prove CO₂ is necessary for photosynthesis.<span class="q-tag experiment">Experiment</span><span class="q-src">RM-85</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">12</span><span class="q-text">What process do you follow in the laboratory to study the presence of starch in leaves?<span class="q-tag activity">Activity</span><span class="q-src">S-13</span></span></div>
+        </div>
+      </div>
+
+    </div>
+  </div></div></div>
+</section>
+
+<!-- ======== CH2: RESPIRATION ======== -->
+<section class="chapter-section fade-in" id="ch2" data-ch="2">
+  <div class="chapter-header" onclick="toggleChapter(this)">
+    <div class="chapter-num">02</div>
+    <div class="chapter-title-block"><div class="chapter-tag">Chapter 2</div><div class="chapter-title">Respiration</div></div>
+    <div class="chapter-toggle"><div class="chapter-stats"><div class="chapter-count" id="count-ch2">—</div><div class="chapter-count-label">Questions</div></div><div class="toggle-icon"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12"/></svg></div></div>
+  </div>
+  <div class="chapter-body"><div class="chapter-body-inner"><div class="chapter-body-content">
+    <div class="marker-groups">
+
+      <div class="marker-group" data-m="2">
+        <div class="marker-group-header"><div class="marker-badge">2</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">3–4 sentences</span></div><div class="marker-count" id="cnt-ch2-2">—</div></div>
+        <div class="question-list" id="ql-ch2-2">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">Write any two required materials for the experiment that prove heat evolved during respiration.<span class="q-tag experiment">Experiment</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">RJ-85 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">Write the two materials required to conduct the experiment to observe the temperature that evolves in aerobic respiration.<span class="q-tag experiment">Experiment</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">MP-13 (×4 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">Write the two materials required to conduct the experiment to observe the temperature evolves in aerobic respiration? (alternate phrasing)<span class="q-tag experiment">Experiment</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">MP-13 (×2 more sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">What are the materials required for the experiment: production of heat and CO₂ in anaerobic respiration?<span class="q-tag experiment">Experiment</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">R-10 (×2 sets), M010 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">05</span><span class="q-text">Write the material required to do the experiment that heat is liberated during respiration in plants.<span class="q-tag experiment">Experiment</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">M010 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">06</span><span class="q-text">Write any two chemicals used in the anaerobic respiration experiment with yeast.<span class="q-tag experiment">Experiment</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">SK-85 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">07</span><span class="q-text">List out the chemicals required to prove CO₂ and heat is liberated during anaerobic respiration.<span class="q-tag experiment">Experiment</span><span class="q-src">PR-85</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">08</span><span class="q-text">What would happen if mitochondria is absent in a cell?<span class="q-src">DCEB district paper</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">09</span><span class="q-text">What will happen if moisture and hairs are absent in the nasal cavity of human beings?<span class="q-src">Y-13</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">10</span><span class="q-text">What happens if the epiglottis in the pharynx is absent?<span class="q-tag repeated">★ Repeated</span><span class="q-src">J-10 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">11</span><span class="q-text">What happens if "C"-shaped cartilage bones are not present in the windpipe (Trachea)?<span class="q-src">DCEB-Warangal</span></span></div>
+        </div>
+      </div>
+
+      <div class="marker-group" data-m="4">
+        <div class="marker-group-header"><div class="marker-badge">4</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">5–6 sentences</span></div><div class="marker-count" id="cnt-ch2-4">—</div></div>
+        <div class="question-list" id="ql-ch2-4">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">Write the differences between Aerobic and Anaerobic respiration.<span class="q-tag repeated">★ Repeated</span><span class="q-src">c-10 (×2), JK-85 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">Write any four differences between photosynthesis and respiration.<span class="q-tag repeated">★ Repeated</span><span class="q-src">RM-85, SK-85 implied</span></span></div>
+        </div>
+      </div>
+
+      <div class="marker-group" data-m="6">
+        <div class="marker-group-header"><div class="marker-badge">6</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">8–10 sentences</span></div><div class="marker-count" id="cnt-ch2-6">—</div></div>
+        <div class="question-list" id="ql-ch2-6">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">Write the procedure and precautions of the Yeast anaerobic respiration experiment.<span class="q-tag experiment">Experiment</span><span class="q-src">Y-10</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">Describe the experimental procedure and observations to prove that heat is evolved in respiration. Write apparatus used.<span class="q-tag experiment">Experiment</span><span class="q-src">NP-10</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">Write the procedure of an activity which shows that heat is released during aerobic respiration in plants; mention apparatus.<span class="q-tag experiment">Experiment</span><span class="q-src">G-14</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">What procedure did you follow in the school laboratory to understand anaerobic respiration?<span class="q-tag activity">Activity</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">V-13 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">05</span><span class="q-text">Plants release carbon dioxide in aerobic respiration. What procedure did you follow in the school laboratory?<span class="q-tag activity">Activity</span><span class="q-src">RP-13 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">06</span><span class="q-text">Write the differences between photosynthesis and respiration (essay level — 8–10 sentences).<span class="q-tag repeated">★ Repeated</span><span class="q-src">20E (×3 sets), BS(A) papers</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">07</span><span class="q-text">Explain the pathway of air from nostril to alveolus in human.<span class="q-tag diagram">Diagram</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">DP-15 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">08</span><span class="q-text">Write materials required, procedure, precautions and result of anaerobic respiration in yeast (full experiment).<span class="q-tag experiment">Experiment</span><span class="q-src">ST-85</span></span></div>
+        </div>
+      </div>
+
+    </div>
+  </div></div></div>
+</section>
+
+<!-- ======== CH3: TRANSPORTATION ======== -->
+<section class="chapter-section fade-in" id="ch3" data-ch="3">
+  <div class="chapter-header" onclick="toggleChapter(this)">
+    <div class="chapter-num">03</div>
+    <div class="chapter-title-block"><div class="chapter-tag">Chapter 3</div><div class="chapter-title">Transportation</div></div>
+    <div class="chapter-toggle"><div class="chapter-stats"><div class="chapter-count" id="count-ch3">—</div><div class="chapter-count-label">Questions</div></div><div class="toggle-icon"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12"/></svg></div></div>
+  </div>
+  <div class="chapter-body"><div class="chapter-body-inner"><div class="chapter-body-content">
+    <div class="marker-groups">
+
+      <div class="marker-group" data-m="2">
+        <div class="marker-group-header"><div class="marker-badge">2</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">3–4 sentences</span></div><div class="marker-count" id="cnt-ch3-2">—</div></div>
+        <div class="question-list" id="ql-ch3-2">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">What would happen if valves of the heart are not functioning properly?<span class="q-tag repeated">★ Repeated</span><span class="q-src">R-10 (×2), M010 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">What happens if transpiration does not take place in trees?<span class="q-src">K-10</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">What happens if blood fails to carry oxygen to the tissues?<span class="q-src">S-13</span></span></div>
+        </div>
+      </div>
+
+      <div class="marker-group" data-m="4">
+        <div class="marker-group-header"><div class="marker-badge">4</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">5–6 sentences</span></div><div class="marker-count" id="cnt-ch3-4">—</div></div>
+        <div class="question-list" id="ql-ch3-4">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">Describe about the valves present in the heart.<span class="q-tag repeated">★ Repeated</span><span class="q-src">J-10 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">Write the differences between arteries and veins.<span class="q-tag repeated">★ Repeated</span><span class="q-src">SK-85 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">Read the passage about heart valves (Tricuspid, Bicuspid, Pulmonary valves, Systemic aorta) and answer: (a) Which septum separates right atrium and right ventricle? (b) Function of Bicuspid valve? (c) Valves at pulmonary aorta? (d) Pulmonary aorta carries blood to which organ?<span class="q-tag table">Refer Passage</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">DP-15 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">Observe the heart diagram (labelled) and answer: (i) Valves present in the heart (ii) Largest artery supplying blood to body parts (iii) Vessels collecting blood from body parts (iv) Which chamber walls are thicker and why?<span class="q-tag diagram">Diagram</span><span class="q-src">Y-10</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">05</span><span class="q-text">Explain the sequential events in the Cardiac Cycle.<span class="q-src">PR-85</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">06</span><span class="q-text">What is hypertension? Mention any three real-life situations in which BP fluctuates.<span class="q-src">ST-85</span></span></div>
+        </div>
+      </div>
+
+      <div class="marker-group" data-m="6">
+        <div class="marker-group-header"><div class="marker-badge">6</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">8–10 sentences</span></div><div class="marker-count" id="cnt-ch3-6">—</div></div>
+        <div class="question-list" id="ql-ch3-6">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">Draw a neat labelled diagram of the internal structure of the mammalian heart and write the role of each valve.<span class="q-tag diagram">Diagram</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">K-10, S-13, RP-13</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">Explain the cardiac cycle in human beings.<span class="q-src">RM-85</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">Describe the internal structure of mammalian heart with the help of a labelled diagram.<span class="q-tag diagram">Diagram</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">S-13, district papers</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">Draw a neat labelled diagram of the heart and explain it.<span class="q-tag diagram">Diagram</span><span class="q-src">DCEB district paper</span></span></div>
+        </div>
+      </div>
+
+    </div>
+  </div></div></div>
+</section>
+
+<!-- ======== CH4: EXCRETION ======== -->
+<section class="chapter-section fade-in" id="ch4" data-ch="4">
+  <div class="chapter-header" onclick="toggleChapter(this)">
+    <div class="chapter-num">04</div>
+    <div class="chapter-title-block"><div class="chapter-tag">Chapter 4</div><div class="chapter-title">Excretion</div></div>
+    <div class="chapter-toggle"><div class="chapter-stats"><div class="chapter-count" id="count-ch4">—</div><div class="chapter-count-label">Questions</div></div><div class="toggle-icon"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12"/></svg></div></div>
+  </div>
+  <div class="chapter-body"><div class="chapter-body-inner"><div class="chapter-body-content">
+    <div class="marker-groups">
+
+      <div class="marker-group" data-m="2">
+        <div class="marker-group-header"><div class="marker-badge">2</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">3–4 sentences</span></div><div class="marker-count" id="cnt-ch4-2">—</div></div>
+        <div class="question-list" id="ql-ch4-2">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">Why is vasopressin not secreted when a person drinks a lot of water?<span class="q-tag repeated">★ Repeated</span><span class="q-src">MP-13 (×4 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">List the materials required to observe the internal structure of the kidney.<span class="q-tag activity">Activity</span><span class="q-src">N-13 (RP-13A)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">Write any two suggestions you may suggest to elders to avoid oedema (edema).<span class="q-tag repeated">★ Repeated</span><span class="q-src">NP-10, G-14</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">List out any four alkaloids useful in our daily life.<span class="q-tag repeated">★ Repeated</span><span class="q-src">SK-85 (×2), RP-13</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">05</span><span class="q-text">Write uses of glues (gums) in daily life.<span class="q-tag repeated">★ Repeated</span><span class="q-src">G010 (×3), W010 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">06</span><span class="q-text">How are latex and gums useful to us?<span class="q-tag repeated">★ Repeated</span><span class="q-src">DP-15 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">07</span><span class="q-text">Write any four secondary metabolites which you use in your daily life.<span class="q-src">K-10</span></span></div>
+        </div>
+      </div>
+
+      <div class="marker-group" data-m="4">
+        <div class="marker-group-header"><div class="marker-badge">4</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">5–6 sentences</span></div><div class="marker-count" id="cnt-ch4-4">—</div></div>
+        <div class="question-list" id="ql-ch4-4">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">Observe the excretion vs. secretion information table and answer: (i) Main difference between excretion and secretion (ii) Two examples of secretions in our body (iii) Organs involved in both processes (iv) Which substances released in one place but work in another are called?<span class="q-tag table">Refer Table</span><span class="q-src">S-13</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">Write about any four alkaloids that are useful in daily life.<span class="q-tag repeated">★ Repeated</span><span class="q-src">V-13 (×2), RP-13</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">List out any four alkaloids useful in our daily life.<span class="q-tag repeated">★ Repeated</span><span class="q-src">SK-85 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">Describe the importance of secondary metabolites in our daily life.<span class="q-src">RM-85</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">05</span><span class="q-text">How secondary metabolites of plants are useful to us in our daily life?<span class="q-src">Y-13</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">06</span><span class="q-text">Observe the secondary metabolites table and answer: (i) Parts of plant yielding Nimbin alkaloid (ii) Alkaloids obtained from coffee plant (iii) Disease cured by Quinine (iv) Part of plant yielding medicine for high BP.<span class="q-tag table">Refer Table</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">M010 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">07</span><span class="q-text">Observe the following table (Quinine/Caffeine/Nimbin/Reserpine) and answer: (i) Which parts of the plant yield nimbin alkaloid? (ii) Name alkaloids from coffee plant. (iii) Which disease is cured by Quinine. (iv) Name part of plant yielding medicine for high BP.<span class="q-tag table">Refer Table</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">DCEB (Warangal), DCEB (district)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">08</span><span class="q-text">Write the names of any four secondary metabolites and their uses.<span class="q-src">DCEB-Warangal</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">09</span><span class="q-text">Observe the secondary metabolites table (Quinine/Resin/Rubber/etc.) and answer: (i) Which belongs to alkaloid? (ii) Which plant is useful for rubber production? (iii) Secondary metabolite used in preparation of varnishes (iv) Plant producing Quinine?<span class="q-tag table">Refer Table</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">c-10 (×2 sets)</span></span></div>
+        </div>
+      </div>
+
+      <div class="marker-group" data-m="6">
+        <div class="marker-group-header"><div class="marker-badge">6</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">8–10 sentences</span></div><div class="marker-count" id="cnt-ch4-6">—</div></div>
+        <div class="question-list" id="ql-ch4-6">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">Describe the formation of urine (mechanism of urine formation).<span class="q-tag repeated">★ Repeated</span><span class="q-src">J-10 (×2), PR-85, Y-10</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">Draw a neat labelled diagram of the structure of the nephron and explain briefly about the renal tubule.<span class="q-tag diagram">Diagram</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">MP-13 (×4 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">Draw a neat labelled diagram of a nephron and explain its structure.<span class="q-tag diagram">Diagram</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">NP-10, JK-85 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">Explain the internal structure of the kidney with a labelled diagram.<span class="q-tag diagram">Diagram</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">20E (×3), BS(A)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">05</span><span class="q-text">Draw a neat labelled diagram of the structure of the Nephron and explain briefly about renal tubule? (slightly different phrasing)<span class="q-tag diagram">Diagram</span><span class="q-src">MP-13 additional sets</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">06</span><span class="q-text">Describe the structural and functional unit of the kidney with neatly labelled diagram.<span class="q-tag diagram">Diagram</span><span class="q-src">ST-85</span></span></div>
+        </div>
+      </div>
+
+    </div>
+  </div></div></div>
+</section>
+
+<!-- ======== CH5: COORDINATION ======== -->
+<section class="chapter-section fade-in" id="ch5" data-ch="5">
+  <div class="chapter-header" onclick="toggleChapter(this)">
+    <div class="chapter-num">05</div>
+    <div class="chapter-title-block"><div class="chapter-tag">Chapter 5</div><div class="chapter-title">Coordination</div></div>
+    <div class="chapter-toggle"><div class="chapter-stats"><div class="chapter-count" id="count-ch5">—</div><div class="chapter-count-label">Questions</div></div><div class="toggle-icon"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12"/></svg></div></div>
+  </div>
+  <div class="chapter-body"><div class="chapter-body-inner"><div class="chapter-body-content">
+    <div class="marker-groups">
+
+      <div class="marker-group" data-m="2">
+        <div class="marker-group-header"><div class="marker-badge">2</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">3–4 sentences</span></div><div class="marker-count" id="cnt-ch5-2">—</div></div>
+        <div class="question-list" id="ql-ch5-2">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">What will happen if insulin hormone is not produced by the pancreas?<span class="q-tag repeated">★ Repeated</span><span class="q-src">RJ-85 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">What happens if glucose levels decrease in our body?<span class="q-src">PR-85</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">How is our brain protected from injuries?<span class="q-src">ST-85</span></span></div>
+        </div>
+      </div>
+
+      <div class="marker-group" data-m="4">
+        <div class="marker-group-header"><div class="marker-badge">4</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">5–6 sentences</span></div><div class="marker-count" id="cnt-ch5-4">—</div></div>
+        <div class="question-list" id="ql-ch5-4">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">Examine the endocrine gland table and answer: (i) What do we call substances secreted from endocrine glands (ii) Name the hormone that causes emotional stress (iii) Male and female sex hormones in the table (iv) Where is the pituitary gland located?<span class="q-tag table">Refer Table</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">RP-13 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">Examine the endocrine gland table and answer: (i) Hormone causing growth of bones (ii) Where is thyroid gland located? (iii) Hormone balancing sugar levels in blood (iv) What do we call chemical substances secreted from endocrine glands?<span class="q-tag table">Refer Table</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">V-13 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">Observe the endocrine gland table and answer: (i) Identify sex hormone secreted in females (ii) Role of Insulin in the body (iii) Which gland is called the master gland? (iv) Where is the adrenal gland located?<span class="q-tag table">Refer Table</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">20E (×3), BS(A) (×3)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">Observe the endocrine glands location/hormones table (K-10 format) and answer: (a) Hormone exclusively in females (b) Hormone for secondary sexual characters in males (c) Endocrine glands in both male and female (d) Hormone exclusively in male.<span class="q-tag table">Refer Table</span><span class="q-src">K-10</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">05</span><span class="q-text">Observe the brain flow chart and answer: (i) Major parts of the brain (ii) Part maintaining posture and equilibrium (iii) Function of diencephalon (iv) How many cranial nerves in human nervous system?<span class="q-tag diagram">Diagram</span><span class="q-src">RM-85</span></span></div>
+        </div>
+      </div>
+
+      <div class="marker-group" data-m="6">
+        <div class="marker-group-header"><div class="marker-badge">6</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">8–10 sentences</span></div><div class="marker-count" id="cnt-ch5-6">—</div></div>
+        <div class="question-list" id="ql-ch5-6">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">Explain the structure of the nerve cell and types of nerves.<span class="q-tag diagram">Diagram</span><span class="q-src">DCEB district paper</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">Draw a well-labelled diagram of the nerve cell and explain briefly.<span class="q-tag diagram">Diagram</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">G010 (×3), W010 (×2), NP (×2), SK-85 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">Draw a label diagram of a nerve cell and explain its structure.<span class="q-tag diagram">Diagram</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">SK-85 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">Draw the well labelled diagram of human brain and write its structure.<span class="q-tag diagram">Diagram</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">c-10 (×2), RM-85, M010 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">05</span><span class="q-text">Explain the structure of human brain with the help of a labelled diagram.<span class="q-tag diagram">Diagram</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">M010 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">06</span><span class="q-text">Draw a neatly labelled diagram of brain and write few points on how it is protected.<span class="q-tag diagram">Diagram</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">V-13 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">07</span><span class="q-text">Explain Tropic and Nastic movements in plants.<span class="q-tag repeated">★ Repeated</span><span class="q-src">RJ-85 (×2), PR-85</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">08</span><span class="q-text">Write the Tropic and Nastic movements shown by plants for stimuli.<span class="q-src">Y-10</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">09</span><span class="q-text">Explain the major plant hormones and their uses in plants.<span class="q-src">JK-85 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">10</span><span class="q-text">How do Tropic and Nastic movements benefit plants? Explain with examples.<span class="q-src">PR-85</span></span></div>
+        </div>
+      </div>
+
+    </div>
+  </div></div></div>
+</section>
+
+<!-- ======== CH6: REPRODUCTION ======== -->
+<section class="chapter-section fade-in" id="ch6" data-ch="6">
+  <div class="chapter-header" onclick="toggleChapter(this)">
+    <div class="chapter-num">06</div>
+    <div class="chapter-title-block"><div class="chapter-tag">Chapter 6</div><div class="chapter-title">Reproduction</div></div>
+    <div class="chapter-toggle"><div class="chapter-stats"><div class="chapter-count" id="count-ch6">—</div><div class="chapter-count-label">Questions</div></div><div class="toggle-icon"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12"/></svg></div></div>
+  </div>
+  <div class="chapter-body"><div class="chapter-body-inner"><div class="chapter-body-content">
+    <div class="marker-groups">
+
+      <div class="marker-group" data-m="2">
+        <div class="marker-group-header"><div class="marker-badge">2</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">3–4 sentences</span></div><div class="marker-count" id="cnt-ch6-2">—</div></div>
+        <div class="question-list" id="ql-ch6-2">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">Write the two materials required to observe/experiment to observe Rhizopus.<span class="q-tag activity">Activity</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">NP-10, S-13, V-13 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">Write required materials to observe the spores of Rhizopus.<span class="q-tag activity">Activity</span><span class="q-src">S-13</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">What materials are required to prepare a temporary slide of Rhizopus?<span class="q-tag activity">Activity</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">V-13 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">What would happen if the gametes do not have half the chromosome number as their parental cell?<span class="q-tag repeated">★ Repeated</span><span class="q-src">JK-85 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">05</span><span class="q-text">Write the names of the daily-useful crop plants grown by the vegetative method of reproduction.<span class="q-tag repeated">★ Repeated</span><span class="q-src">c-10 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">06</span><span class="q-text">What programmes do you suggest to create awareness about organ donation?<span class="q-tag repeated">★ Repeated</span><span class="q-src">G010 (×3), W010 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">07</span><span class="q-text">What precautions will you suggest to prevent sexually transmitted diseases?<span class="q-src">DCEB district paper</span></span></div>
+        </div>
+      </div>
+
+      <div class="marker-group" data-m="4">
+        <div class="marker-group-header"><div class="marker-badge">4</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">5–6 sentences</span></div><div class="marker-count" id="cnt-ch6-4">—</div></div>
+        <div class="question-list" id="ql-ch6-4">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">Write any four modes of asexual reproduction with examples.<span class="q-tag repeated">★ Repeated</span><span class="q-src">RJ-85 (×2), MP-13 (implied)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">Write any four differences between sexual and asexual reproduction.<span class="q-src">DCEB-Warangal</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">Describe any four natural vegetative reproduction methods.<span class="q-tag repeated">★ Repeated</span><span class="q-src">G010 (×3), W010 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">Write about the methods of artificial propagation with examples.<span class="q-tag repeated">★ Repeated</span><span class="q-src">20E (×3)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">05</span><span class="q-text">Write any two asexual modes of reproduction in living organisms.<span class="q-src">Y-13</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">06</span><span class="q-text">Write the differences between mitosis and meiosis.<span class="q-tag repeated">★ Repeated</span><span class="q-src">M010 (×2), G-14</span></span></div>
+        </div>
+      </div>
+
+      <div class="marker-group" data-m="6">
+        <div class="marker-group-header"><div class="marker-badge">6</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">8–10 sentences</span></div><div class="marker-count" id="cnt-ch6-6">—</div></div>
+        <div class="question-list" id="ql-ch6-6">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">What are the different modes of asexual reproduction? Explain with suitable examples.<span class="q-tag repeated">★ Repeated</span><span class="q-src">MP-13 (×4 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">Explain any three asexual reproduction methods in animals with examples.<span class="q-src">NP-10</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">Describe mitosis with the help of neat labelled diagrams.<span class="q-tag diagram">Diagram</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">J-10 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">Explain the various phases of mitotic cell division with suitable diagrams.<span class="q-tag diagram">Diagram</span><span class="q-src">ST-85</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">05</span><span class="q-text">Write the differences between mitosis and meiosis (essay level — 8–10 sentences).<span class="q-src">RP-13 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">06</span><span class="q-text">Write the procedure and precautions of the lab activity to observe Rhizopus and explain its structure.<span class="q-tag activity">Activity</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">SK-85 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">07</span><span class="q-text">Write materials required, procedure, observations and precautions for temporary slide preparation of Rhizopus.<span class="q-tag activity">Activity</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">JK-85 (×2 sets), S-13</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">08</span><span class="q-text">How do you observe the sporangia of Rhizopus in the laboratory?<span class="q-tag activity">Activity</span><span class="q-src">PR-85</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">09</span><span class="q-text">Explain double fertilization in plants with a labelled diagram.<span class="q-tag diagram">Diagram</span><span class="q-src">RM-85, R-10 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">10</span><span class="q-text">Draw a neat labelled diagram of the ovule in a flower and explain its structure.<span class="q-tag diagram">Diagram</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">DP-15 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">11</span><span class="q-text">Draw the diagram of the life cycle of a flowering plant and mention the changes occurring in the embryo after fertilization.<span class="q-tag diagram">Diagram</span><span class="q-src">Y-10</span></span></div>
+        </div>
+      </div>
+
+    </div>
+  </div></div></div>
+</section>
+
+<!-- ======== CH7: COORDINATION IN LIFE PROCESSES ======== -->
+<section class="chapter-section fade-in" id="ch7" data-ch="7">
+  <div class="chapter-header" onclick="toggleChapter(this)">
+    <div class="chapter-num">07</div>
+    <div class="chapter-title-block"><div class="chapter-tag">Chapter 7</div><div class="chapter-title">Coordination in Life Processes</div></div>
+    <div class="chapter-toggle"><div class="chapter-stats"><div class="chapter-count" id="count-ch7">—</div><div class="chapter-count-label">Questions</div></div><div class="toggle-icon"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12"/></svg></div></div>
+  </div>
+  <div class="chapter-body"><div class="chapter-body-inner"><div class="chapter-body-content">
+    <div class="marker-groups">
+
+      <div class="marker-group" data-m="2">
+        <div class="marker-group-header"><div class="marker-badge">2</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">3–4 sentences</span></div><div class="marker-count" id="cnt-ch7-2">—</div></div>
+        <div class="question-list" id="ql-ch7-2">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">What are the apparatus used and procedure followed while you did the activity to understand how the stomach protects from its own acid?<span class="q-tag activity">Activity</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">J-10 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">Write two chemicals required to conduct an experiment to prove how the stomach walls are protected from its own juices.<span class="q-tag experiment">Experiment</span><span class="q-src">DCEB-Warangal</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">Write the apparatus used in the acid-leaf experiment.<span class="q-tag experiment">Experiment</span><span class="q-src">RP-13</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">What will happen if there is no mucus in the oesophagus?<span class="q-tag repeated">★ Repeated</span><span class="q-src">SK-85 (×2 sets)</span></span></div>
+        </div>
+      </div>
+
+      <div class="marker-group" data-m="4">
+        <div class="marker-group-header"><div class="marker-badge">4</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">5–6 sentences</span></div><div class="marker-count" id="cnt-ch7-4">—</div></div>
+        <div class="question-list" id="ql-ch7-4">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">Why do two test tubes show different results in lab activity "Action of saliva on flour"?<span class="q-src">ST-85</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">Observe the teeth diagram and answer: (i) Which teeth have sharp and pointed edges? (ii) Function of molars (iii) How many premolars are present in adult human? (iv) What is "Mastication"?<span class="q-tag diagram">Diagram</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">JK-85 (×2 sets)</span></span></div>
+        </div>
+      </div>
+
+      <div class="marker-group" data-m="6">
+        <div class="marker-group-header"><div class="marker-badge">6</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">8–10 sentences</span></div><div class="marker-count" id="cnt-ch7-6">—</div></div>
+        <div class="question-list" id="ql-ch7-6">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">What is the aim of the acid and leaf experiment? Write its procedure and how it is applicable to the human digestive system.<span class="q-tag experiment">Experiment</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">c-10 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">Explain the procedure and observation of the acid and leaf experiment.<span class="q-tag experiment">Experiment</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">G010 (×3), W010 (×2), NP-10 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">Write the procedure and observations for the experiment: "Action of Saliva on flour."<span class="q-tag experiment">Experiment</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">DP-15 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">Write the action of saliva on flour (procedure and observations).<span class="q-tag experiment">Experiment</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">20E (×3), BS(A) (×3)</span></span></div>
+        </div>
+      </div>
+
+    </div>
+  </div></div></div>
+</section>
+
+<!-- ======== CH8: HEREDITY & EVOLUTION ======== -->
+<section class="chapter-section fade-in" id="ch8" data-ch="8">
+  <div class="chapter-header" onclick="toggleChapter(this)">
+    <div class="chapter-num">08</div>
+    <div class="chapter-title-block"><div class="chapter-tag">Chapter 8</div><div class="chapter-title">Heredity &amp; Evolution</div></div>
+    <div class="chapter-toggle"><div class="chapter-stats"><div class="chapter-count" id="count-ch8">—</div><div class="chapter-count-label">Questions</div></div><div class="toggle-icon"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12"/></svg></div></div>
+  </div>
+  <div class="chapter-body"><div class="chapter-body-inner"><div class="chapter-body-content">
+    <div class="marker-groups">
+
+      <div class="marker-group" data-m="2">
+        <div class="marker-group-header"><div class="marker-badge">2</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">3–4 sentences</span></div><div class="marker-count" id="cnt-ch8-2">—</div></div>
+        <div class="question-list" id="ql-ch8-2">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">Mendel selected a pea plant for his experiments. Mention the reasons in your point of view.<span class="q-tag repeated">★ Repeated</span><span class="q-src">V-13 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">If the theory of inheritance of acquired characters by Lamarck was true, how will the world be?<span class="q-tag repeated">★ Repeated</span><span class="q-src">20E (×3), BS(A), RP-13 (×2)</span></span></div>
+        </div>
+      </div>
+
+      <div class="marker-group" data-m="4">
+        <div class="marker-group-header"><div class="marker-badge">4</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">5–6 sentences</span></div><div class="marker-count" id="cnt-ch8-4">—</div></div>
+        <div class="question-list" id="ql-ch8-4">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">Write any four differences between homologous and analogous organs.<span class="q-tag repeated">★ Repeated</span><span class="q-src">MP-13 (×4 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">Observe the monohybrid cross (checker board) table and answer: (i) Which law does the checker board follow? (ii) How many homozygous plants in the checker board? (iii) Phenotype ratio (iv) Genotype ratio.<span class="q-tag table">Refer Table</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">MP-13 (×4 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">Observe the yellow/green seed monohybrid cross table and answer: (i) Phenotypic ratio (ii) Genotypic ratio (iii) How many characters taken? (iv) Recessive character?<span class="q-tag table">Refer Table</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">J-10 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">Observe the TT/Tt/tt genotype table and answer: (i) Characters indicated by TT and tt genotypes (ii) Identify homozygous traits (iii) Genotypic ratio of offspring (iv) Name the plant Mendel used.<span class="q-tag table">Refer Table</span><span class="q-src">PR-85</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">05</span><span class="q-text">Explain the monohybrid cross based on one character.<span class="q-src">DCEB district paper</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">06</span><span class="q-text">Observe sex determination figure (Father: 44+XY, Mother: 44+XX → baby girl/boy) and answer: (i) What does this figure show? (ii) How many autosomes? (iii) What type of allosomes in the figure? (iv) Who determines the sex — mother or father?<span class="q-tag diagram">Diagram</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">G010 (×3), W010 (×2), NP-10</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">07</span><span class="q-text">Explain Mendel's "Law of Dominance" with suitable example.<span class="q-src">ST-85</span></span></div>
+        </div>
+      </div>
+
+      <div class="marker-group" data-m="6">
+        <div class="marker-group-header"><div class="marker-badge">6</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">8–10 sentences</span></div><div class="marker-count" id="cnt-ch8-6">—</div></div>
+        <div class="question-list" id="ql-ch8-6">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">Explain Darwin's theory of evolution with a suitable example.<span class="q-src">c-10 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">Explain any two evidences of evolution.<span class="q-src">S-13</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">Write a brief note on homologous and analogous organs.<span class="q-tag repeated">★ Repeated</span><span class="q-src">R-10 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">Explain the monohybrid cross with an example. Which laws of inheritance can we understand? Explain.<span class="q-tag repeated">★ Repeated</span><span class="q-src">M010 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">05</span><span class="q-text">Explain the sex determination in human beings — draw the flow chart. Who decides the sex of the baby — mother or father?<span class="q-tag diagram">Diagram</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">RJ-85 (×2), G-14, Y-13</span></span></div>
+        </div>
+      </div>
+
+    </div>
+  </div></div></div>
+</section>
+
+<!-- ======== CH9: OUR ENVIRONMENT ======== -->
+<section class="chapter-section fade-in" id="ch9" data-ch="9">
+  <div class="chapter-header" onclick="toggleChapter(this)">
+    <div class="chapter-num">09</div>
+    <div class="chapter-title-block"><div class="chapter-tag">Chapter 9</div><div class="chapter-title">Our Environment</div></div>
+    <div class="chapter-toggle"><div class="chapter-stats"><div class="chapter-count" id="count-ch9">—</div><div class="chapter-count-label">Questions</div></div><div class="toggle-icon"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12"/></svg></div></div>
+  </div>
+  <div class="chapter-body"><div class="chapter-body-inner"><div class="chapter-body-content">
+    <div class="marker-groups">
+
+      <div class="marker-group" data-m="2">
+        <div class="marker-group-header"><div class="marker-badge">2</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">3–4 sentences</span></div><div class="marker-count" id="cnt-ch9-2">—</div></div>
+        <div class="question-list" id="ql-ch9-2">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">Grass → Grasshopper → Frog → Snake. What would be the effect on this food chain if grasshoppers are removed?<span class="q-src">N-13 (RP-13A)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">What would happen if all primary consumers are removed from the food chain?<span class="q-tag repeated">★ Repeated</span><span class="q-src">c-10 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">Suggest any two programmes on avoiding pesticides and preventing soil pollution.<span class="q-tag repeated">★ Repeated</span><span class="q-src">20E (×3), BS(A) (×3), R-10 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">Suggest one programme on avoiding pesticide and preventing soil pollution.<span class="q-tag repeated">★ Repeated</span><span class="q-src">R-10 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">05</span><span class="q-text">Write the uses of decomposers in our environment.<span class="q-tag repeated">★ Repeated</span><span class="q-src">JK-85 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">06</span><span class="q-text">What would happen if we remove snakes from a food chain?<span class="q-src">RM-85</span></span></div>
+        </div>
+      </div>
+
+      <div class="marker-group" data-m="4">
+        <div class="marker-group-header"><div class="marker-badge">4</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">5–6 sentences</span></div><div class="marker-count" id="cnt-ch9-4">—</div></div>
+        <div class="question-list" id="ql-ch9-4">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">Suggest some alternative methods to protect crops and food from pests based on sound biological principles.<span class="q-tag repeated">★ Repeated</span><span class="q-src">RJ-85 (×2), M010 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">Write any four biological principles used to prevent pests on crops.<span class="q-tag repeated">★ Repeated</span><span class="q-src">J-10 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">Suggest some effective methods of pest control based on the biological principles.<span class="q-tag repeated">★ Repeated</span><span class="q-src">MP-13 (×4 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">Suggest some programmes on avoiding pesticides and preventing environmental pollution.<span class="q-src">JK-85 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">05</span><span class="q-text">Write any four prevention methods to follow by farmers to prevent the use of more pesticides.<span class="q-src">NP-10</span></span></div>
+        </div>
+      </div>
+
+      <div class="marker-group" data-m="6">
+        <div class="marker-group-header"><div class="marker-badge">6</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">8–10 sentences</span></div><div class="marker-count" id="cnt-ch9-6">—</div></div>
+        <div class="question-list" id="ql-ch9-6">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">What is an ecological pyramid? Explain the pyramid of energy with a neat diagram.<span class="q-tag diagram">Diagram</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">SK-85 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">What is an ecological pyramid? Explain the different types of ecological pyramids.<span class="q-src">K-10</span></span></div>
+        </div>
+      </div>
+
+    </div>
+  </div></div></div>
+</section>
+
+<!-- ======== CH10: NATURAL RESOURCES ======== -->
+<section class="chapter-section fade-in" id="ch10" data-ch="10">
+  <div class="chapter-header" onclick="toggleChapter(this)">
+    <div class="chapter-num">10</div>
+    <div class="chapter-title-block"><div class="chapter-tag">Chapter 10</div><div class="chapter-title">Natural Resources</div></div>
+    <div class="chapter-toggle"><div class="chapter-stats"><div class="chapter-count" id="count-ch10">—</div><div class="chapter-count-label">Questions</div></div><div class="toggle-icon"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12"/></svg></div></div>
+  </div>
+  <div class="chapter-body"><div class="chapter-body-inner"><div class="chapter-body-content">
+    <div class="marker-groups">
+
+      <div class="marker-group" data-m="2">
+        <div class="marker-group-header"><div class="marker-badge">2</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">3–4 sentences</span></div><div class="marker-count" id="cnt-ch10-2">—</div></div>
+        <div class="question-list" id="ql-ch10-2">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">Name two fossil fuels that are used in daily life.<span class="q-src">DCEB-Warangal</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">Write about the fossil fuels that are used in daily life.<span class="q-src">RP-13</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">What will happen if forests are decreased rapidly in the future?<span class="q-src">NP-10</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">What may happen in the near future if minerals are extensively mined from the earth?<span class="q-tag repeated">★ Repeated</span><span class="q-src">DP-15 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">05</span><span class="q-text">What are the community-based interventions followed in Kothapally village?<span class="q-tag repeated">★ Repeated</span><span class="q-src">J-10 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">06</span><span class="q-text">Water is a renewable resource. Describe the methods adopted to conserve water.<span class="q-src">N-13 (RP-13A)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">07</span><span class="q-text">Write any two soil conservation methods.<span class="q-src">RM-85</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">08</span><span class="q-text">Write any two suggestions to conserve soil.<span class="q-src">Y-13</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">09</span><span class="q-text">Suggest some steps that can be taken to reduce the use of fossil fuels.<span class="q-src">PR-85</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">10</span><span class="q-text">What are your suggestions for the development of wastelands?<span class="q-tag repeated">★ Repeated</span><span class="q-src">M010 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">11</span><span class="q-text">To sustain the natural resources and to save the environment, what are the 4R's principles we have to follow?<span class="q-src">Y-10</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">12</span><span class="q-text">What will happen in Wanaparthy village if there are no percolation tanks? (community resource management)<span class="q-src">ST-85</span></span></div>
+        </div>
+      </div>
+
+      <div class="marker-group" data-m="4">
+        <div class="marker-group-header"><div class="marker-badge">4</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">5–6 sentences</span></div><div class="marker-count" id="cnt-ch10-4">—</div></div>
+        <div class="question-list" id="ql-ch10-4">
+          <div class="question-item"><span class="q-index">01</span><span class="q-text">How can you apply the 4R's methods in daily life that helps in conservation of environment?<span class="q-tag repeated">★ Repeated</span><span class="q-src">SK-85 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">02</span><span class="q-text">How do you apply 4R's principle in conserving natural resources?<span class="q-src">S-13</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">03</span><span class="q-text">Write about the 4R's required for environmental protection.<span class="q-tag repeated">★ Repeated</span><span class="q-src">R-10 (×2 sets), 20E (×3), BS(A)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">04</span><span class="q-text">Explain the basic principles of 4R's used in waste management which is essential for environmental conservation.<span class="q-tag repeated">★ Repeated</span><span class="q-src">c-10 (×2 sets)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">05</span><span class="q-text">Write about 4R's that help save the environment and maintain natural resources in daily life.<span class="q-tag repeated">★ Repeated</span><span class="q-src">K-10</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">06</span><span class="q-text">How do you save the environment in your daily life through 4R's?<span class="q-tag repeated">★ Repeated</span><span class="q-src">20E (×3), BS(A) (×3)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">07</span><span class="q-text">Why do we need to conserve fossil fuels? Mention any three methods to reduce usage of fossil fuels.<span class="q-src">DP-15 (×2)</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">08</span><span class="q-text">Write the 4R's — What are the 4R's? How are they useful in saving the environment in your daily life?<span class="q-src">K-10</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">09</span><span class="q-text">Write about the 4R's required for environmental protection (essay/detailed 4-mark version).<span class="q-tag repeated">★ Repeated</span><span class="q-src">Multiple district papers</span></span></div><div class="q-divider"></div>
+          <div class="question-item"><span class="q-index">10</span><span class="q-text">Observe the fossil fuel pie diagram and answer: (i) Identify the fossil fuels from the diagram (ii) Why should wastes be considered as primary energy source in future? (iii) Why can't we depend on fossil fuels forever? (iv) What are the alternatives for fossil fuels?<span class="q-tag diagram">Diagram</span><span class="q-tag repeated">★ Repeated</span><span class="q-src">RJ-85 (×2 sets)</span></span></div>
+        </div>
+      </div>
+
+      <div class="marker-group" data-m="6">
+        <div class="marker-group-header"><div class="marker-badge">6</div><div class="marker-label"><span class="marker-label-main">Mark Questions</span><span class="marker-label-sub">8–10 sentences</span></div><div class="marker-count" id="cnt-ch10-6">—</div></div>
+        <div class="question-list" id="ql-ch10-6">
+          <!-- No 6-mark questions fall under Natural Resources after correct classification. All photosynthesis experiment essays belong to Ch.1 Nutrition. -->
+        </div>
+      </div>
+
+    </div>
+  </div></div></div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-brand">BIOQB<br>2026</div>
+  <div class="footer-meta">
+    PRE-FINAL / PRE-PUBLIC PAPERS — FEBRUARY 2026<br>
+    TELANGANA DISTRICT COMMON EXAMINATION BOARDS<br>
+    RJ-85 · SK-85 · JK-85 · ST-85 · RM-85 · PR-85 · MP-13 · DP-15<br>
+    J-10 · R-10 · K-10 · G010 · W010 · M010 · NP-10 · G-14 · c-10<br>
+    V-13 · S-13 · Y-10 · Y-13 · N-13/RP-13 · 20E · BS(A/B) + MORE<br>
+    CLASS X · BIOLOGICAL SCIENCE (ENGLISH MEDIUM)<br>
+    <span style="color:var(--accent)">// SUBJECTIVE QUESTIONS (2M/4M/6M) — MCQs EXCLUDED<br>// ★ = APPEARS IN MULTIPLE PAPER SETS</span>
+  </div>
+</footer>
+
+<script>
+const cursor = document.getElementById('cursor');
+const cursorDot = document.getElementById('cursorDot');
+let mouseX=0,mouseY=0,cursorX=0,cursorY=0;
+document.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY;cursorDot.style.left=mouseX+'px';cursorDot.style.top=mouseY+'px';});
+function animateCursor(){cursorX+=(mouseX-cursorX)*.15;cursorY+=(mouseY-cursorY)*.15;cursor.style.left=cursorX+'px';cursor.style.top=cursorY+'px';requestAnimationFrame(animateCursor);}
+animateCursor();
+document.querySelectorAll('a,button,.chapter-header,.nav-chip').forEach(el=>{el.addEventListener('mouseenter',()=>cursor.classList.add('hover'));el.addEventListener('mouseleave',()=>cursor.classList.remove('hover'));});
+const progressBar=document.getElementById('progress-bar');
+window.addEventListener('scroll',()=>{const s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight;progressBar.style.width=(s/d*100)+'%';});
+function toggleChapter(header){const section=header.closest('.chapter-section');section.classList.toggle('open',!section.classList.contains('open'));}
+const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.05});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+function countQuestions(){
+  const chapters=[1,2,3,4,5,6,7,8,9,10];
+  const marks=[2,4,6];
+  let total2=0,total4=0,total6=0;
+  chapters.forEach(ch=>{
+    let chTotal=0;
+    marks.forEach(m=>{
+      const list=document.getElementById('ql-ch'+ch+'-'+m);
+      if(!list)return;
+      const count=list.querySelectorAll('.question-item').length;
+      const cntEl=document.getElementById('cnt-ch'+ch+'-'+m);
+      if(cntEl)cntEl.textContent=count;
+      chTotal+=count;
+      if(m===2)total2+=count;
+      if(m===4)total4+=count;
+      if(m===6)total6+=count;
+    });
+    const chCountEl=document.getElementById('count-ch'+ch);
+    if(chCountEl)chCountEl.textContent=chTotal;
+  });
+  document.getElementById('total2').textContent=total2;
+  document.getElementById('total4').textContent=total4;
+  document.getElementById('total6').textContent=total6;
+}
+countQuestions();
+document.querySelector('.chapter-section').classList.add('open');
+</script>
+</body>
+</html>
