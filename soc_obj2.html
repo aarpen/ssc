@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class X Social Studies Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #fdf9f0;
+    --ink: #2a2118;
+    --ink-light: #6b5c4a;
+    --yellow: #fff176;
+    --pink: #ffb3c6;
+    --green: #b8f5b1;
+    --red: #ffcdd2;
+    --border: #d4c4a8;
+    --card: #fffef8;
+    --blue-hl: #b3d9ff;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 16px;
+    background-image:
+      repeating-linear-gradient(
+        transparent,
+        transparent 27px,
+        #e8dfc8 27px,
+        #e8dfc8 28px
+      );
+  }
+
+  /* ─── SCREENS ─── */
+  .screen { display: none; }
+  .screen.active { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 90vh; }
+
+  /* ─── WELCOME ─── */
+  #welcome-screen {
+    text-align: center;
+    gap: 20px;
+  }
+
+  .notebook-card {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    padding: 32px 40px;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: 4px 4px 0 #d4c4a8, 8px 8px 0 #ebe0cc;
+    transform: rotate(-0.8deg);
+    position: relative;
+  }
+
+  .notebook-card::before {
+    content: '';
+    position: absolute;
+    left: 48px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(255, 150, 160, 0.4);
+  }
+
+  .welcome-title {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(2.2rem, 6vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .hl-yellow { background: var(--yellow); padding: 2px 6px; border-radius: 3px; }
+  .hl-pink   { background: var(--pink);   padding: 2px 6px; border-radius: 3px; }
+  .hl-blue   { background: var(--blue-hl);padding: 2px 6px; border-radius: 3px; }
+
+  .welcome-sub {
+    font-size: 1rem;
+    color: var(--ink-light);
+    margin-bottom: 4px;
+  }
+
+  .q-count {
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--ink-light);
+    margin-bottom: 24px;
+  }
+
+  .sticker {
+    display: inline-block;
+    font-size: 2.4rem;
+    margin-bottom: 8px;
+  }
+
+  /* ─── BUTTONS ─── */
+  .btn-start {
+    background: var(--ink);
+    color: var(--cream);
+    border: none;
+    border-radius: 4px;
+    padding: 14px 40px;
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 3px 3px 0 #b0a080;
+  }
+  .btn-start:hover { transform: translateY(-2px); box-shadow: 5px 5px 0 #b0a080; }
+  .btn-start:active { transform: translateY(1px); box-shadow: 1px 1px 0 #b0a080; }
+
+  /* ─── PROGRESS ─── */
+  #quiz-screen { gap: 16px; width: 100%; max-width: 680px; }
+
+  .progress-wrap {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .progress-bar-bg {
+    flex: 1;
+    height: 10px;
+    background: var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #c4b494;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--ink);
+    border-radius: 10px;
+    transition: width 0.4s ease;
+  }
+
+  .score-badge {
+    font-family: 'Caveat', cursive;
+    font-size: 1.15rem;
+    font-weight: 700;
+    background: var(--yellow);
+    padding: 3px 10px;
+    border-radius: 3px;
+    white-space: nowrap;
+    border: 1px solid #d4b800;
+  }
+
+  .q-counter {
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    color: var(--ink-light);
+    white-space: nowrap;
+  }
+
+  /* ─── QUESTION CARD ─── */
+  .q-card {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    padding: 28px 32px;
+    width: 100%;
+    box-shadow: 4px 4px 0 #d4c4a8;
+    transform: rotate(0.4deg);
+    position: relative;
+  }
+
+  .q-card::before {
+    content: '';
+    position: absolute;
+    left: 44px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: rgba(255,150,160,0.35);
+  }
+
+  .q-source {
+    font-size: 0.75rem;
+    color: var(--ink-light);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 10px;
+    padding-left: 8px;
+  }
+
+  .q-text {
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: var(--ink);
+    padding-left: 8px;
+    font-weight: 500;
+  }
+
+  /* ─── OPTIONS ─── */
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+  }
+
+  @media (max-width: 480px) {
+    .options-grid { grid-template-columns: 1fr; }
+    .notebook-card, .q-card { padding: 20px 20px; }
+    .q-card::before, .notebook-card::before { left: 28px; }
+  }
+
+  .opt-btn {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    padding: 12px 16px;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--ink);
+    cursor: pointer;
+    transition: transform 0.13s, box-shadow 0.13s, background 0.13s, border-color 0.13s;
+    box-shadow: 2px 2px 0 #d4c4a8;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.4;
+  }
+
+  .opt-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0 #b0a080;
+    border-color: var(--ink-light);
+  }
+
+  .opt-label {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    font-weight: 700;
+    min-width: 22px;
+  }
+
+  .opt-btn.selected {
+    background: var(--blue-hl);
+    border-color: #5aabee;
+  }
+
+  .opt-btn.correct {
+    background: var(--green);
+    border-color: #4caf50;
+  }
+
+  .opt-btn.wrong {
+    background: var(--red);
+    border-color: #e57373;
+  }
+
+  .opt-btn:disabled { cursor: default; }
+
+  /* ─── LOCK IN BUTTON ─── */
+  .lock-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .btn-lock {
+    background: var(--ink);
+    color: var(--cream);
+    border: none;
+    border-radius: 4px;
+    padding: 11px 30px;
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.13s, box-shadow 0.13s;
+    box-shadow: 3px 3px 0 #b0a080;
+  }
+  .btn-lock:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 5px 5px 0 #b0a080; }
+  .btn-lock:disabled { opacity: 0.45; cursor: not-allowed; }
+
+  .btn-next {
+    background: #3a7a3a;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 11px 30px;
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.13s, box-shadow 0.13s;
+    box-shadow: 3px 3px 0 #1a4a1a;
+    display: none;
+  }
+  .btn-next:hover { transform: translateY(-2px); box-shadow: 5px 5px 0 #1a4a1a; }
+
+  .keyboard-hint {
+    font-size: 0.75rem;
+    color: var(--ink-light);
+    font-style: italic;
+  }
+
+  /* ─── FEEDBACK ─── */
+  .feedback-box {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 4px;
+    border: 2px solid;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    display: none;
+    gap: 8px;
+    flex-direction: column;
+  }
+
+  .feedback-box.show { display: flex; }
+  .feedback-box.correct-fb { background: var(--green); border-color: #4caf50; }
+  .feedback-box.wrong-fb   { background: var(--red);   border-color: #e57373; }
+
+  .feedback-title {
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  .feedback-exp { color: var(--ink); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes shake {
+    0%,100%{ transform: rotate(0.4deg) translateX(0); }
+    20%    { transform: rotate(0.4deg) translateX(-6px); }
+    40%    { transform: rotate(0.4deg) translateX(6px); }
+    60%    { transform: rotate(0.4deg) translateX(-4px); }
+    80%    { transform: rotate(0.4deg) translateX(4px); }
+  }
+
+  @keyframes flash-green {
+    0%  { background: var(--card); }
+    30% { background: #c8ffc0; }
+    100%{ background: var(--card); }
+  }
+
+  .shake { animation: shake 0.45s ease; }
+  .flash { animation: flash-green 0.6s ease; }
+
+  /* ─── END SCREEN ─── */
+  #end-screen {
+    gap: 20px;
+    text-align: center;
+  }
+
+  .end-card {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    padding: 36px 44px;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 5px 5px 0 #d4c4a8, 10px 10px 0 #ebe0cc;
+    transform: rotate(0.5deg);
+  }
+
+  .end-emoji { font-size: 3rem; margin-bottom: 12px; }
+
+  .end-title {
+    font-family: 'Caveat', cursive;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .end-score {
+    font-family: 'Caveat', cursive;
+    font-size: 3.2rem;
+    font-weight: 700;
+    background: var(--yellow);
+    padding: 6px 20px;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 12px 0;
+  }
+
+  .end-grade {
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+    color: var(--ink-light);
+    margin-bottom: 24px;
+  }
+
+  .doodle-line {
+    width: 80px;
+    height: 3px;
+    background: var(--ink);
+    margin: 16px auto;
+    border-radius: 2px;
+    transform: rotate(-1deg);
+  }
+
+  /* Tape pieces */
+  .tape {
+    position: absolute;
+    background: rgba(255,241,118,0.65);
+    border: 1px solid rgba(180,160,50,0.3);
+    width: 60px;
+    height: 20px;
+    border-radius: 2px;
+  }
+  .tape-tl { top: -10px; left: 20px; transform: rotate(-5deg); }
+  .tape-tr { top: -10px; right: 20px; transform: rotate(4deg); }
+</style>
+</head>
+<body>
+
+<!-- WELCOME -->
+<div id="welcome-screen" class="screen active">
+  <div class="notebook-card" style="transform:rotate(-1deg)">
+    <div class="tape tape-tl"></div>
+    <div class="tape tape-tr"></div>
+    <div class="sticker">📚</div>
+    <div class="welcome-title">
+      <span class="hl-yellow">Social Studies</span><br>
+      Class X MCQ Quiz
+    </div>
+    <p class="welcome-sub" style="margin-top:10px">Pre-Final &amp; Pre-Public Exams · Feb 2026</p>
+    <p class="q-count" id="total-count">⬡ Loading questions…</p>
+    <div class="doodle-line"></div>
+    <p class="welcome-sub" style="margin-bottom:18px; font-size:0.85rem">All questions from official district exam papers.<br>Pick 1-4 or click · Press <b>Enter</b> to lock in.</p>
+    <button class="btn-start" onclick="startQuiz()">Let's Go! →</button>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz-screen" class="screen">
+  <div class="progress-wrap">
+    <span class="q-counter" id="q-counter">1 / 120</span>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+    <span class="score-badge" id="score-badge">Score: 0</span>
+  </div>
+
+  <div class="q-card" id="q-card">
+    <div class="tape tape-tl"></div>
+    <div class="q-source" id="q-source">Question</div>
+    <p class="q-text" id="q-text">Question text goes here</p>
+  </div>
+
+  <div class="options-grid" id="options-grid"></div>
+
+  <div class="feedback-box" id="feedback-box">
+    <div class="feedback-title" id="fb-title"></div>
+    <div class="feedback-exp" id="fb-exp"></div>
+  </div>
+
+  <div class="lock-wrap">
+    <span class="keyboard-hint">Keys: 1 2 3 4 · Enter to confirm</span>
+    <button class="btn-lock" id="btn-lock" onclick="lockIn()" disabled>Lock In ✓</button>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next →</button>
+  </div>
+</div>
+
+<!-- END -->
+<div id="end-screen" class="screen">
+  <div class="end-card">
+    <div class="tape tape-tl"></div>
+    <div class="tape tape-tr"></div>
+    <div class="end-emoji" id="end-emoji">🎉</div>
+    <div class="end-title" id="end-title">Quiz Done!</div>
+    <div class="end-score" id="end-score">0 / 0</div>
+    <div class="end-grade" id="end-grade"></div>
+    <div class="doodle-line"></div>
+    <p style="font-size:0.9rem;color:var(--ink-light);margin-bottom:20px">Questions shuffle every retry — try again!</p>
+    <button class="btn-start" onclick="retryQuiz()">Retry 🔄</button>
+  </div>
+</div>
+
+<script>
+const ALL_QUESTIONS = [
+  // ── Y-14 (Page 0107-0110) ──
+  { q: "India is divided equally into two parts by ________.", options:["Equator","Arctic Circle","Antarctic Circle","Tropic of Cancer"], correct:3, exp:"The Tropic of Cancer (23.5°N) passes roughly through the middle of India, dividing it into two near-equal halves." },
+  { q: "Which organisation prepares the HDI Reports?", options:["UNO","UNEP","UNDP","UNESCO"], correct:2, exp:"The Human Development Index (HDI) is published annually by UNDP — the United Nations Development Programme." },
+  { q: '"Loo" winds blow in this region.', options:["Northern plains","Eastern plains","Southern plains","Western plains"], correct:0, exp:"'Loo' are hot, dry summer winds that blow over the northern plains of India, especially in Rajasthan, UP, and Haryana." },
+  { q: "The triangular area which lies south of Narmada River is called ________.", options:["Chota Nagpur Plateau","Tibetan Plateau","Malwa Plateau","Deccan Plateau"], correct:3, exp:"The Deccan Plateau is the large triangular landmass lying to the south of the Narmada River, forming most of peninsular India." },
+  { q: "Kurhad Bandi means ________.", options:["Ban on liquor","Ban on grazing","Ban on cutting trees","Family planning"], correct:2, exp:"'Kurhad Bandi' literally means a ban on the axe (cutting of trees) — it was one of the four bans (bandis) in Ralegaon Siddi's model village programme." },
+  { q: "Arrange the following in hierarchy: i) Towns  ii) Cities/Class-I towns  iii) Mega city  iv) Metropolitan city", options:["i, ii, iv, iii","ii, i, iii, iv","i, ii, iii, iv","i, iii, iv, ii"], correct:0, exp:"The correct urban hierarchy from smallest to largest is: Towns → Class-I cities → Metropolitan cities → Mega cities." },
+  { q: "Effect of economic depression: which of the following is correct?", options:["Increase in industrial production","Decrease in poverty","Increase in employment","Decrease in industrial production"], correct:3, exp:"Economic depression leads to a sharp fall in production, demand collapses, factories shut, and industrial output decreases drastically." },
+  { q: '"May Fourth" movement is related to ________.',  options:["Britain","China","France","Russia"], correct:1, exp:"The May Fourth Movement (1919) was a Chinese intellectual and political movement that protested the Versailles Treaty's decision to give German concessions in China to Japan." },
+  { q: "Who led the Tebhaga movement in Bengal Region?", options:["Communist Party of India","Provincial Kisan Sabha","Indian National Army","Indian Navy"], correct:1, exp:"The Tebhaga movement (1946) demanding two-thirds crop share for sharecroppers was led by the Provincial Kisan Sabha in Bengal." },
+  { q: "The preamble of the constitution of India declares India to be a ________.", options:["Sovereign, Socialist, Secular, Democratic, Republic","Sovereign, Secular, Socialist, Democratic, Republic","Sovereign, Socialist, Secular, Republic, Democratic","Sovereign, Democratic, Republic, Secular, Socialist"], correct:0, exp:"The Preamble (as amended in 1976 by the 42nd Amendment) declares India a Sovereign, Socialist, Secular, Democratic Republic." },
+  { q: "Which constitutional Amendment reduced the voting age from 21 years to 18 years?", options:["42nd Amendment Act","44th Amendment Act","58th Amendment Act","61st Amendment Act"], correct:3, exp:"The 61st Constitutional Amendment Act (1988) lowered the voting age from 21 to 18 years, giving millions of young people voting rights." },
+  { q: "Permanent member countries of the Security Council are ________.", options:["USA, Britain, France, Russia, Italy","USA, Britain, France, Russia, Germany","USA, Britain, France, Russia, China","USA, Britain, Russia, Germany, Canada"], correct:2, exp:"The five permanent (P5) members of the UN Security Council are USA, UK, France, Russia, and China — each holds veto power." },
+  { q: "West Asian crisis is related to ________.", options:["Nazis - Jews","Arabs - Jews","Arabs - Nazis","Hindus - Muslims"], correct:1, exp:"The West Asian (Middle East) crisis is primarily the Arab–Israeli conflict over Palestine, territory, and statehood." },
+  { q: "The movement that developed the idea of Sustainable Development is ________.", options:["Chipko movement","Greenpeace movement","Meira Paibi movement","Narmada Bachao Andolan"], correct:1, exp:"The Greenpeace movement globally championed the concept of sustainable development, pushing for environmental protection alongside economic growth." },
+  { q: "This University was set up as per the assurance of the six points formula.", options:["Osmania University","Andhra University","Kakatiya University","Hyderabad Central University"], correct:2, exp:"Kakatiya University in Warangal was established as part of the six-point formula assurances given to the Telangana region." },
+  { q: "Arrange the following in chronological order: 1. Versailles Treaty  2. League of Nations  3. Quit India Movement  4. Cripps Mission", options:["1,2,4,3","1,2,3,4","2,1,3,4","3,2,4,1"], correct:0, exp:"Versailles Treaty (1919) → League of Nations (1920) → Cripps Mission (1942) → Quit India Movement (1942, Aug). So: 1,2,4,3." },
+  { q: "Which country was saved from the Great Depression?", options:["France","Britain","Russia","USA"], correct:2, exp:"The USSR (Russia) followed a planned socialist economy and was largely insulated from the capitalist Great Depression of the 1930s." },
+  { q: "Sex ratio is defined as:", options:["The number of females per 100 males","The number of females per 1000 males","The number of females per 10 males","The number of females per 10,000 males"], correct:1, exp:"In India, sex ratio is officially defined as the number of females per 1000 males in the population." },
+  { q: "Narmada river flows ________.", options:["North to the Vindhya mountains","South to the Satpura mountains","North to the Satpura mountains","North to the Aravali mountains"], correct:2, exp:"The Narmada flows westward in a rift valley, with the Vindhya range to the north and the Satpura range to the south of it." },
+
+  // ── ST-86 Part B (Siddipet, Page 0114-0117) ──
+  { q: "Find out the odd one: A) Kodaikanal  B) Mussoorie  C) Simla  D) Nainital", options:["Kodaikanal","Mussoorie","Simla","Nainital"], correct:0, exp:"Kodaikanal is in Tamil Nadu (southern India), while Mussoorie, Simla, and Nainital are all hill stations in the Himalayan foothills of northern India." },
+  { q: "Schooling Yojana is related to this state.", options:["Himachal Pradesh","Sikkim","Kashmir","Andhra Pradesh"], correct:0, exp:"Himachal Pradesh is known for its high literacy due to model schooling initiatives; it is often cited as a success story for universal primary schooling in India." },
+  { q: "Match: 1-HDI, 2-PDS, 3-Literacy rate, 4-Net Attendance Ratio  with  a) Nutrition level is high, b) 7 years and above, c) Attendance in 9th and 10th class, d) Health", options:["1-a, 2-b, 3-c, 4-d","1-d, 2-a, 3-b, 4-c","1-a, 2-c, 3-b, 4-d","1-c, 2-b, 3-a, 4-d"], correct:1, exp:"HDI measures health/income/education (d); PDS distributes food linked to nutrition (a); Literacy rate counts those 7 years and above (b); Net Attendance Ratio measures school attendance at a specific stage (c)." },
+  { q: "Mining comes under this sector.", options:["Primary","Secondary","Service","A & B"], correct:0, exp:"Mining extracts raw materials directly from the earth, so it belongs to the Primary sector alongside agriculture, forestry, and fishing." },
+  { q: "Which of the following most correctly describes 'Multinational company'?", options:["Which controls production in one country only","Which controls production in different places in the country","Which can't control production in more than one country","Which controls production in more than one country"], correct:3, exp:"A Multinational Corporation (MNC) is defined as a company that operates and controls production in more than one country." },
+  { q: "National Institution of Nutrition is located in:", options:["Hyderabad","Mumbai","Delhi","Chennai"], correct:0, exp:"The National Institute of Nutrition (NIN) is located in Hyderabad, Telangana. It is India's premier research institute on nutrition." },
+  { q: "Which century is called 'The Age of Extremes'?", options:["19th","20th","21st","13th"], correct:1, exp:"Historian Eric Hobsbawm coined the term 'Age of Extremes' for the 20th century — a century of world wars, revolutions, economic depression, and unprecedented change." },
+  { q: "The 'four great needs' identified by Kuo Min Tang (KMT) were:", options:["Clothing, food, housing and transportation","Transportation, electricity, housing and food","Food, housing, education and clothing","Housing, employment, food and transportation"], correct:0, exp:"The Guomindang (KMT) identified the people's four basic needs as food, clothing, housing, and transportation — the foundation of livelihood." },
+  { q: "The slogan 'Do or Die' is related to:", options:["Non Cooperation movement","Quit India movement","Khilafat movement","Civil Disobedience movement"], correct:1, exp:"'Do or Die' was Mahatma Gandhi's rallying call during the Quit India Movement (August 1942), urging Indians to either free India or die trying." },
+  { q: "This is NOT a National party.", options:["INC","BJP","CPI","DMK"], correct:3, exp:"DMK (Dravida Munnetra Kazhagam) is a regional party operating mainly in Tamil Nadu, while INC, BJP, and CPI are recognised national parties." },
+  { q: "By 15th August 1947, which of the following princely states was merged with India?", options:["Travancore","Kashmir","Hyderabad","Junagadh"], correct:0, exp:"Travancore acceded to India before Independence Day. Hyderabad, Kashmir, and Junagadh were problematic cases resolved after August 15, 1947." },
+  { q: "'Operation Barga' is related to:", options:["Employees","Political leaders","Sharecroppers","Traders"], correct:2, exp:"Operation Barga (1978, West Bengal) was a land reform programme that registered sharecroppers (bargadars) to protect their rights to land and fair crop share." },
+  { q: "Meira Paibi means:", options:["Industrial workers","Reformers","Torch bearers","Farmers"], correct:2, exp:"'Meira Paibi' means 'torch bearers' in the Meitei language — referring to the women's vigilance groups of Manipur who patrol with torches against drug and alcohol abuse." },
+  { q: "A city with a population between 10 lakh and one crore is called:", options:["Revenue village","Class cities","Megacities","Metropolitan cities"], correct:3, exp:"Metropolitan cities have a population between 10 lakh (1 million) and 1 crore (10 million). Megacities have a population above 1 crore." },
+  { q: "What is the basic element of the Telangana struggle for separate statehood?", options:["Water","Funds","Employment","All of the above"], correct:3, exp:"The Telangana movement was multifaceted — it demanded fair share of water resources, equitable funds, and employment opportunities, making all three the driving forces." },
+  { q: "Present NITI AAYOG Chairman (as of exam period 2026):", options:["Narendra Modi","Droupadi Murmu","Jagdeep Dhankhar","Om Birla"], correct:0, exp:"The Prime Minister of India is the ex-officio Chairman of NITI Aayog. Narendra Modi, as PM, serves as its Chairman." },
+  { q: "The present Lok Sabha Speaker (as of exam period 2026):", options:["Jagdeep Dhankhar","Amith Shah","Gaddam Prasad Kumar","Om Birla"], correct:3, exp:"Om Birla was elected as the Speaker of the 18th Lok Sabha in June 2024 and continues in that role." },
+
+  // ── G-15 Part B (Page 0121-0124) ──
+  { q: "'Doab' refers to ________.", options:["Peninsular plateau","The fertile land between two rivers","The climate in desert","The highest mountain peak in Purvanchal"], correct:1, exp:"'Doab' is a Persian word meaning 'two rivers' — it refers to the fertile tract of land lying between and around two rivers." },
+  { q: "National income divided by total population is called:", options:["Gross Domestic production","Net Domestic production","National production","Per Capita income"], correct:3, exp:"Per Capita Income = National Income ÷ Total Population. It is used to compare average living standards between countries." },
+  { q: "The German word 'Handel' means:", options:["Business","Transport","Climate","Track"], correct:0, exp:"The German word 'Handel' means 'trade' or 'business/commerce' — relevant in the context of global trade discussions." },
+  { q: "This is NOT an example of a perennial river:", options:["Indus River","Godavari River","Ganga River","Brahmaputra River"], correct:1, exp:"The Godavari is a peninsular river that depends on rainfall and may reduce significantly in summer, making it not truly perennial year-round unlike the Himalayan rivers." },
+  { q: "Chatrapati Shivaji built a fort at Pratapgad because:", options:["This site was in good climate","It is near coastal area","This site was in altitude","It is in a highest population zone"], correct:2, exp:"Hill forts like Pratapgad were built at high altitudes for strategic defense — height gave a military advantage and made them difficult to attack." },
+  { q: "Which are the correct factors of production?", options:["Land, Labour, Capital, Enterprise","Land, Goods, Labour, Climate","Labour, Transport, Money, Banks","Labour, Climate, Transport, Goods"], correct:0, exp:"The classical four factors of production are Land, Labour, Capital, and Enterprise (Entrepreneurship) — together they drive all economic activity." },
+  { q: "Which state gets maximum benefits from the Public Distribution System?", options:["Punjab","Rajasthan","Tamil Nadu","Gujarat"], correct:2, exp:"Tamil Nadu has one of the best-run PDS in India, with near-universal coverage and high percentage of purchases through fair price shops." },
+  { q: "The objectives of the Narmada Valley Development Project include:", options:["Only: generate power, flood control","Only: provide irrigation, fishing","Both: generate power, flood control AND provide irrigation, fishing","Both are wrong"], correct:2, exp:"The Narmada Valley Development Project (including Sardar Sarovar Dam) aims to generate hydroelectric power, control floods, and provide irrigation — making both statements correct." },
+  { q: "The immediate cause of World War I was:", options:["Austria declared war on Serbia","Germany invaded Poland","England declared war on Russia","Italy declared war on Serbia"], correct:0, exp:"The immediate trigger of WWI was the assassination of Archduke Franz Ferdinand (June 1914), after which Austria-Hungary declared war on Serbia, setting off a chain reaction." },
+  { q: "The People's Republic of China was established on this principle:", options:["Socialism","Secularism","Republic","New Democracy"], correct:3, exp:"Mao Zedong established the People's Republic of China in 1949 on the principle of 'New Democracy' — a transitional stage before full socialism." },
+  { q: "Which princely state had agreed to sign the Instrument of Accession with India?", options:["Hyderabad","Mysore","Kashmir","Junagadh"], correct:1, exp:"Mysore's ruler willingly signed the Instrument of Accession with India. Hyderabad, Kashmir, and Junagadh were disputed or resistant." },
+  { q: "This is an example of a National Party.", options:["TDP","BRS","AIMIM","BJP"], correct:3, exp:"BJP (Bharatiya Janata Party) is a recognised national party with presence across India. TDP, BRS, and AIMIM are regional parties." },
+  { q: "Which of the following is NOT related to National Emergency?", options:["Democracy was put on hold","Fundamental Rights suspended","Violations of civil liberties","Constitutional Administration came into force"], correct:3, exp:"During National Emergency, constitutional administration is NOT enforced normally — President's Rule replaces state governments. The other three are real consequences." },
+  { q: "73rd constitutional Amendment was made for this purpose:", options:["Local self Government at village level","Local self Government at cities","State and central relations","State Legislative Assembly"], correct:0, exp:"The 73rd Constitutional Amendment Act (1992) gave constitutional status to Panchayati Raj Institutions — local self-government at the village level." },
+  { q: "West Asia conflicts arose between these nations:", options:["Arabs, Britishers","Jews, America","Arabs, India","Jews, Arabs"], correct:3, exp:"The West Asian (Middle East) conflict is fundamentally between Jews (Israel) and Arabs (Palestinians and neighbouring Arab states) over land and sovereignty." },
+  { q: "What is meant by Meira Paibi?", options:["Hugging of trees","Irrigation for Agriculture","Torch bearers","Green Revolution"], correct:2, exp:"'Meira Paibi' translates to 'torch bearers' in Meitei — the women of Manipur who patrol communities at night with torches fighting drug abuse." },
+  { q: "Which state was formed due to the Gentlemen's Agreement?", options:["Telangana","Hyderabad State","Karnataka","Andhra Pradesh"], correct:3, exp:"The Gentlemen's Agreement (1956) was signed between leaders of Andhra and Telangana to merge into a united Andhra Pradesh with certain guarantees." },
+  { q: "Who is the present UNO Secretary General?", options:["Antonio Guterres","Ban Ki-moon","Trygve Lie","Kofi Annan"], correct:0, exp:"António Guterres has been the UN Secretary-General since 2017 and was re-appointed for a second term starting in 2022." },
+  { q: "Where is the headquarters of UNESCO located?", options:["New York","Paris","Washington","London"], correct:1, exp:"UNESCO's headquarters are in Paris, France. It was established in 1945 to promote international cooperation in education, science, and culture." },
+
+  // ── R-11A Part B (Page 0129-0132) ──
+  { q: "The criterion used by the World Bank to classify countries is:", options:["Total Income","Per Capita Income","Education","Health"], correct:1, exp:"The World Bank classifies countries into low, lower-middle, upper-middle, and high income groups based on Gross National Income (GNI) per capita." },
+  { q: "Find the odd one: Ooty, Mussoorie, Nainital, Simla", options:["Ooty","Mussoorie","Nainital","Simla"], correct:0, exp:"Ooty (Udhagamandalam) is a hill station in Tamil Nadu in the Nilgiri Hills, while Mussoorie, Nainital, and Simla are all Himalayan foothills hill stations." },
+  { q: "This is NOT a service activity:", options:["Communications","Banking","Mining","Transportation"], correct:2, exp:"Mining extracts raw materials from the earth — it belongs to the Primary sector. Communications, banking, and transportation are tertiary/service sector activities." },
+  { q: "Arrange Delhi, Leh, Jaipur, Chennai from North to South:", options:["1,2,3,4","4,3,2,1","2,1,3,4","1,3,2,4"], correct:2, exp:"From north to south: Leh (highest latitude) → New Delhi → Jaipur → Chennai. So the correct order of the given list: 2,1,3,4." },
+  { q: "Which of the following statement is true regarding density of population?", options:["Statement I only: density = persons per unit area","Statement I and II incorrect","Statement I only correct","Statement II only correct: density = persons per sq km"], correct:3, exp:"Population density is defined as the number of persons per square kilometre. Statement II is more precise and scientifically accurate." },
+  { q: "Hawkers are:", options:["Self employees","Govt. employees","Contract employees","Central Govt. employees"], correct:0, exp:"Hawkers are street vendors who sell goods on their own account — they are self-employed individuals in the informal/unorganised sector." },
+  { q: "The important flows in globalisation are:", options:["1, 2, 4","2, 3, 4","1, 3, 4","1, 2, 3, 4"], correct:3, exp:"Globalisation involves flows of trade (goods/services), labour (migration), capital (investment), and tourists — all four are correct." },
+  { q: "National Institute of Nutrition (NIN) is located in:", options:["Hyderabad","Bengaluru","New Delhi","Mumbai"], correct:0, exp:"The National Institute of Nutrition is based in Hyderabad. It conducts nutritional research and provides dietary guidelines for India." },
+  { q: "The potential of the environment to provide resources to different sectors of the economy is known as:", options:["The environment's source function","The environment's sink function","The environment's affecting function","The environment's support function"], correct:0, exp:"The 'source function' refers to the environment's capacity to supply resources (minerals, water, timber, etc.) to the economy." },
+  { q: "One of the three principles of Sun Yat-sen is 'Min' which means:", options:["Nationalism","Democracy","Socialism","Secular"], correct:0, exp:"Sun Yat-sen's Three Principles of the People are: Nationalism (Minzu), Democracy (Minquan), and People's Livelihood (Minsheng)." },
+  { q: "Unitary features of the Indian government include:", options:["1 only: Single citizenship","1, 3 only","1, 2, 3","2, 3, 4"], correct:1, exp:"Single citizenship and Integrated judiciary are unitary features. Dual polity and independent state powers are federal features of India's constitution." },
+  { q: "Which is the slogan for political equality?", options:["One person - one vote","One vote - one value","One person - one vote - one value","One person - one party - one value"], correct:2, exp:"The principle of political equality is expressed as 'One Person, One Vote, One Value' — everyone's vote has equal weight in a democracy." },
+  { q: "Identify the TRUE statements related to Assam movement:", options:["1 and 2 are correct","Only 1 is correct","1, 2, 3, 4 are correct","1, 2, 3 are correct"], correct:3, exp:"The Assam movement protested against Bengali dominance in jobs, trade, and influx of migrants from Bangladesh. All three (Bengali jobs, Bengali trade, Bangladesh migrants) were grievances. Nepal migration was not a major factor." },
+  { q: "Match International Court of Justice, WHO, UNESCO, UNICEF with Geneva, Paris, New York, The Hague:", options:["1-a,2-d,3-c,4-b","1-d,2-a,3-b,4-c","1-d,2-c,3-a,4-b","1-c,2-d,3-b,4-a"], correct:1, exp:"ICJ is at The Hague (d); WHO is in Geneva (a); UNESCO is in Paris (b); UNICEF headquarters is in New York (c)." },
+  { q: "Hyderabad state and Andhra state were merged to form:", options:["Andhra Pradesh","Tamil Nadu","Karnataka","Maharashtra"], correct:0, exp:"In 1956 under the States Reorganisation Act, Hyderabad State and Andhra State merged to form Andhra Pradesh as a Telugu-speaking state." },
+  { q: "The present Chief Election Commissioner of India (as of 2026):", options:["Rajiv Kumar","Gyanesh Kumar","Sunil Arora","Om Prakash Rawat"], correct:1, exp:"Gyanesh Kumar was appointed as the Chief Election Commissioner of India in 2025, succeeding Rajiv Kumar." },
+  { q: "The present Union Education Minister of India (as of 2026):", options:["Amith Shah","Nirmala Sitharaman","Dharmendra Pradhan","Nitin Gadkari"], correct:2, exp:"Dharmendra Pradhan has served as India's Union Education Minister since 2021 and continued in the post after the 2024 elections." },
+
+  // ── J-11A Part B (Page 0184-0187) ──
+  { q: "The environment source function is to ________.", options:["Provide natural resources","Pollute natural resources","Prevent natural resource","Cause natural disasters"], correct:0, exp:"The environment's source function means it provides natural resources (water, minerals, soil, forests) that are inputs for human economic activity." },
+  { q: "The model code of conduct comes into effect ________.", options:["After the declaration of election results","On the day of voting","On the day of commencement of filling of nomination papers","When the Election Commission announces the election schedule"], correct:3, exp:"The Model Code of Conduct automatically comes into force the moment the Election Commission announces the election schedule/dates." },
+  { q: "The aim of 'Operation Barga' is:", options:["Quitting Britishers from India","To secure sharecroppers' rights","Joining Kashmir in Indian Union","Police action on Hyderabad state"], correct:1, exp:"Operation Barga (1978, West Bengal) was a drive to register sharecroppers (bargadars) and secure their rights to land and a fair share of the harvest." },
+  { q: "Arrange in chronological order: i) Operation Blue Star  ii) Formation of TDP  iii) Demolition of Babri Masjid  iv) Ram Janmabhoomi Rath Yatra", options:["iv, iii, ii, i","ii, i, iv, iii","ii, iii, i, iv","iii, ii, i, iv"], correct:1, exp:"TDP formed (1982) → Operation Blue Star (1984) → Ram Rath Yatra (1990) → Babri Masjid demolition (1992). Correct: ii, i, iv, iii." },
+  { q: "The Allies adopted the policy of appeasement of Hitler to ________.", options:["Gain support from Hitler against Soviet and Socialism","Take over the USSR by Germany","Support the victims of economic depression","Gain support from Mussolini against Germany"], correct:0, exp:"Britain and France appeased Hitler (e.g., Munich Agreement, 1938) hoping he would act as a buffer against Soviet communism — a miscalculation that led to WWII." },
+  { q: "The Constitution of India in 1950 had ________.", options:["395 articles and 8 schedules","448 articles and 10 schedules","400 articles and 8 schedules","495 articles and 10 schedules"], correct:0, exp:"The original Constitution of India (1950) had 395 articles divided into 22 parts and 8 schedules. Over time, amendments have increased these numbers." },
+  { q: "Match Eastern Ghats–Aromakonda, Nilgiris–Dodabetta, Annamalai Hills–Anaimudi, Himalayas–Everest:", options:["a-i, b-iii, c-iii, d-iv","a-ii, b-iii, c-iv, d-i","a-ii, b-iii, c-iv, d-i","a-ii, b-iv, c-iii, d-i"], correct:1, exp:"Highest peak: Eastern Ghats–Aromakonda; Nilgiris–Dodabetta; Annamalai Hills–Anaimudi; Himalayas–Everest. Match: a-ii, b-iii, c-iv, d-i." },
+  { q: "Decisions relating to war and peace are taken in the UN at ________.", options:["General Assembly","International Court of Justice","Security Council","UNESCO"], correct:2, exp:"The UN Security Council has primary responsibility for international peace and security. It alone can authorize military action or impose sanctions." },
+  { q: "The minimum age considered for measuring Literacy Rate:", options:["6 years","14 years","18 years","7 years"], correct:3, exp:"In India, literacy rate is calculated for the population aged 7 years and above, as per the Census of India definition." },
+  { q: "Which of the following is TRUE regarding Gross Domestic Product?", options:["The total value of final and intermediate goods","The total value of final goods","The total value of final goods and services","The total value of final goods, intermediate goods, and services"], correct:2, exp:"GDP is the total monetary value of all final goods and services produced within a country in a year — intermediate goods are excluded to avoid double counting." },
+  { q: "The main reason for the 1969 Telangana Movement:", options:["Equal employment in government sector exists","Implementation of the Mulki Rules","The surplus revenue of Telangana was used for other regions","Non-local status for Coastal Andhra people in Telangana"], correct:2, exp:"A key grievance in the 1969 Telangana agitation was that revenue generated from Telangana was diverted for development of other regions, violating the Gentlemen's Agreement." },
+  { q: "Western disturbances cause ________.", options:["Cyclones in Arabian Sea","Moderate rainfall in North India in winter","High rainfall in Coromandel coast","Temperature change in west coast of India"], correct:1, exp:"Western Disturbances are extra-tropical cyclones originating in the Mediterranean Sea that bring winter rainfall and snowfall to northwest India." },
+  { q: "National Food Security Act 2013 legalises people's ________.", options:["Right to employment","Right to freedom","Right to equality","Right to food"], correct:3, exp:"The National Food Security Act (NFSA) 2013 makes food a legal right, entitling up to 75% rural and 50% urban population to subsidised food grains." },
+  { q: "Example for Indian peninsular rivers:", options:["The Ganga, The Indus","The Brahmaputra, The Teesta","The Narmada, The Tapati","The Yamuna, The Gomati"], correct:2, exp:"The Narmada and Tapati (Tapi) are peninsular rivers that flow westward into the Arabian Sea. Ganga, Indus, Brahmaputra, Teesta, and Yamuna are Himalayan rivers." },
+  { q: "Following is NOT an environmental movement:", options:["Chipko","Green Peace","Meira Paibi","Silent Valley"], correct:2, exp:"Meira Paibi is a women's vigilance movement in Manipur against drugs and violence — it is a social movement, not specifically an environmental one." },
+  { q: "The standard unit of measuring land is:", options:["Acre","Cent","Gunta","Hectare"], correct:3, exp:"Hectare is the internationally recognised standard unit for measuring land area. 1 hectare = 10,000 square metres." },
+  { q: "In 1992, India's birth rate and death rate respectively:", options:["29, 19","29, 10","10, 19","10, 29"], correct:1, exp:"In 1992, India's birth rate was approximately 29 per 1000 population and death rate had fallen to about 10 per 1000, resulting in natural population growth." },
+  { q: "Match: Voting age reduced to 18 (1988), NOTA (2013), India Election Commission (1950), First general elections (1952):", options:["a-i, b-ii, c-iii, d-iv","a-i, b-iii, c-ii, d-iv","a-iii, b-iv, c-ii, d-i","a-iii, b-ii, c-i, d-iv"], correct:2, exp:"61st Amendment reduced voting age (1988-iii); NOTA introduced 2013(iv); Election Commission established 1950(ii); First General Elections 1952(i). So: a-iii, b-iv, c-ii, d-i." },
+  { q: "Present Finance Minister of Telangana State (as of 2026):", options:["Shri Mallu Batti Vikramarka","Shri Sridhar Babu","Shri Ponnam Prabhakar","Shri T Nageshwar Rao"], correct:0, exp:"Shri Mallu Batti Vikramarka is the Deputy CM and Finance Minister of Telangana under the Congress government that came to power in December 2023." },
+  { q: "Present Rajya Sabha Chairman (as of 2026):", options:["Shri Jagdeep Dhankhar","Shri Om Birla","Shri Venkaiah Naidu","Shri CP Radhakrishnan"], correct:0, exp:"The Vice President of India is the ex-officio Chairman of the Rajya Sabha. Jagdeep Dhankhar is the current Vice President (since 2022)." },
+
+  // ── C-11A Part B (Page 0192-0193) ──
+  { q: "The main purpose of Globalisation is to:", options:["Isolate Countries","Increase International Co-operation","Stop production","End trade"], correct:1, exp:"Globalisation aims to integrate economies worldwide through trade, investment, and technology — promoting international cooperation and interconnectedness." },
+  { q: "Silent Spring warned against:", options:["Forest fires","Chemical pesticides like D.D.T.","Soil erosion","Pollution"], correct:1, exp:"Rachel Carson's book 'Silent Spring' (1962) warned about the devastating effects of chemical pesticides, especially DDT, on ecosystems and bird populations." },
+  { q: "Forestry and Mining come under this sector:", options:["Agriculture sector","Service sector","Industrial sector","Organised sector"], correct:0, exp:"Forestry and Mining are Primary sector activities because they involve extraction of natural resources directly from the earth, alongside agriculture and fishing." },
+
+  // ── M-011 Part B (Mahabubnagar, Page 0200-0203) ──
+  { q: "The eastern-most boundary of the Himalayas is:", options:["Indus valley","Ganga valley","Brahmaputra valley","Yamuna valley"], correct:2, exp:"The Himalayas extend from the Indus gorge in the west to the Brahmaputra gorge in the east — the Brahmaputra valley marks the eastern boundary." },
+  { q: "This is NOT correct regarding the unorganised sector:", options:["Workers get regular and fixed wages (salaries)","There is no job security","There are no fixed working hours","There is no provision for paid leave"], correct:0, exp:"Unorganised sector workers do NOT get regular or fixed wages — they are paid daily or piece-rate with no job security. The other three are correct features." },
+  { q: "This is NOT a feature of peninsular rivers:", options:["Fixed course","Absence of meanders","Flow from west to east","Perennial flows of water"], correct:3, exp:"Peninsular rivers are NOT perennial — they depend on monsoon rainfall and dry up or reduce significantly in summer. This is unlike Himalayan rivers fed by glaciers." },
+  { q: "Find out the odd one (population indicators):", options:["Population density","Infant mortality Rate","Population growth rate","Gross domestic product"], correct:3, exp:"Population density, IMR, and growth rate are all demographic/population indicators. GDP is an economic indicator — it does not measure population characteristics." },
+  { q: "An example of working capital:", options:["HYV seeds","Tractor","Machines","Land"], correct:0, exp:"Working capital refers to inputs consumed in one production cycle. HYV seeds are used up each season. Tractors, machines, and land are fixed capital." },
+  { q: "Removing barriers set by the government is known as:", options:["Industrialization","Privatization","Liberalisation","Nationalization"], correct:2, exp:"Liberalisation means reducing government restrictions on trade, industry, and investment — allowing market forces to operate more freely." },
+  { q: "The main reason for low calorie consumption among most people in India:", options:["Lack of food production","Lack of awareness about nutritional values","Lack of purchasing power","Dependence on imports"], correct:2, exp:"Food insecurity in India is primarily caused by poverty — people lack purchasing power to buy adequate nutritious food, not due to production shortfalls alone." },
+  { q: "The action taken by the Guomindang (KMT) in China:", options:["Established the Comintern","Supported the Warlords","Launched 'May Fourth Movement'","Launched a military campaign against the warlords"], correct:3, exp:"The Guomindang, under Chiang Kai-shek, launched the Northern Expedition — a military campaign (1926-28) to reunify China by defeating regional warlords." },
+  { q: "The present President of Russia (as of 2026):", options:["Keir Starmer","Benjamin Netanyahu","Vladimir Putin","Volodymyr Zelenskyy"], correct:2, exp:"Vladimir Putin has been President of Russia since 2000 (with a brief period as PM). He continues as President as of 2026." },
+  { q: "The present Chief Election Commissioner of India (as of 2026):", options:["Vivek Joshi","Sudharshan Reddy","Rani Kumudini","Gyanesh Kumar"], correct:3, exp:"Gyanesh Kumar was appointed Chief Election Commissioner in 2025, succeeding Rajiv Kumar who retired." },
+
+  // ── SK-86 Part B (Page 0140-0142) ──
+  { q: "The peninsular plateau slopes slightly towards this side:", options:["West","East","North","South"], correct:1, exp:"The Peninsular Plateau is tilted slightly towards the east, which is why most of its rivers (Mahanadi, Godavari, Krishna, Kaveri) flow eastward into the Bay of Bengal." },
+  { q: "One reason for the low level of gender discrimination in Himachal Pradesh:", options:["Women are themselves employed outside the home","Employment in the industry","Low priority given to education","Men have more freedom"], correct:0, exp:"In Himachal Pradesh, women participate actively in economic activities outside the home, which has historically reduced gender discrimination compared to other states." },
+  { q: "Four great needs identified by the Guomindang (KMT):", options:["Transportation, language, script, electricity","Food, trade, employment, water","Food, clothing, housing, transportation","Employment, housing, land, agriculture"], correct:2, exp:"Sun Yat-sen and the Guomindang identified food, clothing, housing, and transportation as the four basic needs of the people." },
+  { q: "Match primary sector–Agriculture, secondary sector–Industry, service sector–Banking, organised sector–Government employee:", options:["i-a, ii-b, iii-c, iv-d","i-c, ii-d, iii-b, iv-a","i-b, ii-c, iii-d, iv-a","i-b, ii-c, iii-b, iv-a"], correct:1, exp:"Primary=Agriculture(c); Secondary=Industry(d); Service/Tertiary=Banking(b); Organised sector workers include Government employees(a)." },
+  { q: "The highest court in India:", options:["High court","Supreme court","Parliament","President"], correct:1, exp:"The Supreme Court of India is the highest court in the country, serving as the final court of appeal and guardian of the Constitution." },
+  { q: "The Alaknanda and Bhagirathi rivers meet at:", options:["Devprayag","Rudra Prayag","Haridwar","Triveni Sangam"], correct:0, exp:"The Alaknanda and Bhagirathi rivers merge at Devprayag in Uttarakhand to form the Ganga River proper." },
+  { q: "The officer who supervises the elections in the constituency:", options:["Presiding officer","Returning officer","Collector","Polling officer"], correct:1, exp:"The Returning Officer is the officer designated to conduct and supervise elections in a specific constituency, including receiving nominations and declaring results." },
+  { q: "Male literacy rate according to the 2011 census:", options:["85%","65%","82%","90%"], correct:2, exp:"According to Census 2011, India's male literacy rate was 82.14%, while overall literacy was 74.04% and female literacy was 65.46%." },
+  { q: "The area given priority in the first five year plan:", options:["Agriculture","Industry","Service","Infrastructure facilities"], correct:0, exp:"The First Five Year Plan (1951-56) gave highest priority to agriculture and irrigation, aiming for food self-sufficiency after Partition." },
+  { q: "An example of a megacity:", options:["Chennai","Hyderabad","Bengaluru","Mumbai"], correct:3, exp:"Mumbai has a population well over 1 crore (10 million), making it a megacity. As of recent data, Chennai, Hyderabad, and Bengaluru are metropolitan but approach megacity status." },
+  { q: "The commission recommended 27% reservations in government jobs for OBCs:", options:["Sri Krishna Commission","Mandal Commission","Santhanam Commission","Kothari Commission"], correct:1, exp:"The Mandal Commission (1980) recommended 27% reservation in central government jobs and educational institutions for Other Backward Classes (OBCs)." },
+  { q: "NOT a factor of production:", options:["Land","Labour","Capital","Industry"], correct:3, exp:"The four factors of production are Land, Labour, Capital, and Enterprise. 'Industry' is a sector of the economy, not a factor of production." },
+  { q: "Examples of multinational companies in India:", options:["Ranbaxy, Asian Paints","Amazon, Flipkart","Cargill Foods","Ford Motors"], correct:3, exp:"Ford Motors is an American MNC operating in India. Ranbaxy and Asian Paints are Indian companies; Amazon/Flipkart are MNCs in e-commerce; Cargill is also MNC — but Ford Motors is a classic textbook MNC example." },
+  { q: "Medha Patkar is the leader of this movement:", options:["Bhopal Gas Disaster","Meira Paibi movement","Anti-arrack movement","Narmada Bachao Andolan"], correct:3, exp:"Medha Patkar is the prominent leader of the Narmada Bachao Andolan (NBA) — a movement that opposed large dam construction on the Narmada River." },
+  { q: "Present Chief Election Commissioner of India (SK-86 paper):", options:["Rajiv Kumar","Gyanesh Kumar","Sanjay Malhotra","Vivek Joshi"], correct:1, exp:"Gyanesh Kumar was appointed as Chief Election Commissioner in 2025." },
+  { q: "Present United Nations Secretary General:", options:["U Thant","Kofi Annan","Antonio Guterres","Ban Ki-moon"], correct:2, exp:"António Guterres is the current UN Secretary-General, serving since 2017 and re-appointed for a second term through 2026." },
+
+  // ── DP-16A Part B (Page 0165-0167) ──
+  { q: "The topography of the peninsular plateau is slightly tilted towards:", options:["South","North","West","East"], correct:3, exp:"The Deccan Plateau tilts slightly eastward, so most peninsular rivers drain into the Bay of Bengal on the eastern side." },
+  { q: "Identify the incorrect pair:", options:["Konkan coast - Goa","Malabar coast - Karnataka","Utkal coast - Odisha","Coromandal coast - Tamil Nadu"], correct:1, exp:"The Malabar coast is along Kerala, not Karnataka. Karnataka's coast is called the Kanara coast. This makes 'Malabar coast - Karnataka' the incorrect pair." },
+  { q: "Panchsheel pact was signed between:", options:["India and USA","India and Russia","India and China","India and Pakistan"], correct:2, exp:"The Panchsheel Agreement (Five Principles of Peaceful Coexistence) was signed between India and China in 1954 to govern their bilateral relations." },
+  { q: "The main objective of the Silent Valley movement was to:", options:["Promote mining activities in forest areas","Protect rare species of animals","Encourage construction in hilly regions","Expand tourism"], correct:1, exp:"The Silent Valley movement (Kerala, 1970s-80s) successfully opposed a hydroelectric dam project to protect the Silent Valley's unique tropical rainforest and its rare biodiversity." },
+  { q: "An aquifer is:", options:["A layer of soil that prevents water from passing through","An underground layer of rock or soil that stores and transmits ground water","A river that flows below the ground","A body of water found only on the earth's surface"], correct:1, exp:"An aquifer is a permeable underground layer of rock, sediment, or soil that holds and can transmit groundwater — the source of well and borehole water." },
+  { q: "Arrange in chronological order: 1) Bangladesh war  2) Bhopal Gas disaster  3) First General Election  4) Quit India Movement", options:["4,3,1,2","4,1,3,2","4,2,3,1","3,4,1,2"], correct:0, exp:"Quit India Movement (1942) → First General Election (1952) → Bangladesh War (1971) → Bhopal Gas Disaster (1984). Correct: 4, 3, 1, 2." },
+  { q: "A major impact of climate change is:", options:["Decrease in sea levels","Increase in biodiversity","Increase in droughts and floods","Decrease in average temperature"], correct:2, exp:"Climate change caused by global warming leads to more frequent and intense extreme weather events — droughts in some areas and floods in others." },
+  { q: "Match: New deal–relief to depression victims, League of Nations–international org after WWI, UNO–international org after WWII, Treaty of Versailles–penalised Germany:", options:["1-d,2-b,3-c,4-a","1-c,2-d,3-b,4-a","1-c,2-d,3-a,4-b","1-b,2-a,3-d,4-c"], correct:1, exp:"New Deal = relief to depression victims(c); League of Nations = post-WWI organisation(d); UNO = post-WWII organisation(b); Versailles = penalty on Germany(a). Answer: 1-c,2-d,3-b,4-a." },
+  { q: "A coalition government is usually formed when:", options:["One party wins all the seats","No single party gets a clear majority","Elections are not conducted on time","The President dissolves the Lok Sabha"], correct:1, exp:"A coalition government is formed when no single party wins an outright majority — multiple parties join together to form a government with a combined majority." },
+  { q: "The following statement about the Emergency period in India is INCORRECT:", options:["Fundamental rights were suspended","The press was censored","The Emergency was proclaimed due to external aggression","Forced sterilisation programmes were taken up"], correct:2, exp:"The 1975 Emergency was proclaimed on grounds of 'internal disturbance', not external aggression. External aggression would trigger Article 352(b), but Indira Gandhi used Article 352(a)." },
+
+  // ── 21E/22E Part B (Page 0155-0156) ──
+  { q: "Population density is:", options:["A number of persons per unit area","Number of births per unit area","Number of deaths per unit area","Number of persons in a country"], correct:0, exp:"Population density is the average number of people living per unit area (usually per square kilometre) in a given region." },
+  { q: "This is NOT an initiative of Rajiv Gandhi:", options:["Peace initiations with Sri Lanka only","1,2 and 3","Nationalisation of private banks only","1,2,3 and 4"], correct:2, exp:"Nationalisation of banks was done by Indira Gandhi in 1969, not Rajiv Gandhi. Telecom revolution, Panchayati Raj activation, and Sri Lanka peace initiative were Rajiv's contributions." },
+  { q: "Which does NOT come under working capital?", options:["Fertilizers","Seeds","Tractor","Wages to labourers"], correct:2, exp:"A tractor is fixed capital (long-term asset used repeatedly). Fertilizers, seeds, and wages are working/variable capital — consumed or paid out each production cycle." },
+  { q: "The river that does NOT discharge its water into the Arabian Sea:", options:["Godavari","Narmada","Tapati","Mahi"], correct:0, exp:"The Godavari flows eastward into the Bay of Bengal. Narmada, Tapati (Tapi), and Mahi all flow westward into the Arabian Sea." },
+  { q: "This is NOT a function of the Election Commission:", options:["Prepares electoral rolls","Announces the elections","Gives recognition to political parties","Conducts population census"], correct:3, exp:"The Census is conducted by the Office of the Registrar General of India — not by the Election Commission. The ECI prepares rolls, announces elections, and recognises parties." },
+  { q: "To absorb and render harmless waste and pollution is called:", options:["Environmental source function","Environmental service function","Environmental sink function","Environmental potential function"], correct:2, exp:"The environment's 'sink function' refers to its capacity to absorb and neutralise waste products and pollution generated by human activities." },
+  { q: "Disguised unemployment is most commonly seen in:", options:["Service sector","Agriculture","Industries","Banking sector"], correct:1, exp:"Disguised unemployment is common in agriculture — more people work on a farm than needed; removing some would not reduce output, as productivity remains the same." },
+  { q: "Arrange in ascending order: 1) Formation of League of Nations  2) Russian socialist revolution  3) Assassination of Austrian prince  4) Versailles Treaty", options:["3,2,4,1","2,1,3,4","2,3,1,4","4,2,3,1"], correct:0, exp:"Assassination of Franz Ferdinand (1914-3) → Russian Revolution (1917-2) → Versailles Treaty (1919-4) → League of Nations (1920-1). Correct: 3,2,4,1." },
+  { q: "The food grains maintained by government through FCI:", options:["Buffer stock","Minimum support price","Public distribution system","Minimum selling price"], correct:0, exp:"The Food Corporation of India (FCI) maintains a buffer stock of food grains (wheat and rice) to ensure food security and price stabilisation." },
+  { q: "Match: Himalayas–Everest, Eastern Ghats–Aroma Konda, Western Ghats–Anaimudi, Nilgiri Hills–Doda Betta:", options:["1-a,2-c,3-d,4-b","1-d,2-a,3-b,4-c","1-b,2-c,3-a,4-d","1-c,2-d,3-a,4-b"], correct:3, exp:"Highest peaks: Himalayas–Everest(c); Eastern Ghats–Aroma Konda(d); Western Ghats–Anaimudi(a); Nilgiri Hills–Doda Betta(b). Correct: 1-c,2-d,3-a,4-b." },
+  { q: "The idea which promotes unity of all African people irrespective of country or tribe:", options:["African Nationalism","African Unity","African Renaissance","Pan Africanism"], correct:3, exp:"Pan-Africanism is the ideology that advocates solidarity and unity among all people of African origin worldwide, transcending national or tribal boundaries." },
+  { q: "Which two countries signed the Panchsheel pact?", options:["India-China","India-Pakistan","China-Russia","Russia-America"], correct:0, exp:"The Panchsheel Agreement (Five Principles of Peaceful Coexistence) was signed between India and China on April 28, 1954." },
+  { q: "Temperature moving from equator to polar region:", options:["Decreases","Increases","Remains equal","Shows no change"], correct:0, exp:"Temperature generally decreases from the equator towards the poles because the sun's rays become more oblique and spread over a larger area at higher latitudes." },
+  { q: "The purpose of the Silent Valley movement was:", options:["Rights of Adivasis","Oppose construction of dams","Provision of rehabilitation","Compensation of victims"], correct:1, exp:"The Silent Valley movement in Kerala successfully opposed the construction of a hydroelectric dam that would have submerged a rare tropical rainforest." },
+  { q: "The Second Five Year Plan focused on:", options:["Industries","Agriculture","Population control","Removal of poverty"], correct:0, exp:"The Second Five Year Plan (1956-61), based on the Nehru-Mahalanobis model, prioritised rapid industrialisation — especially heavy and basic industries." },
+  { q: "Match: Indian National Army–Subhash Chandra Bose, Quit India–Gandhi, Unification of princely states–Patel, Direct Action Day–Jinnah:", options:["1-c,2-a,3-b,4-d","1-b,2-a,3-d,4-c","1-c,2-a,3-d,4-b","1-d,2-a,3-c,4-b"], correct:2, exp:"INA–Bose(c); Quit India–Gandhi(a); Unification of princely states–Vallabhbhai Patel(d); Direct Action Day–M.A. Jinnah(b). Correct: 1-c,2-a,3-d,4-b." },
+  { q: "Criteria used by Census to identify a person as a migrant:", options:["Place of birth and last usual place of residence","Place of work and duration of employment","Place of education and period of study","Place of marriage and family residence"], correct:0, exp:"India's Census uses two criteria to define migrants: place of birth (if different from current residence) and last usual place of residence." },
+  { q: "Who is the Russian President who recently visited India? (as of exam paper context)", options:["Vladimir Putin","Xi Jinping","Donald Trump","Rishi Sunak"], correct:0, exp:"Vladimir Putin visited India in 2024 at PM Modi's invitation, marking a significant diplomatic engagement between India and Russia." },
+
+  // ── NK-11A Part B (Nagarkurnool, Page 0160-0161) ──
+  { q: "Which of the following is the most fertile land form?", options:["Plateaus","Hills","Plains","Deserts"], correct:2, exp:"Plains, especially alluvial plains formed by river deposits, are the most fertile landforms — ideal for intensive agriculture due to flat terrain and rich soil." },
+  { q: "Mao Zedong's revolutionary programme was based on:", options:["Land Lords","Peasants","Tenants","Labours"], correct:1, exp:"Unlike Lenin who relied on the urban proletariat, Mao Zedong built his revolution on China's vast rural peasant population — a key innovation in communist strategy." },
+  { q: "This Himalayan mountain range is favourable for huge contact corrosion (glaciation):", options:["Himadri","Lower Himalayas","Shiwalik","Purvanchal"], correct:0, exp:"The Himadri (Great Himalaya) is the highest and most continuous range, with permanent snow and glaciers — making it the zone of maximum glacial activity." },
+  { q: "Human Development Report is published by:", options:["UNO","WHO","UNDP","World Bank"], correct:2, exp:"The Human Development Report (HDR) is published annually by UNDP (United Nations Development Programme) since 1990." },
+  { q: "Mines and Fishing come under which sector?", options:["Primary sector","Secondary sector","Tertiary Sector","Industrial sector"], correct:0, exp:"Mining and fishing both involve extracting resources directly from nature — placing them firmly in the Primary sector of the economy." },
+  { q: "Hot winds blow in North India are called:", options:["Bora","Mistral","Loo","Western Disturbance"], correct:2, exp:"'Loo' are hot, dry, and dusty summer winds blowing over the plains of northwestern India, particularly in May-June, causing severe heat waves." },
+  { q: "Which state is NOT in the Indus river system catchment area?", options:["Jammu Kashmir","Punjab","Himachal Pradesh","Bihar"], correct:3, exp:"Bihar is located in the Ganga basin, not the Indus basin. Jammu & Kashmir, Punjab, and Himachal Pradesh are all part of the Indus river system." },
+  { q: "In which year was the population census first started in India?", options:["1881","1872","1891","1865"], correct:1, exp:"The first synchronous census of India was conducted in 1872 under Governor-General Lord Mayo. The decennial census system started in 1881." },
+  { q: "Low sex ratio indicates:", options:["Women protection","Women equal opportunity","Girl education development","Women discrimination"], correct:3, exp:"A low sex ratio (fewer females per 1000 males) indicates discrimination against women — including female foeticide, infanticide, and neglect of girl children." },
+  { q: "Which of the following is NOT working capital?", options:["Harvesting machine","Seeds","Tractor","Agricultural tools"], correct:0, exp:"A harvesting machine (like a tractor or combine) is fixed capital — it is used repeatedly over many seasons. Seeds and tools used up in production are working capital." },
+  { q: "Removing the barriers on imports is called:", options:["Liberalisation","Privatisation","Globalisation","Industrialisation"], correct:0, exp:"Liberalisation involves removing government-imposed restrictions on trade and industry — including reducing import duties and quotas." },
+  { q: "MSP stands for:", options:["Minimum Standard Price","Maximum Support Price","Marginal Support Price","Minimum Support Price"], correct:3, exp:"MSP = Minimum Support Price. It is the price set by the Government of India at which it purchases crops from farmers to protect them against market price drops." },
+  { q: "Objective of Chipko movement:", options:["Control air pollution","Protect ozone layer","Conserve water","Protecting trees"], correct:3, exp:"The Chipko movement (1970s, Uttarakhand) was about protecting trees from commercial logging — villagers, especially women, hugged trees to prevent them from being cut." },
+  { q: "Which is in the Allied powers group?", options:["Germany + Austria + France","Russia + France + Britain","Germany + Russia + France","Germany + Austria + Britain"], correct:1, exp:"In WWI, the Allied Powers (Entente) included Russia, France, and Britain (and later USA and others). Germany and Austria-Hungary were the Central Powers." },
+  { q: "Which is NOT related to Sun Yat-Sen's three principles?", options:["Nationalism","Democracy","Socialism","None"], correct:2, exp:"Sun Yat-sen's Three Principles (Sanmin Zhuyi) are: Nationalism, Democracy, and People's Livelihood (Minsheng). 'Socialism' as such is not one of his three principles." },
+  { q: "Quit India Movement was most intense in:", options:["Haryana & Punjab","Satara & Medinipur","Mysore & Bangalore","Bombay & Pune"], correct:1, exp:"The Quit India Movement (1942) had its most intense and sustained mass uprisings in Satara (Maharashtra) and Medinipur (Bengal), where parallel governments were established." },
+  { q: "This is an example of presidential government:", options:["USA","Britain","France","Pakistan"], correct:0, exp:"The USA has a classic presidential system where the President is both Head of State and Head of Government, elected separately from Congress." },
+  { q: "The body of voters is called:", options:["Compartment","Cantonment","Electorate","Syndicate"], correct:2, exp:"The electorate refers to the body of all eligible voters in a country or constituency who are entitled to vote in elections." },
+  { q: "Who is NOT in the State Reorganisation Commission (SRC)?", options:["Fazal Ali","K.M. Panikkar","Hridaynath Kunzru","Mahadev Nayar"], correct:3, exp:"The States Reorganisation Commission (1953) had three members: Fazal Ali (chairman), K.M. Panikkar, and Hridaynath Kunzru. Mahadev Nayar was not a member." },
+  { q: "Meira Paibi means (in Meitei language):", options:["Women revolution","Embrace","Armed struggle","Torch bearers"], correct:3, exp:"'Meira Paibi' translates to 'torch bearers' in Meitei — referring to the women of Manipur who keep vigil with torches against social evils like drug abuse." },
+
+  // ── W-011A (Wanaparthy Part B extra, page 0180-0183) ──
+  { q: "The famous valley of Kashmir is located between which ranges?", options:["Pirpanjal and Dhaladhar ranges","Pirpanjal and Zaskar ranges","Zaskar and Dhaladhar ranges","Mussoorie and Mahabharath ranges"], correct:1, exp:"The Kashmir Valley lies between the Pirpanjal range (to the south) and the Zaskar range (to the north), forming a beautiful high-altitude valley." },
+  { q: "According to World Development Report 2017, per capita income of high income countries is:", options:["Less than 995 US dollars","995 to 12055 US dollars","More than 12055 US dollars","None of the above"], correct:2, exp:"The World Bank classifies high-income countries as those with GNI per capita above the threshold (approximately $12,055 or more as per 2017 Atlas method)." },
+  { q: "Indian Constitution came into force on:", options:["August 15, 1947","November 26, 1949","January 26, 1950","April 1, 1950"], correct:2, exp:"The Constitution of India was adopted on November 26, 1949, but came into force (enacted) on January 26, 1950 — celebrated as Republic Day." },
+  { q: "The Brahmaputra river system rises from:", options:["Chemayungdung glacier","Sathapnath glacier","Northern slope of Kailash ranges","Thrayambakeswar hills from Nasik"], correct:0, exp:"The Brahmaputra (called Tsangpo in Tibet) originates from the Chemayungdung glacier near Mansarovar in the Kailash Range in Tibet." },
+  { q: "Which state was treated as an 'internal colony' in India?", options:["Mizoram","Punjab","Jammu Kashmir","Assam"], correct:1, exp:"Punjab's grievance during the 1980s Akali agitation included that it was treated like an 'internal colony' — its resources (especially river water and grain) benefiting other states." },
+  { q: "What is the main reason for continuous population increase after 1921 in India?", options:["Easy availability of food grains through ration shops","To control infectious diseases","Advances in medicines","All of the above"], correct:2, exp:"Post-1921, India's death rate began declining due to advances in medicine, vaccination, and control of epidemics — while birth rate remained high, leading to population growth." },
+  { q: "Expand 'NATO':", options:["National Agreement for Trade Organisations","North American Trade Organisation","North Atlantic Treaty Organisation","National Academy for Trade Organisation"], correct:2, exp:"NATO stands for North Atlantic Treaty Organisation — a military alliance established in 1949 among Western nations for collective defense." },
+  { q: "Anti-Hindi movement was started in:", options:["Karnataka","Tamil Nadu","Maharashtra","Andhra Pradesh"], correct:1, exp:"The anti-Hindi agitation began in Tamil Nadu in 1937 (under C. Rajagopalachari's imposition of Hindi) and again in 1965 — opposing Hindi as the sole official language." },
+  { q: "The person who did NOT sign the Gentlemen's Agreement:", options:["Marri Chenna Reddy","Gouthu Latchanna","Alluri Seetharama Raju","J.V. Ranga Rao"], correct:2, exp:"Alluri Seetharama Raju was a revolutionary who died in 1924 — he could not have signed the 1956 Gentlemen's Agreement. The agreement was signed by Andhra and Telangana political leaders." },
+  { q: "The main aim of 'Pan Africanism' movement is:", options:["To promote the unity of all African people","To promote world peace","Avoid communism from Africa","Avoid capitalism from Africa"], correct:0, exp:"Pan-Africanism advocates for the solidarity, unity, and liberation of all people of African descent across the continent and the diaspora." },
+  { q: "India was divided as two dominions in 1947 based on:", options:["Geographical area","Religion","Climate","Population"], correct:1, exp:"India was partitioned in 1947 into Hindu-majority India and Muslim-majority Pakistan based on the Two-Nation Theory — religious identity." },
+
+  // ── PR-86 Part B (Peddapalli, Page 0210-0212) ──
+  { q: "Black soils in the Peninsular Plateau are mainly formed due to:", options:["River deposition","Volcanic activity","Glacial erosion","Wind deposition"], correct:1, exp:"Black cotton soils (Regur) in the Deccan Plateau were formed from the weathering of volcanic/basaltic rocks — explaining their black colour and high clay content." },
+  { q: "The most common entry mode for MNCs into India:", options:["Start new industries","Buy local companies and merge","Export goods","Only provide loans"], correct:1, exp:"The most common MNC strategy in India has been to buy existing Indian companies or merge/acquire local firms to gain instant market access and infrastructure." },
+  { q: "The monsoon system develops mainly between:", options:["0°-10°N latitudes","10°-30°N latitudes","20°N and 20°S latitudes","30°-60°S latitudes"], correct:2, exp:"The monsoon system primarily develops in the tropical zone between 20°N and 20°S latitudes, driven by differential heating of land and sea." },
+  { q: "The deep 'V'-shaped valleys of the Himalayan region are mainly carved by:", options:["Ganga and Yamuna","Narmada and Tapati","Indus and Brahmaputra","Godavari and Krishna"], correct:2, exp:"The Indus and Brahmaputra are antecedent rivers that have been cutting through the Himalayas for millions of years, carving deep gorges and V-shaped valleys." },
+  { q: "This is NOT a basic feature of the Indian Constitution:", options:["Fundamental Duties","Fundamental Rights","Supremacy of the Constitution","Constitution with federal features"], correct:0, exp:"Fundamental Duties were added by the 42nd Amendment (1976) — they were not in the original Constitution. Fundamental Rights, federal features, and constitutional supremacy are original pillars." },
+  { q: "Identify the WRONGLY matched pair (Election officers):", options:["Chief Electoral Officer – Appointed by Election Commission","Returning Officer – Conducts and monitors elections in constituency","Presiding Officer – Allots symbols to candidates","District Collector – Acts as Chief Electoral Officer at district level"], correct:2, exp:"It is the Returning Officer (not Presiding Officer) who allots symbols to candidates. The Presiding Officer manages a specific polling station on election day." },
+  { q: "The Samyukta Vidhayak Dal (SVD) included all EXCEPT:", options:["Jan Sangh","Socialists","Swatantra Party","Communist Party"], correct:3, exp:"The SVD coalitions in 1967 included diverse opposition parties — Jan Sangh, Socialists, Swatantra Party, and others — but the Communist Party generally stayed separate." },
+  { q: "The violent attempts to forcibly remove minority communities are known as:", options:["Federalism","Secularism","Ethnic cleansing","Regional autonomy"], correct:2, exp:"Ethnic cleansing refers to the forced removal or killing of an ethnic, racial, or religious minority group to make an area ethnically homogeneous." },
+  { q: "According to the Gentlemen's Agreement, surplus revenue from Telangana was to be:", options:["Shared equally across Andhra Pradesh","Used for defence","Spent only on the development of Telangana","Given to the central government"], correct:2, exp:"A key provision of the Gentlemen's Agreement (1956) was that surplus revenue collected from Telangana would be spent on the development of Telangana itself." },
+  { q: "Arrange chronologically: 1. Jai Andhra Movement  2. Eight Point Plan  3. Six Point Formula  4. Formation of TDP", options:["4,9,1,3,2","2,7,1,9,3,4","1,2,2,7,4,3","3,7,2,2,7,1,3,4"], correct:0, exp:"Six Point Formula (1972-3) → Jai Andhra Movement (1972-1) → Eight Point Plan (1973-2) → TDP formed (1982-4). Correct order: 3,1,2,4." },
+  { q: "Present Chief Election Commissioner of India (PR-86 paper):", options:["Gyanesh Kumar","Rajiv Kumar","Vivek Joshi","Sukhbir Singh Sandhu"], correct:0, exp:"Gyanesh Kumar was appointed as Chief Election Commissioner of India in 2025." },
+  { q: "The present coalition government in India was formed by:", options:["National Front","United Progressive Alliance (UPA)","National Progressive Front","National Democratic Alliance (NDA)"], correct:3, exp:"The NDA (National Democratic Alliance) led by BJP formed the government after the 2024 general elections, as a coalition since BJP did not win an outright majority alone." },
+
+  // ── RM-86 (Karimnagar) additional ──
+  { q: "Sex ratio refers to (RM-86):", options:["Men per 100 women","Women per 1000 men","Children per family","Adults per family"], correct:1, exp:"Sex ratio in India is defined as the number of females per 1000 males — it is an important indicator of gender balance and women's status in society." },
+  { q: "Match Airport: Kempegowda International Airport–India, Suvarna Bhoomi International Airport–Thailand, Dubai International Airport–UAE, Cairo International Airport–Egypt:", options:["1-d,2-c,3-b,4-a","1-d,2-a,3-b,4-c","1-c,2-b,3-d,4-a","1-a,2-b,3-c,4-d"], correct:1, exp:"Kempegowda = Bengaluru, India(d); Suvarna Bhoomi = Bangkok, Thailand(a); Dubai International = UAE(b); Cairo International = Egypt(c). Answer: 1-d,2-a,3-b,4-c." },
+  { q: "The following statement is TRUE about coarse cereals:", options:["They are highly nutritious and wholesome","They are low in nutrition","They promote labour welfare and health","They encourage industrial expansion"], correct:0, exp:"Coarse cereals (millets like jowar, bajra, ragi) are highly nutritious and rich in proteins, minerals, and fibre — making them wholesome and healthy food grains." },
+  { q: "After the failure of the Cripps Mission, Gandhi launched the:", options:["Non-Cooperation Movement","Civil Disobedience Movement","Quit India Movement","Swadeshi Movement"], correct:2, exp:"After the failure of the Cripps Mission in 1942, Mahatma Gandhi launched the Quit India Movement in August 1942, demanding immediate British withdrawal from India." },
+
+  // ── S-14A Part B (Page 0172-0175) ──
+  { q: "The main objective of the Kudankulam nuclear power plant:", options:["Increasing National Income","To meet the country's electricity needs","For National security","Protection of livelihoods"], correct:1, exp:"The Kudankulam Nuclear Power Plant in Tamil Nadu (India-Russia project) was built primarily to generate electricity and meet India's growing energy demands." },
+  { q: "Indo-Gangetic plain was formed by the interaction of the Indus, Ganga, Brahmaputra rivers and their ________.", options:["Lakes","Glaciers","Tributaries","Plateaus"], correct:2, exp:"The Indo-Gangetic Plain is an alluvial plain formed by sediment deposits of the Indus, Ganga, and Brahmaputra rivers and their numerous tributaries over millions of years." },
+  { q: "Which is NOT related to the Primary sector?", options:["Fishery","Forests","Mines","Machines"], correct:3, exp:"Machines are capital goods used in manufacturing (secondary sector). Fishery, forestry, and mining all involve extraction of natural resources — primary sector activities." },
+  { q: "The river formed by the confluence of Alakananda and Bhagirathi rivers:", options:["Brahmaputra","Indus","Ganga","Godavari"], correct:2, exp:"The Ganga River is formed at Devprayag where the Alaknanda and Bhagirathi rivers meet. This is considered the sacred origin of the Ganga." },
+  { q: "What serves as a powerful force in reducing discrimination against women?", options:["Ornaments","Money","Education","Politics"], correct:2, exp:"Education empowers women with knowledge, confidence, and economic independence — making it the most powerful force against gender discrimination." },
+  { q: "'Tsar' means:", options:["China Emperor","Christian spiritual Teacher","Russian Emperor","France Emperor"], correct:2, exp:"'Tsar' (or Czar) is the title used for the rulers of the Russian Empire — derived from the Latin 'Caesar', meaning Emperor." },
+  { q: "Nigeria's most important resource:", options:["Sand Reserves","Gold Reserves","Diamond Reserves","Oil Reserves"], correct:3, exp:"Nigeria is one of Africa's largest oil producers — crude oil accounts for the vast majority of Nigeria's export earnings and government revenue." },
+  { q: "The significance of August 16, 1946:", options:["Direct Action Day","Republic Day","Independence Day","Interaction of Princely States Day"], correct:0, exp:"August 16, 1946 was declared 'Direct Action Day' by the Muslim League under M.A. Jinnah, which led to the Great Calcutta Killings and communal violence." },
+  { q: "The re-organisation of states was mainly based on:", options:["Religion","Caste","Language","Culture"], correct:2, exp:"The States Reorganisation Act (1956) reorganised Indian states primarily on linguistic lines — grouping people who speak the same language into one state." },
+  { q: "Which policy did Rajiv Gandhi promote?", options:["Green Revolution","Computerisation and modernisation","Industrialisation","Privatisation"], correct:1, exp:"Rajiv Gandhi is remembered for modernising India through computerisation, telecom revolution, and promoting technology — ushering India into the IT age." },
+  { q: "The cold war mainly took place between these two countries:", options:["USA and Germany","USA and USSR","USA and Japan","USSR and China"], correct:1, exp:"The Cold War (1947-1991) was the ideological, political, and military rivalry between the USA (capitalist bloc) and the USSR (communist bloc)." },
+  { q: "The Green Peace Movement was against what?", options:["Chemical weapons","Industrial pollution","Nuclear tests","Deforestation"], correct:2, exp:"Greenpeace was founded in 1971 specifically to oppose nuclear testing — its first campaign was against US nuclear tests in Amchitka, Alaska." },
+];
+
+let questions = [];
+let currentIndex = 0;
+let score = 0;
+let selectedOption = null;
+let locked = false;
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startQuiz() {
+  questions = shuffle(ALL_QUESTIONS);
+  currentIndex = 0;
+  score = 0;
+  showScreen('quiz-screen');
+  renderQuestion();
+}
+
+function retryQuiz() {
+  startQuiz();
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function renderQuestion() {
+  const q = questions[currentIndex];
+  selectedOption = null;
+  locked = false;
+
+  // Progress
+  const pct = ((currentIndex) / questions.length) * 100;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('q-counter').textContent = `${currentIndex + 1} / ${questions.length}`;
+  document.getElementById('score-badge').textContent = `Score: ${score}`;
+
+  // Question
+  document.getElementById('q-source').textContent = `Q ${currentIndex + 1}`;
+  document.getElementById('q-text').textContent = q.q;
+
+  // Reset card rotation
+  const card = document.getElementById('q-card');
+  card.classList.remove('shake', 'flash');
+  card.style.transform = (currentIndex % 2 === 0) ? 'rotate(0.4deg)' : 'rotate(-0.6deg)';
+
+  // Options
+  const grid = document.getElementById('options-grid');
+  grid.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.innerHTML = `<span class="opt-label">${i+1}</span><span>${opt}</span>`;
+    btn.onclick = () => selectOption(i);
+    btn.dataset.index = i;
+    grid.appendChild(btn);
+  });
+
+  // Feedback
+  const fb = document.getElementById('feedback-box');
+  fb.className = 'feedback-box';
+
+  // Buttons
+  document.getElementById('btn-lock').disabled = true;
+  document.getElementById('btn-lock').style.display = 'inline-block';
+  document.getElementById('btn-next').style.display = 'none';
+}
+
+function selectOption(i) {
+  if (locked) return;
+  selectedOption = i;
+
+  document.querySelectorAll('.opt-btn').forEach((btn, idx) => {
+    btn.classList.toggle('selected', idx === i);
+  });
+
+  document.getElementById('btn-lock').disabled = false;
+}
+
+function lockIn() {
+  if (selectedOption === null || locked) return;
+  locked = true;
+
+  const q = questions[currentIndex];
+  const correct = q.correct;
+  const isCorrect = selectedOption === correct;
+
+  if (isCorrect) score++;
+
+  // Style options
+  document.querySelectorAll('.opt-btn').forEach((btn, idx) => {
+    btn.disabled = true;
+    if (idx === correct) btn.classList.add('correct');
+    else if (idx === selectedOption && !isCorrect) btn.classList.add('wrong');
+    btn.classList.remove('selected');
+  });
+
+  // Card animation
+  const card = document.getElementById('q-card');
+  if (isCorrect) {
+    card.classList.add('flash');
+  } else {
+    card.classList.add('shake');
+  }
+
+  // Feedback
+  const fb = document.getElementById('feedback-box');
+  const fbTitle = document.getElementById('fb-title');
+  const fbExp = document.getElementById('fb-exp');
+
+  if (isCorrect) {
+    fb.className = 'feedback-box show correct-fb';
+    fbTitle.textContent = '✓ Nice one!';
+  } else {
+    fb.className = 'feedback-box show wrong-fb';
+    fbTitle.textContent = `✗ Correct: ${q.options[correct]}`;
+  }
+  fbExp.textContent = q.exp;
+
+  // Buttons
+  document.getElementById('btn-lock').style.display = 'none';
+  document.getElementById('btn-next').style.display = 'inline-block';
+
+  // Update score badge
+  document.getElementById('score-badge').textContent = `Score: ${score}`;
+}
+
+function nextQuestion() {
+  currentIndex++;
+  if (currentIndex >= questions.length) {
+    showEndScreen();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showEndScreen() {
+  showScreen('end-screen');
+  const pct = Math.round((score / questions.length) * 100);
+  document.getElementById('end-score').textContent = `${score} / ${questions.length}`;
+  document.getElementById('prog-fill').style.width = '100%';
+
+  let emoji, title, grade;
+  if (pct >= 80) {
+    emoji = '🏆'; title = 'Brilliant!'; grade = `${pct}% — Excellent! You're exam-ready 🎉`;
+  } else if (pct >= 60) {
+    emoji = '👍'; title = 'Good Job!'; grade = `${pct}% — Good, keep revising!`;
+  } else if (pct >= 40) {
+    emoji = '📖'; title = 'Almost There!'; grade = `${pct}% — Keep studying, you'll get there!`;
+  } else {
+    emoji = '💪'; title = 'Keep Going!'; grade = `${pct}% — More revision needed. You've got this!`;
+  }
+
+  document.getElementById('end-emoji').textContent = emoji;
+  document.getElementById('end-title').textContent = title;
+  document.getElementById('end-grade').textContent = grade;
+}
+
+// Keyboard support
+document.addEventListener('keydown', e => {
+  const screen = document.querySelector('.screen.active');
+  if (!screen) return;
+  const id = screen.id;
+
+  if (id === 'quiz-screen') {
+    if (['1','2','3','4'].includes(e.key)) {
+      selectOption(parseInt(e.key) - 1);
+    }
+    if (e.key === 'Enter') {
+      if (!locked && selectedOption !== null) lockIn();
+      else if (locked) nextQuestion();
+    }
+  }
+  if (id === 'welcome-screen' && e.key === 'Enter') startQuiz();
+  if (id === 'end-screen' && e.key === 'Enter') retryQuiz();
+});
+
+// Set question count on load
+document.getElementById('total-count').textContent = `⬡ ${ALL_QUESTIONS.length} questions from 12+ district papers`;
+</script>
+</body>
+</html>
