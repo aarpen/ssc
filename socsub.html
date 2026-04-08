@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SS Exam 2026 - Question Bank</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --accent: #f5c518;
+    --accent2: #ffd700;
+    --text: #e8eaf0;
+    --muted: #8b92a5;
+    --border: #2e3347;
+    --done-color: #2ecc71;
+    --mark2: #3b82f6;
+    --mark4: #a855f7;
+    --mark6: #ef4444;
+    --radius: 12px;
+    --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #1a1d27 0%, #0f1117 100%);
+    border-bottom: 2px solid var(--accent);
+    padding: 18px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+  }
+  .header-left h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+  }
+  .header-left p {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .countdown-badge {
+    background: var(--accent);
+    color: #000;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 6px 14px;
+    border-radius: 20px;
+    animation: pulse 2s infinite;
+    white-space: nowrap;
+  }
+  @keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  .total-badge {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 0.8rem;
+    padding: 6px 14px;
+    border-radius: 20px;
+  }
+  /* PROGRESS BAR */
+  .progress-wrap {
+    background: var(--surface);
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .progress-bar-outer {
+    background: var(--surface2);
+    border-radius: 10px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .progress-bar-inner {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--done-color));
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+  /* CONTROLS */
+  .controls {
+    background: var(--surface);
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .search-wrap {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+  }
+  .search-wrap input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.88rem;
+    padding: 9px 16px 9px 38px;
+    border-radius: 8px;
+    outline: none;
+    transition: border 0.2s;
+  }
+  .search-wrap input:focus { border-color: var(--accent); }
+  .search-wrap::before {
+    content: "🔍";
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.85rem;
+  }
+  .filter-group {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 7px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+  }
+  .chapter-select {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.82rem;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    outline: none;
+    min-width: 160px;
+  }
+  .chapter-select option { background: var(--surface); }
+  /* LAYOUT */
+  .main-layout {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  /* SIDEBAR */
+  .sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    padding: 20px 0;
+    position: sticky;
+    top: 180px;
+    height: calc(100vh - 180px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  .sidebar-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0 16px 10px;
+  }
+  .sidebar-part {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent);
+    padding: 8px 16px 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-top: 1px solid var(--border);
+    margin-top: 6px;
+  }
+  .sidebar-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 16px;
+    font-size: 0.78rem;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 0 8px 8px 0;
+    margin-right: 8px;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+  }
+  .sidebar-link:hover, .sidebar-link.active {
+    background: var(--surface2);
+    color: var(--text);
+    border-left-color: var(--accent);
+  }
+  .sidebar-count {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  /* CONTENT */
+  .content {
+    flex: 1;
+    padding: 24px 20px;
+    min-width: 0;
+  }
+  .chapter-section {
+    margin-bottom: 40px;
+    animation: fadeIn 0.4s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .chapter-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border);
+  }
+  .chapter-num {
+    background: var(--accent);
+    color: #000;
+    font-weight: 700;
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+  .chapter-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .chapter-qcount {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+    color: var(--muted);
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  /* MARK GROUPS */
+  .mark-group {
+    margin-bottom: 18px;
+  }
+  .mark-group-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .mark-pill {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 9px;
+    border-radius: 6px;
+    color: #fff;
+  }
+  .pill-2 { background: var(--mark2); }
+  .pill-4 { background: var(--mark4); }
+  .pill-6 { background: var(--mark6); }
+  /* QUESTION CARD */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .q-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  .q-card.done {
+    opacity: 0.45;
+    background: #1a2a1a;
+    border-color: var(--done-color);
+  }
+  .q-card.done .q-text {
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+  .q-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .q-checkbox {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    cursor: pointer;
+    accent-color: var(--done-color);
+  }
+  .q-body { flex: 1; min-width: 0; }
+  .q-text {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--text);
+    font-weight: 400;
+  }
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .badge-marks {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 9px;
+    border-radius: 6px;
+    color: #fff;
+  }
+  .badge-repeat {
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 2px 9px;
+    border-radius: 6px;
+    background: #2a1a00;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+  }
+  .copy-btn {
+    margin-left: auto;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .copy-btn:hover {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+  }
+  .copy-btn.copied {
+    background: var(--done-color);
+    color: #000;
+    border-color: var(--done-color);
+  }
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .empty-state .icon { font-size: 2.5rem; margin-bottom: 12px; }
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .main-layout { flex-direction: column; }
+    .content { padding: 16px 12px; }
+    .header { padding: 14px 16px; }
+    .controls { padding: 12px 16px; }
+    .chapter-title { font-size: 0.95rem; }
+  }
+  /* HIDDEN */
+  .hidden { display: none !important; }
+  /* SCROLL OFFSET */
+  .chapter-anchor { scroll-margin-top: 180px; }
+  /* NO RESULTS */
+  .no-results {
+    text-align: center;
+    padding: 40px;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-left">
+    <h1>📚 SS Exam 2026 — Question Bank</h1>
+    <p>Class 10 Social Studies · Telangana Board · Pre-Final 2026</p>
+  </div>
+  <div class="header-right">
+    <span class="total-badge" id="totalQCount">Loading…</span>
+    <span class="countdown-badge" id="countdown">⏰ Loading…</span>
+  </div>
+</header>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-info">
+    <span>📝 Progress: <strong id="doneCount">0</strong> / <strong id="totalCount">0</strong> questions done</span>
+    <span id="donePercent">0%</span>
+  </div>
+  <div class="progress-bar-outer">
+    <div class="progress-bar-inner" id="progressBar"></div>
+  </div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="Search questions by keyword…" oninput="filterAll()">
+  </div>
+  <div class="filter-group">
+    <button class="filter-btn active" onclick="setMarkFilter('all', this)">All</button>
+    <button class="filter-btn" onclick="setMarkFilter('2', this)">2 Mark</button>
+    <button class="filter-btn" onclick="setMarkFilter('4', this)">4 Mark</button>
+    <button class="filter-btn" onclick="setMarkFilter('6', this)">6 Mark</button>
+  </div>
+  <select class="chapter-select" id="chapterJump" onchange="jumpToChapter(this.value)">
+    <option value="">— Jump to Chapter —</option>
+  </select>
+</div>
+
+<!-- LAYOUT -->
+<div class="main-layout">
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-title">Chapters</div>
+  </nav>
+
+  <!-- CONTENT -->
+  <main class="content" id="mainContent">
+    <div class="no-results hidden" id="noResults">
+      <div style="font-size:2rem;">🔍</div>
+      <p style="margin-top:10px;">No questions match your search.</p>
+    </div>
+  </main>
+</div>
+
+<script>
+// ============================================================
+// QUESTION DATA — All questions extracted, classified, deduped
+// ============================================================
+const PARTS = {
+  1: "Part 1 — Resources, Development & Equity",
+  2: "Part 2 — Contemporary World & India"
+};
+
+const CHAPTERS = [
+  { id:1,  num:"Ch 1",  title:"India: Relief Features",                        part:1 },
+  { id:2,  num:"Ch 2",  title:"Ideas of Development",                          part:1 },
+  { id:3,  num:"Ch 3",  title:"Production and Employment",                     part:1 },
+  { id:4,  num:"Ch 4",  title:"Climate of India",                              part:1 },
+  { id:5,  num:"Ch 5",  title:"Indian Rivers and Water Resources",             part:1 },
+  { id:6,  num:"Ch 6",  title:"The Population",                                part:1 },
+  { id:7,  num:"Ch 7",  title:"Settlements — Migrations",                      part:1 },
+  { id:8,  num:"Ch 8",  title:"Rampur: A Village Economy",                     part:1 },
+  { id:9,  num:"Ch 9",  title:"Globalisation",                                 part:1 },
+  { id:10, num:"Ch 10", title:"Food Security",                                 part:1 },
+  { id:11, num:"Ch 11", title:"Sustainable Development with Equity",           part:1 },
+  { id:12, num:"Ch 12", title:"World Between the World Wars",                  part:2 },
+  { id:13, num:"Ch 13", title:"National Liberation Movements in the Colonies", part:2 },
+  { id:14, num:"Ch 14", title:"National Movement in India — Partition & Independence 1939–1947", part:2 },
+  { id:15, num:"Ch 15", title:"The Making of Independent India's Constitution",part:2 },
+  { id:16, num:"Ch 16", title:"Election Process in India",                     part:2 },
+  { id:17, num:"Ch 17", title:"Independent India (The First 30 Years 1947–77)",part:2 },
+  { id:18, num:"Ch 18", title:"Emerging Political Trends 1977 to 2000",        part:2 },
+  { id:19, num:"Ch 19", title:"Post-War World and India",                      part:2 },
+  { id:20, num:"Ch 20", title:"Social Movements in Our Times",                 part:2 },
+  { id:21, num:"Ch 21", title:"The Movement for the Formation of Telangana State", part:2 },
+  { id:99, num:"—",     title:"Unclassified",                                  part:2 },
+];
+
+// Q format: { ch, marks, text, repeat }
+// repeat = number of times it appeared across papers (1 = appeared once)
+const QUESTIONS = [
+
+  // ─── CH 1: India Relief Features ───────────────────────────────────────
+  { ch:1, marks:2, repeat:3, text:"What are the major relief divisions of India?" },
+  { ch:1, marks:2, repeat:2, text:"Name the ranges of the Himalayas." },
+  { ch:1, marks:2, repeat:2, text:"What are the facilities available in an aerotropolis?" },
+  { ch:1, marks:2, repeat:2, text:"What is meant by Aerotropolis?" },
+  { ch:1, marks:2, repeat:2, text:"What is a perennial river? Give examples." },
+  { ch:1, marks:2, repeat:1, text:"Write any two differences between the Andaman & Nicobar Islands and the Lakshadweep." },
+  { ch:1, marks:2, repeat:1, text:"Name any two factors that influence climate and weather." },
+  { ch:1, marks:4, repeat:2, text:"Differentiate between Eastern Ghats and Western Ghats." },
+  { ch:1, marks:4, repeat:1, text:"Write the differences between Malwa Plateau and Deccan Plateau." },
+  { ch:1, marks:4, repeat:1, text:"Classify the Indo-Gangetic Plain and explain its divisions." },
+  { ch:1, marks:4, repeat:1, text:"Describe the Indo-Gangetic plains." },
+  { ch:1, marks:6, repeat:2, text:"How are the Eastern Coastal Plains and Western Coastal Plains different from each other? Explain in detail." },
+  { ch:1, marks:6, repeat:1, text:"Explain how the Himalayas play a pivotal role in the Indian climate." },
+
+  // ─── CH 2: Ideas of Development ─────────────────────────────────────────
+  { ch:2, marks:2, repeat:3, text:"How is per capita income calculated?" },
+  { ch:2, marks:2, repeat:1, text:"Define Gross Domestic Product (GDP)." },
+  { ch:2, marks:2, repeat:1, text:"Differentiate between physical capital and working capital." },
+  { ch:2, marks:4, repeat:1, text:"What are the different indicators used to measure development?" },
+  { ch:2, marks:4, repeat:1, text:"Read and comment: 'Income and per capita income, though very often used, is only one aspect of development. Distribution of incomes can be very unequal even when overall incomes rise.'" },
+  { ch:2, marks:6, repeat:1, text:"Observe the table on 'Some data regarding India and its neighbours for 2018' showing Per Capita income, Life expectancy, Mean years of schooling and HDI. Analyse it." },
+
+  // ─── CH 3: Production and Employment ────────────────────────────────────
+  { ch:3, marks:2, repeat:3, text:"Differentiate between organised sector and unorganised sector." },
+  { ch:3, marks:2, repeat:1, text:"Distinguish between foreign trade and foreign investment." },
+  { ch:3, marks:4, repeat:3, text:"How is the organised sector different from the unorganised sector?" },
+  { ch:3, marks:4, repeat:1, text:"What are the problems faced by workers in the unorganised sector?" },
+  { ch:3, marks:4, repeat:1, text:"Explain the factors of production with examples." },
+  { ch:3, marks:6, repeat:2, text:"How does the village economy support India's economic development? Explain." },
+  { ch:3, marks:6, repeat:1, text:"Read and interpret: 'A large number of people should have found different employment in industry and services but this has not taken place. Production has increased without a similar increase in employment... The increase in production is benefitting only about 8% of workers.'" },
+  { ch:3, marks:6, repeat:1, text:"Read and comment: 'Farm labourers come either from landless families or families cultivating small plots of land. Unlike farmers working on their own fields, farm labourers do not have a right over the crops grown on the land. Instead they are paid wages by the farmers from whom they work.'" },
+
+  // ─── CH 4: Climate of India ──────────────────────────────────────────────
+  { ch:4, marks:2, repeat:3, text:"Identify the difference between climate and weather." },
+  { ch:4, marks:2, repeat:2, text:"Which are called western disturbances?" },
+  { ch:4, marks:2, repeat:1, text:"What are the human activities that contribute to global warming?" },
+  { ch:4, marks:4, repeat:2, text:"Explain the factors influencing the Indian climate." },
+  { ch:4, marks:4, repeat:1, text:"Read and comment on AGW (Anthropogenic Global Warming): 'Most scientists from around the world agree on this much: AGW is real, it is happening, and it is leading to rapid and drastic climate change. They warn that severe weather and other changes will increase in the coming years and threaten life as we know it.'" },
+  { ch:4, marks:6, repeat:1, text:"Explain the monsoon structure of India." },
+
+  // ─── CH 5: Indian Rivers and Water Resources ─────────────────────────────
+  { ch:5, marks:2, repeat:2, text:"What are the steps to be taken to achieve sustainable development with equity in water use?" },
+  { ch:5, marks:2, repeat:1, text:"What is an exotic river? Give an example." },
+  { ch:5, marks:4, repeat:2, text:"What were the steps taken in Hiware Bazar to conserve soil and water?" },
+  { ch:5, marks:4, repeat:2, text:"Make a list of challenges faced in water resources in the Tungabhadra basin and give your solutions." },
+  { ch:5, marks:4, repeat:1, text:"Read and interpret: 'Conflicts between Karnataka, Telangana and Andhra Pradesh are generally related to availability of water for use. Water is a flow resource and its storage or use upstream affects what is available to people downstream. Water is shared based on agreement between state governments.'" },
+  { ch:5, marks:4, repeat:1, text:"Read and comment: 'There is often a loss in farm activities, especially when crops are damaged because of floods, pests etc. The other risk is a sudden fall in the price of agricultural produce. In such situations, farmers find it difficult to recover the working capital that they had spent.'" },
+  { ch:5, marks:4, repeat:1, text:"Suggest measures for proper implementation of the Public Distribution System." },
+  { ch:5, marks:6, repeat:1, text:"Read and interpret: 'Today, this is the major source of water for people. When there is so much extraction, it affects others in connected areas. It affects the stock of water that would be available for future generations. Therefore, one can't allow individual landowners to extract as much water as they wish from their land.'" },
+  { ch:5, marks:4, repeat:1, text:"What are the differences between Himalayan rivers and Peninsular rivers?" },
+  { ch:5, marks:4, repeat:1, text:"Why do most peninsular rivers flow eastward?" },
+  { ch:5, marks:2, repeat:1, text:"Suggest two measures for replenishment of rapidly declining groundwater levels." },
+
+  // ─── CH 6: The Population ────────────────────────────────────────────────
+  { ch:6, marks:2, repeat:2, text:"Why does the Indo-Gangetic plain have a high density of population?" },
+  { ch:6, marks:2, repeat:1, text:"What is the 'JP movement'?" },
+  { ch:6, marks:2, repeat:2, text:"Prepare four slogans on population control." },
+  { ch:6, marks:4, repeat:2, text:"Which factors caused changes in population size?" },
+  { ch:6, marks:4, repeat:1, text:"What are the reasons for low sex ratio in India at present?" },
+  { ch:6, marks:4, repeat:1, text:"Analyse the graph on India Population Sex Ratio 1951–2011: The sex ratio dropped from 946 in 1951 to 929 in 1981 then recovered to 940 in 2011. What does this tell you and what are the reasons for low female population in India?" },
+  { ch:6, marks:6, repeat:1, text:"What are the problems of overpopulation at present? Suggest measures to control overpopulation." },
+
+  // ─── CH 7: Settlements — Migrations ─────────────────────────────────────
+  { ch:7, marks:4, repeat:4, text:"Read and interpret: 'When families migrate, children accompanying their parents do not have creche facilities. Grown up children are not able to continue their studies at their parents' new workplaces. Schools in their native place refuse to take them again when they come back. They finally become dropouts.'" },
+  { ch:7, marks:4, repeat:2, text:"What are the problems faced by migrant workers in India?" },
+  { ch:7, marks:2, repeat:1, text:"What are the characteristics that a site should have to become a settlement?" },
+  { ch:7, marks:2, repeat:1, text:"What is a metropolitan city? Give two examples." },
+  { ch:7, marks:2, repeat:1, text:"What is urbanisation? Why is it expanding?" },
+  { ch:7, marks:4, repeat:1, text:"What is urbanisation? Why is it expanding? Give suggestions to solve the problems that arise due to urbanisation." },
+  { ch:7, marks:6, repeat:2, text:"What are the advantages and disadvantages of urbanisation?" },
+  { ch:7, marks:6, repeat:2, text:"Mention urbanisation problems and suggest to government how to solve them." },
+  { ch:7, marks:6, repeat:1, text:"Explain the impact of migration." },
+  { ch:7, marks:4, repeat:1, text:"Read and comment: 'Increasing urbanisation is not just about greater opportunities for people. It creates many problems. The growing urban population has to be housed. It needs water supply, sewage, transportation and many other things. All these result in environmental stress.' Interpret this paragraph." },
+
+  // ─── CH 8: Rampur: A Village Economy ─────────────────────────────────────
+  { ch:8, marks:2, repeat:2, text:"Suggest any two measures to reduce poverty in India." },
+  { ch:8, marks:2, repeat:1, text:"What are the features of economic liberalisation?" },
+  { ch:8, marks:4, repeat:1, text:"Read and interpret: 'Most small farmers have to borrow money to arrange for the working capital. They borrow from large farmers or the village money lenders or the traders who supply various inputs for cultivation. The rate of interest on such loans is very high.'" },
+  { ch:8, marks:6, repeat:1, text:"What are the lessons to be drawn from the alternative PDS initiative at Zaheerabad mandal in Telangana?" },
+
+  // ─── CH 9: Globalisation ─────────────────────────────────────────────────
+  { ch:9, marks:2, repeat:3, text:"What are the factors that have enabled globalisation?" },
+  { ch:9, marks:2, repeat:1, text:"Mention any two factors that led to globalisation." },
+  { ch:9, marks:4, repeat:2, text:"How has information technology contributed to the expansion of globalisation?" },
+  { ch:9, marks:4, repeat:1, text:"What are the problems faced by Indian industries due to MNCs? What measures do you suggest for Indian industries to compete with MNCs?" },
+  { ch:9, marks:4, repeat:2, text:"What are the advantages of globalisation?" },
+  { ch:9, marks:6, repeat:4, text:"Explain the impact of globalisation on India." },
+  { ch:9, marks:6, repeat:3, text:"Write the advantages and disadvantages of Multi National Companies." },
+  { ch:9, marks:6, repeat:2, text:"What is globalisation? Write its advantages and disadvantages." },
+  { ch:9, marks:6, repeat:3, text:"Analyse the reasons for / factors that contributed to globalisation." },
+  { ch:9, marks:6, repeat:1, text:"Read and comment: 'The economic and political changes happening world-wide since 1990s, which go by the name of Globalisation or Neo-Liberalism, have deeply impacted the lives of the underprivileged and poor.'" },
+  { ch:9, marks:4, repeat:1, text:"What is the impact of globalisation on small producers?" },
+  { ch:9, marks:6, repeat:1, text:"Write the consequences of globalisation." },
+
+  // ─── CH 10: Food Security ─────────────────────────────────────────────────
+  { ch:10, marks:2, repeat:1, text:"Write suggestions to improve proper implementation of the Public Distribution System." },
+  { ch:10, marks:4, repeat:2, text:"Prepare a pamphlet on 'Food Security'." },
+  { ch:10, marks:6, repeat:2, text:"Give suggestions for further improvement of the Public Distribution System in your area." },
+  { ch:10, marks:6, repeat:1, text:"How many types of food do we consume? Explain them." },
+  { ch:10, marks:6, repeat:1, text:"Describe the relationship between the increase in food production and food security." },
+
+  // ─── CH 11: Sustainable Development with Equity ───────────────────────────
+  { ch:11, marks:2, repeat:2, text:"What is sustainable development?" },
+  { ch:11, marks:4, repeat:3, text:"Prepare a pamphlet on the importance of sustainable development." },
+  { ch:11, marks:4, repeat:1, text:"Read and comment: 'For long, policy makers have ignored the environmental issues. The argument has been that since developing countries like India are poor, developing economies need to grow. Development has to be achieved at any cost.'" },
+  { ch:11, marks:4, repeat:2, text:"Prepare a pamphlet on environmental protection / awareness on environment." },
+  { ch:11, marks:4, repeat:1, text:"What is the role of the environment in development?" },
+  { ch:11, marks:6, repeat:1, text:"At present, what are the steps to be taken to achieve sustainable development with equity?" },
+  { ch:11, marks:6, repeat:1, text:"Read and comment: 'The extent of our current resource use is such that the chances of future generations to have access to their fair share of scarce resources are endangered. Moreover, the consequences of our resources use in terms of impact on the environment may induce serious damages that go beyond the carrying capacity of the environment.'" },
+  { ch:11, marks:6, repeat:1, text:"Read and interpret: 'During the last few decades, scientists have discovered that pollution causes the depletion of the protective ozone layer... The average temperature of Earth has been increasing steadily. This is causing the melting of polar ice caps... the water level of oceans will rise causing submergence of land in coastal areas.'" },
+  { ch:11, marks:6, repeat:1, text:"Read and comment: 'We are already experiencing the negative consequences of rapid economic growth on several fronts. The problem of groundwater and pesticides are many examples. We have several thousands of communities living off the environment. To destroy the environment means to destroy these communities.'" },
+  { ch:11, marks:4, repeat:1, text:"Read and comment: 'During the last few decades, tribals and marginal farmers have also been threatened by commercial farming, mining corporations, dam projects etc. As large companies find rare resources in remote rural areas, there has been a rapid increase in the ousting of the farming and tribal population from their traditional areas.'" },
+  { ch:11, marks:4, repeat:1, text:"Suggest measures to prevent climate change and its adverse effects. Prepare a pamphlet on climate change." },
+
+  // ─── CH 12: World Between the World Wars ──────────────────────────────────
+  { ch:12, marks:2, repeat:2, text:"Write any two causes of the World Wars." },
+  { ch:12, marks:2, repeat:1, text:"Write the common features of fascist movements." },
+  { ch:12, marks:2, repeat:1, text:"Why was the 20th century called 'The Age of Extremes'?" },
+  { ch:12, marks:4, repeat:3, text:"Write the causes of the World Wars." },
+  { ch:12, marks:4, repeat:2, text:"Write about the consequences of the World Wars." },
+  { ch:12, marks:4, repeat:1, text:"What are the impacts of economic depression on the USA and Germany?" },
+  { ch:12, marks:4, repeat:1, text:"Write about the Treaty of Versailles." },
+  { ch:12, marks:6, repeat:3, text:"Describe the other causes of World War II / Write a short note on various causes of the two World Wars." },
+  { ch:12, marks:6, repeat:2, text:"What were the specific factors that contributed to the Second World War?" },
+  { ch:12, marks:6, repeat:1, text:"Observe and analyse the graph on the Armaments Race showing military expenditure by great powers (1880–1914)." },
+  { ch:12, marks:4, repeat:1, text:"Observe the graph on US and USSR nuclear stockpiles (1945–2005) and analyse it." },
+
+  // ─── CH 13: National Liberation Movements ──────────────────────────────────
+  { ch:13, marks:4, repeat:1, text:"Explain the origin and objectives of the Non-Aligned Movement." },
+  { ch:13, marks:4, repeat:1, text:"Explain the West Asian conflicts." },
+  { ch:13, marks:6, repeat:2, text:"Explain in detail about the West Asian conflicts." },
+  { ch:13, marks:2, repeat:1, text:"What is the Zionist movement?" },
+  { ch:13, marks:2, repeat:1, text:"Write about the cold war." },
+  { ch:13, marks:6, repeat:1, text:"Explain the impacts of the Cold War on the world." },
+  { ch:13, marks:4, repeat:1, text:"Read and interpret: 'The beginning of the twenty-first century witnessed growing discontent among the Arabs which resulted in the growth of religious terrorism. Some Arab terrorists hijacked two aircraft in the US and crashed them into the World Trade Centre in New York killing thousands of people.'" },
+
+  // ─── CH 14: National Movement in India — Partition & Independence ─────────
+  { ch:14, marks:4, repeat:2, text:"What were the problems faced by people during the partition of India?" },
+  { ch:14, marks:4, repeat:1, text:"How did the partition of India affect the lives of common people of our country?" },
+  { ch:14, marks:4, repeat:1, text:"Read and interpret: 'Most Hindus living on the Pakistani side of the border felt insecure and forced to leave their homes. So did many Muslims living on the other side of this border... Around 1.5 crore people, both Hindus and Muslims, were displaced. Between two to five lakh people were killed.'" },
+  { ch:14, marks:4, repeat:2, text:"Read and comment on the British policy: 'Now that the Indian people were revolting against British rule... The British started questioning the right of the Congress to represent the people... they followed the Divide and Rule Policy more vigorously.'" },
+  { ch:14, marks:6, repeat:1, text:"Read and interpret: 'The partition of the country on the basis of religion led to doubts and fears about the security and stability of India. There was a fear that language reorganisation would cause the breakdown of the country.'" },
+
+  // ─── CH 15: Making of Independent India's Constitution ────────────────────
+  { ch:15, marks:2, repeat:1, text:"Write the basic principles of the Indian Constitution." },
+  { ch:15, marks:2, repeat:1, text:"Write the characteristics of the Federal Constitution." },
+  { ch:15, marks:2, repeat:1, text:"How is an amendment made to the Constitution?" },
+  { ch:15, marks:4, repeat:2, text:"Write the main features / basic principles of the Indian Constitution." },
+  { ch:15, marks:4, repeat:1, text:"Observe the bar graph on Constitutional amendments from 1950 to 2024 (nearly 106 amendments made) and analyse it." },
+  { ch:15, marks:6, repeat:1, text:"Read and comment: 'One of the greatest weaknesses was undoubtedly the low priority given to primary education and public health. This was going to haunt India for a long time to come. Other countries like China and Korea which also began a new innings around the same time did much better on these two counts.'" },
+
+  // ─── CH 16: Election Process in India ─────────────────────────────────────
+  { ch:16, marks:2, repeat:2, text:"Differentiate between General election and By-election." },
+  { ch:16, marks:2, repeat:1, text:"Define National and Regional parties." },
+  { ch:16, marks:2, repeat:2, text:"Write some suggestions to control election malpractices in the present times." },
+  { ch:16, marks:4, repeat:3, text:"Describe the functions of the Election Commission of India." },
+  { ch:16, marks:4, repeat:2, text:"What were the major recommendations introduced by T.N. Seshan to strengthen the electoral system in India?" },
+  { ch:16, marks:4, repeat:1, text:"Write the important points of the electoral code of conduct." },
+  { ch:16, marks:4, repeat:1, text:"What qualities do you like in T.N. Sheshan who brought reforms in conducting elections in India as Chief Election Commissioner?" },
+  { ch:16, marks:6, repeat:2, text:"Estimate the role / functions of the Election Commission in India." },
+  { ch:16, marks:6, repeat:1, text:"Explain the administrative function of the Election Commission of India." },
+  { ch:16, marks:6, repeat:1, text:"Explain the functions of the election commission of India." },
+  { ch:16, marks:6, repeat:1, text:"Explain the conduct of elections at various levels." },
+  { ch:16, marks:4, repeat:1, text:"Do you support political parties that are violating the election code of conduct to gain advantages in elections? Discuss." },
+
+  // ─── CH 17: Independent India (The First 30 Years 1947–77) ────────────────
+  { ch:17, marks:2, repeat:2, text:"What were the changes in Indian politics in 1977 elections?" },
+  { ch:17, marks:4, repeat:1, text:"List out the causes for one-party domination from 1947 to 1977." },
+  { ch:17, marks:4, repeat:1, text:"What were the major changes in the political system after 1967 elections?" },
+  { ch:17, marks:6, repeat:2, text:"Write the economic and social changes in the first thirty years of independent India." },
+  { ch:17, marks:6, repeat:1, text:"Read and interpret: 'Land reforms were however implemented in a half-hearted manner across India. While Zamindari System was abolished, redistribution of land to the landless did not take place. The rich and powerful in the rural areas continued to control most of the land.'" },
+  { ch:17, marks:6, repeat:1, text:"Read and comment: 'Despite huge increase in development expenditure, the benefit was not reaching the poor due to widespread corruption and other problems. The fact that most people who had been poor and marginalised including women, dalits and tribals were not getting access to the fruits of development.'" },
+  { ch:17, marks:4, repeat:1, text:"Appreciate the role of Professor Jayashankar Sir in the Telangana agitation." },
+  { ch:17, marks:6, repeat:1, text:"Read and interpret on Operation Barga: 'As a result of Operation Barga, the landlords were largely prevented from forcibly throwing the bargadars off the land. In fact, the bargadar rights were made hereditary and thus perpetual. The State guaranteed that the bargadars would receive a fair share of the crop.'" },
+
+  // ─── CH 18: Emerging Political Trends 1977 to 2000 ────────────────────────
+  { ch:18, marks:4, repeat:1, text:"While some people feel that coalition politics has weakened the government, others feel that it has prevented one party from steamrolling its agenda on the country. Discuss this with examples." },
+  { ch:18, marks:4, repeat:1, text:"What are the causes of corruption? Suggest measures to eradicate it." },
+  { ch:18, marks:6, repeat:1, text:"Mention the reasons for the increase in corruption today and suggest solutions to overcome it." },
+  { ch:18, marks:4, repeat:1, text:"Suggest some measures for better democracy and ethical governance." },
+  { ch:18, marks:6, repeat:1, text:"'Religion has been influencing politics since the partition of India.' Explain with examples." },
+  { ch:18, marks:4, repeat:1, text:"Read and comment: 'Rajiv Gandhi realised that despite all the attention to development in the country, much of it did not reach the real beneficiaries. In a famous speech, Rajiv Gandhi said that out of every Rupee spent on the poor, barely 15 paise reaches them!'" },
+
+  // ─── CH 19: Post-War World and India ──────────────────────────────────────
+  { ch:19, marks:4, repeat:1, text:"Explain the principles which Jawaharlal Nehru formulated for peace among neighbouring countries (Panchsheel)." },
+  { ch:19, marks:4, repeat:1, text:"Describe how the Gentlemen's Agreement was violated during Andhra Pradesh." },
+  { ch:19, marks:4, repeat:2, text:"What are the key features of the Gentlemen's Agreement?" },
+  { ch:19, marks:4, repeat:1, text:"Explain the important features of the Gentlemen's Agreement. How did this become a point of distrust between the regions?" },
+  { ch:19, marks:6, repeat:3, text:"Describe the main features / important points of the Gentlemen's Agreement." },
+  { ch:19, marks:6, repeat:1, text:"Explain the relationship of India with its neighbouring countries." },
+  { ch:19, marks:6, repeat:1, text:"Discuss the foreign policy of India with Pakistan in view of the recent disturbances between them." },
+  { ch:19, marks:6, repeat:1, text:"Write the similarities and differences between the Assam movement and Punjab agitation." },
+  { ch:19, marks:4, repeat:1, text:"How did the main features of the Gentlemen's Agreement become a point of distrust between the two regions of Telangana and Andhra?" },
+
+  // ─── CH 20: Social Movements in Our Times ─────────────────────────────────
+  { ch:20, marks:2, repeat:1, text:"Write about the Greenpeace movement." },
+  { ch:20, marks:2, repeat:1, text:"Suggest measures to maintain friendly relations among the nations." },
+  { ch:20, marks:4, repeat:1, text:"Read and comment: 'People who stood to be displaced from the project demanded a fair compensation not just to those who owned land but all those who lived there. They also demanded proper rehabilitation with land in return for the land lost and also afforestation to compensate for the loss of forests under the dam.'" },
+  { ch:20, marks:4, repeat:1, text:"Suggest some measures to solve the problems of displaced people due to projects." },
+  { ch:20, marks:6, repeat:1, text:"Explain the peasant movements in the freedom struggle." },
+
+  // ─── CH 21: Movement for Formation of Telangana State ─────────────────────
+  { ch:21, marks:2, repeat:1, text:"Describe how the Gentlemen's Agreement was violated during Andhra Pradesh. What were the main demands during Telangana movement?" },
+  { ch:21, marks:4, repeat:2, text:"Write the methods and forms of the Telangana movement." },
+  { ch:21, marks:4, repeat:1, text:"List out the important programmes during the Telangana movement." },
+  { ch:21, marks:4, repeat:1, text:"Read and comment on the Telangana farmers' movement: 'In Hyderabad, the Communist party led a massive movement of farmers of the Telangana region. The Telangana farmers opposed the large land owners and demanded that debts of farmers be cancelled. They also demanded that bonded labour should be stopped and land be distributed to those who worked on it. The peasants took up arms to fight against the rulers and their armies. Nearly 3000 villagers participated in the movement.'" },
+  { ch:21, marks:6, repeat:2, text:"What were the major reasons that led to the formation of the Telangana state?" },
+  { ch:21, marks:6, repeat:1, text:"Read and interpret: 'In response to the Telangana agitation, a counter movement started in 1972 in the Seemandhra regions called Jai Andhra movement, demanding not only greater development of the coastal districts but also the removal of Mulki rules relating to domicile status.'" },
+
+  // ─── ADDITIONAL / CROSS-CHAPTER SUBJECTIVE ────────────────────────────────
+  { ch:16, marks:2, repeat:2, text:"Write any two slogans that sensitize citizens to exercise their Right to Vote." },
+  { ch:12, marks:4, repeat:1, text:"Give some suggestions to avoid the war-like tensions in the world / suggest measures to prevent wars among countries." },
+  { ch:12, marks:4, repeat:1, text:"Suggest measures to prevent wars / give suggestions for world peace." },
+  { ch:14, marks:4, repeat:1, text:"Which qualities do you like in Sardar Vallabhai Patel and why?" },
+  { ch:14, marks:4, repeat:1, text:"Which qualities do you like in Netaji Subhash Chandra Bose? Why?" },
+  { ch:14, marks:4, repeat:1, text:"Which qualities do you like in Dr. B.R. Ambedkar and why?" },
+  { ch:17, marks:4, repeat:1, text:"Which qualities do you like in T.N. Sheshan who brought reforms in conducting elections as Chief Election Commissioner?" },
+  { ch:11, marks:2, repeat:2, text:"Prepare two slogans on environment protection." },
+  { ch:6,  marks:2, repeat:2, text:"Prepare two slogans to encourage educated skilled labour to serve our country by avoiding international migration." },
+  { ch:13, marks:2, repeat:1, text:"What is meant by Veto Power?" },
+  { ch:12, marks:4, repeat:1, text:"Explain why India adopted the Non-Aligned Movement and its objectives." },
+  { ch:10, marks:4, repeat:1, text:"Prepare a pamphlet on the importance of nutritious food." },
+  { ch:16, marks:4, repeat:1, text:"Prepare a pamphlet on awareness among people about corruption." },
+  { ch:6,  marks:4, repeat:1, text:"Prepare a pamphlet on population control in India." },
+  { ch:9,  marks:4, repeat:1, text:"Prepare a pamphlet on the prohibition of liquor." },
+  { ch:20, marks:4, repeat:1, text:"Prepare a pamphlet on the importance of Human Rights." },
+  { ch:11, marks:4, repeat:1, text:"Prepare a pamphlet on organic farming." },
+  { ch:17, marks:4, repeat:1, text:"Observe the table on 'Progress in Himachal Pradesh' comparing percentage of girls and boys (6+ years) with more than 5 years of education in 1993 and 2006. Write your analysis." },
+  { ch:3,  marks:4, repeat:1, text:"Read and comment: 'India also set up an impressive institutional framework with independent institutions like Judiciary, Election Commission, Controller and Auditor General and so on. Bureaucratic neutrality was also an important achievement.'" },
+  { ch:19, marks:4, repeat:1, text:"Write about India's relations with any two bordering countries in the present day." },
+  { ch:9,  marks:6, repeat:1, text:"Explain the impact of globalisation on India's small producers and farmers." },
+  { ch:21, marks:4, repeat:1, text:"Describe the Telangana movement: What is the Eight Point Plan? What is the Six Point Formula?" },
+  { ch:19, marks:4, repeat:1, text:"How did the Assam movement and Punjab agitation compare? Write similarities and differences." },
+  { ch:14, marks:6, repeat:1, text:"Explain the role of Jawaharlal Nehru in India's foreign policy, including Panchsheel principles." },
+  { ch:17, marks:6, repeat:1, text:"Explain the Positive and Negative impacts that changes in technology in today's society are having on people's lives and suggest possible solutions." },
+  { ch:18, marks:4, repeat:1, text:"Observe the pie graph on Share of different sectors in GDP (1973–74 and 2015–16) and analyse it." },
+  { ch:3,  marks:6, repeat:1, text:"Observe the table on GDP by Agriculture, Industry and Service Sectors and analyse it." },
+  { ch:20, marks:4, repeat:1, text:"Prepare a pamphlet on discrimination against the girl child (prevent discrimination)." },
+  { ch:20, marks:4, repeat:1, text:"Prepare a pamphlet on 'Social Justice' to create awareness among people." },
+  { ch:13, marks:4, repeat:1, text:"Read and interpret about Arab terrorism and the 9/11 attack on the World Trade Centre: 'The beginning of the twenty-first century witnessed growing discontent among the Arabs which resulted in the growth of religious terrorism...'" },
+  { ch:3,  marks:4, repeat:1, text:"Observe the contribution of organised and unorganised sectors table. What does it tell? Give reasons for low employment in organised sector." },
+  { ch:17, marks:4, repeat:1, text:"Read and comment: 'For long, policy makers have ignored environmental issues. The argument has been that since developing countries like India are poor, developing economies need to grow at any cost.'" },
+  { ch:12, marks:4, repeat:1, text:"Observe and analyse the graph on India's and Pakistan's Military Expenditures (1988–2011)." },
+  { ch:17, marks:6, repeat:1, text:"How does the Parliamentary system of government differ from the Presidential system of government?" },
+  { ch:17, marks:6, repeat:2, text:"Differentiate the parliamentary and presidential types of governments." },
+  { ch:11, marks:6, repeat:1, text:"Read and comment: 'As the ice melts and joins the oceans, the water level of oceans and seas will rise causing submergence of land in the coastal areas all over the world. Countries like Bangladesh, Sri Lanka, Mauritius, India and Indonesia will face severe problems.'" },
+  { ch:16, marks:6, repeat:1, text:"Observe and analyse the table on seats share of various political parties in 1952 and 1962." },
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let markFilter = 'all';
+let doneSet = new Set(JSON.parse(localStorage.getItem('doneQ') || '[]'));
+
+function saveProgress() {
+  localStorage.setItem('doneQ', JSON.stringify([...doneSet]));
+}
+
+// ============================================================
+// COUNTDOWN
+// ============================================================
+function updateCountdown() {
+ const exam = new Date('2026-04-13T09:30:00');
+  const now = new Date();
+  const diff = exam - now;
+  if (diff <= 0) { document.getElementById('countdown').textContent = '⏰ Exam Day!'; return; }
+  const d = Math.floor(diff/86400000);
+  const h = Math.floor((diff%86400000)/3600000);
+  const m = Math.floor((diff%3600000)/60000);
+  document.getElementById('countdown').textContent = `⏰ ${d}d ${h}h ${m}m Left`;
+}
+updateCountdown();
+setInterval(updateCountdown, 60000);
+
+// ============================================================
+// BUILD SIDEBAR & CHAPTER SELECT
+// ============================================================
+function buildSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const jumpSelect = document.getElementById('chapterJump');
+  let currentPart = 0;
+
+  CHAPTERS.forEach(ch => {
+    const qs = getChapterQs(ch.id);
+    if (qs.length === 0 && ch.id !== 99) return;
+    if (qs.length === 0) return;
+
+    if (ch.part !== currentPart) {
+      currentPart = ch.part;
+      const pd = document.createElement('div');
+      pd.className = 'sidebar-part';
+      pd.textContent = PARTS[ch.part];
+      sidebar.appendChild(pd);
+    }
+
+    const link = document.createElement('div');
+    link.className = 'sidebar-link';
+    link.id = `slink-${ch.id}`;
+    link.innerHTML = `<span>${ch.num}: ${ch.title}</span><span class="sidebar-count">${qs.length}</span>`;
+    link.onclick = () => {
+      document.getElementById(`ch-${ch.id}`)?.scrollIntoView({ behavior:'smooth' });
+    };
+    sidebar.appendChild(link);
+
+    const opt = document.createElement('option');
+    opt.value = ch.id;
+    opt.textContent = `${ch.num}: ${ch.title}`;
+    jumpSelect.appendChild(opt);
+  });
+}
+
+function getChapterQs(chId) {
+  return QUESTIONS.filter(q => q.ch === chId);
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function qKey(q) {
+  return q.ch + '|' + q.marks + '|' + q.text.slice(0, 60);
+}
+
+function renderAll() {
+  const content = document.getElementById('mainContent');
+  content.innerHTML = '';
+  const noRes = document.createElement('div');
+  noRes.className = 'no-results hidden';
+  noRes.id = 'noResults';
+  noRes.innerHTML = '<div style="font-size:2rem;">🔍</div><p style="margin-top:10px;">No questions match your search.</p>';
+  content.appendChild(noRes);
+
+  const search = document.getElementById('searchInput').value.toLowerCase().trim();
+  let totalVisible = 0;
+
+  CHAPTERS.forEach(ch => {
+    let qs = getChapterQs(ch.id);
+    if (!qs.length) return;
+
+    // filter by marks
+    if (markFilter !== 'all') {
+      qs = qs.filter(q => q.marks === parseInt(markFilter));
+    }
+    // filter by search
+    if (search) {
+      qs = qs.filter(q => q.text.toLowerCase().includes(search));
+    }
+    if (!qs.length) return;
+
+    totalVisible += qs.length;
+
+    // sort: repeat desc, then marks desc
+    qs = [...qs].sort((a,b) => (b.repeat - a.repeat) || (b.marks - a.marks));
+
+    const section = document.createElement('div');
+    section.className = 'chapter-section chapter-anchor';
+    section.id = `ch-${ch.id}`;
+
+    // header
+    const header = document.createElement('div');
+    header.className = 'chapter-header';
+    header.innerHTML = `
+      <span class="chapter-num">${ch.num}</span>
+      <span class="chapter-title">${ch.title}</span>
+      <span class="chapter-qcount">${qs.length} Q</span>
+    `;
+    section.appendChild(header);
+
+    // group by marks
+    [2, 4, 6].forEach(m => {
+      const mqs = qs.filter(q => q.marks === m);
+      if (!mqs.length) return;
+
+      const grp = document.createElement('div');
+      grp.className = 'mark-group';
+
+      const grpHdr = document.createElement('div');
+      grpHdr.className = 'mark-group-header';
+      grpHdr.innerHTML = `<span class="mark-pill pill-${m}">${m}M</span> ${m}-Mark Questions (${mqs.length})`;
+      grp.appendChild(grpHdr);
+
+      mqs.forEach(q => {
+        const key = qKey(q);
+        const isDone = doneSet.has(key);
+        const card = document.createElement('div');
+        card.className = `q-card ${isDone ? 'done' : ''}`;
+        card.dataset.key = key;
+
+        const pillClass = m === 2 ? 'mark2' : m === 4 ? 'mark4' : 'mark6';
+        const pillColor = m === 2 ? '#3b82f6' : m === 4 ? '#a855f7' : '#ef4444';
+
+        card.innerHTML = `
+          <div class="q-top">
+            <input type="checkbox" class="q-checkbox" ${isDone ? 'checked' : ''} onchange="toggleDone('${key.replace(/'/g,"\\'")}', this)">
+            <div class="q-body">
+              <div class="q-text">${escapeHtml(q.text)}</div>
+              <div class="q-meta">
+                <span class="badge-marks" style="background:${pillColor}">${m}M</span>
+                ${q.repeat > 1 ? `<span class="badge-repeat">🔁 ${q.repeat}× repeated</span>` : ''}
+                <button class="copy-btn" onclick="copyPrompt(this, '${escapeForAttr(q.text)}', ${m})">📋 Copy Prompt</button>
+              </div>
+            </div>
+          </div>
+        `;
+        grp.appendChild(card);
+      });
+
+      section.appendChild(grp);
+    });
+
+    content.appendChild(section);
+  });
+
+  if (totalVisible === 0) {
+    noRes.classList.remove('hidden');
+  }
+
+  updateProgress();
+  updateTotalBadge();
+}
+
+function escapeHtml(t) {
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function escapeForAttr(t) {
+  return t.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'\\"').replace(/\n/g,' ');
+}
+
+// ============================================================
+// INTERACTIONS
+// ============================================================
+function toggleDone(key, cb) {
+  const card = cb.closest('.q-card');
+  if (cb.checked) {
+    doneSet.add(key);
+    card.classList.add('done');
+  } else {
+    doneSet.delete(key);
+    card.classList.remove('done');
+  }
+  saveProgress();
+  updateProgress();
+}
+
+function updateProgress() {
+  const allCards = document.querySelectorAll('.q-card');
+  const total = allCards.length;
+  const done = document.querySelectorAll('.q-card.done').length;
+  document.getElementById('doneCount').textContent = done;
+  document.getElementById('totalCount').textContent = total;
+  const pct = total ? Math.round(done/total*100) : 0;
+  document.getElementById('donePercent').textContent = pct + '%';
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+
+function updateTotalBadge() {
+  const total = QUESTIONS.length;
+  document.getElementById('totalQCount').textContent = `📚 ${total} Questions`;
+}
+
+function setMarkFilter(val, btn) {
+  markFilter = val;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAll();
+}
+
+function filterAll() {
+  renderAll();
+}
+
+function jumpToChapter(chId) {
+  if (!chId) return;
+  const el = document.getElementById(`ch-${chId}`);
+  if (el) el.scrollIntoView({ behavior:'smooth' });
+}
+
+function copyPrompt(btn, questionText, marks) {
+  const sentences = marks === 2 ? '3-4' : marks === 4 ? '5-6' : '8-10';
+  const prompt = `Generate a Class 10 board exam answer for: ${questionText}. Marks: ${marks}. Keep it simple, ${sentences} sentences.`;
+  navigator.clipboard.writeText(prompt).then(() => {
+    btn.textContent = '✅ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '📋 Copy Prompt';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = prompt;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => { btn.textContent = '📋 Copy Prompt'; }, 2000);
+  });
+}
+
+// ============================================================
+// INIT
+// ============================================================
+buildSidebar();
+renderAll();
+</script>
+</body>
+</html>
